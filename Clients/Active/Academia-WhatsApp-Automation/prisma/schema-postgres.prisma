@@ -1,0 +1,433 @@
+// Academia WhatsApp Automation - Database Schema
+// IMPORTANT: Multi-tenant schema for academy management system
+// PROACTIVELY designed for scalability and compliance
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// CORE ENTITIES
+
+model Academia {
+  id              String   @id @default(uuid())
+  nome            String
+  cnpj            String   @unique
+  endereco        String
+  telefone        String
+  email           String
+  whatsappNumber  String   @map("whatsapp_number")
+  planoAtivo      Boolean  @default(true) @map("plano_ativo")
+  
+  // Business Configuration
+  horarioAbertura String   @map("horario_abertura") // "08:00"
+  horarioFechamento String @map("horario_fechamento") // "22:00"
+  limiteDisparo   Int      @default(100) @map("limite_disparo") // msgs/hour
+  
+  // Integration Settings
+  sistemaAcademia String?  @map("sistema_academia") // "Tecnofit", "Evolution"
+  apiKey          String?  @map("api_key")
+  webhookUrl      String?  @map("webhook_url")
+  
+  // Timestamps
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  
+  // Relations
+  alunos          Aluno[]
+  mensagens       Mensagem[]
+  campanhas       Campanha[]
+  automacoes      Automacao[]
+  planos          Plano[]
+  instrutores     Instrutor[]
+  
+  @@map("academias")
+}
+
+model Aluno {
+  id              String    @id @default(uuid())
+  nome            String
+  telefone        String
+  email           String?
+  cpf             String?
+  dataNascimento  DateTime? @map("data_nascimento")
+  
+  // Status and Activity
+  status          StatusAluno @default(ATIVO)
+  ultimaVisita    DateTime?   @map("ultima_visita")
+  dataMatricula   DateTime    @default(now()) @map("data_matricula")
+  dataFimPlano    DateTime?   @map("data_fim_plano")
+  
+  // Plan Information
+  planoAtual      String?     @map("plano_atual")
+  valorMensalidade Decimal?   @map("valor_mensalidade") @db.Decimal(10,2)
+  diaVencimento   Int?        @map("dia_vencimento")
+  
+  // Contact Preferences
+  permiteWhatsApp Boolean     @default(true) @map("permite_whatsapp")
+  permiteEmail    Boolean     @default(true) @map("permite_email")
+  permiteMarketing Boolean    @default(true) @map("permite_marketing")
+  
+  // Academy Reference
+  academiaId      String      @map("academia_id")
+  academia        Academia    @relation(fields: [academiaId], references: [id], onDelete: Cascade)
+  
+  // Relations
+  mensagens       Mensagem[]
+  treinos         Treino[]
+  pagamentos      Pagamento[]
+  frequencia      Frequencia[]
+  
+  // Timestamps
+  createdAt       DateTime    @default(now()) @map("created_at")
+  updatedAt       DateTime    @updatedAt @map("updated_at")
+  
+  @@unique([telefone, academiaId])
+  @@index([status, ultimaVisita])
+  @@index([dataFimPlano])
+  @@map("alunos")
+}
+
+model Mensagem {
+  id              String      @id @default(uuid())
+  conteudo        String
+  tipo            TipoMensagem
+  status          StatusMensagem @default(ENVIADA)
+  
+  // WhatsApp Specific
+  whatsappId      String?     @map("whatsapp_id")
+  templateId      String?     @map("template_id")
+  mediaUrl        String?     @map("media_url")
+  mediaType       String?     @map("media_type")
+  
+  // References
+  alunoId         String?     @map("aluno_id")
+  aluno           Aluno?      @relation(fields: [alunoId], references: [id], onDelete: SetNull)
+  
+  campanhaId      String?     @map("campanha_id")
+  campanha        Campanha?   @relation(fields: [campanhaId], references: [id], onDelete: SetNull)
+  
+  academiaId      String      @map("academia_id")
+  academia        Academia    @relation(fields: [academiaId], references: [id], onDelete: Cascade)
+  
+  // Automation Context
+  fluxoId         String?     @map("fluxo_id")
+  etapaFluxo      Int?        @map("etapa_fluxo")
+  
+  // Timestamps
+  enviadaEm       DateTime?   @map("enviada_em")
+  lida            Boolean     @default(false)
+  lidaEm          DateTime?   @map("lida_em")
+  respondida      Boolean     @default(false)
+  respondidaEm    DateTime?   @map("respondida_em")
+  
+  createdAt       DateTime    @default(now()) @map("created_at")
+  updatedAt       DateTime    @updatedAt @map("updated_at")
+  
+  @@index([tipo, status])
+  @@index([enviadaEm])
+  @@map("mensagens")
+}
+
+model Campanha {
+  id              String        @id @default(uuid())
+  nome            String
+  descricao       String?
+  tipo            TipoCampanha
+  status          StatusCampanha @default(ATIVA)
+  
+  // Campaign Configuration
+  inicioAgendado  DateTime?     @map("inicio_agendado")
+  fimAgendado     DateTime?     @map("fim_agendado")
+  inicioReal      DateTime?     @map("inicio_real")
+  fimReal         DateTime?     @map("fim_real")
+  
+  // Target Criteria
+  filtroStatus    StatusAluno[]  @map("filtro_status")
+  diasInatividade Int?          @map("dias_inatividade")
+  planoTarget     String?       @map("plano_target")
+  
+  // Metrics
+  totalEnviadas   Int           @default(0) @map("total_enviadas")
+  totalLidas      Int           @default(0) @map("total_lidas")
+  totalRespondidas Int          @default(0) @map("total_respondidas")
+  totalConvertidas Int          @default(0) @map("total_convertidas")
+  
+  // Academy Reference
+  academiaId      String        @map("academia_id")
+  academia        Academia      @relation(fields: [academiaId], references: [id], onDelete: Cascade)
+  
+  // Relations
+  mensagens       Mensagem[]
+  
+  // Timestamps
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+  
+  @@index([tipo, status])
+  @@map("campanhas")
+}
+
+model Automacao {
+  id              String         @id @default(uuid())
+  nome            String
+  descricao       String?
+  tipo            TipoAutomacao
+  ativo           Boolean        @default(true)
+  
+  // Flow Configuration (JSON)
+  fluxoConfig     Json           @map("fluxo_config")
+  
+  // Trigger Configuration
+  triggerTipo     String         @map("trigger_tipo") // "inatividade", "vencimento", "cadastro"
+  triggerValor    Json?          @map("trigger_valor") // {"dias": 15} ou {"antes_dias": 5}
+  
+  // Execution Settings
+  proximaExecucao DateTime?      @map("proxima_execucao")
+  ultimaExecucao  DateTime?      @map("ultima_execucao")
+  intervaloMinutos Int?          @map("intervalo_minutos")
+  
+  // Statistics
+  totalExecucoes  Int            @default(0) @map("total_execucoes")
+  totalSucesso    Int            @default(0) @map("total_sucesso")
+  totalErros      Int            @default(0) @map("total_erros")
+  
+  // Academy Reference
+  academiaId      String         @map("academia_id")
+  academia        Academia       @relation(fields: [academiaId], references: [id], onDelete: Cascade)
+  
+  // Execution Logs
+  execucoes       ExecucaoAutomacao[]
+  
+  // Timestamps
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
+  
+  @@index([ativo, proximaExecucao])
+  @@map("automacoes")
+}
+
+model ExecucaoAutomacao {
+  id              String         @id @default(uuid())
+  status          StatusExecucao
+  resultado       Json?          // Detalhes da execução
+  erro            String?        // Mensagem de erro se houver
+  
+  // References
+  automacaoId     String         @map("automacao_id")
+  automacao       Automacao      @relation(fields: [automacaoId], references: [id], onDelete: Cascade)
+  
+  // Timestamps
+  iniciadaEm      DateTime       @default(now()) @map("iniciada_em")
+  finalizadaEm    DateTime?      @map("finalizada_em")
+  
+  @@index([status, iniciadaEm])
+  @@map("execucoes_automacao")
+}
+
+// SUPPORTING ENTITIES
+
+model Plano {
+  id              String         @id @default(uuid())
+  nome            String
+  descricao       String?
+  valor           Decimal        @db.Decimal(10,2)
+  duracaoMeses    Int            @map("duracao_meses")
+  ativo           Boolean        @default(true)
+  
+  // Plan Features
+  incluiMusculacao Boolean       @default(true) @map("inclui_musculacao")
+  incluiCardio    Boolean        @default(true) @map("inclui_cardio")
+  incluiNutricao  Boolean        @default(false) @map("inclui_nutricao")
+  limiteDiario    Int?           @map("limite_diario") // visits per day
+  
+  // Academy Reference
+  academiaId      String         @map("academia_id")
+  academia        Academia       @relation(fields: [academiaId], references: [id], onDelete: Cascade)
+  
+  // Timestamps
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
+  
+  @@map("planos")
+}
+
+model Instrutor {
+  id              String         @id @default(uuid())
+  nome            String
+  telefone        String
+  email           String
+  especialidades  String[]       // ["musculacao", "cardio", "funcional"]
+  ativo           Boolean        @default(true)
+  
+  // Academy Reference
+  academiaId      String         @map("academia_id")
+  academia        Academia       @relation(fields: [academiaId], references: [id], onDelete: Cascade)
+  
+  // Relations
+  treinos         Treino[]
+  
+  // Timestamps
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
+  
+  @@unique([email, academiaId])
+  @@map("instrutores")
+}
+
+model Treino {
+  id              String         @id @default(uuid())
+  nome            String
+  tipo            String         // "musculacao", "cardio", "funcional"
+  descricao       String?
+  duracaoMinutos  Int            @map("duracao_minutos")
+  
+  // Training Data (JSON)
+  exercicios      Json           // Array of exercises with sets/reps
+  observacoes     String?
+  
+  // References
+  alunoId         String         @map("aluno_id")
+  aluno           Aluno          @relation(fields: [alunoId], references: [id], onDelete: Cascade)
+  
+  instrutorId     String         @map("instrutor_id")
+  instrutor       Instrutor      @relation(fields: [instrutorId], references: [id], onDelete: Restrict)
+  
+  // Execution
+  executadoEm     DateTime?      @map("executado_em")
+  concluido       Boolean        @default(false)
+  avaliacaoAluno  Int?           @map("avaliacao_aluno") // 1-5 stars
+  
+  // Timestamps
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
+  
+  @@index([alunoId, executadoEm])
+  @@map("treinos")
+}
+
+model Frequencia {
+  id              String         @id @default(uuid())
+  dataVisita      DateTime       @map("data_visita")
+  horaEntrada     DateTime       @map("hora_entrada")
+  horaSaida       DateTime?      @map("hora_saida")
+  tipo            String         // "musculacao", "cardio", "funcional", "outros"
+  
+  // References
+  alunoId         String         @map("aluno_id")
+  aluno           Aluno          @relation(fields: [alunoId], references: [id], onDelete: Cascade)
+  
+  // Timestamps
+  createdAt       DateTime       @default(now()) @map("created_at")
+  
+  @@unique([alunoId, dataVisita])
+  @@index([dataVisita])
+  @@map("frequencia")
+}
+
+model Pagamento {
+  id              String         @id @default(uuid())
+  valor           Decimal        @db.Decimal(10,2)
+  dataVencimento  DateTime       @map("data_vencimento")
+  dataPagamento   DateTime?      @map("data_pagamento")
+  status          StatusPagamento
+  
+  // Payment Details
+  metodoPagamento String         @map("metodo_pagamento") // "pix", "cartao", "dinheiro"
+  referenciaMes   String         @map("referencia_mes") // "2024-03"
+  transacaoId     String?        @map("transacao_id")
+  
+  // References
+  alunoId         String         @map("aluno_id")
+  aluno           Aluno          @relation(fields: [alunoId], references: [id], onDelete: Cascade)
+  
+  // Timestamps
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
+  
+  @@index([status, dataVencimento])
+  @@map("pagamentos")
+}
+
+// ENUMS
+
+enum StatusAluno {
+  ATIVO
+  INATIVO
+  VISITANTE
+  SUSPENSO
+  CANCELADO
+  
+  @@map("status_aluno")
+}
+
+enum TipoMensagem {
+  ENTRADA
+  SAIDA
+  AUTOMATICA
+  MANUAL
+  
+  @@map("tipo_mensagem")
+}
+
+enum StatusMensagem {
+  PENDENTE
+  ENVIADA
+  ENTREGUE
+  LIDA
+  RESPONDIDA
+  FALHA
+  
+  @@map("status_mensagem")
+}
+
+enum TipoCampanha {
+  REATIVACAO
+  NURTURING
+  OUTBOUND
+  PROMOCIONAL
+  INFORMATIVA
+  
+  @@map("tipo_campanha")
+}
+
+enum StatusCampanha {
+  ATIVA
+  PAUSADA
+  FINALIZADA
+  CANCELADA
+  
+  @@map("status_campanha")
+}
+
+enum TipoAutomacao {
+  REATIVACAO_INATIVO
+  NURTURING_VISITANTE
+  RENOVACAO_PLANO
+  BOAS_VINDAS
+  ANIVERSARIO
+  
+  @@map("tipo_automacao")
+}
+
+enum StatusExecucao {
+  SUCESSO
+  ERRO
+  EM_ANDAMENTO
+  CANCELADA
+  
+  @@map("status_execucao")
+}
+
+enum StatusPagamento {
+  PENDENTE
+  PAGO
+  VENCIDO
+  CANCELADO
+  
+  @@map("status_pagamento")
+}

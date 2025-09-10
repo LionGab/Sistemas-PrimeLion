@@ -1,0 +1,21 @@
+nome,telefone,email,status,ultimaVisita,valorMensalidade,dataMatricula,planoAnterior,observacoes
+João Silva Santos,66999123456,joao.silva@email.com,INATIVO,2024-11-15,149.90,2024-01-15,Plano Gold,Ex-aluno ativo - parou por mudança de horário
+Maria Oliveira Costa,66999234567,maria.oliveira@gmail.com,INATIVO,2024-10-28,99.90,2024-02-10,Plano Bronze,Boa frequência - parou por questões financeiras
+Pedro Henrique Lima,66999345678,pedro.lima@hotmail.com,INATIVO,2024-09-20,199.90,2024-03-05,Plano Premium,Muito dedicado - parou por trabalho
+Ana Carolina Souza,66999456789,ana.souza@outlook.com,INATIVO,2024-08-18,149.90,2024-01-20,Plano Gold,Resultados excelentes - mudou de cidade
+Carlos Eduardo Santos,66999567890,carlos.santos@yahoo.com,INATIVO,2024-07-25,99.90,2024-04-12,Plano Bronze,Iniciante motivado - problemas de agenda
+Fernanda Ribeiro Alves,66999678901,fernanda.ribeiro@email.com,INATIVO,2024-12-01,149.90,2024-05-08,Plano Gold,Atleta amadora - pausa por lesão
+Ricardo Mendes Silva,66999789012,ricardo.mendes@gmail.com,INATIVO,2024-06-15,199.90,2024-02-28,Plano Premium,Personal trainer - conflito de horários
+Juliana Ferreira Costa,66999890123,juliana.ferreira@hotmail.com,INATIVO,2024-11-10,99.90,2024-03-15,Plano Bronze,Estudante universitária - falta de tempo
+Roberto Carlos Oliveira,66999901234,roberto.oliveira@outlook.com,INATIVO,2024-05-30,149.90,2024-01-10,Plano Gold,Empresário local - viagens frequentes
+Patrícia Lima Souza,66999012345,patricia.lima@yahoo.com,INATIVO,2024-10-05,199.90,2024-04-20,Plano Premium,Médica - plantões irregulares
+Marcos Antonio Silva,66999123457,marcos.silva@email.com,INATIVO,2024-09-12,99.90,2024-06-01,Plano Bronze,Aposentado ativo - problemas de saúde temporários
+Luciana Santos Costa,66999234568,luciana.santos@gmail.com,INATIVO,2024-08-08,149.90,2024-02-14,Plano Gold,Professora - período de férias escolares
+Anderson Pereira Lima,66999345679,anderson.pereira@hotmail.com,INATIVO,2024-11-20,199.90,2024-03-25,Plano Premium,Engenheiro - mudança para outro turno
+Camila Rodrigues Alves,66999456780,camila.rodrigues@outlook.com,INATIVO,2024-07-18,99.90,2024-05-12,Plano Bronze,Jovem profissional - nova oportunidade trabalho
+Bruno Henrique Santos,66999567891,bruno.santos@yahoo.com,INATIVO,2024-06-22,149.90,2024-01-30,Plano Gold,Comerciante - temporada alta de vendas
+Renata Oliveira Silva,66999678902,renata.oliveira@email.com,INATIVO,2024-10-15,199.90,2024-04-05,Plano Premium,Advogada - período de concursos
+Gabriel Costa Souza,66999789013,gabriel.costa@gmail.com,INATIVO,2024-09-28,99.90,2024-06-18,Plano Bronze,Técnico em informática - curso noturno
+Vanessa Lima Ferreira,66999890124,vanessa.lima@hotmail.com,INATIVO,2024-08-14,149.90,2024-02-22,Plano Gold,Fisioterapeuta - especialização
+Felipe Santos Oliveira,66999901235,felipe.santos@outlook.com,INATIVO,2024-12-03,199.90,2024-03-12,Plano Premium,Veterinário - clínica própria
+Priscila Alves Costa,66999012346,priscila.alves@yahoo.com,INATIVO,2024-07-08,99.90,2024-05-25,Plano Bronze,Enfermeira - escala hospitalar

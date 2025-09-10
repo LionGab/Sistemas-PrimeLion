@@ -1,0 +1,6 @@
+nome,telefone,email,status,ultimaVisita,valorMensalidade,dataMatricula,planoAnterior
+João Silva,66999876543,joao.silva@email.com,INATIVO,2024-12-15,149.90,2024-01-15,Plano Gold
+Maria Santos,66999876544,maria.santos@email.com,INATIVO,2024-11-28,99.90,2024-02-10,Plano Bronze
+Pedro Costa,66999876545,pedro.costa@email.com,INATIVO,2024-10-20,199.90,2024-03-05,Plano Premium
+Ana Oliveira,66999876546,ana.oliveira@email.com,INATIVO,2024-09-18,149.90,2024-01-20,Plano Gold
+Carlos Ferreira,66999876547,carlos.ferreira@email.com,INATIVO,2024-08-25,99.90,2024-04-12,Plano Bronze

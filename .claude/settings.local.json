@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(C:\\Users\\User/**)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "mcp__serena__list_dir",
+      "mcp__sequential-thinking__sequentialthinking",
+      "Read(C:\\Users\\User\\Downloads/**)",
+      "Read(C:\\Users\\User\\Downloads/**)",
+      "Read(C:\\Users\\User\\Downloads/**)",
+      "mcp__serena__activate_project",
+      "Bash(mkdir:*)",
+      "Bash(cp:*)",
+      "Bash(rm:*)",
+      "Bash(find:*)",
+      "Bash(git remote set-url:*)",
+      "Bash(git push:*)",
+      "Bash(git filter-branch:*)",
+      "Bash(git rebase:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

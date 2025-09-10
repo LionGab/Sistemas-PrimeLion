@@ -1,0 +1,441 @@
+{
+  "flows": {
+    "reativacao_inativo": {
+      "id": "reativacao_inativo",
+      "nome": "Reativação de Membros Inativos",
+      "descricao": "Fluxo para reativar alunos que não comparecem há 15+ dias",
+      "ativo": true,
+      "prioridade": "alta",
+      
+      "trigger": {
+        "tipo": "inatividade",
+        "condicoes": {
+          "dias_sem_frequencia": [15, 30, 60],
+          "status_aluno": ["ATIVO"],
+          "permite_whatsapp": true,
+          "ultimo_contato_dias": 7
+        },
+        "execucao": "daily_09h00"
+      },
+      
+      "sequencia": [
+        {
+          "etapa": 1,
+          "nome": "Primeiro Contato - Preocupação",
+          "template_id": "reativacao_15",
+          "delay_desde_trigger": {
+            "valor": 0,
+            "unidade": "dias"
+          },
+          "horario_preferencial": "09:00",
+          "condicoes_envio": {
+            "dias_inativo": 15,
+            "max_tentativas_anteriores": 0
+          },
+          "acoes_pos_envio": [
+            "marcar_como_contatado",
+            "agendar_proxima_etapa"
+          ]
+        },
+        
+        {
+          "etapa": 2, 
+          "nome": "Segunda Tentativa - Oferta Flexível",
+          "template_id": "reativacao_30",
+          "delay_desde_trigger": {
+            "valor": 15,
+            "unidade": "dias"
+          },
+          "horario_preferencial": "14:00",
+          "condicoes_envio": {
+            "dias_inativo": 30,
+            "nao_respondeu_etapa_anterior": true
+          },
+          "condicoes_parada": [
+            "aluno_voltou_a_treinar",
+            "respondeu_negativamente",
+            "opt_out"
+          ],
+          "personalizacao": {
+            "incluir_oferta_especial": true,
+            "desconto_percentual": 0.15,
+            "beneficios_extras": ["avaliacao_gratis", "semana_cortesia"]
+          }
+        },
+        
+        {
+          "etapa": 3,
+          "nome": "Mensagem Final - Despedida Respeitosa", 
+          "template_id": "reativacao_60",
+          "delay_desde_trigger": {
+            "valor": 45,
+            "unidade": "dias"
+          },
+          "horario_preferencial": "10:00",
+          "condicoes_envio": {
+            "dias_inativo": 60,
+            "nao_respondeu_etapas_anteriores": true
+          },
+          "acoes_pos_envio": [
+            "marcar_como_tentativa_finalizada",
+            "mover_para_segmento_ex_aluno",
+            "agendar_campanha_semestral"
+          ]
+        }
+      ],
+      
+      "configuracao": {
+        "max_alunos_por_execucao": 50,
+        "intervalo_entre_envios_segundos": 30,
+        "pausar_em_feriados": true,
+        "respeitar_horario_comercial": true,
+        "stop_words": ["PARAR", "STOP", "SAIR", "CANCELAR"]
+      },
+      
+      "metricas": {
+        "kpis": ["taxa_resposta", "taxa_reativacao", "receita_recuperada"],
+        "meta_taxa_reativacao": 0.30,
+        "meta_taxa_resposta": 0.25
+      }
+    },
+
+    "nurturing_visitante": {
+      "id": "nurturing_visitante",
+      "nome": "Nurturing de Visitantes/Leads",
+      "descricao": "Sequência para converter visitantes em alunos pagantes",
+      "ativo": true,
+      "prioridade": "alta",
+      
+      "trigger": {
+        "tipo": "cadastro_visitante",
+        "condicoes": {
+          "status_aluno": ["VISITANTE"],
+          "dias_desde_visita": 1,
+          "nao_possui_plano_ativo": true,
+          "interesse_declarado": true
+        },
+        "execucao": "continuous"
+      },
+      
+      "sequencia": [
+        {
+          "etapa": 1,
+          "nome": "Boas-vindas e Primeira Impressão",
+          "template_id": "boas_vindas",
+          "delay_desde_trigger": {
+            "valor": 2,
+            "unidade": "horas"
+          },
+          "horario_preferencial": "10:00",
+          "personalizacao": {
+            "incluir_midia": true,
+            "tipo_midia": "video_apresentacao_academia",
+            "personalizar_por_interesse": ["musculacao", "cardio", "funcional"]
+          },
+          "acoes_pos_envio": [
+            "criar_perfil_interesse",
+            "agendar_followup"
+          ]
+        },
+        
+        {
+          "etapa": 2,
+          "nome": "Conteúdo Educativo - Dicas de Treino",
+          "template_id": "dicas_fitness", 
+          "delay_desde_trigger": {
+            "valor": 2,
+            "unidade": "dias"
+          },
+          "horario_preferencial": "16:00",
+          "condicoes_envio": {
+            "nao_se_matriculou": true,
+            "engajamento_positivo": "opcional"
+          },
+          "personalizacao": {
+            "conteudo_por_objetivo": {
+              "emagrecimento": "dicas_cardio_queima_gordura",
+              "ganho_massa": "dicas_musculacao_hipertrofia",
+              "condicionamento": "dicas_treino_funcional"
+            }
+          }
+        },
+        
+        {
+          "etapa": 3,
+          "nome": "Motivação e Social Proof",
+          "template_id": "mensagem_motivacional",
+          "delay_desde_trigger": {
+            "valor": 5,
+            "unidade": "dias"
+          },
+          "horario_preferencial": "09:00",
+          "personalizacao": {
+            "incluir_depoimentos": true,
+            "incluir_transformacoes": true,
+            "stories_antes_depois": true
+          }
+        },
+        
+        {
+          "etapa": 4,
+          "nome": "Oferta Especial - Urgência",
+          "template_id": "renovacao_plano",
+          "delay_desde_trigger": {
+            "valor": 10,
+            "unidade": "dias"
+          },
+          "horario_preferencial": "11:00",
+          "condicoes_envio": {
+            "ainda_nao_se_matriculou": true,
+            "mostrou_interesse": true
+          },
+          "personalizacao": {
+            "oferta_especial": {
+              "desconto_primeiro_mes": 0.30,
+              "matricula_gratis": true,
+              "prazo_validade_dias": 3
+            },
+            "criar_urgencia": true,
+            "incluir_link_pagamento": true
+          },
+          "acoes_pos_envio": [
+            "marcar_como_oferta_enviada", 
+            "notificar_equipe_vendas"
+          ]
+        },
+        
+        {
+          "etapa": 5,
+          "nome": "Última Chance - Follow-up Final",
+          "template_id": "convite_evento",
+          "delay_desde_trigger": {
+            "valor": 15,
+            "unidade": "dias"
+          },
+          "horario_preferencial": "15:00",
+          "personalizacao": {
+            "evento": "aula_experimental_gratuita",
+            "remover_pressao_vendas": true,
+            "foco_experiencia": true
+          },
+          "acoes_pos_envio": [
+            "finalizar_nurturing_sequence",
+            "mover_para_lista_leads_frios",
+            "agendar_reativacao_trimestral"
+          ]
+        }
+      ],
+      
+      "configuracao": {
+        "max_leads_por_dia": 30,
+        "pausar_se_matriculou": true,
+        "pausar_se_opt_out": true,
+        "pausar_weekends": false,
+        "segmentacao_automatica": true
+      },
+      
+      "metricas": {
+        "kpis": ["taxa_conversao", "tempo_medio_conversao", "ticket_medio"],
+        "meta_taxa_conversao": 0.15,
+        "meta_tempo_conversao_dias": 12
+      }
+    },
+
+    "renovacao_plano": {
+      "id": "renovacao_plano",
+      "nome": "Renovação Automática de Planos",
+      "descricao": "Lembretes automáticos para renovação de mensalidade",
+      "ativo": true,
+      "prioridade": "critica",
+      
+      "trigger": {
+        "tipo": "vencimento_plano",
+        "condicoes": {
+          "dias_para_vencimento": [7, 3, 1, 0],
+          "status_aluno": ["ATIVO"],
+          "status_pagamento_atual": ["PAGO", "PENDENTE"],
+          "plano_renovavel": true
+        },
+        "execucao": "daily_08h00"
+      },
+      
+      "sequencia": [
+        {
+          "etapa": 1,
+          "nome": "Lembrete Antecipado - 7 dias",
+          "template_id": "renovacao_plano",
+          "delay_desde_trigger": {
+            "valor": 0,
+            "unidade": "dias"
+          },
+          "horario_preferencial": "09:00",
+          "condicoes_envio": {
+            "dias_ate_vencimento": 7,
+            "nao_renovou_ainda": true
+          },
+          "personalizacao": {
+            "tom": "amigavel_lembranca",
+            "incluir_desconto_antecipado": true,
+            "desconto_pix": 0.05,
+            "opcoes_parcelamento": true
+          }
+        },
+        
+        {
+          "etapa": 2,
+          "nome": "Lembrete Urgente - 3 dias",
+          "template_id": "renovacao_plano",
+          "delay_desde_trigger": {
+            "valor": 4,
+            "unidade": "dias"
+          },
+          "horario_preferencial": "14:00",
+          "condicoes_envio": {
+            "dias_ate_vencimento": 3,
+            "nao_renovou_ainda": true
+          },
+          "personalizacao": {
+            "tom": "mais_urgente",
+            "destacar_data_vencimento": true,
+            "incluir_consequencias": "suspensao_acesso",
+            "facilitar_pagamento": true
+          }
+        },
+        
+        {
+          "etapa": 3,
+          "nome": "Último Aviso - 1 dia",
+          "template_id": "renovacao_plano", 
+          "delay_desde_trigger": {
+            "valor": 6,
+            "unidade": "dias"
+          },
+          "horario_preferencial": "10:00",
+          "condicoes_envio": {
+            "dias_ate_vencimento": 1,
+            "nao_renovou_ainda": true
+          },
+          "personalizacao": {
+            "tom": "ultima_chance",
+            "simplificar_processo": true,
+            "contato_direto_disponivel": true,
+            "opcoes_negociacao": true
+          }
+        },
+        
+        {
+          "etapa": 4,
+          "nome": "Pós-vencimento - Negociação",
+          "template_id": "reativacao_15",
+          "delay_desde_trigger": {
+            "valor": 8,
+            "unidade": "dias"
+          },
+          "horario_preferencial": "11:00",
+          "condicoes_envio": {
+            "venceu_sem_pagar": true,
+            "ainda_nao_suspenso": true
+          },
+          "personalizacao": {
+            "tom": "compreensivo",
+            "ofertas_especiais": {
+              "desconto_pontualidade": 0.10,
+              "parcelamento_em_dobro": true,
+              "plano_mais_barato_disponivel": true
+            },
+            "evitar_suspensao": true
+          },
+          "acoes_pos_envio": [
+            "notificar_financeiro",
+            "agendar_revisao_caso",
+            "preparar_suspensao_se_necessario"
+          ]
+        }
+      ],
+      
+      "configuracao": {
+        "criticidade": "alta",
+        "tentar_multiple_canais": ["whatsapp", "email", "ligacao"],
+        "escalar_para_humano": {
+          "after_days": 3,
+          "valor_mensalidade_minimo": 100
+        },
+        "automatizar_suspensao": {
+          "dias_apos_vencimento": 10,
+          "manter_dados": true
+        }
+      },
+      
+      "metricas": {
+        "kpis": ["taxa_renovacao", "receita_mantida", "churn_evitado"],
+        "meta_taxa_renovacao": 0.85,
+        "meta_renovacao_antecipada": 0.40
+      }
+    }
+  },
+
+  "configuracao_global": {
+    "execucao": {
+      "fuso_horario": "America/Sao_Paulo",
+      "dias_operacao": ["segunda", "terca", "quarta", "quinta", "sexta", "sabado"],
+      "horario_funcionamento": "08:00-20:00",
+      "pausar_feriados_nacionais": true,
+      "pausar_manutencao": true
+    },
+    
+    "compliance": {
+      "opt_out_keywords": ["PARAR", "STOP", "SAIR", "CANCELAR", "REMOVER"],
+      "respeitar_nao_perturbe": true,
+      "max_mensagens_por_aluno_dia": 3,
+      "intervalo_minimo_entre_flows_horas": 4,
+      "lgpd_compliance": true
+    },
+    
+    "integracao": {
+      "whatsapp_connector": "baileys",
+      "database": "prisma_postgresql",
+      "queue_system": "bullmq_redis",
+      "analytics": "custom_dashboard"
+    },
+    
+    "monitoramento": {
+      "log_level": "info",
+      "alertas_erro": true,
+      "alertas_baixa_performance": true,
+      "backup_automático": "daily_03h00",
+      "metricas_tempo_real": true
+    }
+  },
+  
+  "condicoes_compartilhadas": {
+    "stop_flow_se": [
+      "aluno_opt_out",
+      "numero_invalido", 
+      "conta_suspensa",
+      "limite_diario_atingido",
+      "aluno_respondeu_negativamente",
+      "objetivo_flow_atingido"
+    ],
+    
+    "personalizar_por": [
+      "idade_aluno",
+      "genero",
+      "tipo_plano",
+      "historico_pagamento",
+      "frequencia_treinos",
+      "objetivos_declarados",
+      "horario_preferencial"
+    ],
+    
+    "eventos_webhook": [
+      "flow_iniciado",
+      "mensagem_enviada",
+      "mensagem_lida", 
+      "mensagem_respondida",
+      "flow_finalizado",
+      "conversao_alcancada",
+      "opt_out_recebido",
+      "erro_envio"
+    ]
+  }
+}
