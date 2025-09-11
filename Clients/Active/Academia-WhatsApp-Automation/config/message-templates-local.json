@@ -1,0 +1,268 @@
+{
+  "templates": {
+    "quente_reativacao": {
+      "category": "QUENTE",
+      "priority": "HIGH",
+      "variants": [
+        {
+          "id": "quente_v1",
+          "message": "Oi {{nome}}! Sentimos sua falta na Full Force! 💪 Que tal voltar com 7 dias GRÁTIS? Estamos na {{endereco}} te esperando! 🔥",
+          "media": null,
+          "cta": "Quero os 7 dias grátis! 💪",
+          "weight": 40
+        },
+        {
+          "id": "quente_v2", 
+          "message": "{{nome}}, saudades de você na Full Force! 😊 Oferta especial: 7 DIAS GRATUITOS para você voltar a treinar conosco em Matupá! Vamos? 🏋️‍♂️",
+          "media": null,
+          "cta": "Sim, quero voltar! 🔥",
+          "weight": 35
+        },
+        {
+          "id": "quente_v3",
+          "message": "Hey {{nome}}! A galera da Full Force está perguntando por você! 😄 Bora voltar com 1 SEMANA GRÁTIS? {{endereco}} - {{telefone}} 💪",
+          "media": null,
+          "cta": "Vou voltar sim! 💪",
+          "weight": 25
+        }
+      ],
+      "followUp": {
+        "delay": 3,
+        "message": "{{nome}}, ainda está interessado(a) nos 7 dias grátis na Full Force? É só confirmar! 😊 {{telefone}}"
+      }
+    },
+    "morno_promocao": {
+      "category": "MORNO",
+      "priority": "MEDIUM",
+      "variants": [
+        {
+          "id": "morno_v1",
+          "message": "{{nome}}, oferta especial da Full Force! 50% OFF nos próximos 2 meses 🔥 Em Matupá, você treina com os melhores! Apenas R$ 75/mês 💪",
+          "media": null,
+          "cta": "Quero a promoção! 🔥",
+          "weight": 45
+        },
+        {
+          "id": "morno_v2",
+          "message": "Oi {{nome}}! Promoção imperdível na Full Force: METADE DO PREÇO por 2 meses! 🎯 R$ 75 ao invés de R$ 150. Vaga limitada em Matupá! 🏃‍♂️",
+          "media": null,
+          "cta": "Quero garantir! 💪",
+          "weight": 35
+        },
+        {
+          "id": "morno_v3",
+          "message": "{{nome}}, que tal voltar para a Full Force com 50% de desconto? 💰 2 meses de treino por apenas R$ 150 total! {{endereco}} - {{telefone}} 🔥",
+          "media": null,
+          "cta": "Vou aproveitar! 🎯",
+          "weight": 20
+        }
+      ],
+      "followUp": {
+        "delay": 7,
+        "message": "{{nome}}, última semana da promoção 50% OFF na Full Force! Não perca esta oportunidade em Matupá! 🏃‍♂️💨"
+      }
+    },
+    "frio_isca": {
+      "category": "FRIO", 
+      "priority": "LOW",
+      "variants": [
+        {
+          "id": "frio_v1",
+          "message": "{{nome}}, sem taxa de adesão na Full Force! 🎉 Apenas R$ 89 no primeiro mês. Vamos treinar juntos em Matupá? {{endereco}} 💪",
+          "media": null,
+          "cta": "Quero conhecer! 🔥",
+          "weight": 50
+        },
+        {
+          "id": "frio_v2",
+          "message": "Oi {{nome}}! Promoção de volta: SEM TAXA DE MATRÍCULA + primeiro mês por R$ 89! 🎯 Full Force Matupá te espera! {{telefone}} 😊",
+          "media": null,
+          "cta": "Vou aproveitar! 💪",
+          "weight": 30
+        },
+        {
+          "id": "frio_v3",
+          "message": "{{nome}}, oportunidade única! Comece na Full Force por apenas R$ 89 (sem taxas extras) 💰 A melhor academia de Matupá! Bora treinar? 🔥",
+          "media": null,
+          "cta": "Quero começar! 🏋️‍♂️",
+          "weight": 20
+        }
+      ],
+      "followUp": {
+        "delay": 14,
+        "message": "{{nome}}, ainda vale a oferta sem taxa de adesão na Full Force! R$ 89 primeiro mês. Interesse? 😊"
+      }
+    },
+    "resposta_positiva": {
+      "category": "RESPONSE",
+      "priority": "IMMEDIATE",
+      "variants": [
+        {
+          "id": "positiva_v1",
+          "message": "Que ótimo, {{nome}}! 🔥 Vou te passar para nosso atendente para agendar. Ou se preferir, ligue {{telefone}} ou apareça na {{endereco}}! 💪",
+          "media": null,
+          "weight": 60
+        },
+        {
+          "id": "positiva_v2", 
+          "message": "Perfeito {{nome}}! 😄 Para agilizar, me chama no {{telefone}} ou cola aqui na academia: {{endereco}} - {{horarios}}. Te aguardamos! 🔥",
+          "media": null,
+          "weight": 40
+        }
+      ]
+    },
+    "resposta_negativa": {
+      "category": "RESPONSE",
+      "priority": "LOW",
+      "variants": [
+        {
+          "id": "negativa_v1",
+          "message": "Sem problemas, {{nome}}! 😊 Se mudar de ideia, estaremos sempre aqui na Full Force Matupá. Grande abraço! 💪",
+          "media": null,
+          "weight": 70
+        },
+        {
+          "id": "negativa_v2",
+          "message": "Tranquilo {{nome}}! Quando quiser voltar, é só dar um toque. A Full Force sempre terá um espaço para você! 🔥",
+          "media": null,
+          "weight": 30
+        }
+      ]
+    },
+    "resposta_duvida": {
+      "category": "RESPONSE",
+      "priority": "MEDIUM", 
+      "variants": [
+        {
+          "id": "duvida_v1",
+          "message": "Claro {{nome}}! Me chama no {{telefone}} que esclarecemos tudo! 😊 Ou se preferir, passa aqui: {{endereco}} - {{horarios}} 💪",
+          "media": null,
+          "weight": 80
+        },
+        {
+          "id": "duvida_v2",
+          "message": "Opa {{nome}}! Vamos esclarecer tudo! 🔥 Liga {{telefone}} ou cola na academia que conversamos pessoalmente: {{endereco}} 😊",
+          "media": null,
+          "weight": 20
+        }
+      ]
+    },
+    "opt_out": {
+      "category": "SYSTEM",
+      "priority": "IMMEDIATE",
+      "variants": [
+        {
+          "id": "opt_out_v1",
+          "message": "{{nome}}, entendido! Você foi removido(a) da nossa lista de contatos. Obrigado! 😊 - Full Force Academia",
+          "media": null,
+          "weight": 100
+        }
+      ]
+    },
+    "boas_vindas": {
+      "category": "ONBOARDING",
+      "priority": "HIGH",
+      "variants": [
+        {
+          "id": "welcome_v1",
+          "message": "Seja bem-vindo(a) de volta à Full Force, {{nome}}! 🔥 Estamos aqui {{endereco}} - {{horarios}}. Vamos alcançar seus objetivos juntos! 💪",
+          "media": null,
+          "weight": 100
+        }
+      ]
+    }
+  },
+  "variables": {
+    "nome": "{{contact.name}}",
+    "endereco": "Rua Principal, Centro - Matupá/MT", 
+    "telefone": "66 99999-9999",
+    "horarios": "Segunda a Sexta: 5h às 22h | Sábado: 6h às 18h",
+    "instagram": "@fullforceacademia",
+    "site": "fullforceacademia.com.br",
+    "valor_mensal": "R$ 150",
+    "promocao_valor": "R$ 75",
+    "primeira_vez": "R$ 89"
+  },
+  "rules": {
+    "personalization": {
+      "useFirstName": true,
+      "localizeContent": true,
+      "respectTimeZone": true,
+      "includeEmojis": true,
+      "casualTone": true
+    },
+    "abTesting": {
+      "enabled": true,
+      "splitTraffic": true,
+      "trackConversions": true,
+      "minimumSampleSize": 50,
+      "confidenceLevel": 0.95
+    },
+    "frequency": {
+      "maxMessagesPerContact": 3,
+      "cooldownBetweenCampaigns": 30,
+      "respectGlobalLimits": true
+    },
+    "compliance": {
+      "lgpdCompliant": true,
+      "whatsappApproved": true,
+      "includeOptOut": true,
+      "respectDoNotDisturb": true,
+      "auditTrail": true
+    }
+  },
+  "triggers": {
+    "keywords": {
+      "interesse": ["interesse", "quero", "sim", "vou", "aceito", "topo"],
+      "nao_interesse": ["não", "nao", "sem interesse", "não quero", "nao quero"], 
+      "duvida": ["dúvida", "duvida", "como", "quando", "onde", "preço", "preco", "valor", "horário", "horario"],
+      "opt_out": ["sair", "parar", "remover", "cancelar", "stop", "remova-me", "não envie mais"]
+    },
+    "sentiment": {
+      "positivo": 0.6,
+      "neutro": 0.0,
+      "negativo": -0.6
+    },
+    "timing": {
+      "businessHours": {
+        "start": "08:00",
+        "end": "18:00",
+        "timezone": "America/Cuiaba"
+      },
+      "avoidWeekends": false,
+      "respectHolidays": true
+    }
+  },
+  "analytics": {
+    "trackMetrics": [
+      "delivery_rate",
+      "open_rate", 
+      "response_rate",
+      "click_through_rate",
+      "conversion_rate",
+      "opt_out_rate"
+    ],
+    "segmentBy": [
+      "category",
+      "template_variant", 
+      "time_sent",
+      "response_type"
+    ],
+    "reporting": {
+      "frequency": "daily",
+      "recipients": ["eugabrielmktd@gmail.com"],
+      "format": "detailed"
+    }
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "created": "2024-01-15",
+    "lastUpdated": "2024-01-15",
+    "author": "Full Force Academia - Matupá MT",
+    "description": "Templates personalizados para reativação de ex-alunos em Matupá-MT",
+    "totalTemplates": 19,
+    "totalVariants": 16,
+    "averageLength": 85,
+    "complianceStatus": "APPROVED"
+  }
+}

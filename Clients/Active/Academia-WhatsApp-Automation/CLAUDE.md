@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a **WhatsApp Business automation system** for fitness academies, built with TypeScript/Node.js and focused on member reactivation, lead nurturing, and billing automation. The system integrates with WhatsApp Business API via Baileys and uses enterprise-grade patterns for reliability and compliance.
 
+**Important Note**: The current repository contains both a React frontend (Create React App) structure and a Node.js backend system. The main application entry point is `src/index.js` which implements a Fastify-based WhatsApp automation server.
+
 ### Core Technology Stack
 - **WhatsApp Integration**: @whiskeysockets/baileys (WhatsApp Web API)
 - **Backend Framework**: Fastify (high-performance HTTP server)  
@@ -14,6 +16,7 @@ This is a **WhatsApp Business automation system** for fitness academies, built w
 - **Message Templates**: JSON-based template system with variable substitution
 - **Logging**: Pino structured logging
 - **Authentication**: JWT with refresh tokens
+- **Frontend**: React with TypeScript (Create React App)
 
 ### System Architecture
 The application follows a **Multi-Agent Controller Pattern (MCP)** where specialized agents handle different automation workflows:
@@ -36,12 +39,15 @@ The application follows a **Multi-Agent Controller Pattern (MCP)** where special
 # Install dependencies
 npm install
 
-# Database setup
+# Database setup (when Prisma is configured)
 npm run prisma:generate     # Generate Prisma client
 npm run prisma:migrate      # Create and apply migrations
 
-# Development server
-npm run dev                 # Start with hot reload on port 3001
+# Development server (backend)
+npm run dev                 # Start Fastify server with hot reload on port 3001
+
+# Frontend development (React)
+npm start                   # Start React development server (if using frontend)
 
 # Production build
 npm run build               # Compile TypeScript to dist/
@@ -63,10 +69,25 @@ npm test                 # Run test suite
 npm run queue:dev        # BullMQ dashboard (Redis queue dashboard)
 npm run docker:up        # Start all services (PostgreSQL, Redis)
 npm run docker:down      # Stop all services
+```
 
-# TypeScript compilation
-npm run build            # Build TypeScript to dist/
-npm run dev              # Development server with hot reload
+### MCP (Model Context Protocol) Operations
+```bash
+# MCP Integration Commands
+npm run mcp:install       # Install MCP dependencies
+npm run mcp:test          # Test all MCP connections
+npm run mcp:setup         # Interactive credential setup
+
+# Analytics and Reporting
+npm run analytics:daily   # Generate daily analytics report
+npm run backup:weekly     # Run weekly backup workflow
+
+# Audit System
+npm run audit:complete    # Full system audit
+npm run audit:whatsapp   # WhatsApp-specific audit
+npm run audit:compliance # LGPD compliance check
+npm run audit:performance # Performance benchmarks
+npm run audit:roi        # Business impact analysis
 ```
 
 ### Deployment
@@ -74,88 +95,54 @@ npm run dev              # Development server with hot reload
 npm run deploy           # Production deployment script
 ```
 
-## Critical Configuration Files
+## Key Implementation Details
 
-### Automation Flow Configuration (`automation_flows.json`)
-Defines the complete automation sequences with triggers, timing, personalization rules, and success metrics. Each flow includes:
-- **Trigger conditions**: Days inactive, member status, consent requirements
-- **Multi-stage sequences**: Timed messages with conditional logic  
-- **Personalization rules**: Variable substitution, segmentation, offers
-- **Compliance controls**: Rate limiting, opt-out handling, stop words
+### Main Server (`src/index.js`)
+The main Fastify server implements a comprehensive REST API with:
+- **WhatsApp Integration**: Full WhatsApp Business API integration via Baileys
+- **Automation Engine**: Orchestrates member reactivation, lead nurturing, and billing flows
+- **Database Manager**: Handles all database operations and member lifecycle tracking
+- **API Endpoints**: Complete REST API for system management and monitoring
+- **Graceful Shutdown**: Proper cleanup of WhatsApp connections, automation flows, and database
 
-### Academy Configuration (`academy.config.json`)
-Contains academy-specific settings:
-- **Business details**: Name, contact info, operating hours
-- **Integration settings**: Payment gateways, calendar sync, CRM connections
-- **Automation parameters**: Message limits, delays, compliance settings
-- **Template variables**: Academy-specific content for message personalization
+### Key API Endpoints
+- `GET /health` - System health check with component status
+- `GET /whatsapp/status` - WhatsApp connection status
+- `POST /whatsapp/send` - Manual message sending (testing)
+- `POST /automation/start` - Start automation engine
+- `POST /automation/stop` - Stop automation engine
+- `POST /automation/trigger/reactivation` - Manual reactivation trigger
+- `POST /automation/trigger/nurturing` - Manual nurturing trigger
+- `GET /analytics/dashboard` - Business analytics and metrics
 
-### Message Templates (`message_templates.json`)
-WhatsApp-approved templates with variable substitution:
-- **Template categories**: Onboarding, financial, reminders, reactivation, educational
-- **Variable mapping**: Dynamic content insertion (names, dates, amounts, links)
-- **Media support**: Optional images/videos for enhanced engagement
-- **A/B testing**: Multiple template versions for optimization
+### Frontend Structure (React/TypeScript)
+The React frontend provides administrative interface for:
+- **Dashboard Monitoring**: Real-time system status and performance metrics
+- **Member Management**: View and manage academy member database
+- **Automation Control**: Start/stop automation flows and configure sequences
+- **Analytics Reporting**: ROI tracking, conversion rates, and business insights
+- **Template Management**: Configure and test WhatsApp message templates
 
 ## Architecture Patterns
 
 ### WhatsApp Business Reliability
-- **Connection Management**: Auto-reconnection with exponential backoff
+- **Connection Management**: Auto-reconnection with exponential backoff via Baileys
 - **Rate Limiting**: 100 messages/hour with queue overflow handling  
-- **Message Queue**: Persistent delivery with retry logic
+- **Message Queue**: Persistent delivery with retry logic using BullMQ
 - **Session Management**: Multi-file auth state with QR code handling
+- **Event-Driven Architecture**: Message routing to appropriate automation controllers
 
-### Database Design  
+### Database Design Principles
 - **Member Lifecycle**: Status tracking (ATIVO, INATIVO, VISITANTE, SUSPENSO)
 - **Message Tracking**: Full audit trail with delivery confirmation
 - **Payment Integration**: Automated billing state management
 - **Analytics Storage**: Time-series data for performance metrics
 
-### MCP (Multi-Agent Controller) Pattern
-Each automation type has a dedicated controller with:
-- **Initialization**: Database connections, queue setup, scheduler configuration
-- **Trigger Logic**: Member segmentation and condition checking
-- **Sequence Management**: Multi-step workflow execution
-- **Response Handling**: Inbound message processing and conversation state
-- **Analytics**: Performance tracking and ROI calculation
-
-### Business Compliance
+### Business Compliance Framework
 - **LGPD Compliance**: Explicit consent, data retention, right to deletion
 - **WhatsApp Business Policy**: Template approval, opt-out respect, content guidelines
 - **Rate Limiting**: Strict adherence to API limits to prevent account suspension
 - **Audit Trails**: Complete message history for compliance reporting
-
-## Key Implementation Details
-
-### Server Architecture (`src/backend/server.ts`)
-The main Fastify server implements a comprehensive REST API with:
-- **Authentication middleware**: JWT-based auth with role-based access  
-- **Rate limiting**: Per-endpoint protection against abuse
-- **Comprehensive routing**: Member management, automation control, analytics
-- **Real-time monitoring**: Health checks, system status, performance metrics
-- **Graceful shutdown**: Proper cleanup of connections and processes
-- **Type safety**: Zod schemas for request/response validation
-- **High performance**: Fastify framework optimized for speed
-
-### WhatsApp Connector (`src/whatsapp/WhatsAppBusinessConnector.js`)
-Robust WhatsApp integration featuring:
-- **Event-driven architecture**: Incoming message routing to appropriate MCPs  
-- **Media handling**: Support for images, videos, documents with type detection
-- **Interactive messages**: Button and list support for enhanced UX
-- **Connection resilience**: Auto-recovery from network issues and WhatsApp downtime
-
-### Message Processing Pipeline
-1. **Inbound messages** → Phone number lookup → Member identification
-2. **Member status routing** → Appropriate MCP (Reactivation/Nurturing/Billing)
-3. **Context handling** → Conversation state tracking and response generation
-4. **Database logging** → Complete audit trail with timestamps and status
-
-### Analytics and ROI Tracking
-The system provides comprehensive business metrics:
-- **Reactivation success**: Members who resume training within 30 days
-- **Lead conversion**: Visitors who sign up after nurturing sequence  
-- **Revenue impact**: Direct ROI calculation from automation activities
-- **Performance monitoring**: Message delivery rates, response times, system health
 
 ## Environment Configuration
 
@@ -175,16 +162,23 @@ REDIS_URL="redis://localhost:6379"
 # JWT Security
 JWT_SECRET="your-secure-jwt-secret"
 
-# Server
+# Server Configuration
 PORT=3001
 NODE_ENV=production
-```
+HOST=0.0.0.0
+LOG_LEVEL=info
 
-### Academia System Integration
-The system expects integration with existing academy management software:
-- **Member data sync**: Real-time status updates, payment confirmations
-- **Attendance tracking**: Automatic inactivity detection
-- **Billing integration**: Payment gateway webhooks for automation triggers
+# MCP Integration
+BRAVE_API_KEY=your_brave_api_key
+SLACK_BOT_TOKEN=xoxb-your-token
+SLACK_SIGNING_SECRET=your_signing_secret
+LINEAR_API_KEY=your_linear_key
+LINEAR_TEAM_ID=your_team_id
+SENTRY_DSN=your_sentry_dsn
+SENTRY_AUTH_TOKEN=your_auth_token
+SENTRY_ORG=your_org
+SENTRY_PROJECT=your_project
+```
 
 ## Business Metrics and Success Criteria
 
@@ -194,11 +188,13 @@ The system expects integration with existing academy management software:
 - **Revenue Impact**: Target R$4,200/month additional revenue
 - **System Reliability**: >99% WhatsApp connection uptime
 
-### Compliance Monitoring
-- All automations respect WhatsApp Business Policy (rate limits, templates, opt-outs)
-- LGPD compliance with explicit consent and data retention policies
-- Complete audit trails for regulatory compliance
-- Automated opt-out processing with immediate effect
+### Performance Targets
+- **Message Delivery Rate**: >95%
+- **Response Time**: <2 seconds for API endpoints
+- **System Uptime**: >99.5%
+- **Member Reactivation**: >30% success rate
+- **Lead Conversion**: >15% conversion rate
+- **LGPD Compliance**: 100% compliance score
 
 ## MCP (Model Context Protocol) Integration
 
@@ -275,27 +271,6 @@ npm run mcp:test
 - `.env`: Environment variables and API keys
 - `config/`: Service-specific credential files (Gmail, Google Drive)
 
-#### Environment Variables
-```bash
-# Search and Analysis
-BRAVE_API_KEY=your_brave_api_key
-
-# Communication
-SLACK_BOT_TOKEN=xoxb-your-token
-SLACK_SIGNING_SECRET=your_signing_secret
-
-# Google Services
-# (credentials stored in config/ directory)
-
-# Development and Monitoring
-LINEAR_API_KEY=your_linear_key
-LINEAR_TEAM_ID=your_team_id
-SENTRY_DSN=your_sentry_dsn
-SENTRY_AUTH_TOKEN=your_auth_token
-SENTRY_ORG=your_org
-SENTRY_PROJECT=your_project
-```
-
 ### MCP API Endpoints
 
 #### Status and Management
@@ -367,30 +342,6 @@ node scripts/test-mcp-connections.js --verbose  # Detailed testing
 - Rate limiting prevents API quota exhaustion
 - Queue-based processing for high-volume operations
 
-## Project File Structure
-
-### Core Directories
-- `src/backend/`: Fastify server implementation and API routes
-- `src/whatsapp/`: WhatsApp Business API integration (Baileys)
-- `src/automation/`: Business automation flows and logic
-- `src/mcps/`: Multi-Agent Controller Pattern implementations
-- `src/integrations/`: MCP and external service integrations
-- `src/fitness/`: Domain-specific business logic for fitness academies
-- `src/database/`: Database operations and models
-- `prisma/`: Database schema and migrations
-- `tests/`: Test suites for automation and integration testing
-- `scripts/`: Deployment and maintenance scripts
-- `config/`: Service configuration files
-- `logs/`: Application and automation logs
-
-### Key Configuration Files
-- `automation_flows.json`: Complete automation sequence definitions
-- `academy.config.json`: Academy-specific business settings
-- `message_templates.json`: WhatsApp-approved message templates
-- `mcp.config.json`: MCP server definitions and integration rules
-- `package.json`: Dependencies and npm scripts
-- `prisma/schema.prisma`: Database schema definition
-
 ## 🔍 Comprehensive Audit System
 
 The system includes a **sophisticated audit framework** based on the proven methodology from Operação Safra Automatizada, specifically adapted for WhatsApp automation in fitness academies.
@@ -421,26 +372,6 @@ POST /api/audit/roi             # ROI and business impact audit
 GET /api/audit/dashboard        # Real-time audit dashboard
 GET /api/audit/reports          # List all audit reports
 GET /api/audit/reports/:id      # Get specific audit report
-```
-
-### **Audit Execution Commands**
-
-#### **NPM Scripts**
-```bash
-npm run audit:complete          # Full system audit
-npm run audit:whatsapp         # WhatsApp-specific audit
-npm run audit:compliance       # LGPD compliance check
-npm run audit:performance      # Performance benchmarks
-npm run audit:roi              # Business impact analysis
-```
-
-#### **Claude Code Integration**
-```bash
-/audit complete                # Complete audit via Claude Code
-/audit whatsapp               # WhatsApp performance check
-/audit compliance             # LGPD compliance validation
-/audit performance            # System performance analysis  
-/audit roi                    # ROI and business metrics
 ```
 
 ### **Audit Metrics & Benchmarks**
@@ -492,6 +423,69 @@ npm run audit:roi              # Business impact analysis
 
 This comprehensive audit system ensures continuous optimization of the WhatsApp automation platform, delivering measurable business results while maintaining the highest standards of compliance and technical excellence.
 
+## Project Structure
+
+### Current Repository Layout
+```
+├── public/                 # React public assets
+├── src/
+│   ├── index.js           # Main Fastify server (WhatsApp automation backend)
+│   ├── App.tsx            # React main component
+│   ├── index.tsx          # React entry point
+│   └── [React components] # Frontend components
+├── package.json           # Dependencies and npm scripts
+├── CLAUDE.md             # This file
+└── [config files]        # Various configuration files
+```
+
+### Expected Backend Structure (to be implemented)
+```
+├── src/
+│   ├── backend/           # Fastify server implementation
+│   ├── whatsapp/          # WhatsApp Business API integration
+│   ├── automation/        # Business automation flows
+│   ├── mcps/              # Multi-Agent Controller implementations
+│   ├── integrations/      # MCP and external service integrations
+│   ├── fitness/           # Domain-specific business logic
+│   └── database/          # Database operations and models
+├── prisma/                # Database schema and migrations
+├── tests/                 # Test suites
+├── scripts/               # Deployment and maintenance scripts
+├── config/                # Service configuration files
+└── logs/                  # Application logs
+```
+
+### Critical Configuration Files (to be created)
+- `automation_flows.json`: Complete automation sequence definitions
+- `academy.config.json`: Academy-specific business settings
+- `message_templates.json`: WhatsApp-approved message templates
+- `mcp.config.json`: MCP server definitions and integration rules
+- `prisma/schema.prisma`: Database schema definition
+- `docker-compose.yml`: Development environment services
+
+## Development Workflow
+
+### Getting Started
+1. **Clone and Setup**: `npm install` to install all dependencies
+2. **Environment**: Configure `.env` file with required variables
+3. **Database**: Set up PostgreSQL and run migrations (when Prisma is configured)
+4. **Services**: Start Redis for queue management (`npm run docker:up`)
+5. **Development**: Run `npm run dev` to start the backend server
+6. **Frontend**: Run `npm start` for React development server (optional)
+
+### Common Development Tasks
+- **Add Automation Flow**: Modify automation engine and create new MCP controller
+- **WhatsApp Templates**: Update message templates and test with WhatsApp Business API
+- **Database Changes**: Create Prisma migrations and update schema
+- **API Endpoints**: Add new routes to main server file
+- **Frontend Components**: Create React components for admin interface
+
+### Testing Strategy
+- **Unit Tests**: Test automation logic and WhatsApp integration
+- **Integration Tests**: Test end-to-end message flows and database operations
+- **Compliance Tests**: Verify LGPD compliance and WhatsApp policy adherence
+- **Performance Tests**: Load testing for message throughput and system reliability
+
 ---
 
-This system represents a sophisticated integration of marketing automation, CRM functionality, WhatsApp Business capabilities, and enterprise-grade MCP integrations, specifically designed for the fitness industry's unique retention and acquisition challenges.
+This system represents a sophisticated integration of WhatsApp Business automation, CRM functionality, and enterprise-grade monitoring capabilities, specifically designed for the fitness industry's unique member retention and lead conversion challenges.

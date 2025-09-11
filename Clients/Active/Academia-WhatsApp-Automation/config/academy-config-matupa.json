@@ -1,0 +1,204 @@
+{
+  "academia": {
+    "name": "Full Force Academia",
+    "location": "Matupá-MT",
+    "phone": "66 99999-9999",
+    "whatsappNumber": "5566999999999",
+    "address": "Rua Principal, Centro - Matupá/MT",
+    "cep": "78525-000",
+    "monthlyFee": 150,
+    "welcomeHours": "Segunda a Sexta: 5h às 22h | Sábado: 6h às 18h",
+    "email": "contato@fullforceacademia.com.br",
+    "instagram": "@fullforceacademia",
+    "website": "https://fullforceacademia.com.br"
+  },
+  "business": {
+    "exStudentsCount": 561,
+    "revenueTarget": 12600,
+    "roiTarget": 2520,
+    "averageTicket": 150,
+    "targetConversionRate": 0.15,
+    "targetResponseRate": 0.25,
+    "operationalHoursGoal": 2.5
+  },
+  "segmentation": {
+    "categories": {
+      "QUENTE": {
+        "daysInactive": 30,
+        "priority": "HIGH",
+        "offer": "7 dias grátis",
+        "discount": 0,
+        "urgency": "immediate",
+        "template": "quente_reativacao"
+      },
+      "MORNO": {
+        "daysInactive": 90,
+        "priority": "MEDIUM", 
+        "offer": "50% desconto por 2 meses",
+        "discount": 50,
+        "urgency": "week",
+        "template": "morno_promocao"
+      },
+      "FRIO": {
+        "daysInactive": 365,
+        "priority": "LOW",
+        "offer": "Sem taxa de adesão + R$ 89 primeiro mês",
+        "discount": 41,
+        "urgency": "month",
+        "template": "frio_isca"
+      }
+    },
+    "automation": {
+      "enableAutoSegmentation": true,
+      "useAIClassification": true,
+      "updateFrequency": "daily",
+      "reSegmentAfterDays": 7
+    }
+  },
+  "rateLimits": {
+    "whatsapp": {
+      "messagesPerDay": 20,
+      "messagesPerHour": 5,
+      "delayBetweenMessages": 3000,
+      "respectWhatsAppLimits": true,
+      "autoBackoffOnError": true,
+      "maxRetriesPerMessage": 3,
+      "cooldownAfterLimit": 3600000
+    },
+    "evolution": {
+      "maxConcurrentConnections": 1,
+      "heartbeatInterval": 30000,
+      "reconnectInterval": 5000,
+      "maxReconnectAttempts": 5
+    }
+  },
+  "compliance": {
+    "lgpd": {
+      "consentRequired": true,
+      "optOutRespected": true,
+      "dataRetention": "24 months",
+      "auditTrail": "complete",
+      "revokeMethod": "reply SAIR",
+      "privacyPolicyUrl": "https://fullforceacademia.com.br/privacidade",
+      "dataController": "Full Force Academia Ltda",
+      "dataProtectionOfficer": "eugabrielmktd@gmail.com"
+    },
+    "whatsappPolicy": {
+      "templateApprovalRequired": true,
+      "noSpam": true,
+      "respectOptOut": true,
+      "businessAccountRequired": true,
+      "noAutomatedResponses": false
+    }
+  },
+  "monitoring": {
+    "kpis": {
+      "responseRate": {
+        "target": 0.25,
+        "minimum": 0.15,
+        "alertBelow": 0.10
+      },
+      "conversionRate": {
+        "target": 0.15,
+        "minimum": 0.10,
+        "alertBelow": 0.05
+      },
+      "monthlyRevenue": {
+        "target": 12600,
+        "minimum": 8000,
+        "alertBelow": 5000
+      },
+      "roi": {
+        "target": 25.20,
+        "minimum": 10.0,
+        "alertBelow": 5.0
+      }
+    },
+    "alerts": {
+      "email": "eugabrielmktd@gmail.com",
+      "whatsapp": "5566999999999",
+      "frequency": "daily",
+      "thresholds": {
+        "lowResponse": 0.10,
+        "highError": 0.05,
+        "connectionDown": true
+      }
+    }
+  },
+  "integration": {
+    "n8n": {
+      "baseUrl": "http://localhost:5678",
+      "email": "eugabrielmktd@gmail.com",
+      "workflowPrefix": "FullForce_"
+    },
+    "evolutionApi": {
+      "baseUrl": "http://localhost:8080",
+      "apiKey": "academia_evolution_2024",
+      "instance": "Full_Force_Academia",
+      "webhookUrl": "http://localhost:5678/webhook/evolution"
+    },
+    "googleSheets": {
+      "spreadsheetId": "",
+      "sheetName": "Ex-Alunos-Matupa",
+      "credentialsPath": "./config/google-credentials.json"
+    },
+    "smtp": {
+      "host": "smtp.gmail.com",
+      "port": 587,
+      "secure": false,
+      "user": "eugabrielmktd@gmail.com",
+      "appPasswordRequired": true
+    }
+  },
+  "messageTemplates": {
+    "variables": {
+      "academia_name": "Full Force Academia",
+      "location": "Matupá",
+      "phone": "66 99999-9999",
+      "address": "Rua Principal, Centro",
+      "hours": "Segunda a Sexta: 5h às 22h | Sábado: 6h às 18h",
+      "instagram": "@fullforceacademia"
+    },
+    "personalization": {
+      "useFirstName": true,
+      "localizeOffers": true,
+      "includeEmojis": true,
+      "respectTimeZone": "America/Cuiaba"
+    }
+  },
+  "analytics": {
+    "dashboardUrl": "http://localhost:3001/dashboard",
+    "reportFrequency": "daily",
+    "metricsRetention": "12 months",
+    "exportFormats": ["PDF", "Excel", "JSON"],
+    "realTimeUpdates": true
+  },
+  "backup": {
+    "frequency": "daily",
+    "retention": "30 days",
+    "destination": "./backups/academia-matupa",
+    "includeMessages": true,
+    "includeAnalytics": true,
+    "compression": true
+  },
+  "localization": {
+    "timezone": "America/Cuiaba",
+    "currency": "BRL",
+    "locale": "pt-BR",
+    "dateFormat": "DD/MM/YYYY",
+    "numberFormat": "1.234,56"
+  },
+  "security": {
+    "encryptSensitiveData": true,
+    "auditLogging": true,
+    "accessControl": true,
+    "sessionTimeout": 3600,
+    "maxLoginAttempts": 3,
+    "passwordPolicy": {
+      "minLength": 8,
+      "requireUppercase": true,
+      "requireNumbers": true,
+      "requireSymbols": true
+    }
+  }
+}
