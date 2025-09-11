@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Read(C:\\Users\\User\\Downloads/**)",
+      "Read(C:\\Users\\User\\Downloads/**)",
+      "Read(C:\\Users\\User\\Downloads/**)",
+      "Read(C:\\Users\\User\\Downloads/**)",
+      "Read(C:\\Users\\User\\Downloads/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

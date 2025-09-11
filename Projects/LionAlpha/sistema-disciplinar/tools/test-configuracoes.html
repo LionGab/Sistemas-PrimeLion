@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste - Configurações GitHub</title>
+</head>
+<body>
+    <h1>Teste das Funções GitHub</h1>
+    
+    <div>
+        <h2>GitHub Sync</h2>
+        <button onclick="testarFuncoes()">Testar Funções</button>
+        <button onclick="configurarGitHub()">Configurar GitHub</button>
+        <div id="resultado"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/local-db.js"></script>
+    <script src="assets/js/local-auth.js"></script>
+    <script src="assets/js/github-sync.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        function testarFuncoes() {
+            const resultado = document.getElementById('resultado');
+            let html = '<h3>Teste de Funções:</h3>';
+            
+            // Testar se as funções existem
+            const funcoes = [
+                'configurarGitHub',
+                'testarConexaoGitHub', 
+                'desconectarGitHub'
+            ];
+            
+            funcoes.forEach(func => {
+                const existe = typeof window[func] === 'function';
+                html += `<p>${func}: ${existe ? '✅ Existe' : '❌ Não existe'}</p>`;
+            });
+            
+            // Testar gitHubSync
+            html += `<p>window.gitHubSync: ${window.gitHubSync ? '✅ Carregado' : '❌ Não carregado'}</p>`;
+            
+            if (window.gitHubSync) {
+                html += `<p>gitHubSync.podeEscrever(): ${window.gitHubSync.podeEscrever() ? '✅ Pode escrever' : '⚠️ Somente leitura'}</p>`;
+                html += `<p>gitHubSync.userName: ${window.gitHubSync.userName || 'Não definido'}</p>`;
+                html += `<p>gitHubSync.userEmail: ${window.gitHubSync.userEmail || 'Não definido'}</p>`;
+            }
+            
+            resultado.innerHTML = html;
+        }
+        
+        // Simular funções básicas para teste
+        function configurarGitHub() {
+            alert('Função configurarGitHub chamada!');
+        }
+        
+        function testarConexaoGitHub() {
+            alert('Função testarConexaoGitHub chamada!');
+        }
+        
+        function desconectarGitHub() {
+            alert('Função desconectarGitHub chamada!');
+        }
+        
+        // Expor globalmente
+        window.configurarGitHub = configurarGitHub;
+        window.testarConexaoGitHub = testarConexaoGitHub;
+        window.desconectarGitHub = desconectarGitHub;
+        
+        // Testar ao carregar
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(testarFuncoes, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,446 @@
+/* ============================================
+   DASHBOARD DISCIPLINAR - ESTILOS GLOBAIS
+   ============================================ */
+
+/* ============================================
+   RESET E CONFIGURAÇÕES GLOBAIS
+============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f5f5;
+    color: #323130;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ============================================
+   BARRA SUPERIOR
+============================================ */
+.top-bar {
+    background: #ffffff;
+    height: 48px;
+    border-bottom: 1px solid #e1dfdd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.top-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.app-launcher {
+    width: 24px;
+    height: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 2px;
+    cursor: pointer;
+    padding: 2px;
+}
+
+.app-launcher span {
+    background: #323130;
+    border-radius: 1px;
+    display: block;
+}
+
+.app-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #323130;
+    letter-spacing: -0.5px;
+}
+
+.top-bar-center {
+    flex: 1;
+    max-width: 500px;
+    margin: 0 40px;
+}
+
+.search-box {
+    width: 100%;
+    padding: 8px 40px 8px 16px;
+    border: 1px solid #e1dfdd;
+    border-radius: 4px;
+    background: #ffffff;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.search-box:focus {
+    border-color: #0078d4;
+    box-shadow: 0 0 0 1px #0078d4;
+}
+
+.search-box::placeholder {
+    color: #a19f9d;
+}
+
+.top-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-profile {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0078d4, #106ebe);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.user-profile:hover {
+    transform: scale(1.05);
+}
+
+/* Botão Logout */
+.btn-logout {
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #d13438, #c13438);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(209, 52, 56, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 70px;
+    justify-content: center;
+}
+
+.btn-logout:hover {
+    background: linear-gradient(135deg, #c13438, #b12832);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(209, 52, 56, 0.3);
+}
+
+.btn-logout:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(209, 52, 56, 0.2);
+}
+
+.btn-logout:before {
+    content: "🚪";
+    font-size: 12px;
+}
+
+/* ============================================
+   LAYOUT PRINCIPAL
+============================================ */
+.main-layout {
+    display: flex;
+    height: 100vh;
+    padding-top: 48px;
+}
+
+/* ============================================
+   SIDEBAR
+============================================ */
+.sidebar {
+    width: 250px;
+    background: #ffffff;
+    border-right: 1px solid #e1dfdd;
+    overflow-y: auto;
+    flex-shrink: 0;
+    box-shadow: 1px 0 3px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-section {
+    padding: 20px 0;
+    border-bottom: 1px solid #f3f2f1;
+}
+
+.sidebar-section:last-child {
+    border-bottom: none;
+}
+
+.sidebar-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #605e5c;
+    margin: 0 20px 12px 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    color: #323130;
+    position: relative;
+    text-decoration: none;
+}
+
+.sidebar-item:hover {
+    background: #f3f2f1;
+    transform: translateX(2px);
+}
+
+.sidebar-item.active {
+    background: #deecf9;
+    color: #0078d4;
+    font-weight: 600;
+}
+
+.sidebar-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #0078d4;
+}
+
+.sidebar-icon {
+    font-size: 18px;
+    width: 24px;
+    text-align: center;
+}
+
+.sidebar-text {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* ============================================
+   ÁREA DE CONTEÚDO
+============================================ */
+.content-area {
+    flex: 1;
+    background: #faf9f8;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.main-content {
+    padding: 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* ============================================
+   TÍTULOS DOS MÓDULOS
+============================================ */
+.module-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #323130;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: typewriter 0.5s steps(20) 1s both;
+}
+
+.modulo-content {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes typewriter {
+    from {
+        width: 0;
+        opacity: 0;
+    }
+    to {
+        width: auto;
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   MENSAGENS E NOTIFICAÇÕES
+============================================ */
+.message {
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    padding: 16px 20px;
+    border-radius: 6px;
+    color: white;
+    font-weight: 500;
+    z-index: 1100;
+    animation: slideIn 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.message:hover {
+    transform: translateX(-5px);
+    transition: transform 0.2s ease;
+}
+
+.message.success {
+    background: #107c10;
+}
+
+.message.error {
+    background: #dc3545;
+}
+
+.message.info {
+    background: #0078d4;
+}
+
+.message.loading {
+    background: #323130;
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.loading::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ============================================
+   RESPONSIVIDADE
+============================================ */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 220px;
+    }
+    
+    .main-content {
+        padding: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-layout {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #e1dfdd;
+        overflow-x: auto;
+    }
+    
+    .sidebar-section {
+        padding: 12px 0;
+    }
+    
+    .sidebar-item {
+        padding: 8px 16px;
+    }
+    
+    .main-content {
+        padding: 16px;
+    }
+    
+    .top-bar-center {
+        margin: 0 16px;
+    }
+    
+    .module-title {
+        font-size: 24px;
+    }
+    
+    .message {
+        right: 12px;
+        left: 12px;
+        max-width: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .top-bar {
+        padding: 0 12px;
+    }
+    
+    .top-bar-center {
+        margin: 0 8px;
+    }
+    
+    .main-content {
+        padding: 12px;
+    }
+}

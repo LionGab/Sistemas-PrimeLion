@@ -1,0 +1,159 @@
+{
+  "name": "5 - Dashboard Report",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "value": "0 18 * * *"
+            }
+          ]
+        }
+      },
+      "id": "schedule-daily-6pm",
+      "name": "Schedule Daily 6PM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 400]
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "ExAlunos",
+        "options": {
+          "headerRow": 1,
+          "includeEmptyCells": false,
+          "range": "A:O"
+        }
+      },
+      "id": "read-all-data",
+      "name": "Read All Student Data",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [440, 350]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Calcular métricas do dashboard\nconst dados = $input.all();\nconst hoje = new Date();\nconst ontem = new Date(hoje.getTime() - 24 * 60 * 60 * 1000);\n\n// Contadores básicos\nlet totalExAlunos = dados.length;\nlet totalEnviados = dados.filter(item => item.json.status === 'ENVIADO').length;\nlet totalResponderam = dados.filter(item => item.json.resposta_recebida && item.json.resposta_recebida !== '').length;\nlet totalInteressados = dados.filter(item => item.json.tipo_resposta === 'INTERESSADO').length;\nlet totalRecusados = dados.filter(item => item.json.tipo_resposta === 'RECUSADO').length;\nlet totalAgendamentos = dados.filter(item => item.json.status === 'AGENDAMENTO').length;\n\n// Contadores por categoria\nlet quentes = dados.filter(item => item.json.categoria === 'QUENTE').length;\nlet mornos = dados.filter(item => item.json.categoria === 'MORNO').length;\nlet frios = dados.filter(item => item.json.categoria === 'FRIO').length;\n\n// Enviados hoje\nlet enviadosHoje = dados.filter(item => {\n  if (!item.json.data_ultimo_contato) return false;\n  const dataContato = new Date(item.json.data_ultimo_contato);\n  return dataContato.toDateString() === hoje.toDateString();\n}).length;\n\n// Respostas hoje\nlet respostasHoje = dados.filter(item => {\n  if (!item.json.timestamp_resposta) return false;\n  const dataResposta = new Date(item.json.timestamp_resposta);\n  return dataResposta.toDateString() === hoje.toDateString();\n}).length;\n\n// Calcular taxas\nlet taxaResposta = totalEnviados > 0 ? (totalResponderam / totalEnviados * 100).toFixed(1) : 0;\nlet taxaInteresse = totalResponderam > 0 ? (totalInteressados / totalResponderam * 100).toFixed(1) : 0;\nlet taxaConversao = totalEnviados > 0 ? (totalInteressados / totalEnviados * 100).toFixed(1) : 0;\n\n// Calcular ROI\nlet roiPorAluno = 150; // Valor médio mensal por aluno\nlet taxaConversaoReal = 0.30; // 30% dos interessados viram alunos\nlet alunosConvertidos = Math.round(totalInteressados * taxaConversaoReal);\nlet roiMensal = alunosConvertidos * roiPorAluno;\nlet roiAnual = roiMensal * 12;\n\n// ROI potencial total (todos os ex-alunos)\nlet roiPotencialTotal = totalExAlunos * roiPorAluno * 0.15; // 15% conversão geral\n\n// Métricas de pontuação\nlet pontuacaoMedia = 0;\nlet dadosComPontuacao = dados.filter(item => item.json.pontuacao_interesse && item.json.pontuacao_interesse > 0);\nif (dadosComPontuacao.length > 0) {\n  pontuacaoMedia = (dadosComPontuacao.reduce((sum, item) => sum + parseFloat(item.json.pontuacao_interesse || 0), 0) / dadosComPontuacao.length).toFixed(1);\n}\n\n// Status operacional\nlet statusSistema = 'ATIVO';\nlet ultimaExecucao = new Date().toLocaleString('pt-BR', {timeZone: 'America/Sao_Paulo'});\n\n// Próximas ações\nlet pendentesEnvio = dados.filter(item => \n  item.json.status === 'IMPORTADO' || \n  (item.json.status === 'RECUSADO' && item.json.proxima_acao === 'retry_campaign')\n).length;\n\nlet proximaExecucao = '09:00 (amanhã)';\n\nreturn {\n  // Métricas principais\n  total_ex_alunos: totalExAlunos,\n  total_enviados: totalEnviados,\n  total_responderam: totalResponderam,\n  total_interessados: totalInteressados,\n  total_recusados: totalRecusados,\n  total_agendamentos: totalAgendamentos,\n  \n  // Categorização\n  categoria_quente: quentes,\n  categoria_morno: mornos,\n  categoria_frio: frios,\n  \n  // Métricas do dia\n  enviados_hoje: enviadosHoje,\n  respostas_hoje: respostasHoje,\n  \n  // Taxas de performance\n  taxa_resposta: parseFloat(taxaResposta),\n  taxa_interesse: parseFloat(taxaInteresse),\n  taxa_conversao: parseFloat(taxaConversao),\n  pontuacao_media: parseFloat(pontuacaoMedia),\n  \n  // ROI e financeiro\n  alunos_convertidos: alunosConvertidos,\n  roi_mensal: roiMensal,\n  roi_anual: roiAnual,\n  roi_potencial_total: Math.round(roiPotencialTotal),\n  \n  // Status operacional\n  status_sistema: statusSistema,\n  ultima_execucao: ultimaExecucao,\n  pendentes_envio: pendentesEnvio,\n  proxima_execucao: proximaExecucao,\n  \n  // Dados para relatório\n  data_relatorio: hoje.toISOString(),\n  academia_nome: 'Full Force Academia',\n  academia_localizacao: 'Matupá-MT'\n};"
+      },
+      "id": "calculate-metrics",
+      "name": "Calculate Dashboard Metrics",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [640, 350]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Gerar HTML do dashboard\nconst data = $input.item.json;\n\nconst htmlTemplate = `\n<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Dashboard - ${data.academia_nome}</title>\n    <style>\n        * { margin: 0; padding: 0; box-sizing: border-box; }\n        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f7fa; color: #333; }\n        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }\n        .header { text-align: center; margin-bottom: 30px; }\n        .header h1 { color: #2c3e50; font-size: 2.5em; margin-bottom: 10px; }\n        .header p { color: #7f8c8d; font-size: 1.2em; }\n        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px; }\n        .metric-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; }\n        .metric-card.primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }\n        .metric-card.success { background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%); color: white; }\n        .metric-card.warning { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }\n        .metric-card.info { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; }\n        .metric-value { font-size: 2.5em; font-weight: bold; margin-bottom: 5px; }\n        .metric-label { font-size: 1em; opacity: 0.9; }\n        .section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 30px; }\n        .section h2 { color: #2c3e50; margin-bottom: 20px; font-size: 1.8em; }\n        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }\n        .stat-item { text-align: center; padding: 15px; background: #f8f9fa; border-radius: 8px; }\n        .stat-value { font-size: 1.8em; font-weight: bold; color: #2c3e50; }\n        .stat-label { color: #7f8c8d; margin-top: 5px; }\n        .progress-bar { background: #ecf0f1; height: 8px; border-radius: 4px; overflow: hidden; margin: 10px 0; }\n        .progress-fill { height: 100%; background: linear-gradient(90deg, #56ab2f, #a8e6cf); transition: width 0.3s ease; }\n        .status-indicator { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; }\n        .status-active { background: #27ae60; }\n        .footer { text-align: center; margin-top: 40px; color: #7f8c8d; }\n        @media (max-width: 768px) {\n            .container { padding: 10px; }\n            .header h1 { font-size: 2em; }\n            .metric-value { font-size: 2em; }\n        }\n    </style>\n</head>\n<body>\n    <div class=\"container\">\n        <div class=\"header\">\n            <h1>🏋️‍♂️ ${data.academia_nome}</h1>\n            <p>📍 ${data.academia_localizacao} | Dashboard de Reativação</p>\n            <p>📅 ${new Date(data.data_relatorio).toLocaleDateString('pt-BR')} - ${data.ultima_execucao}</p>\n        </div>\n\n        <div class=\"metrics-grid\">\n            <div class=\"metric-card primary\">\n                <div class=\"metric-value\">${data.total_ex_alunos}</div>\n                <div class=\"metric-label\">Ex-Alunos Total</div>\n            </div>\n            <div class=\"metric-card success\">\n                <div class=\"metric-value\">${data.total_interessados}</div>\n                <div class=\"metric-label\">Interessados</div>\n            </div>\n            <div class=\"metric-card warning\">\n                <div class=\"metric-value\">R$ ${data.roi_mensal.toLocaleString('pt-BR')}</div>\n                <div class=\"metric-label\">ROI Mensal</div>\n            </div>\n            <div class=\"metric-card info\">\n                <div class=\"metric-value\">${data.taxa_resposta}%</div>\n                <div class=\"metric-label\">Taxa Resposta</div>\n            </div>\n        </div>\n\n        <div class=\"section\">\n            <h2>📊 Performance da Campanha</h2>\n            <div class=\"stats-row\">\n                <div class=\"stat-item\">\n                    <div class=\"stat-value\">${data.total_enviados}</div>\n                    <div class=\"stat-label\">Mensagens Enviadas</div>\n                    <div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width: ${(data.total_enviados/data.total_ex_alunos*100)}%\"></div></div>\n                </div>\n                <div class=\"stat-item\">\n                    <div class=\"stat-value\">${data.total_responderam}</div>\n                    <div class=\"stat-label\">Respostas Recebidas</div>\n                    <div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width: ${data.taxa_resposta}%\"></div></div>\n                </div>\n                <div class=\"stat-item\">\n                    <div class=\"stat-value\">${data.total_agendamentos}</div>\n                    <div class=\"stat-label\">Agendamentos</div>\n                    <div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width: ${data.taxa_conversao}%\"></div></div>\n                </div>\n                <div class=\"stat-item\">\n                    <div class=\"stat-value\">${data.pontuacao_media}/100</div>\n                    <div class=\"stat-label\">Pontuação Média</div>\n                    <div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width: ${data.pontuacao_media}%\"></div></div>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"section\">\n            <h2>🎯 Categorização de Ex-Alunos</h2>\n            <div class=\"stats-row\">\n                <div class=\"stat-item\">\n                    <div class=\"stat-value\" style=\"color: #e74c3c;\">${data.categoria_quente}</div>\n                    <div class=\"stat-label\">🔥 QUENTES (≤30 dias)</div>\n                </div>\n                <div class=\"stat-item\">\n                    <div class=\"stat-value\" style=\"color: #f39c12;\">${data.categoria_morno}</div>\n                    <div class=\"stat-label\">🔶 MORNOS (31-60 dias)</div>\n                </div>\n                <div class=\"stat-item\">\n                    <div class=\"stat-value\" style=\"color: #3498db;\">${data.categoria_frio}</div>\n                    <div class=\"stat-label\">❄️ FRIOS (>60 dias)</div>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"section\">\n            <h2>💰 Projeção Financeira</h2>\n            <div class=\"stats-row\">\n                <div class=\"stat-item\">\n                    <div class=\"stat-value\">R$ ${data.roi_anual.toLocaleString('pt-BR')}</div>\n                    <div class=\"stat-label\">ROI Anual Projetado</div>\n                </div>\n                <div class=\"stat-item\">\n                    <div class=\"stat-value\">${data.alunos_convertidos}</div>\n                    <div class=\"stat-label\">Alunos Convertidos</div>\n                </div>\n                <div class=\"stat-item\">\n                    <div class=\"stat-value\">R$ ${data.roi_potencial_total.toLocaleString('pt-BR')}</div>\n                    <div class=\"stat-label\">Potencial Total</div>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"section\">\n            <h2>⚡ Status do Sistema</h2>\n            <div class=\"stats-row\">\n                <div class=\"stat-item\">\n                    <div class=\"stat-value\"><span class=\"status-indicator status-active\"></span>${data.status_sistema}</div>\n                    <div class=\"stat-label\">Sistema Operacional</div>\n                </div>\n                <div class=\"stat-item\">\n                    <div class=\"stat-value\">${data.enviados_hoje}</div>\n                    <div class=\"stat-label\">Enviados Hoje</div>\n                </div>\n                <div class=\"stat-item\">\n                    <div class=\"stat-value\">${data.respostas_hoje}</div>\n                    <div class=\"stat-label\">Respostas Hoje</div>\n                </div>\n                <div class=\"stat-item\">\n                    <div class=\"stat-value\">${data.pendentes_envio}</div>\n                    <div class=\"stat-label\">Pendentes Envio</div>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"footer\">\n            <p>🤖 Dashboard automático gerado via N8N | Próxima execução: ${data.proxima_execucao}</p>\n            <p>📱 WhatsApp Business | 🎯 Taxa meta: 30% resposta | 💪 Full Force Academia</p>\n        </div>\n    </div>\n</body>\n</html>\n`;\n\nreturn { htmlContent: htmlTemplate };"
+      },
+      "id": "generate-html",
+      "name": "Generate HTML Dashboard",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [840, 350]
+    },
+    {
+      "parameters": {
+        "fromEmail": "dashboard@fullforceacademia.com",
+        "toEmail": "={{ $env.ADMIN_EMAIL }}",
+        "subject": "📊 Dashboard Diário - Full Force Academia | {{ new Date().toLocaleDateString('pt-BR') }}",
+        "message": "=📊 **RELATÓRIO DIÁRIO - FULL FORCE ACADEMIA**\\n🏢 **Matupá-MT** | {{ new Date().toLocaleDateString('pt-BR') }}\\n\\n🎯 **RESUMO EXECUTIVO:**\\n• Ex-alunos total: {{ $('Calculate Dashboard Metrics').item.json.total_ex_alunos }}\\n• Mensagens enviadas: {{ $('Calculate Dashboard Metrics').item.json.total_enviados }}\\n• Taxa de resposta: {{ $('Calculate Dashboard Metrics').item.json.taxa_resposta }}%\\n• Interessados: {{ $('Calculate Dashboard Metrics').item.json.total_interessados }}\\n• Agendamentos: {{ $('Calculate Dashboard Metrics').item.json.total_agendamentos }}\\n\\n💰 **FINANCEIRO:**\\n• ROI mensal: R$ {{ $('Calculate Dashboard Metrics').item.json.roi_mensal.toLocaleString('pt-BR') }}\\n• ROI anual projetado: R$ {{ $('Calculate Dashboard Metrics').item.json.roi_anual.toLocaleString('pt-BR') }}\\n• Alunos convertidos: {{ $('Calculate Dashboard Metrics').item.json.alunos_convertidos }}\\n\\n📈 **PERFORMANCE HOJE:**\\n• Mensagens enviadas: {{ $('Calculate Dashboard Metrics').item.json.enviados_hoje }}\\n• Respostas recebidas: {{ $('Calculate Dashboard Metrics').item.json.respostas_hoje }}\\n• Pendentes para envio: {{ $('Calculate Dashboard Metrics').item.json.pendentes_envio }}\\n\\n🔥 **CATEGORIZAÇÃO:**\\n• QUENTES (≤30 dias): {{ $('Calculate Dashboard Metrics').item.json.categoria_quente }}\\n• MORNOS (31-60 dias): {{ $('Calculate Dashboard Metrics').item.json.categoria_morno }}\\n• FRIOS (>60 dias): {{ $('Calculate Dashboard Metrics').item.json.categoria_frio }}\\n\\n⚡ **STATUS SISTEMA:**\\n• Sistema: {{ $('Calculate Dashboard Metrics').item.json.status_sistema }}\\n• Última execução: {{ $('Calculate Dashboard Metrics').item.json.ultima_execucao }}\\n• Próxima execução: {{ $('Calculate Dashboard Metrics').item.json.proxima_execucao }}\\n\\n📊 Dashboard completo em anexo (HTML)\\n\\n🚀 **N8N Academy Automation System**",
+        "options": {
+          "attachments": [
+            {
+              "name": "dashboard_full_force_{{ new Date().toISOString().split('T')[0] }}.html",
+              "content": "={{ $('Generate HTML Dashboard').item.json.htmlContent }}",
+              "type": "text/html"
+            }
+          ]
+        }
+      },
+      "id": "send-dashboard-email",
+      "name": "Send Dashboard Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1040, 350]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Daily 6PM": {
+      "main": [
+        [
+          {
+            "node": "Read All Student Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Read All Student Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read All Student Data": {
+      "main": [
+        [
+          {
+            "node": "Calculate Dashboard Metrics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate Dashboard Metrics": {
+      "main": [
+        [
+          {
+            "node": "Generate HTML Dashboard",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate HTML Dashboard": {
+      "main": [
+        [
+          {
+            "node": "Send Dashboard Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "5",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "id": "5",
+  "tags": ["dashboard", "report", "metrics", "academia"]
+}

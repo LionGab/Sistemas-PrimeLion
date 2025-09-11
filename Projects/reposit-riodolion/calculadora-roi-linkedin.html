@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de ROI LinkedIn para CEOs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --linkedin-blue: #0077B5;
+            --linkedin-dark: #004b7a;
+            --gold: #FFD700;
+            --gold-dark: #DAA520;
+            --gray-light: #f3f6f8;
+            --gray-medium: #86888a;
+            --text-dark: #1c1c1c;
+            --success: #10B981;
+            --danger: #EF4444;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px 10px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 119, 181, 0.15);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--linkedin-blue) 0%, var(--linkedin-dark) 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header-image {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 15px;
+            margin: 20px auto 15px;
+            display: block;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-dark) 100%);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.95;
+            line-height: 1.4;
+        }
+
+        .gold-highlight {
+            color: var(--gold);
+            font-weight: 700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .form-section {
+            padding: 30px 20px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15liberation;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--linkedin-blue);
+            box-shadow: 0 0 0 3px rgba(0, 119, 181, 0.1);
+        }
+
+        .input-prefix {
+            position: relative;
+        }
+
+        .input-prefix::before {
+            content: 'R$';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-medium);
+            font-weight: 600;
+        }
+
+        .input-prefix input {
+            padding-left: 45px;
+        }
+
+        .input-suffix {
+            position: relative;
+        }
+
+        .input-suffix::after {
+            content: '%';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-medium);
+            font-weight: 600;
+        }
+
+        .input-suffix input {
+            padding-right: 35px;
+        }
+
+        .results-section {
+            padding: 0 20px 30px;
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scenario-card {
+            background: var(--gray-light);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scenario-card.current {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border: 2px solid var(--danger);
+        }
+
+        .scenario-card.future {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border: 2px solid var(--success);
+        }
+
+        .scenario-title {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .scenario-card.current .scenario-title {
+            color: var(--danger);
+        }
+
+        .scenario-card.future .scenario-title {
+            color: var(--success);
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+
+        .metric-value {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .metric-value.loss {
+            color: var(--danger);
+        }
+
+        .metric-value.gain {
+            color: var(--success);
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #growthChart {
+            width: 100%;
+            height: 200px;
+        }
+
+        .cta-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--text-dark);
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            padding: 30px;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            border: none;
+            background: var(--gray-light);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--gray-medium);
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: var(--linkedin-blue);
+            color: white;
+        }
+
+        .modal h2 {
+            font-size: 22px;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .whatsapp-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 15px;
+            background: #25D366;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .whatsapp-button:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+        }
+
+        .whatsapp-icon {
+            margin-right: 10px;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            color: var(--gray-medium);
+            font-size: 14px;
+            position: relative;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: calc(50% - 30px);
+            height: 1px;
+            background: var(--gray-medium);
+            opacity: 0.3;
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+
+        .form-modal input {
+            margin-bottom: 15px;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--linkedin-blue) 0%, var(--linkedin-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 119, 181, 0.3);
+        }
+
+        .success-message {
+            display: none;
+            padding: 20px;
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-radius: 12px;
+            text-align: center;
+            color: var(--success);
+            font-weight: 600;
+            margin-top: 20px;
+        }
+
+        .success-message.active {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        .roi-highlight {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--text-dark);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .roi-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .roi-value {
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .roi-detail {
+            font-size: 12px;
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 20px;
+            }
+            
+            .subtitle {
+                font-size: 13px;
+            }
+            
+            .form-section,
+            .results-section {
+                padding: 20px 15px;
+            }
+            
+            .modal-content {
+                padding: 20px;
+            }
+            
+            .header-image {
+                max-width: 250px;
+                margin: 15px auto 10px;
+            }
+            
+            .header {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 20px;
+                margin-bottom: 8px;
+            }
+            
+            .subtitle {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://i.imgur.com/V7VvBfv.png" alt="Calculadora de ROI LinkedIn para CEOs" class="header-image">
+            <h1>Calculadora de ROI LinkedIn</h1>
+            <p class="subtitle">Descubra quanto <span class="gold-highlight">faturamento você pode gerar</span> no LinkedIn estrategicamente</p>
+        </div>
+
+        <div class="form-section">
+            <div class="input-group">
+                <label for="ticketMedio">Seu ticket médio por cliente</label>
+                <div class="input-prefix">
+                    <input type="number" id="ticketMedio" placeholder="10000" value="10000">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="clientesMes">Quantos clientes fecha por mês</label>
+                <input type="number" id="clientesMes" placeholder="5" value="5">
+            </div>
+
+            <div class="input-group">
+                <label for="conexoes">Quantas conexões tem no LinkedIn</label>
+                <input type="number" id="conexoes" placeholder="500" value="500">
+            </div>
+
+            <div class="input-group">
+                <label for="postsMes">Quantos posts faz por mês</label>
+                <input type="number" id="postsMes" placeholder="2" value="2">
+            </div>
+
+            <div class="input-group">
+                <label for="taxaConversao">Sua taxa de conversão atual</label>
+                <div class="input-suffix">
+                    <input type="number" id="taxaConversao" placeholder="2" value="2" step="0.1">
+                </div>
+            </div>
+        </div>
+
+        <div class="results-section" id="results">
+            <div class="scenario-card current">
+                <div class="scenario-title">😔 Cenário Atual - Oportunidades Perdidas</div>
+                <div class="metric">
+                    <span class="metric-label">Potencial desperdiçado/mês:</span>
+                    <span class="metric-value loss" id="potencialDesperdicado">R$ 0</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Clientes perdidos para concorrência:</span>
+                    <span class="metric-value loss" id="clientesPerdidos">0</span>
+                </div>
+            </div>
+
+            <div class="scenario-card future">
+                <div class="scenario-title">🚀 Com Ghostwriting Estratégico</div>
+                <div class="metric">
+                    <span class="metric-label">Novos leads/mês projetados:</span>
+                    <span class="metric-value gain" id="novosLeads">0</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Faturamento adicional/mês:</span>
+                    <span class="metric-value gain" id="faturamentoAdicional">R$ 0</span>
+                </div>
+            </div>
+
+            <div class="roi-highlight">
+                <div class="roi-label">ROI do Investimento em Ghostwriting</div>
+                <div class="roi-value" id="roiValue">0x</div>
+                <div class="roi-detail">Para cada R$ 8.500 investidos</div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">📈 Projeção de Crescimento - 12 Meses</div>
+                <canvas id="growthChart"></canvas>
+            </div>
+
+            <button class="cta-button" onclick="openModal()">
+                💰 QUERO ESTE RESULTADO
+            </button>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">×</button>
+            <h2>Recupere seu faturamento perdido!</h2>
+            
+            <a href="#" id="whatsappLink" class="whatsapp-button" target="_blank">
+                <span class="whatsapp-icon">📱</span>
+                Falar com Especialista no WhatsApp
+            </a>
+
+            <div class="divider">ou</div>
+
+            <form id="captureForm" class="form-modal">
+                <input type="text" id="nome" placeholder="Seu nome completo" required>
+                <input type="email" id="email" placeholder="Seu melhor e-mail" required>
+                <input type="tel" id="telefone" placeholder="WhatsApp (11) 99999-9999" required>
+                <button type="submit" class="submit-button">Solicitar Análise Gratuita</button>
+            </form>
+
+            <div class="success-message" id="successMessage">
+                ✅ Formulário enviado com sucesso! Entraremos em contato em breve.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variáveis globais para armazenar valores calculados
+        let valorPerdidoMensal = 0;
+
+        // Função para formatar valores monetários
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(value);
+        }
+
+        // Função para calcular resultados
+        function calculateResults() {
+            const ticketMedio = parseFloat(document.getElementById('ticketMedio').value) || 0;
+            const clientesMes = parseFloat(document.getElementById('clientesMes').value) || 0;
+            const conexoes = parseFloat(document.getElementById('conexoes').value) || 0;
+            const postsMes = parseFloat(document.getElementById('postsMes').value) || 0;
+            const taxaConversao = parseFloat(document.getElementById('taxaConversao').value) || 0;
+
+            // Cálculos para cenário atual
+            const faturamentoAtual = ticketMedio * clientesMes;
+            
+            // Potencial com uso otimizado do LinkedIn
+            const conexoesPotenciais = Math.min(conexoes * 4, 5000); // Pode crescer 4x até 5000
+            const postsIdeais = 12; // 3 posts por semana
+            const taxaConversaoOtimizada = Math.min(taxaConversao * 2.5, 10); // Pode aumentar 2.5x
+            
+            // Cálculo de leads baseado em engajamento
+            const engajamentoPorPost = conexoesPotenciais * 0.03; // 3% das conexões engajam
+            const leadsGerados = Math.floor(engajamentoPorPost * postsIdeais * 0.1); // 10% viram leads
+            
+            // Novos clientes potenciais
+            const clientesAdicionais = Math.floor(leadsGerados * (taxaConversaoOtimizada / 100));
+            const faturamentoPotencial = (clientesMes + clientesAdicionais) * ticketMedio;
+            
+            // Valores perdidos
+            valorPerdidoMensal = faturamentoPotencial - faturamentoAtual;
+            const clientesPerdidosParaConcorrencia = clientesAdicionais;
+            
+            // Com ghostwriting
+            const leadsComGhostwriting = leadsGerados * 2; // Dobra os leads com conteúdo profissional
+            const faturamentoAdicionalComGhostwriting = clientesAdicionais * ticketMedio * 2;
+            
+            // ROI
+            const investimentoGhostwriting = 8500;
+            const roi = Math.floor(faturamentoAdicionalComGhostwriting / investimentoGhostwriting);
+
+            // Atualizar interface
+            document.getElementById('potencialDesperdicado').textContent = formatCurrency(valorPerdidoMensal);
+            document.getElementById('clientesPerdidos').textContent = clientesPerdidosParaConcorrencia;
+            document.getElementById('novosLeads').textContent = leadsComGhostwriting;
+            document.getElementById('faturamentoAdicional').textContent = formatCurrency(faturamentoAdicionalComGhostwriting);
+            document.getElementById('roiValue').textContent = roi + 'x';
+
+            // Mostrar resultados
+            document.getElementById('results').classList.add('active');
+
+            // Desenhar gráfico
+            drawChart(faturamentoAtual, faturamentoPotencial, faturamentoAdicionalComGhostwriting);
+        }
+
+        // Função para desenhar gráfico
+        function drawChart(atual, potencial, comGhostwriting) {
+            const canvas = document.getElementById('growthChart');
+            const ctx = canvas.getContext('2d');
+            
+            // Configurar canvas
+            canvas.width = canvas.offsetWidth * 2;
+            canvas.height = 400;
+            canvas.style.width = canvas.offsetWidth + 'px';
+            canvas.style.height = '200px';
+            
+            const padding = 40;
+            const chartWidth = canvas.width - padding * 2;
+            const chartHeight = canvas.height - padding * 2;
+            
+            // Limpar canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Dados para 12 meses
+            const meses = 12;
+            const dataAtual = [];
+            const dataGhostwriting = [];
+            
+            for (let i = 0; i <= meses; i++) {
+                // Crescimento gradual
+                const growthFactor = i / meses;
+                dataAtual.push(atual);
+                dataGhostwriting.push(atual + (comGhostwriting * growthFactor));
+            }
+            
+            // Encontrar valor máximo para escala
+            const maxValue = Math.max(...dataGhostwriting);
+            
+            // Desenhar linhas de grade
+            ctx.strokeStyle = '#e5e7eb';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+            
+            for (let i = 0; i <= 4; i++) {
+                const y = padding + (chartHeight / 4) * i;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(canvas.width - padding, y);
+                ctx.stroke();
+            }
+            
+            ctx.setLineDash([]);
+            
+            // Função para desenhar linha
+            function drawLine(data, color, lineWidth) {
+                ctx.strokeStyle = color;
+                ctx.lineWidth = lineWidth;
+                ctx.beginPath();
+                
+                data.forEach((value, index) => {
+                    const x = padding + (chartWidth / meses) * index;
+                    const y = padding + chartHeight - (value / maxValue) * chartHeight;
+                    
+                    if (index === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                });
+                
+                ctx.stroke();
+                
+                // Adicionar pontos
+                ctx.fillStyle = color;
+                data.forEach((value, index) => {
+                    const x = padding + (chartWidth / meses) * index;
+                    const y = padding + chartHeight - (value / maxValue) * chartHeight;
+                    
+                    ctx.beginPath();
+                    ctx.arc(x, y, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+            }
+            
+            // Desenhar linha atual (estagnada)
+            drawLine(dataAtual, '#EF4444', 3);
+            
+            // Desenhar linha com ghostwriting (crescente)
+            drawLine(dataGhostwriting, '#10B981', 4);
+            
+            // Adicionar labels
+            ctx.fillStyle = '#1c1c1c';
+            ctx.font = '24px Arial';
+            ctx.textAlign = 'center';
+            
+            // Labels dos meses
+            for (let i = 0; i <= meses; i += 3) {
+                const x = padding + (chartWidth / meses) * i;
+                const y = canvas.height - 10;
+                ctx.fillText(`Mês ${i}`, x, y);
+            }
+            
+            // Legenda
+            ctx.font = '20px Arial';
+            ctx.textAlign = 'left';
+            
+            // Legenda linha vermelha
+            ctx.fillStyle = '#EF4444';
+            ctx.fillRect(padding, 20, 30, 4);
+            ctx.fillText('Sem estratégia', padding + 40, 28);
+            
+            // Legenda linha verde
+            ctx.fillStyle = '#10B981';
+            ctx.fillRect(padding + 200, 20, 30, 4);
+            ctx.fillText('Com Ghostwriting', padding + 240, 28);
+        }
+
+        // Adicionar event listeners
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', calculateResults);
+        });
+
+        // Funções do modal
+        function openModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.add('active');
+            
+            // Atualizar link do WhatsApp
+            const mensagem = `Vi a calculadora de ROI, quero recuperar os ${formatCurrency(valorPerdidoMensal)} que estou perdendo todo mês!`;
+            const whatsappNumber = '5511999999999'; // Substitua pelo número real
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mensagem)}`;
+            document.getElementById('whatsappLink').href = whatsappUrl;
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // Fechar modal ao clicar fora
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Form submission
+        document.getElementById('captureForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Coletar dados
+            const formData = {
+                nome: document.getElementById('nome').value,
+                email: document.getElementById('email').value,
+                telefone: document.getElementById('telefone').value,
+                valorPerdido: valorPerdidoMensal,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Aqui você integraria com seu backend
+            console.log('Dados capturados:', formData);
+            
+            // Mostrar mensagem de sucesso
+            document.getElementById('successMessage').classList.add('active');
+            document.getElementById('captureForm').style.display = 'none';
+            
+            // Reset após 3 segundos
+            setTimeout(() => {
+                closeModal();
+                document.getElementById('successMessage').classList.remove('active');
+                document.getElementById('captureForm').style.display = 'block';
+                document.getElementById('captureForm').reset();
+            }, 3000);
+        });
+
+        // Calcular resultados iniciais
+        calculateResults();
+    </script>
+</body>
+</html>

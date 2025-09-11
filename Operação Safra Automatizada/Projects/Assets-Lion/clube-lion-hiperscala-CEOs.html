@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clube Lion - R$20M Faturados | Consultoria de Hiper-Escala com IA</title>
+    <meta name="description" content="O único consultor que faturou R$20M antes da IA. Agora uso IA para escalar negócios high-ticket em 90 dias.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        :root {
+            --gold: #D4AF37;
+            --dark-gold: #B8941F;
+            --blood-red: #8B0000;
+            --black: #0A0A0A;
+            --white: #FFFFFF;
+            --gray: #1a1a1a;
+            --success: #00ff00;
+            --danger: #ff4444;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* Loading Screen */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: var(--black);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+        
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .lion-logo {
+            font-size: 60px;
+            margin-bottom: 15px;
+            animation: roar 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes roar {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .loader-text {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Mobile First Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 15px 20px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .logo {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--gold);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo-icon {
+            font-size: 24px;
+        }
+        
+        .mobile-menu-toggle {
+            background: none;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .mobile-menu-toggle:active {
+            transform: scale(0.95);
+        }
+        
+        .nav-links {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 20px;
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+            border-bottom: 2px solid var(--gold);
+            z-index: 999;
+        }
+        
+        .nav-links.active {
+            display: flex;
+        }
+        
+        .nav-link {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px;
+            transition: color 0.3s;
+            text-align: center;
+        }
+        
+        .nav-link:active {
+            color: var(--gold);
+        }
+        
+        .nav-cta {
+            background: linear-gradient(135deg, var(--gold), var(--dark-gold));
+            color: var(--black);
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        
+        /* Hero Section Mobile First */
+        .hero {
+            min-height: 100vh;
+            min-height: 100dvh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 40px;
+            background: linear-gradient(180deg, 
+                rgba(10,10,10,0.7) 0%, 
+                rgba(10,10,10,0.85) 50%, 
+                rgba(10,10,10,0.95) 100%),
+                linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            width: 100%;
+            max-width: 900px;
+        }
+        
+        .authority-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            padding: 10px 24px;
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            border-radius: 50px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
+            to { box-shadow: 0 0 25px rgba(212, 175, 55, 0.6); }
+        }
+        
+        .main-title {
+            font-size: clamp(32px, 8vw, 64px);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--white) 50%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease-in-out infinite;
+            background-size: 200% auto;
+            line-height: 1.1;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .subtitle {
+            font-size: clamp(18px, 4vw, 28px);
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 30px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            padding: 0 10px;
+        }
+        
+        .highlight {
+            color: var(--gold);
+            font-weight: bold;
+        }
+        
+        .hero-promise {
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .promise-title {
+            font-size: 20px;
+            color: var(--gold);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .promise-list {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+        
+        .promise-item {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .promise-icon {
+            color: var(--success);
+            font-weight: bold;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .hero-stat {
+            text-align: center;
+            padding: 15px 5px;
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .hero-stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--gold);
+            display: block;
+        }
+        
+        .hero-stat-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        
+        .cta-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+            margin-top: 40px;
+        }
+        
+        .hero-cta {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold), var(--dark-gold));
+            color: var(--black);
+            padding: 20px 50px;
+            font-size: 18px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-cta:active {
+            transform: scale(0.98);
+        }
+        
+        .hero-cta-secondary {
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            padding: 18px 40px;
+        }
+        
+        .urgency-text {
+            color: var(--danger);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: blink 2s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Services Section */
+        .services-section {
+            padding: 80px 20px;
+            background: var(--gray);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
+            padding: 8px 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50px;
+        }
+        
+        .section-title {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--white);
+        }
+        
+        .section-subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-top: 50px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .service-card {
+            background: rgba(10, 10, 10, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+        }
+        
+        .service-card.featured {
+            border-color: var(--gold);
+            background: linear-gradient(135deg, 
+                rgba(212, 175, 55, 0.05) 0%, 
+                rgba(10, 10, 10, 0.9) 100%);
+        }
+        
+        .service-ribbon {
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: var(--gold);
+            color: var(--black);
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .service-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .service-title {
+            font-size: 24px;
+            color: var(--gold);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .service-price {
+            font-size: 28px;
+            color: var(--white);
+            font-weight: bold;
+        }
+        
+        .service-price-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            display: block;
+            margin-top: 5px;
+        }
+        
+        .service-description {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .service-features {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .service-feature {
+            padding: 10px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .service-feature:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-icon {
+            color: var(--success);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .service-cta {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--gold), var(--dark-gold));
+            color: var(--black);
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 8px;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        
+        .service-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+        
+        /* Results Section */
+        .results-section {
+            padding: 80px 20px;
+            background: linear-gradient(180deg, var(--gray) 0%, var(--black) 100%);
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-top: 50px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .result-card {
+            background: rgba(212, 175, 55, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            text-align: center;
+        }
+        
+        .result-number {
+            font-size: 48px;
+            color: var(--gold);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .result-label {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+        
+        .result-description {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+        
+        /* Process Section */
+        .process-section {
+            padding: 80px 20px;
+            background: var(--black);
+        }
+        
+        .process-timeline {
+            max-width: 800px;
+            margin: 50px auto;
+            position: relative;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--gold) 0%, rgba(212, 175, 55, 0.2) 100%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 40px;
+        }
+        
+        .timeline-marker {
+            position: absolute;
+            left: 10px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: var(--gold);
+            border-radius: 50%;
+            border: 4px solid var(--black);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.3);
+        }
+        
+        .timeline-content {
+            background: rgba(10, 10, 10, 0.8);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .timeline-day {
+            font-size: 12px;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        
+        .timeline-title {
+            font-size: 20px;
+            color: var(--white);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .timeline-description {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+        
+        /* Guarantee Section */
+        .guarantee-section {
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(10, 10, 10, 0.9) 100%);
+            text-align: center;
+        }
+        
+        .guarantee-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(10, 10, 10, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            border: 3px solid var(--gold);
+            position: relative;
+        }
+        
+        .guarantee-seal {
+            position: absolute;
+            top: -30px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.5);
+        }
+        
+        .guarantee-title {
+            font-size: 32px;
+            color: var(--gold);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .guarantee-text {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+        
+        .guarantee-cta {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold), var(--dark-gold));
+            color: var(--black);
+            padding: 18px 40px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, var(--black) 0%, var(--gray) 100%);
+            text-align: center;
+        }
+        
+        .cta-title {
+            font-size: 40px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--white) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cta-subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            padding: 0 20px;
+        }
+        
+        .final-cta-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .final-cta {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--gold), var(--dark-gold));
+            color: var(--black);
+            text-align: center;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s;
+        }
+        
+        .final-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
+        }
+        
+        .spots-counter {
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(139, 0, 0, 0.2);
+            border: 2px solid var(--blood-red);
+            border-radius: 8px;
+            margin-top: 20px;
+            color: var(--white);
+            font-size: 16px;
+        }
+        
+        .spots-number {
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 40px 20px;
+            background: var(--black);
+            text-align: center;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .footer-logo {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-link {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 14px;
+            padding: 5px 10px;
+        }
+        
+        .footer-link:active {
+            color: var(--gold);
+        }
+        
+        .footer-text {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+        
+        /* Tablets and larger screens */
+        @media (min-width: 768px) {
+            .navbar {
+                padding: 20px 40px;
+            }
+            
+            .logo {
+                font-size: 24px;
+            }
+            
+            .mobile-menu-toggle {
+                display: none;
+            }
+            
+            .nav-links {
+                position: static;
+                display: flex;
+                flex-direction: row;
+                gap: 30px;
+                align-items: center;
+                padding: 0;
+                background: transparent;
+                border: none;
+            }
+            
+            .nav-link {
+                padding: 0;
+                font-size: 14px;
+            }
+            
+            .nav-link:hover {
+                color: var(--gold);
+            }
+            
+            .nav-cta {
+                padding: 10px 20px;
+            }
+            
+            .nav-cta:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+            }
+            
+            .hero {
+                padding: 120px 40px 60px;
+            }
+            
+            .hero-stats {
+                grid-template-columns: repeat(3, 200px);
+                justify-content: center;
+                gap: 30px;
+            }
+            
+            .cta-container {
+                flex-direction: row;
+                justify-content: center;
+                gap: 20px;
+            }
+            
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .results-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .timeline-line {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .timeline-item:nth-child(even) {
+                padding-left: 0;
+                padding-right: 60px;
+                text-align: right;
+            }
+            
+            .timeline-item:nth-child(even) .timeline-marker {
+                left: auto;
+                right: calc(50% - 10px);
+            }
+            
+            .timeline-item:nth-child(even) .timeline-content {
+                margin-left: auto;
+                margin-right: calc(50% + 30px);
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content {
+                margin-left: calc(50% + 30px);
+            }
+            
+            .timeline-marker {
+                left: calc(50% - 10px);
+            }
+        }
+        
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader">
+        <div class="lion-logo">🦁</div>
+        <div class="loader-text">Clube Lion</div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <span class="logo-icon">🦁</span>
+            <span>CLUBE LION</span>
+        </a>
+        <div class="nav-links" id="navLinks">
+            <a href="#servicos" class="nav-link">Serviços</a>
+            <a href="#resultados" class="nav-link">Resultados</a>
+            <a href="#processo" class="nav-link">Processo</a>
+            <a href="#diagnostico" class="nav-cta">Diagnóstico Gratuito</a>
+        </div>
+        <button class="mobile-menu-toggle" id="menuToggle">☰</button>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="authority-badge">
+                💰 R$20M Faturados ANTES da IA
+            </div>
+            
+            <h1 class="main-title">O Único Consultor Que Faturou R$20M Sem IA</h1>
+            <p class="subtitle">
+                Agora uso <span class="highlight">IA para escalar negócios high-ticket</span> em 90 dias
+            </p>
+            
+            <div class="hero-promise">
+                <h3 class="promise-title">Em 90 Dias Você Terá:</h3>
+                <div class="promise-list">
+                    <div class="promise-item">
+                        <span class="promise-icon">✓</span>
+                        <span>+30-70% de consultas premium qualificadas (clínicas estéticas)</span>
+                    </div>
+                    <div class="promise-item">
+                        <span class="promise-icon">✓</span>
+                        <span>Pipeline previsível de consultas pagas (advogados high-ticket)</span>
+                    </div>
+                    <div class="promise-item">
+                        <span class="promise-icon">✓</span>
+                        <span>Redução drástica de no-show com sistemas IA</span>
+                    </div>
+                    <div class="promise-item">
+                        <span class="promise-icon">✓</span>
+                        <span>ROI garantido por contrato ou reorquestração completa</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-number">R$20M</span>
+                    <span class="hero-stat-label">Faturados Pre-IA</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">150+</span>
+                    <span class="hero-stat-label">Empresas Escaladas</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">3X</span>
+                    <span class="hero-stat-label">ROI Médio em 90 Dias</span>
+                </div>
+            </div>
+            
+            <div class="cta-container">
+                <a href="#diagnostico" class="hero-cta">Agendar Diagnóstico Gratuito</a>
+                <a href="#servicos" class="hero-cta hero-cta-secondary">Ver Pacotes</a>
+            </div>
+            
+            <p class="urgency-text">⚠️ Apenas 5 diagnósticos por semana</p>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section class="services-section fade-in" id="servicos">
+        <div class="section-header">
+            <span class="section-badge">Serviços Premium</span>
+            <h2 class="section-title">3 Formas de Escalar</h2>
+            <p class="section-subtitle">
+                Escolha o nível de transformação que seu negócio precisa
+            </p>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-header">
+                    <div>
+                        <h3 class="service-title">Sprint Diagnóstico</h3>
+                        <p class="service-description">
+                            Análise profunda de gargalos + mapa de implementação IA + projeções de ROI
+                        </p>
+                    </div>
+                </div>
+                <div class="service-price">
+                    R$ 5-10k
+                    <span class="service-price-label">2 semanas</span>
+                </div>
+                <ul class="service-features">
+                    <li class="service-feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Análise 360° do funil atual</span>
+                    </li>
+                    <li class="service-feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Mapa de gargalos prioritários</span>
+                    </li>
+                    <li class="service-feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Plano de IA personalizado</span>
+                    </li>
+                    <li class="service-feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Projeções de ROI detalhadas</span>
+                    </li>
+                    <li class="service-feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Relatório executivo completo</span>
+                    </li>
+                </ul>
+                <a href="#diagnostico" class="service-cta">Começar Diagnóstico</a>
+            </div>
+            
+            <div class="service-card featured">
+                <div class="service-ribbon">Mais Popular</div>
+                <div class="service-header">
+                    <div>
+                        <h3 class="service-title">Implementação MVP</h3>
+                        <p class="service-description">
+                            Setup completo do sistema IA + 3 playbooks de captura/reativação/fechamento
+                        </p>
+                    </div>
+                </div>
+                <div class="service-price">
+                    R$ 25-40k
+                    <span class="service-price-label">60 dias</span>
+                </div>
+                <ul class="service-features">
+                    <li class="service-feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Assistente IA de pré-qualificação</span>
+                    </li>
+                    <li class="service-feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Trilhas de nutrição automatizadas</span>
+                    </li>
+                    <li class="service-feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Reativação inteligente da base</span>
+                    </li>
+                    <li class="service-feature">
+                        <span class="feature-icon">✓</span>
+                        <span>3 playbooks personalizados</span>
+                    </li>
+                    <li class="service-feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Dashboard de métricas em tempo real</span>
+                    </li>
+                    <li class="service-feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Treinamento completo da equipe</span>
+                    </li>
+                </ul>
+                <a href="#diagnostico" class="service-cta">Reservar Implementação</a>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-header">
+                    <div>
+                        <h3 class="service-title">Retainer Mensal</h3>
+                        <p class="service-description">
+                            Otimização contínua + novos testes + relatórios semanais de performance
+                        </p>
+                    </div>
+                </div>
+                <div class="service-price">
+                    R$ 12-20k
+                    <span class="service-price-label">por mês</span>
+                </div>
+                <ul class="service-features">
+                    <li class="service-feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Otimização semanal de IA</span>
+                    </li>
+                    <li class="service-feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Novos testes A/B mensais</span>
+                    </li>
+                    <li class="service-feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Relatórios executivos semanais</span>
+                    </li>
+                    <li class="service-feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Calls quinzenais de estratégia</span>
+                    </li>
+                    <li class="service-feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Suporte prioritário via WhatsApp</span>
+                    </li>
+                </ul>
+                <a href="#diagnostico" class="service-cta">Falar sobre Retainer</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Results Section -->
+    <section class="results-section fade-in" id="resultados">
+        <div class="section-header">
+            <span class="section-badge">Resultados Reais</span>
+            <h2 class="section-title">KPIs Que Entregamos</h2>
+            <p class="section-subtitle">
+                Métricas médias dos primeiros 90 dias de implementação
+            </p>
+        </div>
+        
+        <div class="results-grid">
+            <div class="result-card">
+                <div class="result-number">>80%</div>
+                <div class="result-label">Redução Tempo</div>
+                <p class="result-description">
+                    De qualificação de leads com IA
+                </p>
+            </div>
+            
+            <div class="result-card">
+                <div class="result-number">>30%</div>
+                <div class="result-label">Taxa Resposta</div>
+                <p class="result-description">
+                    Em follow-ups automatizados
+                </p>
+            </div>
+            
+            <div class="result-card">
+                <div class="result-number">3X</div>
+                <div class="result-label">ROI Médio</div>
+                <p class="result-description">
+                    Retorno sobre investimento
+                </p>
+            </div>
+            
+            <div class="result-card">
+                <div class="result-number">NPS ≥8</div>
+                <div class="result-label">Satisfação</div>
+                <p class="result-description">
+                    Dos clientes no piloto
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Process Section -->
+    <section class="process-section fade-in" id="processo">
+        <div class="section-header">
+            <span class="section-badge">Protocolo de Execução</span>
+            <h2 class="section-title">90 Dias Para Escalar</h2>
+            <p class="section-subtitle">
+                Processo validado com 150+ empresas transformadas
+            </p>
+        </div>
+        
+        <div class="process-timeline">
+            <div class="timeline-line"></div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-day">Dias 1-7</div>
+                    <h3 class="timeline-title">Validação Relâmpago</h3>
+                    <p class="timeline-description">
+                        Análise profunda do funil, identificação de gargalos críticos, 
+                        mapeamento de quick wins e decisão go/no-go baseada em dados.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-day">Dias 8-30</div>
+                    <h3 class="timeline-title">Sprint de Diagnóstico</h3>
+                    <p class="timeline-description">
+                        Implementação de pilotos IA, primeiros testes com base quente,
+                        validação de mensagens e ajustes de guerra baseados em métricas.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-day">Dias 31-60</div>
+                    <h3 class="timeline-title">Implementação MVP</h3>
+                    <p class="timeline-description">
+                        Setup completo do sistema, automações rodando, equipe treinada,
+                        primeiros resultados documentados com >10% de melhoria.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-day">Dias 61-90</div>
+                    <h3 class="timeline-title">Escala & Otimização</h3>
+                    <p class="timeline-description">
+                        Sistema otimizado, ROI comprovado, pipeline previsível,
+                        conversão para retainer mensal com metas claras.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Guarantee Section -->
+    <section class="guarantee-section">
+        <div class="guarantee-container">
+            <div class="guarantee-seal">🛡️</div>
+            <h3 class="guarantee-title">Garantia Inteligente</h3>
+            <p class="guarantee-text">
+                <strong>Metas contratuais claras com marcos definidos.</strong><br>
+                Se não batermos a meta principal em 90 dias, fazemos a reorquestração completa sem custo adicional.<br><br>
+                
+                Sem pegadinhas. Sem letras miúdas.<br>
+                <span class="highlight">Ou entregamos o ROI prometido ou trabalhamos de graça até entregar.</span>
+            </p>
+            <a href="#diagnostico" class="guarantee-cta">Quero Essa Garantia</a>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta-section" id="diagnostico">
+        <div class="cta-container">
+            <h2 class="cta-title">Reserve Seu Diagnóstico</h2>
+            <p class="cta-subtitle">
+                2 semanas para mapear todos os gargalos e entregar um plano de IA personalizado<br>
+                <strong>Investimento: R$ 5.000</strong> (deduzido da implementação)
+            </p>
+            
+            <div class="final-cta-container">
+                <a href="https://calendly.com/clubelion/diagnostico" class="final-cta">
+                    📅 Agendar Diagnóstico Agora
+                </a>
+                <a href="https://wa.me/5511999999999?text=Olá,%20vi%20sobre%20o%20diagnóstico%20de%20IA%20e%20quero%20saber%20mais" class="final-cta" style="background: transparent; border: 2px solid var(--gold); color: var(--gold);">
+                    💬 Tirar Dúvidas no WhatsApp
+                </a>
+            </div>
+            
+            <div class="spots-counter">
+                Apenas <span class="spots-number">3</span> vagas disponíveis esta semana
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">🦁</div>
+        <div class="footer-links">
+            <a href="#servicos" class="footer-link">Serviços</a>
+            <a href="#resultados" class="footer-link">Resultados</a>
+            <a href="#processo" class="footer-link">Processo</a>
+            <a href="https://instagram.com/clubelion" class="footer-link" target="_blank">Instagram</a>
+        </div>
+        <p class="footer-text">
+            © 2025 Clube Lion - Consultoria de Hiper-Escala com IA<br>
+            R$20M faturados. 150+ empresas transformadas. ROI garantido.
+        </p>
+    </footer>
+    
+    <script>
+        // Remove loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelector('.loader').classList.add('hidden');
+            }, 1500);
+        });
+        
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+        });
+        
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-link, .nav-cta').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuToggle.textContent = '☰';
+            });
+        });
+        
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Update spots counter
+        let spots = 3;
+        const spotsInterval = setInterval(() => {
+            if (Math.random() > 0.7 && spots > 1) {
+                spots--;
+                const spotsElement = document.querySelector('.spots-number');
+                if (spotsElement) {
+                    spotsElement.textContent = spots;
+                }
+                if (spots === 1) {
+                    clearInterval(spotsInterval);
+                }
+            }
+        }, 45000); // Update every 45 seconds
+        
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

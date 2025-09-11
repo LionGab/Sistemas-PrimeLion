@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações - Dashboard Disciplinar</title>
+    
+    <!-- CSS Externos -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    
+    <!-- GitHub Sync -->
+    <script src="../assets/js/github-sync.js"></script>
+</head>
+
+<body>
+    <!-- BARRA SUPERIOR -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <div class="app-launcher">
+                <span></span><span></span><span></span>
+                <span></span><span></span><span></span>
+                <span></span><span></span><span></span>
+            </div>
+            <span class="app-name">Dashboard Disciplinar</span>
+        </div>
+        <div class="top-bar-center">
+            <input type="text" class="search-box" placeholder="Pesquisar configurações...">
+        </div>
+        <div class="top-bar-right">
+            <div class="user-profile">A</div>
+        </div>
+    </div>
+
+    <!-- LAYOUT PRINCIPAL -->
+    <div class="main-layout">
+        
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">Módulos Principais</div>
+                
+                <a href="../index.html" class="sidebar-item">
+                    <span class="sidebar-icon">🏠</span>
+                    <span class="sidebar-text">Dashboard</span>
+                </a>
+                
+                
+                <a href="gestao-alunos.html" class="sidebar-item">
+                    <span class="sidebar-icon">👥</span>
+                    <span class="sidebar-text">Gestão de Alunos</span>
+                </a>
+                
+                <a href="medidas-disciplinares.html" class="sidebar-item">
+                    <span class="sidebar-icon">📋</span>
+                    <span class="sidebar-text">Medidas Disciplinares</span>
+                </a>
+                
+                <a href="frequencia.html" class="sidebar-item">
+                    <span class="sidebar-icon">📅</span>
+                    <span class="sidebar-text">Controle de Frequência</span>
+                </a>
+                
+                <a href="relatorios.html" class="sidebar-item">
+                    <span class="sidebar-icon">📊</span>
+                    <span class="sidebar-text">Relatórios</span>
+                </a>
+                
+                <a href="analises.html" class="sidebar-item">
+                    <span class="sidebar-icon">📈</span>
+                    <span class="sidebar-text">Análises</span>
+                </a>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-title">Ferramentas</div>
+                
+                <a href="configuracoes.html" class="sidebar-item active">
+                    <span class="sidebar-icon">⚙️</span>
+                    <span class="sidebar-text">Configurações</span>
+                </a>
+                
+                <a href="comunicacao.html" class="sidebar-item">
+                    <span class="sidebar-icon">📱</span>
+                    <span class="sidebar-text">Comunicação</span>
+                </a>
+                
+                <a href="login.html" class="sidebar-item">
+                    <span class="sidebar-icon">🔐</span>
+                    <span class="sidebar-text">Login/Logout</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- ÁREA DE CONTEÚDO -->
+        <div class="content-area">
+            <div class="main-content">
+                
+                <!-- TÍTULO -->
+                <div class="module-title">
+                    ⚙️ Configurações do Sistema
+                </div>
+
+                <!-- CONFIGURAÇÕES GERAIS -->
+                <div class="data-card">
+                    <div class="card-header">
+                        <h3 class="card-title">🏫 Configurações da Escola</h3>
+                        <p class="card-subtitle">Informações básicas da instituição de ensino</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Nome da Escola</label>
+                                <input type="text" id="nomeEscola" class="form-input" placeholder="Digite o nome da escola">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Ano Letivo</label>
+                                <input type="number" id="anoLetivo" class="form-input" value="2025" min="2020" max="2030">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">CNPJ/Código MEC</label>
+                                <input type="text" id="cnpjEscola" class="form-input" placeholder="00.000.000/0001-00">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Endereço Completo</label>
+                                <input type="text" id="enderecoEscola" class="form-input" placeholder="Rua, número, bairro, cidade, CEP">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Telefone</label>
+                                <input type="tel" id="telefoneEscola" class="form-input" placeholder="(11) 99999-9999">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Institucional</label>
+                                <input type="email" id="emailEscola" class="form-input" placeholder="contato@escola.edu.br">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn-primary" onclick="salvarConfiguracoesEscola()">
+                                💾 Salvar Configurações da Escola
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONFIGURAÇÕES DO SISTEMA -->
+                <div class="data-card">
+                    <div class="card-header">
+                        <h3 class="card-title">🔧 Configurações do Sistema</h3>
+                        <p class="card-subtitle">Personalize o comportamento e aparência do sistema</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Limite de Faltas para Alerta</label>
+                                <input type="number" id="limiteFaltas" class="form-input" value="10" min="1" max="50">
+                                <small class="form-help">Número de faltas para gerar alerta automático</small>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Backup Automático (dias)</label>
+                                <input type="number" id="diasBackup" class="form-input" value="7" min="1" max="30">
+                                <small class="form-help">Intervalo entre backups automáticos</small>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Formato de Data</label>
+                                <select id="formatoData" class="form-input">
+                                    <option value="DD/MM/YYYY">DD/MM/YYYY (brasileiro)</option>
+                                    <option value="MM/DD/YYYY">MM/DD/YYYY (americano)</option>
+                                    <option value="YYYY-MM-DD">YYYY-MM-DD (ISO)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Tema do Sistema</label>
+                                <select id="temaSistema" class="form-input">
+                                    <option value="claro">🌞 Tema Claro</option>
+                                    <option value="escuro">🌙 Tema Escuro</option>
+                                    <option value="auto">🔄 Automático</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Notificações por Email</label>
+                                <select id="notificacoesEmail" class="form-input">
+                                    <option value="todas">📧 Todas as Notificações</option>
+                                    <option value="importantes">⚠️ Apenas Importantes</option>
+                                    <option value="nenhuma">🔕 Desabilitadas</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Idioma do Sistema</label>
+                                <select id="idiomaSistema" class="form-input">
+                                    <option value="pt-BR">🇧🇷 Português (Brasil)</option>
+                                    <option value="en-US">🇺🇸 English (US)</option>
+                                    <option value="es-ES">🇪🇸 Español</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn-primary" onclick="salvarConfigracoesSistema()">
+                                ⚙️ Salvar Configurações do Sistema
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONFIGURAÇÕES DE SEGURANÇA -->
+                <div class="data-card security-card">
+                    <div class="card-header">
+                        <h3 class="card-title">🔒 Configurações de Segurança</h3>
+                        <p class="card-subtitle">Gerencie a segurança e privacidade do sistema</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="security-warning">
+                            <div class="alert alert-warning">
+                                <span class="alert-icon">⚠️</span>
+                                <div class="alert-content">
+                                    <strong>Atenção:</strong> Alterações nas configurações de segurança podem afetar o acesso ao sistema.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Tempo de Sessão</label>
+                                <input type="number" id="tempoSessao" class="form-input" value="60" min="15" max="480">
+                                <small class="form-help">Minutos de inatividade para logout automático</small>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Política de Senhas</label>
+                                <select id="politicaSenhas" class="form-input">
+                                    <option value="basica">🔐 Básica (6+ caracteres)</option>
+                                    <option value="intermediaria">🔒 Intermediária (8+ com números)</option>
+                                    <option value="avancada">🛡️ Avançada (12+ com símbolos)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Autenticação de Dois Fatores</label>
+                                <select id="autenticacao2FA" class="form-input">
+                                    <option value="desabilitada">❌ Desabilitada</option>
+                                    <option value="opcional">🔓 Opcional</option>
+                                    <option value="obrigatoria">🔐 Obrigatória</option>
+                                </select>
+                                <small class="form-help">Recomendamos ativar para maior segurança</small>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Log de Atividades</label>
+                                <select id="logAtividades" class="form-input">
+                                    <option value="completo">📊 Completo</option>
+                                    <option value="basico">📝 Básico</option>
+                                    <option value="desabilitado">🚫 Desabilitado</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn-warning" onclick="salvarConfiguracoeSeguranca()">
+                                🔒 Salvar Configurações de Segurança
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GESTÃO DE USUÁRIOS -->
+                <div class="data-card users-card">
+                    <div class="card-header">
+                        <h3 class="card-title">👥 Gestão de Usuários</h3>
+                        <p class="card-subtitle">Adicione e gerencie usuários do sistema</p>
+                    </div>
+                    <div class="card-content">
+                        <!-- Adicionar Novo Usuário -->
+                        <div class="form-section">
+                            <h4>➕ Adicionar Novo Usuário</h4>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" id="novoUsuarioEmail" class="form-input" placeholder="usuario@escola.edu.br">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Nome Completo</label>
+                                    <input type="text" id="novoUsuarioNome" class="form-input" placeholder="Nome do usuário">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Senha Inicial</label>
+                                    <input type="password" id="novoUsuarioSenha" class="form-input" placeholder="Mínimo 6 caracteres">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Papel no Sistema</label>
+                                    <select id="novoUsuarioRole" class="form-input">
+                                        <option value="user">👤 Usuário (Consulta)</option>
+                                        <option value="teacher">👨‍🏫 Professor (Lançamentos)</option>
+                                        <option value="admin">👑 Administrador (Total)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button class="btn btn-success" onclick="criarNovoUsuario()">
+                                    ➕ Criar Usuário
+                                </button>
+                                <button class="btn btn-secondary" onclick="criarUsuarioGitHub()">
+                                    🐙 Criar com Email do GitHub
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Lista de Usuários -->
+                        <div class="users-list">
+                            <h4>📋 Usuários Cadastrados</h4>
+                            <div id="usuariosList" class="users-table">
+                                <!-- Será preenchido via JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONFIGURAÇÕES DE SINCRONIZAÇÃO GITHUB -->
+                <div class="data-card github-card">
+                    <div class="card-header">
+                        <h3 class="card-title">🐙 Sincronização GitHub</h3>
+                        <p class="card-subtitle">Configure a sincronização automática de dados para trabalho em equipe</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="github-status" id="githubStatus">
+                            <div class="alert alert-warning">
+                                <span class="alert-icon">⚠️</span>
+                                <div class="alert-content">
+                                    <strong>Sincronização não configurada</strong> - Configure um token GitHub para habilitar sincronização automática entre múltiplos usuários.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Token GitHub</label>
+                                <input type="password" id="githubToken" class="form-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+                                <small class="form-help">Token de acesso pessoal com permissões de repositório</small>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email do Usuário</label>
+                                <input type="email" id="githubEmail" class="form-input" placeholder="seu-email@escola.edu.br">
+                                <small class="form-help">Email para identificação nos commits</small>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Nome do Usuário</label>
+                                <input type="text" id="githubNome" class="form-input" placeholder="Seu Nome">
+                                <small class="form-help">Nome que aparecerá nos commits</small>
+                            </div>
+                        </div>
+                        
+                        <div class="github-info">
+                            <div class="info-box">
+                                <h4>📋 Como obter um Token GitHub:</h4>
+                                <ol class="steps-list">
+                                    <li>Acesse <a href="https://github.com/settings/tokens" target="_blank">GitHub Settings → Tokens</a></li>
+                                    <li>Clique em "Generate new token" → "Classic"</li>
+                                    <li>Selecione as permissões: <code>repo</code> (acesso completo ao repositório)</li>
+                                    <li>Copie o token gerado e cole no campo acima</li>
+                                </ol>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button class="btn btn-success" onclick="configurarGitHub()">
+                                🔗 Conectar GitHub
+                            </button>
+                            <button class="btn btn-secondary" onclick="testarConexaoGitHub()" id="testarBtn" disabled>
+                                🧪 Testar Conexão
+                            </button>
+                            <button class="btn btn-warning" onclick="desconectarGitHub()" id="desconectarBtn" disabled>
+                                🔓 Desconectar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GERENCIAMENTO DE DADOS -->
+                <div class="data-card">
+                    <div class="card-header">
+                        <h3 class="card-title">💾 Gerenciamento de Dados</h3>
+                        <p class="card-subtitle">Backup, restauração e manutenção dos dados do sistema</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="data-actions-grid">
+                            <div class="action-card backup">
+                                <div class="action-icon">💾</div>
+                                <div class="action-content">
+                                    <h4 class="action-title">Backup Completo</h4>
+                                    <p class="action-description">Faça backup de todos os dados para evitar perdas</p>
+                                    <button class="btn btn-info" onclick="fazerBackupCompleto()">
+                                        💾 Fazer Backup Agora
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="action-card restore">
+                                <div class="action-icon">📂</div>
+                                <div class="action-content">
+                                    <h4 class="action-title">Restaurar Dados</h4>
+                                    <p class="action-description">Restaurar dados a partir de um arquivo de backup</p>
+                                    <input type="file" id="arquivoRestore" accept=".json" class="form-input" style="margin-bottom: 10px;">
+                                    <button class="btn btn-warning" onclick="restaurarBackup()">
+                                        📂 Restaurar Backup
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="action-card export">
+                                <div class="action-icon">📊</div>
+                                <div class="action-content">
+                                    <h4 class="action-title">Exportar Dados</h4>
+                                    <p class="action-description">Exportar todos os dados em formato CSV</p>
+                                    <div class="export-buttons">
+                                        <button class="btn btn-success" onclick="exportarAlunos()">
+                                            👥 Alunos
+                                        </button>
+                                        <button class="btn btn-success" onclick="exportarMedidas()">
+                                            📋 Medidas
+                                        </button>
+                                        <button class="btn btn-success" onclick="exportarTodosDados()">
+                                            📊 Tudo
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="action-card danger">
+                                <div class="action-icon">🗑️</div>
+                                <div class="action-content">
+                                    <h4 class="action-title">Limpeza de Dados</h4>
+                                    <p class="action-description">⚠️ <strong>CUIDADO:</strong> Ação irreversível</p>
+                                    <div class="danger-zone">
+                                        <button class="btn btn-secondary" onclick="limparDadosAntigos()">
+                                            🗑️ Limpar Dados Antigos
+                                        </button>
+                                        <button class="btn btn-danger" onclick="resetarSistema()" style="margin-top: 5px;">
+                                            ⚠️ Reset Completo
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ESTATÍSTICAS E INFORMAÇÕES -->
+                <div class="data-card">
+                    <div class="card-header">
+                        <h3 class="card-title">📊 Estatísticas do Sistema</h3>
+                        <p class="card-subtitle">Informações sobre uso e performance do sistema</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">📱</div>
+                                <div class="stat-content">
+                                    <div class="stat-number">v1.0</div>
+                                    <div class="stat-label">Versão Atual</div>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">📊</div>
+                                <div class="stat-content">
+                                    <div class="stat-number" id="totalRegistros">0</div>
+                                    <div class="stat-label">Total Registros</div>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">💾</div>
+                                <div class="stat-content">
+                                    <div class="stat-number" id="espacoUsado">0 KB</div>
+                                    <div class="stat-label">Espaço Usado</div>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">⏰</div>
+                                <div class="stat-content">
+                                    <div class="stat-number" id="ultimoBackup">Nunca</div>
+                                    <div class="stat-label">Último Backup</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- SOBRE O SISTEMA -->
+                <div class="data-card info-card">
+                    <div class="card-header">
+                        <h3 class="card-title">ℹ️ Sobre o Sistema</h3>
+                        <p class="card-subtitle">Informações técnicas e de desenvolvimento</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="system-info">
+                            <div class="info-section">
+                                <h4 class="info-title">📋 Dashboard Disciplinar</h4>
+                                <p class="info-description">
+                                    Sistema completo de gestão disciplinar escolar desenvolvido para facilitar 
+                                    o controle de frequência, medidas disciplinares e comunicação com responsáveis.
+                                </p>
+                            </div>
+                            <div class="tech-stack">
+                                <h4 class="info-title">🛠️ Tecnologias</h4>
+                                <div class="tech-badges">
+                                    <span class="tech-badge">HTML5</span>
+                                    <span class="tech-badge">CSS3</span>
+                                    <span class="tech-badge">JavaScript</span>
+                                    <span class="tech-badge">LocalStorage</span>
+                                    <span class="tech-badge">PWA Ready</span>
+                                </div>
+                            </div>
+                            <div class="info-section">
+                                <h4 class="info-title">🔧 Funcionalidades</h4>
+                                <ul class="features-list">
+                                    <li>Gestão completa de alunos e turmas</li>
+                                    <li>Controle de frequência automatizado</li>
+                                    <li>Sistema de medidas disciplinares</li>
+                                    <li>Portal de consulta para pais</li>
+                                    <li>Relatórios e análises detalhadas</li>
+                                    <li>Backup e exportação de dados</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script src="../assets/js/local-auth.js"></script>
+    <script src="../assets/js/local-db.js"></script>
+    <script src="../assets/js/main.js" defer></script>
+    
+    <script>
+        // Inicialização da página
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('⚙️ Página de Configurações carregada');
+            inicializarConfiguracoes();
+        });
+
+        // Função de inicialização
+        function inicializarConfiguracoes() {
+            carregarConfiguracoesSalvas();
+            atualizarEstatisticasSistema();
+            
+            // Aguardar carregamento dos sistemas
+            setTimeout(() => {
+                verificarStatusGitHub();
+                carregarListaUsuarios();
+            }, 1000);
+        }
+
+        // Carregar configurações salvas
+        function carregarConfiguracoesSalvas() {
+            // Carregar do localStorage
+            const configs = {
+                nomeEscola: localStorage.getItem('nomeEscola') || '',
+                anoLetivo: localStorage.getItem('anoLetivo') || new Date().getFullYear(),
+                cnpjEscola: localStorage.getItem('cnpjEscola') || '',
+                enderecoEscola: localStorage.getItem('enderecoEscola') || '',
+                telefoneEscola: localStorage.getItem('telefoneEscola') || '',
+                emailEscola: localStorage.getItem('emailEscola') || '',
+                limiteFaltas: localStorage.getItem('limiteFaltas') || '10',
+                diasBackup: localStorage.getItem('diasBackup') || '7',
+                formatoData: localStorage.getItem('formatoData') || 'DD/MM/YYYY',
+                temaSistema: localStorage.getItem('temaSistema') || 'claro',
+                notificacoesEmail: localStorage.getItem('notificacoesEmail') || 'importantes',
+                idiomaSistema: localStorage.getItem('idiomaSistema') || 'pt-BR',
+                tempoSessao: localStorage.getItem('tempoSessao') || '60',
+                politicaSenhas: localStorage.getItem('politicaSenhas') || 'basica',
+                autenticacao2FA: localStorage.getItem('autenticacao2FA') || 'desabilitada',
+                logAtividades: localStorage.getItem('logAtividades') || 'basico'
+            };
+
+            // Aplicar valores aos campos
+            Object.keys(configs).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.value = configs[key];
+                }
+            });
+        }
+
+        // Atualizar estatísticas do sistema
+        async function atualizarEstatisticasSistema() {
+            try {
+                let totalRegistros = 0;
+                
+                // Contar registros do localStorage
+                try {
+                    const dados = JSON.parse(localStorage.getItem('db') || '{}');
+                    const medidas = JSON.parse(localStorage.getItem('medidas') || '[]');
+                    
+                    const alunos = dados.alunos || {};
+                    const alunosCount = Object.keys(alunos).length;
+                    const medidasCount = medidas.length;
+                    
+                    totalRegistros = alunosCount + medidasCount;
+                    
+                    console.log(`📊 Estatísticas: ${alunosCount} alunos, ${medidasCount} medidas`);
+                } catch (e) {
+                    console.warn('Erro ao contar registros:', e);
+                }
+                
+                // Atualizar interface
+                const totalElement = document.getElementById('totalRegistros');
+                if (totalElement) {
+                    totalElement.textContent = totalRegistros;
+                }
+                
+                // Simular espaço usado (estimativa básica)
+                const espacoEstimado = Math.round(totalRegistros * 0.5); // 0.5KB por registro
+                const espacoElement = document.getElementById('espacoUsado');
+                if (espacoElement) {
+                    espacoElement.textContent = espacoEstimado + ' KB';
+                }
+                
+                // Último backup
+                const ultimoBackup = localStorage.getItem('ultimoBackup') || 'Nunca';
+                const backupElement = document.getElementById('ultimoBackup');
+                if (backupElement) {
+                    backupElement.textContent = ultimoBackup;
+                }
+                
+            } catch (error) {
+                console.error('Erro ao atualizar estatísticas:', error);
+            }
+        }
+
+        // Salvar configurações
+        function salvarConfiguracoesEscola() {
+            const configs = {
+                nomeEscola: document.getElementById('nomeEscola').value,
+                anoLetivo: document.getElementById('anoLetivo').value,
+                cnpjEscola: document.getElementById('cnpjEscola').value,
+                enderecoEscola: document.getElementById('enderecoEscola').value,
+                telefoneEscola: document.getElementById('telefoneEscola').value,
+                emailEscola: document.getElementById('emailEscola').value
+            };
+
+            try {
+                Object.keys(configs).forEach(key => {
+                    localStorage.setItem(key, configs[key]);
+                });
+                showMessage('✅ Configurações da escola salvas!', 'success');
+            } catch (error) {
+                showMessage('Erro ao salvar configurações', 'error');
+            }
+        }
+
+        function salvarConfigracoesSistema() {
+            const configs = {
+                limiteFaltas: document.getElementById('limiteFaltas').value,
+                diasBackup: document.getElementById('diasBackup').value,
+                formatoData: document.getElementById('formatoData').value,
+                temaSistema: document.getElementById('temaSistema').value,
+                notificacoesEmail: document.getElementById('notificacoesEmail').value,
+                idiomaSistema: document.getElementById('idiomaSistema').value
+            };
+
+            try {
+                Object.keys(configs).forEach(key => {
+                    localStorage.setItem(key, configs[key]);
+                });
+                showMessage('✅ Configurações do sistema salvas!', 'success');
+                
+                // Aplicar tema se mudou
+                aplicarTema(configs.temaSistema);
+            } catch (error) {
+                showMessage('Erro ao salvar configurações', 'error');
+            }
+        }
+
+        function salvarConfiguracoeSeguranca() {
+            const configs = {
+                tempoSessao: document.getElementById('tempoSessao').value,
+                politicaSenhas: document.getElementById('politicaSenhas').value,
+                autenticacao2FA: document.getElementById('autenticacao2FA').value,
+                logAtividades: document.getElementById('logAtividades').value
+            };
+
+            try {
+                Object.keys(configs).forEach(key => {
+                    localStorage.setItem(key, configs[key]);
+                });
+                showMessage('✅ Configurações de segurança salvas!', 'success');
+            } catch (error) {
+                showMessage('Erro ao salvar configurações', 'error');
+            }
+        }
+
+        // Funções de dados
+        async function fazerBackupCompleto() {
+            try {
+                await fazerBackup();
+                localStorage.setItem('ultimoBackup', new Date().toLocaleDateString('pt-BR'));
+                atualizarEstatisticasSistema();
+            } catch (error) {
+                showMessage('Erro ao fazer backup', 'error');
+            }
+        }
+
+        async function restaurarBackup() {
+            const arquivo = document.getElementById('arquivoRestore').files[0];
+            if (!arquivo) {
+                showMessage('Por favor, selecione um arquivo de backup', 'warning');
+                return;
+            }
+            
+            try {
+                const texto = await arquivo.text();
+                const dados = JSON.parse(texto);
+                
+                // Validar estrutura do backup
+                if (dados.alunos || dados.medidas || dados.configuracoes) {
+                    // Salvar dados no localStorage
+                    if (dados.alunos) localStorage.setItem('alunos', JSON.stringify(dados.alunos));
+                    if (dados.medidas) localStorage.setItem('medidas', JSON.stringify(dados.medidas));
+                    if (dados.configuracoes) {
+                        Object.keys(dados.configuracoes).forEach(key => {
+                            localStorage.setItem(key, dados.configuracoes[key]);
+                        });
+                    }
+                    
+                    showMessage('✅ Backup restaurado com sucesso!', 'success');
+                    setTimeout(() => window.location.reload(), 2000);
+                } else {
+                    showMessage('Arquivo de backup inválido', 'error');
+                }
+            } catch (error) {
+                showMessage('Erro ao restaurar backup: arquivo corrompido', 'error');
+            }
+        }
+
+        function exportarAlunos() {
+            const dados = JSON.parse(localStorage.getItem('db') || '{}');
+            const alunos = Object.values(dados.alunos || {});
+            
+            if (alunos.length === 0) {
+                showMessage('Nenhum aluno encontrado para exportar', 'warning');
+                return;
+            }
+            
+            const csv = convertToCSV(alunos, ['codigo', 'nome_completo', 'turma', 'responsavel']);
+            downloadCSV(csv, 'alunos_' + new Date().toISOString().slice(0, 10) + '.csv');
+            showMessage('✅ Dados de alunos exportados!', 'success');
+        }
+        
+        function exportarMedidas() {
+            const medidas = JSON.parse(localStorage.getItem('medidas') || '[]');
+            
+            if (medidas.length === 0) {
+                showMessage('Nenhuma medida encontrada para exportar', 'warning');
+                return;
+            }
+            
+            const csv = convertToCSV(medidas, ['data', 'aluno', 'tipo', 'descricao', 'professor']);
+            downloadCSV(csv, 'medidas_' + new Date().toISOString().slice(0, 10) + '.csv');
+            showMessage('✅ Medidas disciplinares exportadas!', 'success');
+        }
+
+        function exportarTodosDados() {
+            const todosOsDados = {
+                alunos: JSON.parse(localStorage.getItem('db') || '{}').alunos || {},
+                medidas: JSON.parse(localStorage.getItem('medidas') || '[]'),
+                configuracoes: {
+                    nomeEscola: localStorage.getItem('nomeEscola'),
+                    anoLetivo: localStorage.getItem('anoLetivo'),
+                    cnpjEscola: localStorage.getItem('cnpjEscola'),
+                    enderecoEscola: localStorage.getItem('enderecoEscola'),
+                    telefoneEscola: localStorage.getItem('telefoneEscola'),
+                    emailEscola: localStorage.getItem('emailEscola')
+                },
+                exportadoEm: new Date().toISOString()
+            };
+            
+            const json = JSON.stringify(todosOsDados, null, 2);
+            downloadJSON(json, 'backup_completo_' + new Date().toISOString().slice(0, 10) + '.json');
+            showMessage('✅ Backup completo exportado!', 'success');
+        }
+
+        function limparDadosAntigos() {
+            if (confirm('ATENÇÃO: Esta ação irá remover registros com mais de 1 ano permanentemente.\n\nTem certeza que deseja continuar?')) {
+                try {
+                    const medidas = JSON.parse(localStorage.getItem('medidas') || '[]');
+                    const dataLimite = new Date();
+                    dataLimite.setFullYear(dataLimite.getFullYear() - 1);
+                    
+                    const medidasRecentes = medidas.filter(medida => {
+                        const dataMedida = new Date(medida.data);
+                        return dataMedida >= dataLimite;
+                    });
+                    
+                    localStorage.setItem('medidas', JSON.stringify(medidasRecentes));
+                    const removidos = medidas.length - medidasRecentes.length;
+                    
+                    showMessage(`✅ ${removidos} registros antigos removidos!`, 'success');
+                    atualizarEstatisticasSistema();
+                } catch (error) {
+                    showMessage('Erro ao limpar dados antigos', 'error');
+                }
+            }
+        }
+        
+        function resetarSistema() {
+            if (confirm('⚠️ ATENÇÃO: Esta ação irá APAGAR TODOS OS DADOS do sistema!\n\nEsta ação é IRREVERSÍVEL!\n\nDigite "CONFIRMAR" para continuar:')) {
+                const confirmacao = prompt('Digite "CONFIRMAR" para resetar o sistema:');
+                if (confirmacao === 'CONFIRMAR') {
+                    // Fazer backup antes do reset
+                    exportarTodosDados();
+                    
+                    // Limpar todos os dados
+                    localStorage.clear();
+                    
+                    showMessage('🔄 Sistema resetado! Backup salvo automaticamente.', 'info');
+                    setTimeout(() => window.location.href = '../index.html', 3000);
+                } else {
+                    showMessage('Reset cancelado', 'info');
+                }
+            }
+        }
+
+        // Aplicar tema
+        function aplicarTema(tema) {
+            // Implementação básica de tema
+            const body = document.body;
+            body.classList.remove('tema-claro', 'tema-escuro');
+            
+            if (tema === 'escuro') {
+                body.classList.add('tema-escuro');
+            } else if (tema === 'auto') {
+                const isEscuro = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                body.classList.add(isEscuro ? 'tema-escuro' : 'tema-claro');
+            } else {
+                body.classList.add('tema-claro');
+            }
+        }
+
+        // Funções auxiliares para exportação
+        function convertToCSV(data, headers) {
+            const csvHeaders = headers.join(',');
+            const csvRows = data.map(item => {
+                return headers.map(header => {
+                    const value = item[header] || '';
+                    return `"${String(value).replace(/"/g, '""')}"`;
+                }).join(',');
+            });
+            return [csvHeaders, ...csvRows].join('\n');
+        }
+        
+        function downloadCSV(csv, filename) {
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+            URL.revokeObjectURL(link.href);
+        }
+        
+        function downloadJSON(json, filename) {
+            const blob = new Blob([json], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+            URL.revokeObjectURL(link.href);
+        }
+        
+        // Sistema de mensagens
+        function showMessage(message, type = 'info') {
+            // Remove mensagens anteriores
+            const existingAlert = document.querySelector('.floating-alert');
+            if (existingAlert) existingAlert.remove();
+            
+            // Cria nova mensagem
+            const alert = document.createElement('div');
+            alert.className = `floating-alert alert-${type}`;
+            alert.innerHTML = `
+                <span class="alert-icon">${getAlertIcon(type)}</span>
+                <span class="alert-text">${message}</span>
+                <span class="alert-close" onclick="this.parentElement.remove()">×</span>
+            `;
+            
+            document.body.appendChild(alert);
+            
+            // Remove automaticamente após 5 segundos
+            setTimeout(() => {
+                if (alert.parentElement) alert.remove();
+            }, 5000);
+        }
+        
+        function getAlertIcon(type) {
+            const icons = {
+                success: '✅',
+                error: '❌',
+                warning: '⚠️',
+                info: 'ℹ️'
+            };
+            return icons[type] || 'ℹ️';
+        }
+
+        // ============================================
+        //           FUNÇÕES DO GITHUB
+        // ============================================
+        
+        // Verificar status do GitHub ao carregar
+        function verificarStatusGitHub() {
+            const statusDiv = document.getElementById('githubStatus');
+            const testarBtn = document.getElementById('testarBtn');
+            const desconectarBtn = document.getElementById('desconectarBtn');
+            
+            if (window.gitHubSync && window.gitHubSync.podeEscrever()) {
+                // GitHub configurado
+                statusDiv.innerHTML = `
+                    <div class="alert alert-success">
+                        <span class="alert-icon">✅</span>
+                        <div class="alert-content">
+                            <strong>GitHub conectado!</strong> Sincronização automática ativada para: ${window.gitHubSync.userName}
+                        </div>
+                    </div>
+                `;
+                
+                // Preencher campos
+                document.getElementById('githubEmail').value = window.gitHubSync.userEmail || '';
+                document.getElementById('githubNome').value = window.gitHubSync.userName || '';
+                
+                testarBtn.disabled = false;
+                desconectarBtn.disabled = false;
+            } else {
+                // GitHub não configurado
+                statusDiv.innerHTML = `
+                    <div class="alert alert-warning">
+                        <span class="alert-icon">⚠️</span>
+                        <div class="alert-content">
+                            <strong>Sincronização não configurada</strong> - Configure um token GitHub para habilitar sincronização automática entre múltiplos usuários.
+                        </div>
+                    </div>
+                `;
+                
+                testarBtn.disabled = true;
+                desconectarBtn.disabled = true;
+            }
+        }
+        
+        // Configurar GitHub
+        async function configurarGitHub() {
+            const token = document.getElementById('githubToken').value.trim();
+            const email = document.getElementById('githubEmail').value.trim();
+            const nome = document.getElementById('githubNome').value.trim();
+            
+            if (!token) {
+                showMessage('Por favor, insira o token GitHub', 'error');
+                return;
+            }
+            
+            if (!email) {
+                showMessage('Por favor, insira seu email', 'error');
+                return;
+            }
+            
+            if (!nome) {
+                showMessage('Por favor, insira seu nome', 'error');
+                return;
+            }
+            
+            try {
+                showMessage('🔄 Testando conexão com GitHub...', 'info');
+                
+                const sucesso = await window.gitHubSync.configurarGitHub(token, email, nome);
+                
+                if (sucesso) {
+                    showMessage('✅ GitHub configurado com sucesso!', 'success');
+                    verificarStatusGitHub();
+                    
+                    // Limpar campo de token por segurança
+                    document.getElementById('githubToken').value = '';
+                } else {
+                    showMessage('❌ Falha na configuração do GitHub', 'error');
+                }
+                
+            } catch (error) {
+                console.error('Erro ao configurar GitHub:', error);
+                showMessage(`Erro: ${error.message}`, 'error');
+            }
+        }
+        
+        // Testar conexão GitHub
+        async function testarConexaoGitHub() {
+            try {
+                showMessage('🧪 Testando conexão...', 'info');
+                
+                const isValid = await window.gitHubSync.validarToken();
+                
+                if (isValid) {
+                    showMessage('✅ Conexão com GitHub funcionando perfeitamente!', 'success');
+                    
+                    // Testar sincronização
+                    const dados = await window.gitHubSync.sincronizarAutomatico();
+                    if (dados) {
+                        showMessage('📡 Sincronização de dados realizada com sucesso!', 'success');
+                    } else {
+                        showMessage('⚠️ Conexão OK, mas sem dados para sincronizar', 'warning');
+                    }
+                } else {
+                    showMessage('❌ Token inválido ou expirado', 'error');
+                }
+                
+            } catch (error) {
+                console.error('Erro no teste:', error);
+                showMessage(`Erro no teste: ${error.message}`, 'error');
+            }
+        }
+        
+        // Desconectar GitHub
+        function desconectarGitHub() {
+            if (confirm('Tem certeza que deseja desconectar o GitHub?\n\nIsso desabilitará a sincronização automática.')) {
+                window.gitHubSync.logout();
+                
+                // Limpar campos
+                document.getElementById('githubToken').value = '';
+                document.getElementById('githubEmail').value = '';
+                document.getElementById('githubNome').value = '';
+                
+                verificarStatusGitHub();
+                showMessage('🔓 GitHub desconectado', 'info');
+            }
+        }
+
+        // ============================================
+        //           FUNÇÕES DE GESTÃO DE USUÁRIOS
+        // ============================================
+        
+        // Carregar lista de usuários
+        async function carregarListaUsuarios() {
+            const container = document.getElementById('usuariosList');
+            
+            try {
+                if (!window.localAuth) {
+                    if (container) {
+                        container.innerHTML = '<p class="no-users">⏳ Carregando sistema de autenticação...</p>';
+                    }
+                    setTimeout(carregarListaUsuarios, 1000);
+                    return;
+                }
+                
+                // Verificar se usuário está autenticado
+                if (!window.localAuth.getCurrentUser()) {
+                    if (container) {
+                        container.innerHTML = '<p class="no-users">⏳ Aguardando autenticação...</p>';
+                    }
+                    setTimeout(carregarListaUsuarios, 1000);
+                    return;
+                }
+                
+                const usuarios = await window.localAuth.listUsers();
+                
+                if (!container) return;
+                
+                if (usuarios.length === 0) {
+                    container.innerHTML = '<p class="no-users">Nenhum usuário cadastrado além do administrador padrão.</p>';
+                    return;
+                }
+                
+                let html = `
+                    <div class="users-header">
+                        <span>📧 Email</span>
+                        <span>👤 Nome</span>
+                        <span>👑 Papel</span>
+                        <span>📅 Criado</span>
+                        <span>⚙️ Ações</span>
+                    </div>
+                `;
+                
+                usuarios.forEach(user => {
+                    const roleIcon = {
+                        'admin': '👑',
+                        'teacher': '👨‍🏫',
+                        'user': '👤'
+                    }[user.role] || '👤';
+                    
+                    const roleName = {
+                        'admin': 'Administrador',
+                        'teacher': 'Professor',
+                        'user': 'Usuário'
+                    }[user.role] || 'Usuário';
+                    
+                    html += `
+                        <div class="user-row">
+                            <span class="user-email">${user.email}</span>
+                            <span class="user-name">${user.displayName}</span>
+                            <span class="user-role">${roleIcon} ${roleName}</span>
+                            <span class="user-created">${new Date(user.createdAt).toLocaleDateString('pt-BR')}</span>
+                            <span class="user-actions">
+                                ${user.email !== 'admin@escola.com' ? `
+                                    <button class="btn-small btn-warning" onclick="alterarPapelUsuario('${user.email}')">
+                                        🔄 Alterar Papel
+                                    </button>
+                                    <button class="btn-small btn-danger" onclick="excluirUsuario('${user.email}')">
+                                        🗑️ Excluir
+                                    </button>
+                                ` : '<span class="protected-user">👑 Protegido</span>'}
+                            </span>
+                        </div>
+                    `;
+                });
+                
+                container.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Erro ao carregar usuários:', error);
+                const container = document.getElementById('usuariosList');
+                if (container) {
+                    container.innerHTML = '<p class="error-message">Erro ao carregar usuários. Faça login como administrador.</p>';
+                }
+            }
+        }
+        
+        // Criar novo usuário
+        async function criarNovoUsuario() {
+            // Verificar se o sistema está carregado
+            if (!window.localAuth) {
+                showMessage('⚠️ Sistema de autenticação não carregado. Tente novamente em alguns segundos.', 'warning');
+                setTimeout(criarNovoUsuario, 2000);
+                return;
+            }
+            
+            const email = document.getElementById('novoUsuarioEmail').value.trim();
+            const nome = document.getElementById('novoUsuarioNome').value.trim();
+            const senha = document.getElementById('novoUsuarioSenha').value;
+            const role = document.getElementById('novoUsuarioRole').value;
+            
+            if (!email || !nome || !senha) {
+                showMessage('Por favor, preencha todos os campos', 'error');
+                return;
+            }
+            
+            try {
+                showMessage('👤 Criando usuário...', 'info');
+                
+                await window.localAuth.createUserWithEmailAndPassword(email, senha, nome, role);
+                
+                showMessage('✅ Usuário criado com sucesso!', 'success');
+                
+                // Limpar formulário
+                document.getElementById('novoUsuarioEmail').value = '';
+                document.getElementById('novoUsuarioNome').value = '';
+                document.getElementById('novoUsuarioSenha').value = '';
+                document.getElementById('novoUsuarioRole').value = 'user';
+                
+                // Recarregar lista
+                carregarListaUsuarios();
+                
+            } catch (error) {
+                console.error('Erro ao criar usuário:', error);
+                showMessage(`Erro: ${error.message}`, 'error');
+            }
+        }
+        
+        // Criar usuário com email do GitHub
+        async function criarUsuarioGitHub() {
+            const githubEmail = window.gitHubSync?.userEmail;
+            const githubNome = window.gitHubSync?.userName;
+            
+            if (!githubEmail) {
+                showMessage('Configure o GitHub primeiro para usar esta opção', 'warning');
+                return;
+            }
+            
+            // Preencher campos
+            document.getElementById('novoUsuarioEmail').value = githubEmail;
+            document.getElementById('novoUsuarioNome').value = githubNome || githubEmail.split('@')[0];
+            document.getElementById('novoUsuarioRole').value = 'admin';
+            
+            showMessage('📋 Dados do GitHub preenchidos! Defina uma senha e clique em "Criar Usuário"', 'info');
+            
+            // Focar no campo senha
+            document.getElementById('novoUsuarioSenha').focus();
+        }
+        
+        // Excluir usuário
+        async function excluirUsuario(email) {
+            if (!confirm(`Tem certeza que deseja excluir o usuário:\n\n${email}\n\nEsta ação não pode ser desfeita.`)) {
+                return;
+            }
+            
+            try {
+                showMessage('🗑️ Excluindo usuário...', 'info');
+                
+                await window.localAuth.deleteUser(email);
+                
+                showMessage('✅ Usuário excluído com sucesso!', 'success');
+                carregarListaUsuarios();
+                
+            } catch (error) {
+                console.error('Erro ao excluir usuário:', error);
+                showMessage(`Erro: ${error.message}`, 'error');
+            }
+        }
+        
+        // Alterar papel do usuário
+        async function alterarPapelUsuario(email) {
+            const novoRole = prompt(`Alterar papel do usuário ${email}:\n\n1 = Usuário (consulta)\n2 = Professor (lançamentos)\n3 = Administrador (total)\n\nDigite 1, 2 ou 3:`);
+            
+            if (!novoRole || !['1', '2', '3'].includes(novoRole)) {
+                return;
+            }
+            
+            const roleMap = {
+                '1': 'user',
+                '2': 'teacher', 
+                '3': 'admin'
+            };
+            
+            const roleNames = {
+                'user': 'Usuário',
+                'teacher': 'Professor',
+                'admin': 'Administrador'
+            };
+            
+            const newRoleValue = roleMap[novoRole];
+            
+            try {
+                showMessage('👑 Alterando papel...', 'info');
+                
+                await window.localAuth.updateUserRole(email, newRoleValue);
+                
+                showMessage(`✅ Papel alterado para: ${roleNames[newRoleValue]}`, 'success');
+                carregarListaUsuarios();
+                
+            } catch (error) {
+                console.error('Erro ao alterar papel:', error);
+                showMessage(`Erro: ${error.message}`, 'error');
+            }
+        }
+
+        // Funções expostas globalmente
+        window.salvarConfiguracoesEscola = salvarConfiguracoesEscola;
+        window.salvarConfigracoesSistema = salvarConfigracoesSistema;
+        window.salvarConfiguracoeSeguranca = salvarConfiguracoeSeguranca;
+        window.fazerBackupCompleto = fazerBackupCompleto;
+        window.restaurarBackup = restaurarBackup;
+        window.exportarAlunos = exportarAlunos;
+        window.exportarMedidas = exportarMedidas;
+        window.exportarTodosDados = exportarTodosDados;
+        window.limparDadosAntigos = limparDadosAntigos;
+        window.resetarSistema = resetarSistema;
+        window.configurarGitHub = configurarGitHub;
+        window.testarConexaoGitHub = testarConexaoGitHub;
+        window.desconectarGitHub = desconectarGitHub;
+        window.criarNovoUsuario = criarNovoUsuario;
+        window.criarUsuarioGitHub = criarUsuarioGitHub;
+        window.excluirUsuario = excluirUsuario;
+        window.alterarPapelUsuario = alterarPapelUsuario;
+    </script>
+    <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Verificação de autenticação - mais permissiva para configurações
+    setTimeout(() => {
+      if (window.localAuth && typeof window.localAuth.onAuthStateChanged === 'function') {
+        // Verifica usuário logado
+        window.localAuth.onAuthStateChanged(user => {
+          if (!user) {
+            // Permitir acesso à configurações mesmo sem login para primeiro acesso
+            console.log('⚠️ Acesso à configurações sem login - permitido para configuração inicial');
+          } else {
+            console.log("✅ Usuário logado:", user.email);
+          }
+        });
+      } else {
+        console.log('⚠️ Sistema de autenticação carregando...');
+      }
+    }, 500);
+  });
+</script>
+
+</body>
+</html>

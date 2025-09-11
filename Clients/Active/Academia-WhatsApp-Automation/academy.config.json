@@ -1,0 +1,240 @@
+{
+  "academia": {
+    "nome": "Full Force Academia",
+    "cnpj": "48.123.456/0001-78",
+    "endereco": "Rua Principal, 789 - Centro",
+    "cidade": "Matupá",
+    "estado": "MT",
+    "telefone": "+55 66 99876-5432",
+    "whatsapp": "+55 66 99876-5432",
+    "email": "contato@fullforceacademia.com.br",
+    "website": "https://fullforceacademia.com.br"
+  },
+  
+  "operacao": {
+    "horario_funcionamento": {
+      "segunda_sexta": {
+        "abertura": "06:00",
+        "fechamento": "22:00"
+      },
+      "sabado": {
+        "abertura": "08:00",
+        "fechamento": "18:00"
+      },
+      "domingo": {
+        "abertura": "08:00",
+        "fechamento": "16:00"
+      }
+    },
+    "horario_atendimento_whatsapp": {
+      "inicio": "08:00",
+      "fim": "20:00",
+      "dias_semana": ["seg", "ter", "qua", "qui", "sex", "sab"]
+    }
+  },
+  
+  "automacao": {
+    "configuracao_geral": {
+      "limite_mensagens_hora": 100,
+      "delay_entre_mensagens_ms": 2000,
+      "max_tentativas_envio": 3,
+      "timeout_resposta_horas": 24,
+      "idioma_padrao": "pt-BR"
+    },
+    
+    "reativacao": {
+      "ativo": true,
+      "criterios": {
+        "dias_inatividade": [15, 30, 60],
+        "status_aluno": ["ATIVO"],
+        "permite_whatsapp": true
+      },
+      "configuracao": {
+        "max_tentativas_por_aluno": 3,
+        "intervalo_entre_tentativas_dias": 7,
+        "horarios_permitidos": ["09:00", "14:00", "19:00"],
+        "pausar_em_feriados": true
+      }
+    },
+    
+    "nurturing": {
+      "ativo": true,
+      "criterios": {
+        "status_aluno": ["VISITANTE"],
+        "dias_desde_visita": 1,
+        "max_mensagens": 5
+      },
+      "configuracao": {
+        "sequencia_dias": [1, 3, 7, 14, 21],
+        "horarios_preferenciais": ["10:00", "16:00"],
+        "incluir_midia": true,
+        "personalizar_por_interesse": ["musculacao", "cardio", "funcional"]
+      }
+    },
+    
+    "renovacao": {
+      "ativo": true,
+      "criterios": {
+        "dias_antes_vencimento": 5,
+        "status_aluno": ["ATIVO"],
+        "ultimo_pagamento_status": ["PAGO", "PENDENTE"]
+      },
+      "configuracao": {
+        "lembretes_por_dia": 1,
+        "max_lembretes_total": 10,
+        "incluir_link_pagamento": true,
+        "desconto_pagamento_antecipado": 0.05
+      }
+    }
+  },
+  
+  "planos": {
+    "bronze": {
+      "nome": "Plano Bronze",
+      "valor": 99.90,
+      "duracao_meses": 1,
+      "beneficios": [
+        "Acesso à musculação",
+        "Acesso ao cardio",
+        "Avaliação física inicial"
+      ]
+    },
+    "prata": {
+      "nome": "Plano Prata",
+      "valor": 149.90,
+      "duracao_meses": 1,
+      "beneficios": [
+        "Tudo do Bronze",
+        "2 aulas funcionais por semana",
+        "Plano alimentar básico"
+      ]
+    },
+    "ouro": {
+      "nome": "Plano Ouro",
+      "valor": 199.90,
+      "duracao_meses": 1,
+      "beneficios": [
+        "Tudo do Prata",
+        "Personal trainer 1x/semana",
+        "Acompanhamento nutricional",
+        "Acesso a todas as modalidades"
+      ]
+    }
+  },
+  
+  "integracoes": {
+    "sistema_academia": {
+      "tipo": "SCA Online",
+      "api_url": null,
+      "webhook_url": null,
+      "sincronizacao_ativa": false,
+      "integracao_via": "csv_export",
+      "observacoes": "Sistema sem API - integração via exportação CSV diária para Google Sheets",
+      "campos_sincronizar": [
+        "alunos",
+        "status_pagamento",
+        "data_ultimo_acesso",
+        "planos"
+      ]
+    },
+    
+    "pagamentos": {
+      "pix": {
+        "ativo": true,
+        "chave_pix": "contato@fitlife.com.br",
+        "banco": "Banco do Brasil",
+        "auto_confirmacao": true
+      },
+      "cartao": {
+        "ativo": true,
+        "gateway": "PagSeguro",
+        "taxa_processamento": 0.0399,
+        "parcelamento_maximo": 12
+      },
+      "boleto": {
+        "ativo": false,
+        "banco_emissor": "Banco do Brasil",
+        "taxa_emissao": 2.90
+      }
+    },
+    
+    "calendario": {
+      "google_calendar": {
+        "ativo": true,
+        "calendar_id": "fitlife.academica@gmail.com",
+        "sincronizar_aulas": true
+      }
+    }
+  },
+  
+  "templates_personalizacao": {
+    "variaveis_globais": {
+      "nome_academia": "Full Force",
+      "telefone_contato": "(66) 99876-5432",
+      "endereco_completo": "Rua Principal, 789 - Centro, Matupá/MT",
+      "site": "fullforceacademia.com.br",
+      "instagram": "@fullforce_academia"
+    },
+    
+    "segmentacao": {
+      "por_idade": {
+        "jovem": "18-25",
+        "adulto": "26-45", 
+        "senior": "45+"
+      },
+      "por_objetivo": {
+        "emagrecimento": "Perder peso e definir",
+        "ganho_massa": "Ganhar massa muscular",
+        "condicionamento": "Melhorar condicionamento físico"
+      },
+      "por_frequencia": {
+        "iniciante": "1-2x semana",
+        "regular": "3-4x semana",
+        "avancado": "5+ vezes semana"
+      }
+    }
+  },
+  
+  "compliance": {
+    "lgpd": {
+      "consentimento_obrigatorio": true,
+      "opt_out_facil": true,
+      "retencao_dados_meses": 24,
+      "anonimizacao_automatica": true
+    },
+    
+    "whatsapp_business": {
+      "templates_aprovados_apenas": true,
+      "respeitar_opt_out": true,
+      "rate_limit_rigoroso": true,
+      "media_apenas_apropiada": true
+    }
+  },
+  
+  "analytics": {
+    "kpis_principais": {
+      "taxa_reativacao": {
+        "meta": 0.30,
+        "calculo": "reativados / inativos_contatados"
+      },
+      "taxa_conversao_nurturing": {
+        "meta": 0.15,
+        "calculo": "visitantes_convertidos / visitantes_contatados"  
+      },
+      "roi_mensal": {
+        "meta": 4200.00,
+        "calculo": "receita_adicional - custo_sistema"
+      },
+      "tempo_resposta_medio": {
+        "meta": "< 2 minutos",
+        "calculo": "media_tempo_primeira_resposta"
+      }
+    },
+    
+    "relatorios": {
+      "diario": ["mensagens_enviadas", "respostas_recebidas", "conversoes"],
+      "semanal": ["performance_campanhas", "segmentacao_resultados"],
+      "mensal": ["roi_detalhado", "churn_prevention", "growth_metrics"]
+    }
+  }
+}

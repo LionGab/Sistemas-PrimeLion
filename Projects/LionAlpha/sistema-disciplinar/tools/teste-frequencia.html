@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TESTE - Frequência Simples</title>
+</head>
+<body>
+    <h1>TESTE - Carregamento de Frequência</h1>
+    
+    <div>
+        <label>Código do aluno:</label>
+        <input type="text" id="codigoAluno" value="1969064" placeholder="Digite o código do aluno">
+        <button onclick="testarFrequencia()">Testar Frequência</button>
+    </div>
+    
+    <div id="resultado" style="margin-top: 20px; padding: 10px; background: #f0f0f0;"></div>
+    
+    <script>
+        async function testarFrequencia() {
+            const codigo = document.getElementById('codigoAluno').value;
+            const resultado = document.getElementById('resultado');
+            
+            resultado.innerHTML = 'Carregando...';
+            console.log('TESTE: Buscando frequência para código:', codigo);
+            
+            try {
+                // Carregar dados de frequência agosto diretamente
+                console.log('TESTE: Fazendo fetch do arquivo...');
+                const response = await fetch('./assets/js/dados-frequencia-agosto.js');
+                
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar arquivo: ' + response.status);
+                }
+                
+                const jsContent = await response.text();
+                console.log('TESTE: Arquivo carregado, tamanho:', jsContent.length);
+                
+                // Extrair dados CSV
+                const csvMatch = jsContent.match(/const dadosCSV = `([^`]+)`/);
+                if (!csvMatch || !csvMatch[1]) {
+                    throw new Error('Dados CSV não encontrados no arquivo');
+                }
+                
+                const csvData = csvMatch[1];
+                console.log('TESTE: CSV extraído, primeiras 200 chars:', csvData.substring(0, 200));
+                
+                // Parse CSV
+                const linhas = csvData.trim().split('\n');
+                console.log('TESTE: Total de linhas CSV:', linhas.length);
+                
+                // Buscar linha do aluno
+                let linhaAluno = null;
+                for (let linha of linhas) {
+                    if (linha.startsWith(codigo + ',')) {
+                        linhaAluno = linha;
+                        break;
+                    }
+                }
+                
+                if (!linhaAluno) {
+                    resultado.innerHTML = `❌ Aluno ${codigo} não encontrado no arquivo`;
+                    console.log('TESTE: Aluno não encontrado. Primeiras 5 linhas:', linhas.slice(0, 5));
+                    return;
+                }
+                
+                console.log('TESTE: Linha do aluno encontrada:', linhaAluno);
+                
+                // Parse da linha
+                const campos = linhaAluno.split(',');
+                const nome = campos[1];
+                const turma = campos[2];
+                
+                // Dias de agosto
+                const diasAgosto = [1, 4, 5, 6, 7, 8, 11, 12, 13, 14, 15, 18, 19, 20, 21, 22, 25, 26, 27, 28, 29];
+                
+                const faltas = [];
+                for (let i = 3; i < campos.length && i - 3 < diasAgosto.length; i++) {
+                    const marcacao = campos[i];
+                    if (marcacao === 'F' || marcacao === 'FC' || marcacao === 'A') {
+                        const dia = diasAgosto[i - 3];
+                        faltas.push({
+                            dia: dia,
+                            marcacao: marcacao,
+                            data: `${dia.toString().padStart(2, '0')}/08`
+                        });
+                    }
+                }
+                
+                // Mostrar resultado
+                let html = `
+                    <h3>✅ SUCESSO!</h3>
+                    <p><strong>Código:</strong> ${codigo}</p>
+                    <p><strong>Nome:</strong> ${nome}</p>
+                    <p><strong>Turma:</strong> ${turma}</p>
+                    <p><strong>Total de faltas:</strong> ${faltas.length}</p>
+                    <div style="margin-top: 10px;">
+                `;
+                
+                if (faltas.length > 0) {
+                    html += '<p><strong>Faltas encontradas:</strong></p>';
+                    faltas.forEach(falta => {
+                        let cor = '#dc3545'; // Vermelho para F (Falta)
+                        if (falta.marcacao === 'FC') {
+                            cor = '#ffc107'; // Amarelo para FC (Falta Controlada)
+                        } else if (falta.marcacao === 'A') {
+                            cor = '#17a2b8'; // Azul para A (Atestado)
+                        }
+                        
+                        html += `<span style="background: ${cor}; color: white; padding: 4px 8px; margin: 2px; border-radius: 4px;">${falta.data} - ${falta.marcacao}</span> `;
+                    });
+                } else {
+                    html += '<p>Nenhuma falta encontrada</p>';
+                }
+                
+                html += '</div>';
+                resultado.innerHTML = html;
+                
+                console.log('TESTE: Faltas encontradas:', faltas);
+                
+            } catch (error) {
+                console.error('TESTE: Erro:', error);
+                resultado.innerHTML = `❌ Erro: ${error.message}`;
+            }
+        }
+        
+        // Testar automaticamente ao carregar
+        window.onload = () => {
+            setTimeout(testarFrequencia, 1000);
+        };
+    </script>
+</body>
+</html>

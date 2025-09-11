@@ -1,0 +1,38 @@
+// Firestore Security Rules (RBAC por custom claims)
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function signedIn() { return request.auth != null }
+    
+    function hasRole(role) {
+      return signedIn() && (
+        (request.auth.token.roles is list && role in request.auth.token.roles) ||
+        (request.auth.token.roles is map && request.auth.token.roles[role] == true)
+      );
+    }
+    
+    function isAdmin()     { return hasRole("admin") }
+    function isGestor()    { return hasRole("gestor") || isAdmin() }
+    function isProfessor() { return hasRole("professor") || isGestor() }
+    
+    // Ajuste os nomes de coleção conforme seu schema real
+    match /alunos/{id} {
+      allow read:  if isProfessor();
+      allow create, update, delete: if isGestor();
+    }
+    
+    match /medidas/{id} {
+      allow read:  if isProfessor();
+      allow create, update, delete: if isGestor();
+    }
+    
+    match /frequencia/{id} {
+      allow read:  if isProfessor();
+      allow create, update, delete: if isGestor();
+    }
+    
+    // Bloqueio padrão
+    match /{document=**} { allow read, write: if false; }
+  }
+}

@@ -1,0 +1,4168 @@
+{
+  "lastUpdate": "2025-08-27T14:04:02.308Z",
+  "version": "5.0",
+  "total": 462,
+  "dias_letivos": 14,
+  "periodo": "Agosto 2024 - Dados Reais Completos",
+  "alunos_processados": 33,
+  "registros": [
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_1_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_1_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_1_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_1_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_1_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_1_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_1_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_1_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_1_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_1_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_1_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_1_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_1_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_1_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2590632",
+      "nome_aluno": "Ana Clara da Silva Coelho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_2_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2590632",
+      "nome_aluno": "Ana Clara da Silva Coelho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_2_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2590632",
+      "nome_aluno": "Ana Clara da Silva Coelho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_2_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2590632",
+      "nome_aluno": "Ana Clara da Silva Coelho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_2_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2590632",
+      "nome_aluno": "Ana Clara da Silva Coelho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_2_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2590632",
+      "nome_aluno": "Ana Clara da Silva Coelho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_2_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2590632",
+      "nome_aluno": "Ana Clara da Silva Coelho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_2_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2590632",
+      "nome_aluno": "Ana Clara da Silva Coelho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_2_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2590632",
+      "nome_aluno": "Ana Clara da Silva Coelho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_2_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2590632",
+      "nome_aluno": "Ana Clara da Silva Coelho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_2_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2590632",
+      "nome_aluno": "Ana Clara da Silva Coelho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_2_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2590632",
+      "nome_aluno": "Ana Clara da Silva Coelho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_2_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2590632",
+      "nome_aluno": "Ana Clara da Silva Coelho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_2_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2590632",
+      "nome_aluno": "Ana Clara da Silva Coelho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_2_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2230465",
+      "nome_aluno": "Ana Júlia da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_3_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2230465",
+      "nome_aluno": "Ana Júlia da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_3_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2230465",
+      "nome_aluno": "Ana Júlia da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_3_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2230465",
+      "nome_aluno": "Ana Júlia da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_3_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2230465",
+      "nome_aluno": "Ana Júlia da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_3_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2230465",
+      "nome_aluno": "Ana Júlia da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_3_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2230465",
+      "nome_aluno": "Ana Júlia da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_3_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2230465",
+      "nome_aluno": "Ana Júlia da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_3_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2230465",
+      "nome_aluno": "Ana Júlia da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_3_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2230465",
+      "nome_aluno": "Ana Júlia da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_3_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2230465",
+      "nome_aluno": "Ana Júlia da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_3_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2230465",
+      "nome_aluno": "Ana Júlia da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_3_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2230465",
+      "nome_aluno": "Ana Júlia da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_3_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2230465",
+      "nome_aluno": "Ana Júlia da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_3_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2208832",
+      "nome_aluno": "Aysha Micaelly dos Santos B. Lemos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_4_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2208832",
+      "nome_aluno": "Aysha Micaelly dos Santos B. Lemos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_4_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2208832",
+      "nome_aluno": "Aysha Micaelly dos Santos B. Lemos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_4_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2208832",
+      "nome_aluno": "Aysha Micaelly dos Santos B. Lemos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_4_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2208832",
+      "nome_aluno": "Aysha Micaelly dos Santos B. Lemos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_4_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2208832",
+      "nome_aluno": "Aysha Micaelly dos Santos B. Lemos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_4_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2208832",
+      "nome_aluno": "Aysha Micaelly dos Santos B. Lemos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_4_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2208832",
+      "nome_aluno": "Aysha Micaelly dos Santos B. Lemos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_4_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2208832",
+      "nome_aluno": "Aysha Micaelly dos Santos B. Lemos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_4_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2208832",
+      "nome_aluno": "Aysha Micaelly dos Santos B. Lemos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_4_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2208832",
+      "nome_aluno": "Aysha Micaelly dos Santos B. Lemos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_4_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2208832",
+      "nome_aluno": "Aysha Micaelly dos Santos B. Lemos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_4_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2208832",
+      "nome_aluno": "Aysha Micaelly dos Santos B. Lemos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_4_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2208832",
+      "nome_aluno": "Aysha Micaelly dos Santos B. Lemos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_4_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2308886",
+      "nome_aluno": "Azaff Gabriel Souza Pereira da Cunha",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_5_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2308886",
+      "nome_aluno": "Azaff Gabriel Souza Pereira da Cunha",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_5_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2308886",
+      "nome_aluno": "Azaff Gabriel Souza Pereira da Cunha",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_5_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2308886",
+      "nome_aluno": "Azaff Gabriel Souza Pereira da Cunha",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_5_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2308886",
+      "nome_aluno": "Azaff Gabriel Souza Pereira da Cunha",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_5_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2308886",
+      "nome_aluno": "Azaff Gabriel Souza Pereira da Cunha",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_5_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2308886",
+      "nome_aluno": "Azaff Gabriel Souza Pereira da Cunha",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_5_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2308886",
+      "nome_aluno": "Azaff Gabriel Souza Pereira da Cunha",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_5_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2308886",
+      "nome_aluno": "Azaff Gabriel Souza Pereira da Cunha",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_5_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2308886",
+      "nome_aluno": "Azaff Gabriel Souza Pereira da Cunha",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_5_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2308886",
+      "nome_aluno": "Azaff Gabriel Souza Pereira da Cunha",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_5_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2308886",
+      "nome_aluno": "Azaff Gabriel Souza Pereira da Cunha",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_5_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2308886",
+      "nome_aluno": "Azaff Gabriel Souza Pereira da Cunha",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_5_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2308886",
+      "nome_aluno": "Azaff Gabriel Souza Pereira da Cunha",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_5_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_6_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_6_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_6_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_6_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_6_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_6_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_6_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_6_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_6_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_6_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_6_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_6_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_6_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_6_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2235078",
+      "nome_aluno": "Davi de Lima Trevisan Araújo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_7_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2235078",
+      "nome_aluno": "Davi de Lima Trevisan Araújo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_7_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2235078",
+      "nome_aluno": "Davi de Lima Trevisan Araújo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_7_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2235078",
+      "nome_aluno": "Davi de Lima Trevisan Araújo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_7_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2235078",
+      "nome_aluno": "Davi de Lima Trevisan Araújo",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_7_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2235078",
+      "nome_aluno": "Davi de Lima Trevisan Araújo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_7_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2235078",
+      "nome_aluno": "Davi de Lima Trevisan Araújo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_7_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2235078",
+      "nome_aluno": "Davi de Lima Trevisan Araújo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_7_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2235078",
+      "nome_aluno": "Davi de Lima Trevisan Araújo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_7_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2235078",
+      "nome_aluno": "Davi de Lima Trevisan Araújo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_7_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2235078",
+      "nome_aluno": "Davi de Lima Trevisan Araújo",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_7_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2235078",
+      "nome_aluno": "Davi de Lima Trevisan Araújo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_7_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2235078",
+      "nome_aluno": "Davi de Lima Trevisan Araújo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_7_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2235078",
+      "nome_aluno": "Davi de Lima Trevisan Araújo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_7_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2590882",
+      "nome_aluno": "Eduarda Gomes da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_8_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2590882",
+      "nome_aluno": "Eduarda Gomes da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_8_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2590882",
+      "nome_aluno": "Eduarda Gomes da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_8_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2590882",
+      "nome_aluno": "Eduarda Gomes da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_8_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2590882",
+      "nome_aluno": "Eduarda Gomes da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_8_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2590882",
+      "nome_aluno": "Eduarda Gomes da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_8_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2590882",
+      "nome_aluno": "Eduarda Gomes da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_8_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2590882",
+      "nome_aluno": "Eduarda Gomes da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_8_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2590882",
+      "nome_aluno": "Eduarda Gomes da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_8_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2590882",
+      "nome_aluno": "Eduarda Gomes da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_8_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2590882",
+      "nome_aluno": "Eduarda Gomes da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_8_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2590882",
+      "nome_aluno": "Eduarda Gomes da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_8_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2590882",
+      "nome_aluno": "Eduarda Gomes da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_8_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2590882",
+      "nome_aluno": "Eduarda Gomes da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_8_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_9_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_9_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_9_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_9_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_9_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_9_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_9_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_9_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_9_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_9_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_9_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_9_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_9_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_9_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_10_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_10_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_10_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_10_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_10_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_10_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_10_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_10_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_10_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_10_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_10_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_10_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_10_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_10_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2221844",
+      "nome_aluno": "Everton Peris dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_11_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2221844",
+      "nome_aluno": "Everton Peris dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_11_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2221844",
+      "nome_aluno": "Everton Peris dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_11_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2221844",
+      "nome_aluno": "Everton Peris dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_11_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2221844",
+      "nome_aluno": "Everton Peris dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_11_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2221844",
+      "nome_aluno": "Everton Peris dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_11_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2221844",
+      "nome_aluno": "Everton Peris dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_11_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2221844",
+      "nome_aluno": "Everton Peris dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_11_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2221844",
+      "nome_aluno": "Everton Peris dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_11_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2221844",
+      "nome_aluno": "Everton Peris dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_11_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2221844",
+      "nome_aluno": "Everton Peris dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_11_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2221844",
+      "nome_aluno": "Everton Peris dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_11_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2221844",
+      "nome_aluno": "Everton Peris dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_11_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2221844",
+      "nome_aluno": "Everton Peris dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_11_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2611953",
+      "nome_aluno": "Felipe Santana Silva Fonseca",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_12_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2611953",
+      "nome_aluno": "Felipe Santana Silva Fonseca",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_12_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2611953",
+      "nome_aluno": "Felipe Santana Silva Fonseca",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_12_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2611953",
+      "nome_aluno": "Felipe Santana Silva Fonseca",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_12_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2611953",
+      "nome_aluno": "Felipe Santana Silva Fonseca",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_12_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2611953",
+      "nome_aluno": "Felipe Santana Silva Fonseca",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_12_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2611953",
+      "nome_aluno": "Felipe Santana Silva Fonseca",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_12_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2611953",
+      "nome_aluno": "Felipe Santana Silva Fonseca",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_12_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2611953",
+      "nome_aluno": "Felipe Santana Silva Fonseca",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_12_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2611953",
+      "nome_aluno": "Felipe Santana Silva Fonseca",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_12_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2611953",
+      "nome_aluno": "Felipe Santana Silva Fonseca",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_12_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2611953",
+      "nome_aluno": "Felipe Santana Silva Fonseca",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_12_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2611953",
+      "nome_aluno": "Felipe Santana Silva Fonseca",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_12_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2611953",
+      "nome_aluno": "Felipe Santana Silva Fonseca",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_12_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_13_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_13_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_13_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_13_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_13_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_13_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_13_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_13_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_13_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_13_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_13_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_13_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_13_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_13_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2221796",
+      "nome_aluno": "Graziely Soyane Brito Januário",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_14_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2221796",
+      "nome_aluno": "Graziely Soyane Brito Januário",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_14_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2221796",
+      "nome_aluno": "Graziely Soyane Brito Januário",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_14_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2221796",
+      "nome_aluno": "Graziely Soyane Brito Januário",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_14_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2221796",
+      "nome_aluno": "Graziely Soyane Brito Januário",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_14_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2221796",
+      "nome_aluno": "Graziely Soyane Brito Januário",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_14_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2221796",
+      "nome_aluno": "Graziely Soyane Brito Januário",
+      "turma": "6A",
+      "marcacao": "A",
+      "id": "freq_real_1756303442307_14_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2221796",
+      "nome_aluno": "Graziely Soyane Brito Januário",
+      "turma": "6A",
+      "marcacao": "A",
+      "id": "freq_real_1756303442307_14_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2221796",
+      "nome_aluno": "Graziely Soyane Brito Januário",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_14_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2221796",
+      "nome_aluno": "Graziely Soyane Brito Januário",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_14_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2221796",
+      "nome_aluno": "Graziely Soyane Brito Januário",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_14_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2221796",
+      "nome_aluno": "Graziely Soyane Brito Januário",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_14_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2221796",
+      "nome_aluno": "Graziely Soyane Brito Januário",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_14_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2221796",
+      "nome_aluno": "Graziely Soyane Brito Januário",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_14_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_15_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_15_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_15_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_15_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_15_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_15_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_15_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_15_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_15_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_15_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_15_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_15_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_15_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_15_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2218077",
+      "nome_aluno": "José Bruno Xavier Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_16_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2218077",
+      "nome_aluno": "José Bruno Xavier Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_16_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2218077",
+      "nome_aluno": "José Bruno Xavier Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_16_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2218077",
+      "nome_aluno": "José Bruno Xavier Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_16_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2218077",
+      "nome_aluno": "José Bruno Xavier Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_16_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2218077",
+      "nome_aluno": "José Bruno Xavier Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_16_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2218077",
+      "nome_aluno": "José Bruno Xavier Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_16_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2218077",
+      "nome_aluno": "José Bruno Xavier Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_16_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2218077",
+      "nome_aluno": "José Bruno Xavier Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_16_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2218077",
+      "nome_aluno": "José Bruno Xavier Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_16_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2218077",
+      "nome_aluno": "José Bruno Xavier Pereira",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_16_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2218077",
+      "nome_aluno": "José Bruno Xavier Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_16_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2218077",
+      "nome_aluno": "José Bruno Xavier Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_16_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2218077",
+      "nome_aluno": "José Bruno Xavier Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_16_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2238497",
+      "nome_aluno": "Kamila Cristina de Oliveira da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_17_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2238497",
+      "nome_aluno": "Kamila Cristina de Oliveira da Silva",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_17_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2238497",
+      "nome_aluno": "Kamila Cristina de Oliveira da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_17_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2238497",
+      "nome_aluno": "Kamila Cristina de Oliveira da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_17_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2238497",
+      "nome_aluno": "Kamila Cristina de Oliveira da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_17_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2238497",
+      "nome_aluno": "Kamila Cristina de Oliveira da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_17_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2238497",
+      "nome_aluno": "Kamila Cristina de Oliveira da Silva",
+      "turma": "6A",
+      "marcacao": "A",
+      "id": "freq_real_1756303442307_17_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2238497",
+      "nome_aluno": "Kamila Cristina de Oliveira da Silva",
+      "turma": "6A",
+      "marcacao": "A",
+      "id": "freq_real_1756303442307_17_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2238497",
+      "nome_aluno": "Kamila Cristina de Oliveira da Silva",
+      "turma": "6A",
+      "marcacao": "A",
+      "id": "freq_real_1756303442307_17_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2238497",
+      "nome_aluno": "Kamila Cristina de Oliveira da Silva",
+      "turma": "6A",
+      "marcacao": "A",
+      "id": "freq_real_1756303442307_17_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2238497",
+      "nome_aluno": "Kamila Cristina de Oliveira da Silva",
+      "turma": "6A",
+      "marcacao": "A",
+      "id": "freq_real_1756303442307_17_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2238497",
+      "nome_aluno": "Kamila Cristina de Oliveira da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_17_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2238497",
+      "nome_aluno": "Kamila Cristina de Oliveira da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_17_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2238497",
+      "nome_aluno": "Kamila Cristina de Oliveira da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_17_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2410707",
+      "nome_aluno": "Kawanny Latyffa Carvalho Neto",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_18_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2410707",
+      "nome_aluno": "Kawanny Latyffa Carvalho Neto",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_18_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2410707",
+      "nome_aluno": "Kawanny Latyffa Carvalho Neto",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_18_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2410707",
+      "nome_aluno": "Kawanny Latyffa Carvalho Neto",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_18_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2410707",
+      "nome_aluno": "Kawanny Latyffa Carvalho Neto",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_18_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2410707",
+      "nome_aluno": "Kawanny Latyffa Carvalho Neto",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_18_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2410707",
+      "nome_aluno": "Kawanny Latyffa Carvalho Neto",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_18_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2410707",
+      "nome_aluno": "Kawanny Latyffa Carvalho Neto",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_18_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2410707",
+      "nome_aluno": "Kawanny Latyffa Carvalho Neto",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_18_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2410707",
+      "nome_aluno": "Kawanny Latyffa Carvalho Neto",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_18_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2410707",
+      "nome_aluno": "Kawanny Latyffa Carvalho Neto",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_18_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2410707",
+      "nome_aluno": "Kawanny Latyffa Carvalho Neto",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_18_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2410707",
+      "nome_aluno": "Kawanny Latyffa Carvalho Neto",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_18_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2410707",
+      "nome_aluno": "Kawanny Latyffa Carvalho Neto",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_18_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2590602",
+      "nome_aluno": "Ludmila Silva Figueiredo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_19_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2590602",
+      "nome_aluno": "Ludmila Silva Figueiredo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_19_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2590602",
+      "nome_aluno": "Ludmila Silva Figueiredo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_19_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2590602",
+      "nome_aluno": "Ludmila Silva Figueiredo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_19_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2590602",
+      "nome_aluno": "Ludmila Silva Figueiredo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_19_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2590602",
+      "nome_aluno": "Ludmila Silva Figueiredo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_19_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2590602",
+      "nome_aluno": "Ludmila Silva Figueiredo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_19_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2590602",
+      "nome_aluno": "Ludmila Silva Figueiredo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_19_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2590602",
+      "nome_aluno": "Ludmila Silva Figueiredo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_19_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2590602",
+      "nome_aluno": "Ludmila Silva Figueiredo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_19_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2590602",
+      "nome_aluno": "Ludmila Silva Figueiredo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_19_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2590602",
+      "nome_aluno": "Ludmila Silva Figueiredo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_19_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2590602",
+      "nome_aluno": "Ludmila Silva Figueiredo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_19_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2590602",
+      "nome_aluno": "Ludmila Silva Figueiredo",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_19_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2590937",
+      "nome_aluno": "Luna Samya Ferreira da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_20_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2590937",
+      "nome_aluno": "Luna Samya Ferreira da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_20_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2590937",
+      "nome_aluno": "Luna Samya Ferreira da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_20_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2590937",
+      "nome_aluno": "Luna Samya Ferreira da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_20_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2590937",
+      "nome_aluno": "Luna Samya Ferreira da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_20_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2590937",
+      "nome_aluno": "Luna Samya Ferreira da Silva",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_20_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2590937",
+      "nome_aluno": "Luna Samya Ferreira da Silva",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_20_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2590937",
+      "nome_aluno": "Luna Samya Ferreira da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_20_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2590937",
+      "nome_aluno": "Luna Samya Ferreira da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_20_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2590937",
+      "nome_aluno": "Luna Samya Ferreira da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_20_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2590937",
+      "nome_aluno": "Luna Samya Ferreira da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_20_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2590937",
+      "nome_aluno": "Luna Samya Ferreira da Silva",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_20_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2590937",
+      "nome_aluno": "Luna Samya Ferreira da Silva",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_20_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2590937",
+      "nome_aluno": "Luna Samya Ferreira da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_20_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2642036",
+      "nome_aluno": "Malvina Sophie Barbosa R. Goffi Savi",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_21_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2642036",
+      "nome_aluno": "Malvina Sophie Barbosa R. Goffi Savi",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_21_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2642036",
+      "nome_aluno": "Malvina Sophie Barbosa R. Goffi Savi",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_21_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2642036",
+      "nome_aluno": "Malvina Sophie Barbosa R. Goffi Savi",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_21_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2642036",
+      "nome_aluno": "Malvina Sophie Barbosa R. Goffi Savi",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_21_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2642036",
+      "nome_aluno": "Malvina Sophie Barbosa R. Goffi Savi",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_21_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2642036",
+      "nome_aluno": "Malvina Sophie Barbosa R. Goffi Savi",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_21_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2642036",
+      "nome_aluno": "Malvina Sophie Barbosa R. Goffi Savi",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_21_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2642036",
+      "nome_aluno": "Malvina Sophie Barbosa R. Goffi Savi",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_21_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2642036",
+      "nome_aluno": "Malvina Sophie Barbosa R. Goffi Savi",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_21_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2642036",
+      "nome_aluno": "Malvina Sophie Barbosa R. Goffi Savi",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_21_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2642036",
+      "nome_aluno": "Malvina Sophie Barbosa R. Goffi Savi",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_21_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2642036",
+      "nome_aluno": "Malvina Sophie Barbosa R. Goffi Savi",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_21_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2642036",
+      "nome_aluno": "Malvina Sophie Barbosa R. Goffi Savi",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_21_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2264960",
+      "nome_aluno": "Maria Vitória Ramos dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_22_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2264960",
+      "nome_aluno": "Maria Vitória Ramos dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_22_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2264960",
+      "nome_aluno": "Maria Vitória Ramos dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_22_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2264960",
+      "nome_aluno": "Maria Vitória Ramos dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_22_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2264960",
+      "nome_aluno": "Maria Vitória Ramos dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_22_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2264960",
+      "nome_aluno": "Maria Vitória Ramos dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_22_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2264960",
+      "nome_aluno": "Maria Vitória Ramos dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_22_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2264960",
+      "nome_aluno": "Maria Vitória Ramos dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_22_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2264960",
+      "nome_aluno": "Maria Vitória Ramos dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_22_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2264960",
+      "nome_aluno": "Maria Vitória Ramos dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_22_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2264960",
+      "nome_aluno": "Maria Vitória Ramos dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_22_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2264960",
+      "nome_aluno": "Maria Vitória Ramos dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_22_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2264960",
+      "nome_aluno": "Maria Vitória Ramos dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_22_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2264960",
+      "nome_aluno": "Maria Vitória Ramos dos Santos",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_22_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2579209",
+      "nome_aluno": "Mariana Prado Fujii",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_23_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2579209",
+      "nome_aluno": "Mariana Prado Fujii",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_23_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2579209",
+      "nome_aluno": "Mariana Prado Fujii",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_23_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2579209",
+      "nome_aluno": "Mariana Prado Fujii",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_23_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2579209",
+      "nome_aluno": "Mariana Prado Fujii",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_23_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2579209",
+      "nome_aluno": "Mariana Prado Fujii",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_23_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2579209",
+      "nome_aluno": "Mariana Prado Fujii",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_23_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2579209",
+      "nome_aluno": "Mariana Prado Fujii",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_23_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2579209",
+      "nome_aluno": "Mariana Prado Fujii",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_23_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2579209",
+      "nome_aluno": "Mariana Prado Fujii",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_23_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2579209",
+      "nome_aluno": "Mariana Prado Fujii",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_23_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2579209",
+      "nome_aluno": "Mariana Prado Fujii",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_23_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2579209",
+      "nome_aluno": "Mariana Prado Fujii",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_23_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2579209",
+      "nome_aluno": "Mariana Prado Fujii",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_23_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2229922",
+      "nome_aluno": "Nathiely Nunes Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_24_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2229922",
+      "nome_aluno": "Nathiely Nunes Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_24_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2229922",
+      "nome_aluno": "Nathiely Nunes Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_24_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2229922",
+      "nome_aluno": "Nathiely Nunes Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_24_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2229922",
+      "nome_aluno": "Nathiely Nunes Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_24_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2229922",
+      "nome_aluno": "Nathiely Nunes Oliveira",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_24_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2229922",
+      "nome_aluno": "Nathiely Nunes Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_24_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2229922",
+      "nome_aluno": "Nathiely Nunes Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_24_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2229922",
+      "nome_aluno": "Nathiely Nunes Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_24_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2229922",
+      "nome_aluno": "Nathiely Nunes Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_24_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2229922",
+      "nome_aluno": "Nathiely Nunes Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_24_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2229922",
+      "nome_aluno": "Nathiely Nunes Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_24_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2229922",
+      "nome_aluno": "Nathiely Nunes Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_24_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2229922",
+      "nome_aluno": "Nathiely Nunes Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_24_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2415239",
+      "nome_aluno": "Nicolly Soffie Freitas Marczal",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_25_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2415239",
+      "nome_aluno": "Nicolly Soffie Freitas Marczal",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_25_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2415239",
+      "nome_aluno": "Nicolly Soffie Freitas Marczal",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_25_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2415239",
+      "nome_aluno": "Nicolly Soffie Freitas Marczal",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_25_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2415239",
+      "nome_aluno": "Nicolly Soffie Freitas Marczal",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_25_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2415239",
+      "nome_aluno": "Nicolly Soffie Freitas Marczal",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_25_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2415239",
+      "nome_aluno": "Nicolly Soffie Freitas Marczal",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442307_25_6",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2415239",
+      "nome_aluno": "Nicolly Soffie Freitas Marczal",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_25_7",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2415239",
+      "nome_aluno": "Nicolly Soffie Freitas Marczal",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_25_8",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2415239",
+      "nome_aluno": "Nicolly Soffie Freitas Marczal",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_25_9",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2415239",
+      "nome_aluno": "Nicolly Soffie Freitas Marczal",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_25_10",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2415239",
+      "nome_aluno": "Nicolly Soffie Freitas Marczal",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_25_11",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2415239",
+      "nome_aluno": "Nicolly Soffie Freitas Marczal",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_25_12",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2415239",
+      "nome_aluno": "Nicolly Soffie Freitas Marczal",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_25_13",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2266996",
+      "nome_aluno": "Nikolas Cézar Dias da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_26_0",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2266996",
+      "nome_aluno": "Nikolas Cézar Dias da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_26_1",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2266996",
+      "nome_aluno": "Nikolas Cézar Dias da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_26_2",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2266996",
+      "nome_aluno": "Nikolas Cézar Dias da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_26_3",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2266996",
+      "nome_aluno": "Nikolas Cézar Dias da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_26_4",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2266996",
+      "nome_aluno": "Nikolas Cézar Dias da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442307_26_5",
+      "created_at": "2025-08-27T14:04:02.307Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2266996",
+      "nome_aluno": "Nikolas Cézar Dias da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_26_6",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2266996",
+      "nome_aluno": "Nikolas Cézar Dias da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_26_7",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2266996",
+      "nome_aluno": "Nikolas Cézar Dias da Silva",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_26_8",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2266996",
+      "nome_aluno": "Nikolas Cézar Dias da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_26_9",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2266996",
+      "nome_aluno": "Nikolas Cézar Dias da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_26_10",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2266996",
+      "nome_aluno": "Nikolas Cézar Dias da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_26_11",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2266996",
+      "nome_aluno": "Nikolas Cézar Dias da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_26_12",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2266996",
+      "nome_aluno": "Nikolas Cézar Dias da Silva",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_26_13",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2590976",
+      "nome_aluno": "Pedro Henrique Carneiro",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_27_0",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2590976",
+      "nome_aluno": "Pedro Henrique Carneiro",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_27_1",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2590976",
+      "nome_aluno": "Pedro Henrique Carneiro",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_27_2",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2590976",
+      "nome_aluno": "Pedro Henrique Carneiro",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_27_3",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2590976",
+      "nome_aluno": "Pedro Henrique Carneiro",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_27_4",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2590976",
+      "nome_aluno": "Pedro Henrique Carneiro",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_27_5",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2590976",
+      "nome_aluno": "Pedro Henrique Carneiro",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_27_6",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2590976",
+      "nome_aluno": "Pedro Henrique Carneiro",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_27_7",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2590976",
+      "nome_aluno": "Pedro Henrique Carneiro",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_27_8",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2590976",
+      "nome_aluno": "Pedro Henrique Carneiro",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_27_9",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2590976",
+      "nome_aluno": "Pedro Henrique Carneiro",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_27_10",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2590976",
+      "nome_aluno": "Pedro Henrique Carneiro",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_27_11",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2590976",
+      "nome_aluno": "Pedro Henrique Carneiro",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_27_12",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2590976",
+      "nome_aluno": "Pedro Henrique Carneiro",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_27_13",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2260814",
+      "nome_aluno": "Pedro Henrique Magalhães Neves",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_28_0",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2260814",
+      "nome_aluno": "Pedro Henrique Magalhães Neves",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_28_1",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2260814",
+      "nome_aluno": "Pedro Henrique Magalhães Neves",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_28_2",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2260814",
+      "nome_aluno": "Pedro Henrique Magalhães Neves",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_28_3",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2260814",
+      "nome_aluno": "Pedro Henrique Magalhães Neves",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_28_4",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2260814",
+      "nome_aluno": "Pedro Henrique Magalhães Neves",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_28_5",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2260814",
+      "nome_aluno": "Pedro Henrique Magalhães Neves",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_28_6",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2260814",
+      "nome_aluno": "Pedro Henrique Magalhães Neves",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_28_7",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2260814",
+      "nome_aluno": "Pedro Henrique Magalhães Neves",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_28_8",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2260814",
+      "nome_aluno": "Pedro Henrique Magalhães Neves",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_28_9",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2260814",
+      "nome_aluno": "Pedro Henrique Magalhães Neves",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_28_10",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2260814",
+      "nome_aluno": "Pedro Henrique Magalhães Neves",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_28_11",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2260814",
+      "nome_aluno": "Pedro Henrique Magalhães Neves",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_28_12",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2260814",
+      "nome_aluno": "Pedro Henrique Magalhães Neves",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_28_13",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2231253",
+      "nome_aluno": "Rafael Augusto Nunes Rodrigues - MP",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_29_0",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2231253",
+      "nome_aluno": "Rafael Augusto Nunes Rodrigues - MP",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_29_1",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2231253",
+      "nome_aluno": "Rafael Augusto Nunes Rodrigues - MP",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_29_2",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2231253",
+      "nome_aluno": "Rafael Augusto Nunes Rodrigues - MP",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_29_3",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2231253",
+      "nome_aluno": "Rafael Augusto Nunes Rodrigues - MP",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_29_4",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2231253",
+      "nome_aluno": "Rafael Augusto Nunes Rodrigues - MP",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_29_5",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2231253",
+      "nome_aluno": "Rafael Augusto Nunes Rodrigues - MP",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_29_6",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2231253",
+      "nome_aluno": "Rafael Augusto Nunes Rodrigues - MP",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_29_7",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2231253",
+      "nome_aluno": "Rafael Augusto Nunes Rodrigues - MP",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_29_8",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2231253",
+      "nome_aluno": "Rafael Augusto Nunes Rodrigues - MP",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_29_9",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2231253",
+      "nome_aluno": "Rafael Augusto Nunes Rodrigues - MP",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_29_10",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2231253",
+      "nome_aluno": "Rafael Augusto Nunes Rodrigues - MP",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_29_11",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2231253",
+      "nome_aluno": "Rafael Augusto Nunes Rodrigues - MP",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_29_12",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2231253",
+      "nome_aluno": "Rafael Augusto Nunes Rodrigues - MP",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_29_13",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2492468",
+      "nome_aluno": "Rafael Rosalvo de Souza",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_30_0",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2492468",
+      "nome_aluno": "Rafael Rosalvo de Souza",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_30_1",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2492468",
+      "nome_aluno": "Rafael Rosalvo de Souza",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_30_2",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2492468",
+      "nome_aluno": "Rafael Rosalvo de Souza",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_30_3",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2492468",
+      "nome_aluno": "Rafael Rosalvo de Souza",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_30_4",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2492468",
+      "nome_aluno": "Rafael Rosalvo de Souza",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_30_5",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2492468",
+      "nome_aluno": "Rafael Rosalvo de Souza",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_30_6",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2492468",
+      "nome_aluno": "Rafael Rosalvo de Souza",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_30_7",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2492468",
+      "nome_aluno": "Rafael Rosalvo de Souza",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_30_8",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2492468",
+      "nome_aluno": "Rafael Rosalvo de Souza",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_30_9",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2492468",
+      "nome_aluno": "Rafael Rosalvo de Souza",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_30_10",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2492468",
+      "nome_aluno": "Rafael Rosalvo de Souza",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_30_11",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2492468",
+      "nome_aluno": "Rafael Rosalvo de Souza",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_30_12",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2492468",
+      "nome_aluno": "Rafael Rosalvo de Souza",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_30_13",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2467698",
+      "nome_aluno": "Ruan Gregório Fonseca Barboza",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_31_0",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2467698",
+      "nome_aluno": "Ruan Gregório Fonseca Barboza",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_31_1",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2467698",
+      "nome_aluno": "Ruan Gregório Fonseca Barboza",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_31_2",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2467698",
+      "nome_aluno": "Ruan Gregório Fonseca Barboza",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_31_3",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2467698",
+      "nome_aluno": "Ruan Gregório Fonseca Barboza",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_31_4",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2467698",
+      "nome_aluno": "Ruan Gregório Fonseca Barboza",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_31_5",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2467698",
+      "nome_aluno": "Ruan Gregório Fonseca Barboza",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_31_6",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2467698",
+      "nome_aluno": "Ruan Gregório Fonseca Barboza",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_31_7",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2467698",
+      "nome_aluno": "Ruan Gregório Fonseca Barboza",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_31_8",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2467698",
+      "nome_aluno": "Ruan Gregório Fonseca Barboza",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_31_9",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2467698",
+      "nome_aluno": "Ruan Gregório Fonseca Barboza",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_31_10",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2467698",
+      "nome_aluno": "Ruan Gregório Fonseca Barboza",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_31_11",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2467698",
+      "nome_aluno": "Ruan Gregório Fonseca Barboza",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_31_12",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2467698",
+      "nome_aluno": "Ruan Gregório Fonseca Barboza",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_31_13",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2483240",
+      "nome_aluno": "Wenia Pereira Gomes",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_32_0",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2483240",
+      "nome_aluno": "Wenia Pereira Gomes",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_32_1",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2483240",
+      "nome_aluno": "Wenia Pereira Gomes",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_32_2",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2483240",
+      "nome_aluno": "Wenia Pereira Gomes",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_32_3",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2483240",
+      "nome_aluno": "Wenia Pereira Gomes",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_32_4",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2483240",
+      "nome_aluno": "Wenia Pereira Gomes",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_32_5",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2483240",
+      "nome_aluno": "Wenia Pereira Gomes",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_32_6",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2483240",
+      "nome_aluno": "Wenia Pereira Gomes",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_32_7",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2483240",
+      "nome_aluno": "Wenia Pereira Gomes",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_32_8",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2483240",
+      "nome_aluno": "Wenia Pereira Gomes",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_32_9",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2483240",
+      "nome_aluno": "Wenia Pereira Gomes",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_32_10",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2483240",
+      "nome_aluno": "Wenia Pereira Gomes",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_32_11",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2483240",
+      "nome_aluno": "Wenia Pereira Gomes",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_32_12",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2483240",
+      "nome_aluno": "Wenia Pereira Gomes",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_real_1756303442308_32_13",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2335511",
+      "nome_aluno": "IZABELLY EDUARDA RODRIGUES PIRES",
+      "turma": "9A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_33_0",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2335511",
+      "nome_aluno": "IZABELLY EDUARDA RODRIGUES PIRES",
+      "turma": "9A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_33_1",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2335511",
+      "nome_aluno": "IZABELLY EDUARDA RODRIGUES PIRES",
+      "turma": "9A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_33_2",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2335511",
+      "nome_aluno": "IZABELLY EDUARDA RODRIGUES PIRES",
+      "turma": "9A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_33_3",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2335511",
+      "nome_aluno": "IZABELLY EDUARDA RODRIGUES PIRES",
+      "turma": "9A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_33_4",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2335511",
+      "nome_aluno": "IZABELLY EDUARDA RODRIGUES PIRES",
+      "turma": "9A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_33_5",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2335511",
+      "nome_aluno": "IZABELLY EDUARDA RODRIGUES PIRES",
+      "turma": "9A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_33_6",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2335511",
+      "nome_aluno": "IZABELLY EDUARDA RODRIGUES PIRES",
+      "turma": "9A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_33_7",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2335511",
+      "nome_aluno": "IZABELLY EDUARDA RODRIGUES PIRES",
+      "turma": "9A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_33_8",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2335511",
+      "nome_aluno": "IZABELLY EDUARDA RODRIGUES PIRES",
+      "turma": "9A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_33_9",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2335511",
+      "nome_aluno": "IZABELLY EDUARDA RODRIGUES PIRES",
+      "turma": "9A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_33_10",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2335511",
+      "nome_aluno": "IZABELLY EDUARDA RODRIGUES PIRES",
+      "turma": "9A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_33_11",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2335511",
+      "nome_aluno": "IZABELLY EDUARDA RODRIGUES PIRES",
+      "turma": "9A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_33_12",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2335511",
+      "nome_aluno": "IZABELLY EDUARDA RODRIGUES PIRES",
+      "turma": "9A",
+      "marcacao": "F",
+      "id": "freq_real_1756303442308_33_13",
+      "created_at": "2025-08-27T14:04:02.308Z"
+    }
+  ]
+}

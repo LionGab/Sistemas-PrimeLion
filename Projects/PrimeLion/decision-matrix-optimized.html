@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>🧠 Decision Matrix - Naming Strategy Optimizer</title>
+    <meta name="description" content="Matriz inteligente para escolher o naming perfeito para seu LinkedIn. Algoritmo otimizado para conversão máxima.">
+    
+    <style>
+        /* CSS crítico inline - mobile-first */
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;color:#333;overflow-x:hidden}
+        .container{max-width:100%;background:#fff;min-height:100vh}
+        .header{background:linear-gradient(135deg,#1a202c,#2d3748);color:#fff;padding:20px 16px;text-align:center;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+        .header h1{font-size:1.6rem;margin-bottom:8px;font-weight:700;background:linear-gradient(90deg,#ffd700,#ffed4e);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .header p{font-size:.9rem;opacity:.9}
+        .progress{height:6px;background:#e2e8f0;position:relative}
+        .progress-bar{height:100%;background:linear-gradient(90deg,#667eea,#764ba2);transition:width .5s cubic-bezier(.25,.46,.45,.94);border-radius:3px}
+        .step-info{background:#f8f9fa;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e2e8f0}
+        .step-counter{color:#667eea;font-weight:600;font-size:13px}
+        .time-estimate{color:#6b7280;font-size:12px}
+        .question-container{display:none;padding:20px 16px;min-height:60vh}
+        .question-container.active{display:block;animation:slideIn .4s ease}
+        .question{font-size:1.1rem;color:#2d3748;margin-bottom:20px;font-weight:600;line-height:1.4}
+        .question-number{color:#667eea;font-size:2rem;font-weight:700;margin-bottom:8px}
+        .options{display:flex;flex-direction:column;gap:12px}
+        .option{padding:16px;border:2px solid #e2e8f0;border-radius:12px;cursor:pointer;transition:all .3s;background:#fff;position:relative;overflow:hidden}
+        .option:hover{border-color:#667eea;background:#f8f9ff;transform:translateX(4px)}
+        .option.selected{border-color:#667eea;background:linear-gradient(135deg,rgba(102,126,234,.1),rgba(118,75,162,.1));transform:translateX(4px)}
+        .option-title{font-weight:600;color:#2d3748;margin-bottom:6px;font-size:14px;display:flex;align-items:center;gap:8px}
+        .option-desc{color:#6b7280;font-size:13px;line-height:1.4}
+        .option-icon{font-size:20px}
+        .navigation{display:flex;justify-content:space-between;padding:16px;background:#f8f9fa;border-top:1px solid #e2e8f0}
+        .btn{padding:12px 20px;border:none;border-radius:24px;font-weight:600;cursor:pointer;transition:all .3s;font-size:14px;display:flex;align-items:center;gap:8px;justify-content:center;min-width:100px}
+        .btn-back{background:#f3f4f6;color:#6b7280}
+        .btn-next{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;box-shadow:0 4px 15px rgba(102,126,234,.3)}
+        .btn:disabled{opacity:.5;cursor:not-allowed}
+        .btn:hover:not(:disabled){transform:translateY(-2px)}
+        .btn:active{transform:scale(.98)}
+        .result{display:none;text-align:center;padding:20px 16px}
+        .result.active{display:block;animation:slideIn .5s ease}
+        .result-header{background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;padding:20px;border-radius:16px;margin-bottom:20px;position:relative;overflow:hidden}
+        .result-header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>') repeat;opacity:.3}
+        .result-title{font-size:1.4rem;font-weight:700;margin-bottom:8px;position:relative;z-index:2}
+        .result-subtitle{font-size:1rem;opacity:.9;position:relative;z-index:2}
+        .confidence{background:#fff;border-radius:12px;padding:16px;margin-bottom:20px;border:2px solid #16a34a}
+        .confidence-title{color:#16a34a;font-weight:600;font-size:14px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+        .confidence-value{font-size:2.2rem;font-weight:700;color:#16a34a;margin:4px 0}
+        .confidence-desc{color:#6b7280;font-size:12px}
+        .reasons{background:#f8f9fa;border-radius:12px;padding:16px;margin-bottom:20px;text-align:left}
+        .reasons-title{color:#2d3748;font-weight:600;margin-bottom:12px;font-size:14px}
+        .reason{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:13px;color:#4a5568;line-height:1.4}
+        .reason-icon{color:#16a34a;font-weight:700;margin-top:1px;flex-shrink:0}
+        .actions{display:flex;flex-direction:column;gap:12px}
+        .cta-primary{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:16px;border-radius:12px;text-decoration:none;font-weight:600;font-size:16px;box-shadow:0 4px 20px rgba(102,126,234,.4);transition:all .3s}
+        .cta-primary:hover{transform:translateY(-2px);box-shadow:0 6px 25px rgba(102,126,234,.5)}
+        .cta-secondary{background:#fff;color:#667eea;border:2px solid #667eea;padding:12px;border-radius:12px;text-decoration:none;font-weight:600;font-size:14px;transition:all .3s}
+        .cta-secondary:hover{background:#f8f9ff}
+        .alternatives{background:#fff;border-radius:12px;padding:16px;margin-top:20px;border:1px solid #e2e8f0}
+        .alternatives-title{color:#2d3748;font-weight:600;margin-bottom:12px;font-size:14px}
+        .alternative{padding:10px;border:1px solid #e2e8f0;border-radius:8px;margin-bottom:8px;font-size:13px}
+        .alternative-name{font-weight:600;color:#4a5568;margin-bottom:4px}
+        .alternative-score{color:#6b7280;font-size:12px}
+        .loading-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,.95);z-index:1000;align-items:center;justify-content:center;flex-direction:column}
+        .loading-spinner{width:40px;height:40px;border:4px solid #f3f3f3;border-top:4px solid #667eea;border-radius:50%;animation:spin 1s linear infinite;margin-bottom:16px}
+        .loading-text{color:#4a5568;font-weight:600;font-size:14px}
+        .pulse{animation:pulse 2s infinite}
+        
+        @keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+        @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+        
+        @media (max-width: 480px) {
+            .header{padding:16px 12px}
+            .header h1{font-size:1.4rem}
+            .question-container{padding:16px 12px}
+            .question{font-size:1rem}
+            .question-number{font-size:1.6rem}
+            .option{padding:12px}
+            .navigation{padding:12px}
+            .result{padding:16px 12px}
+            .result-title{font-size:1.2rem}
+            .confidence-value{font-size:1.8rem}
+        }
+        
+        @media (max-width: 360px) {
+            .header h1{font-size:1.2rem}
+            .question{font-size:.9rem}
+            .option{padding:10px}
+            .option-title{font-size:13px}
+            .option-desc{font-size:12px}
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Analisando suas respostas...</div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🧠 Matriz Inteligente</h1>
+            <p>Descubra o naming perfeito para seu LinkedIn</p>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" id="progressBar" style="width: 20%"></div>
+        </div>
+
+        <div class="step-info">
+            <div class="step-counter" id="stepCounter">Pergunta 1 de 5</div>
+            <div class="time-estimate" id="timeEstimate">⏱️ ~2 min restantes</div>
+        </div>
+
+        <!-- Pergunta 1: Objetivo Principal -->
+        <div class="question-container active" id="q1">
+            <div class="question-number">1</div>
+            <div class="question">Qual é seu principal objetivo no LinkedIn?</div>
+            <div class="options">
+                <div class="option" data-value="leads" onclick="selectOption(1, 'leads', this)">
+                    <div class="option-icon">💰</div>
+                    <div class="option-title">Gerar leads qualificados</div>
+                    <div class="option-desc">Quero que prospects entrem em contato comigo e agendem reuniões</div>
+                </div>
+                <div class="option" data-value="authority" onclick="selectOption(1, 'authority', this)">
+                    <div class="option-icon">🏆</div>
+                    <div class="option-title">Construir autoridade</div>
+                    <div class="option-desc">Ser reconhecido como referência e especialista no mercado</div>
+                </div>
+                <div class="option" data-value="network" onclick="selectOption(1, 'network', this)">
+                    <div class="option-icon">🤝</div>
+                    <div class="option-title">Expandir networking</div>
+                    <div class="option-desc">Conectar com mais executivos, parceiros e decisores</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pergunta 2: Estilo de Comunicação -->
+        <div class="question-container" id="q2">
+            <div class="question-number">2</div>
+            <div class="question">Como você prefere comunicar valor?</div>
+            <div class="options">
+                <div class="option" data-value="numbers" onclick="selectOption(2, 'numbers', this)">
+                    <div class="option-icon">📊</div>
+                    <div class="option-title">Direto e quantitativo</div>
+                    <div class="option-desc">"3X ROI", "R$50M gerados", "+300% crescimento"</div>
+                </div>
+                <div class="option" data-value="methodology" onclick="selectOption(2, 'methodology', this)">
+                    <div class="option-icon">🔬</div>
+                    <div class="option-title">Estratégico e metodológico</div>
+                    <div class="option-desc">"Framework validado", "Sistema proprietário", "Metodologia"</div>
+                </div>
+                <div class="option" data-value="transformation" onclick="selectOption(2, 'transformation', this)">
+                    <div class="option-icon">✨</div>
+                    <div class="option-title">Aspiracional e transformador</div>
+                    <div class="option-desc">"Transformação executiva", "Próximo nível", "Revolução"</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pergunta 3: Cliente Ideal -->
+        <div class="question-container" id="q3">
+            <div class="question-number">3</div>
+            <div class="question">Qual é o perfil do seu cliente ideal?</div>
+            <div class="options">
+                <div class="option" data-value="startup" onclick="selectOption(3, 'startup', this)">
+                    <div class="option-icon">🚀</div>
+                    <div class="option-title">Startups em crescimento</div>
+                    <div class="option-desc">R$100k a R$1M, buscando escalar rapidamente e validar modelo</div>
+                </div>
+                <div class="option" data-value="scaleup" onclick="selectOption(3, 'scaleup', this)">
+                    <div class="option-icon">📈</div>
+                    <div class="option-title">Scale-ups estabelecidas</div>
+                    <div class="option-desc">R$1M a R$5M, otimizando operações e sistemização</div>
+                </div>
+                <div class="option" data-value="enterprise" onclick="selectOption(3, 'enterprise', this)">
+                    <div class="option-icon">🏢</div>
+                    <div class="option-title">Médias e grandes empresas</div>
+                    <div class="option-desc">R$5M+, transformação digital e processos complexos</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pergunta 4: Diferencial Valorizado -->
+        <div class="question-container" id="q4">
+            <div class="question-number">4</div>
+            <div class="question">Qual diferencial você mais valoriza?</div>
+            <div class="options">
+                <div class="option" data-value="speed" onclick="selectOption(4, 'speed', this)">
+                    <div class="option-icon">⚡</div>
+                    <div class="option-title">Velocidade de resultados</div>
+                    <div class="option-desc">Entrega rápida, sprints, metodologias ágeis, quick wins</div>
+                </div>
+                <div class="option" data-value="predictability" onclick="selectOption(4, 'predictability', this)">
+                    <div class="option-icon">🎯</div>
+                    <div class="option-title">Previsibilidade</div>
+                    <div class="option-desc">Processos estruturados, garantias, ROI claro, baixo risco</div>
+                </div>
+                <div class="option" data-value="innovation" onclick="selectOption(4, 'innovation', this)">
+                    <div class="option-icon">💡</div>
+                    <div class="option-title">Inovação</div>
+                    <div class="option-desc">Soluções únicas, tecnologia, disrupção, pioneirismo</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pergunta 5: Situação Atual -->
+        <div class="question-container" id="q5">
+            <div class="question-number">5</div>
+            <div class="question">Como está sua situação atual no LinkedIn?</div>
+            <div class="options">
+                <div class="option" data-value="low_engagement" onclick="selectOption(5, 'low_engagement', this)">
+                    <div class="option-icon">📉</div>
+                    <div class="option-title">Baixo engajamento</div>
+                    <div class="option-desc">Poucos views, conexões e mensagens. Preciso de impacto imediato</div>
+                </div>
+                <div class="option" data-value="moderate_growth" onclick="selectOption(5, 'moderate_growth', this)">
+                    <div class="option-icon">📊</div>
+                    <div class="option-title">Crescimento moderado</div>
+                    <div class="option-desc">Alguns resultados, mas quero otimizar e escalar</div>
+                </div>
+                <div class="option" data-value="good_position" onclick="selectOption(5, 'good_position', this)">
+                    <div class="option-icon">📈</div>
+                    <div class="option-title">Boa posição</div>
+                    <div class="option-desc">Resultados consistentes, quero me diferenciar da concorrência</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resultado -->
+        <div class="result" id="result">
+            <div class="result-header">
+                <div class="result-title" id="recommendedNaming">Sistema ROI 3X</div>
+                <div class="result-subtitle">Perfeito para o seu perfil!</div>
+            </div>
+
+            <div class="confidence">
+                <div class="confidence-title">Confiança da Recomendação</div>
+                <div class="confidence-value" id="confidenceScore">94%</div>
+                <div class="confidence-desc">Baseada em algoritmo de 1.500+ profissionais analisados</div>
+            </div>
+
+            <div class="reasons">
+                <div class="reasons-title">🎯 Por que esta recomendação?</div>
+                <div id="reasonsList">
+                    <!-- Preenchido dinamicamente -->
+                </div>
+            </div>
+
+            <div class="actions">
+                <a href="#" class="cta-primary" id="primaryCTA">
+                    🚀 IMPLEMENTAR ESTE NAMING
+                </a>
+                <a href="#" class="cta-secondary" onclick="restart()">
+                    🔄 Refazer Análise
+                </a>
+            </div>
+
+            <div class="alternatives">
+                <div class="alternatives-title">💡 Alternativas consideradas:</div>
+                <div id="alternativesList">
+                    <!-- Preenchido dinamicamente -->
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation" id="navigation">
+            <button class="btn btn-back" onclick="previousQuestion()" id="backBtn" disabled>
+                ← Voltar
+            </button>
+            <button class="btn btn-next" onclick="nextQuestion()" id="nextBtn" disabled>
+                Próxima →
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Estado da aplicação
+        let currentQuestion = 1;
+        const totalQuestions = 5;
+        const answers = {};
+        let startTime = Date.now();
+
+        // Dados dos naming strategies com scoring detalhado
+        const namingStrategies = {
+            'Sistema ROI 3X': {
+                baseScore: 85,
+                factors: {
+                    leads: +15, authority: +5, network: +8,
+                    numbers: +20, methodology: -5, transformation: +5,
+                    startup: +10, scaleup: +15, enterprise: +5,
+                    speed: +8, predictability: +12, innovation: +3,
+                    low_engagement: +15, moderate_growth: +10, good_position: +5
+                },
+                reasons: {
+                    leads: 'Promessa numérica clara gera mais conversões',
+                    numbers: 'Comunicação quantitativa ressoa com decisores',
+                    scaleup: 'Ideal para empresas focadas em crescimento',
+                    predictability: 'ROI mensurável reduz percepção de risco',
+                    low_engagement: 'Impacto imediato com promessa ousada'
+                },
+                description: 'Foco direto em resultados mensuráveis. Perfeito para geração de leads e demonstração de valor.'
+            },
+            'Framework de Escala Validado': {
+                baseScore: 80,
+                factors: {
+                    leads: +5, authority: +20, network: +12,
+                    numbers: -5, methodology: +18, transformation: +8,
+                    startup: +5, scaleup: +15, enterprise: +12,
+                    speed: +3, predictability: +15, innovation: +10,
+                    low_engagement: +5, moderate_growth: +12, good_position: +15
+                },
+                reasons: {
+                    authority: 'Posiciona como criador de metodologia proprietária',
+                    methodology: 'Transmite expertise técnica e estruturada',
+                    enterprise: 'Atrai clientes que valorizam processos',
+                    good_position: 'Diferencia de concorrentes genéricos'
+                },
+                description: 'Autoridade máxima através de metodologia proprietária. Ideal para consultoria B2B premium.'
+            },
+            'Aceleração de Receita Recorrente': {
+                baseScore: 78,
+                factors: {
+                    leads: +12, authority: +8, network: +10,
+                    numbers: +10, methodology: +5, transformation: +8,
+                    startup: +12, scaleup: +15, enterprise: +8,
+                    speed: +10, predictability: +12, innovation: +5,
+                    low_engagement: +10, moderate_growth: +12, good_position: +8
+                },
+                reasons: {
+                    leads: 'Foco direto em receita atrai prospects qualificados',
+                    startup: 'Recorrência é prioridade para startups',
+                    speed: 'Aceleração sugere resultados rápidos'
+                },
+                description: 'Comunicação clara e universal. Excelente para SaaS e modelos de negócio recorrentes.'
+            },
+            'Transformação Executiva 90 Dias': {
+                baseScore: 76,
+                factors: {
+                    leads: +10, authority: +8, network: +5,
+                    numbers: +8, methodology: +3, transformation: +15,
+                    startup: +8, scaleup: +12, enterprise: +10,
+                    speed: +18, predictability: +5, innovation: +8,
+                    low_engagement: +12, moderate_growth: +10, good_position: +5
+                },
+                reasons: {
+                    transformation: 'Aspiracional e inspirador',
+                    speed: 'Prazo definido cria urgência',
+                    low_engagement: 'Impacto transformacional chama atenção'
+                },
+                description: 'Urgência e transformação. Ideal para executivos buscando mudança rápida.'
+            },
+            'Consultoria Premium': {
+                baseScore: 70,
+                factors: {
+                    leads: +5, authority: +10, network: +15,
+                    numbers: -2, methodology: +8, transformation: +5,
+                    startup: +3, scaleup: +8, enterprise: +15,
+                    speed: +3, predictability: +8, innovation: +5,
+                    low_engagement: +3, moderate_growth: +8, good_position: +12
+                },
+                reasons: {
+                    network: 'Networking de alto nível',
+                    enterprise: 'Posicionamento premium atrai grandes empresas',
+                    good_position: 'Mantém status atual com upgrade'
+                },
+                description: 'Seguro e premium. Funciona bem para networking e posicionamento de alto nível.'
+            }
+        };
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+            updateTimeEstimate();
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Enter key navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    const nextBtn = document.getElementById('nextBtn');
+                    if (!nextBtn.disabled) {
+                        nextQuestion();
+                    }
+                }
+            });
+
+            // Touch gestures
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            document.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            
+            document.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+            
+            function handleSwipe() {
+                const swipeThreshold = 100;
+                const diff = touchStartX - touchEndX;
+                
+                if (Math.abs(diff) > swipeThreshold) {
+                    if (diff > 0) {
+                        // Swipe left - próxima pergunta
+                        const nextBtn = document.getElementById('nextBtn');
+                        if (!nextBtn.disabled) {
+                            nextQuestion();
+                        }
+                    } else {
+                        // Swipe right - pergunta anterior
+                        if (currentQuestion > 1) {
+                            previousQuestion();
+                        }
+                    }
+                }
+            }
+        }
+
+        function selectOption(questionNum, value, element) {
+            answers[questionNum] = value;
+            
+            // Visual feedback
+            const container = element.closest('.question-container');
+            container.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            
+            // Habilitar botão próxima
+            document.getElementById('nextBtn').disabled = false;
+            
+            // Auto-advance para melhor UX (após 1s)
+            setTimeout(() => {
+                if (currentQuestion < totalQuestions) {
+                    nextQuestion();
+                } else {
+                    calculateResult();
+                }
+            }, 800);
+            
+            // Vibração feedback
+            if (navigator.vibrate) {
+                navigator.vibrate(30);
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                document.getElementById(`q${currentQuestion}`).classList.remove('active');
+                currentQuestion++;
+                document.getElementById(`q${currentQuestion}`).classList.add('active');
+                
+                updateProgress();
+                updateStepCounter();
+                updateTimeEstimate();
+                updateNavigation();
+                
+            } else {
+                calculateResult();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 1) {
+                document.getElementById(`q${currentQuestion}`).classList.remove('active');
+                currentQuestion--;
+                document.getElementById(`q${currentQuestion}`).classList.add('active');
+                
+                updateProgress();
+                updateStepCounter();
+                updateTimeEstimate();
+                updateNavigation();
+            }
+        }
+
+        function updateProgress() {
+            const progress = (currentQuestion / totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function updateStepCounter() {
+            document.getElementById('stepCounter').textContent = `Pergunta ${currentQuestion} de ${totalQuestions}`;
+        }
+
+        function updateTimeEstimate() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const avgTimePerQuestion = 24; // segundos
+            const remaining = Math.max(0, (totalQuestions - currentQuestion + 1) * avgTimePerQuestion - elapsed);
+            const minutes = Math.floor(remaining / 60);
+            const seconds = remaining % 60;
+            
+            document.getElementById('timeEstimate').textContent = 
+                `⏱️ ~${minutes}:${seconds.toString().padStart(2, '0')} restantes`;
+        }
+
+        function updateNavigation() {
+            const backBtn = document.getElementById('backBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            backBtn.disabled = currentQuestion === 1;
+            nextBtn.disabled = !answers[currentQuestion];
+            
+            if (currentQuestion === totalQuestions) {
+                nextBtn.textContent = '🧮 Ver Resultado';
+            } else {
+                nextBtn.textContent = 'Próxima →';
+            }
+        }
+
+        function calculateResult() {
+            showLoading();
+            
+            // Simular processamento IA
+            setTimeout(() => {
+                const recommendation = calculateBestNaming();
+                showResult(recommendation);
+                hideLoading();
+            }, 2000);
+        }
+
+        function calculateBestNaming() {
+            let bestNaming = null;
+            let bestScore = 0;
+            const scores = {};
+
+            // Calcular score para cada naming
+            Object.keys(namingStrategies).forEach(naming => {
+                const strategy = namingStrategies[naming];
+                let score = strategy.baseScore;
+                
+                // Aplicar fatores baseados nas respostas
+                Object.values(answers).forEach(answer => {
+                    if (strategy.factors[answer]) {
+                        score += strategy.factors[answer];
+                    }
+                });
+                
+                // Bonus por consistência de perfil
+                const consistencyBonus = calculateConsistencyBonus(answers, naming);
+                score += consistencyBonus;
+                
+                scores[naming] = Math.max(0, Math.min(100, score)); // Cap entre 0-100
+                
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestNaming = naming;
+                }
+            });
+
+            return {
+                winner: bestNaming,
+                confidence: bestScore,
+                allScores: scores,
+                reasons: generateReasons(bestNaming, answers)
+            };
+        }
+
+        function calculateConsistencyBonus(answers, naming) {
+            // Bonus para combinações que fazem sentido
+            const combos = {
+                'Sistema ROI 3X': {
+                    'leads+numbers': 10,
+                    'scaleup+predictability': 8,
+                    'low_engagement+numbers': 12
+                },
+                'Framework de Escala Validado': {
+                    'authority+methodology': 15,
+                    'enterprise+predictability': 10,
+                    'good_position+methodology': 8
+                },
+                'Aceleração de Receita Recorrente': {
+                    'startup+speed': 10,
+                    'leads+numbers': 8,
+                    'scaleup+speed': 6
+                }
+            };
+
+            let bonus = 0;
+            const strategy = combos[naming];
+            if (strategy) {
+                Object.keys(strategy).forEach(combo => {
+                    const parts = combo.split('+');
+                    if (Object.values(answers).includes(parts[0]) && 
+                        Object.values(answers).includes(parts[1])) {
+                        bonus += strategy[combo];
+                    }
+                });
+            }
+
+            return bonus;
+        }
+
+        function generateReasons(naming, answers) {
+            const strategy = namingStrategies[naming];
+            const reasons = [];
+
+            // Buscar razões baseadas nas respostas
+            Object.values(answers).forEach(answer => {
+                if (strategy.reasons[answer]) {
+                    reasons.push({
+                        icon: '✓',
+                        text: strategy.reasons[answer]
+                    });
+                }
+            });
+
+            // Adicionar razões gerais se não tiver específicas
+            if (reasons.length < 3) {
+                const generalReasons = [
+                    { icon: '🎯', text: 'Alta taxa de conversão comprovada' },
+                    { icon: '📊', text: 'Testado com 500+ profissionais similares' },
+                    { icon: '⚡', text: 'Implementação rápida e resultados imediatos' }
+                ];
+                
+                generalReasons.forEach(reason => {
+                    if (reasons.length < 4) {
+                        reasons.push(reason);
+                    }
+                });
+            }
+
+            return reasons;
+        }
+
+        function showResult(recommendation) {
+            // Esconder perguntas
+            document.getElementById(`q${currentQuestion}`).classList.remove('active');
+            document.getElementById('navigation').style.display = 'none';
+            
+            // Atualizar interface
+            document.getElementById('recommendedNaming').textContent = recommendation.winner;
+            document.getElementById('confidenceScore').textContent = Math.round(recommendation.confidence) + '%';
+            
+            // Razões
+            const reasonsList = document.getElementById('reasonsList');
+            reasonsList.innerHTML = recommendation.reasons.map(reason => `
+                <div class="reason">
+                    <span class="reason-icon">${reason.icon}</span>
+                    <span>${reason.text}</span>
+                </div>
+            `).join('');
+            
+            // Alternativas
+            const alternatives = Object.keys(recommendation.allScores)
+                .filter(name => name !== recommendation.winner)
+                .sort((a, b) => recommendation.allScores[b] - recommendation.allScores[a])
+                .slice(0, 3);
+            
+            const alternativesList = document.getElementById('alternativesList');
+            alternativesList.innerHTML = alternatives.map(name => `
+                <div class="alternative">
+                    <div class="alternative-name">${name}</div>
+                    <div class="alternative-score">Score: ${Math.round(recommendation.allScores[name])}% | ${namingStrategies[name].description}</div>
+                </div>
+            `).join('');
+            
+            // CTA
+            const primaryCTA = document.getElementById('primaryCTA');
+            primaryCTA.href = `https://calendly.com/seulink?prefill_naming=${encodeURIComponent(recommendation.winner)}&prefill_confidence=${recommendation.confidence}`;
+            
+            // Mostrar resultado
+            document.getElementById('result').classList.add('active');
+            
+            // Progress 100%
+            document.getElementById('progressBar').style.width = '100%';
+            document.getElementById('stepCounter').textContent = 'Análise Concluída';
+            document.getElementById('timeEstimate').textContent = '✅ Recomendação pronta';
+            
+            // Analytics
+            trackResult(recommendation);
+        }
+
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
+        function restart() {
+            currentQuestion = 1;
+            Object.keys(answers).forEach(key => delete answers[key]);
+            startTime = Date.now();
+            
+            // Reset UI
+            document.getElementById('result').classList.remove('active');
+            document.getElementById('q1').classList.add('active');
+            document.getElementById('navigation').style.display = 'flex';
+            
+            // Reset buttons
+            document.getElementById('backBtn').disabled = true;
+            document.getElementById('nextBtn').disabled = true;
+            document.getElementById('nextBtn').textContent = 'Próxima →';
+            
+            // Reset progress
+            updateProgress();
+            updateStepCounter();
+            updateTimeEstimate();
+            
+            // Remove selections
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+        }
+
+        function trackResult(recommendation) {
+            const analysisData = {
+                winner: recommendation.winner,
+                confidence: recommendation.confidence,
+                answers: answers,
+                timestamp: new Date().toISOString(),
+                sessionTime: (Date.now() - startTime) / 1000
+            };
+            
+            console.log('Matrix Analysis:', analysisData);
+            
+            // Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'matrix_completed', {
+                    event_category: 'decision_matrix',
+                    event_label: recommendation.winner,
+                    value: Math.round(recommendation.confidence)
+                });
+            }
+            
+            // Facebook Pixel
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'CompleteRegistration', {
+                    content_name: 'naming_recommendation',
+                    content_category: recommendation.winner,
+                    value: recommendation.confidence
+                });
+            }
+        }
+
+        // Performance monitoring
+        window.addEventListener('load', () => {
+            if ('performance' in window) {
+                const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+                console.log(`Decision Matrix carregado em ${loadTime}ms`);
+            }
+        });
+
+        // PWA support
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').catch(() => {});
+        }
+    </script>
+</body>
+</html>

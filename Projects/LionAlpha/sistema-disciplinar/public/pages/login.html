@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login — Sistema Disciplinar</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <!-- Firebase compat para manter compatibilidade com código existente -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="../assets/js/firebase-config.js"></script>
+
+  <style>
+    .login-container{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0078d4,#106ebe);padding:20px}
+    .login-card{background:#fff;border-radius:12px;padding:40px;width:100%;max-width:400px;box-shadow:0 10px 40px rgba(0,0,0,.2);animation:slideIn .5s ease}
+    .login-header{text-align:center;margin-bottom:30px}
+    .login-logo{width:64px;height:64px;background:linear-gradient(135deg,#0078d4,#106ebe);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:32px}
+    .login-title{font-size:24px;font-weight:700;color:#323130;margin-bottom:8px}
+    .login-subtitle{color:#605e5c;font-size:14px}
+    .login-form{display:flex;flex-direction:column;gap:20px}
+    .login-input{padding:16px;border:2px solid #e1dfdd;border-radius:8px;font-size:16px;transition:all .3s ease;background:#fff}
+    .login-input:focus{outline:none;border-color:#0078d4;box-shadow:0 0 0 3px rgba(0,120,212,.1)}
+    .login-button{padding:16px;background:linear-gradient(135deg,#0078d4,#106ebe);color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;transition:all .3s ease;margin-top:10px}
+    .login-button:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,120,212,.4)}
+    .login-button:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
+    .login-options{display:flex;justify-content:space-between;align-items:center;font-size:14px;margin-top:20px}
+    .remember-me{display:flex;align-items:center;gap:8px;color:#605e5c}
+    .forgot-password{color:#0078d4;text-decoration:none;transition:color .2s ease}
+    .forgot-password:hover{color:#106ebe}
+    .login-footer{text-align:center;margin-top:30px;padding-top:20px;border-top:1px solid #f3f2f1;color:#605e5c;font-size:12px}
+    .logout-section{display:none}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+    .logout-mode .login-section{display:none}
+    .logout-mode .logout-section{display:block}
+  </style>
+</head>
+<body>
+  <main class="container" style="max-width:400px;margin:48px auto;">
+    <h1>Entrar</h1>
+    <form id="loginForm">
+      <label>Email</label>
+      <input id="email" type="email" required autocomplete="username" />
+      <label>Senha</label>
+      <input id="password" type="password" required autocomplete="current-password" />
+      <button id="btnLogin" type="submit">Entrar</button>
+      <p id="error" style="color:#c21;min-height:1.5em;"></p>
+    </form>
+  </main>
+
+  <script>
+    const form = document.getElementById('loginForm');
+    const errorEl = document.getElementById('error');
+    const btn = document.getElementById('btnLogin');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      btn.disabled = true; errorEl.textContent = '';
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      try {
+        await firebase.auth().signInWithEmailAndPassword(email, password);
+        const go = (location.pathname.includes('/pages/')) ? '../index.html' : 'index.html';
+        location.href = go;
+      } catch (err) {
+        errorEl.textContent = (err && err.message) ? err.message : 'Falha no login.';
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

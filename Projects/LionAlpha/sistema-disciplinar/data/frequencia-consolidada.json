@@ -1,0 +1,764 @@
+{
+  "lastUpdate": "2025-08-21T11:09:43.445Z",
+  "version": "2.0",
+  "total": 84,
+  "alunos_unicos": 6,
+  "registros": [
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000029",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000030",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000031",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000032",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000033",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000034",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000035",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000036",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000037",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000038",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000039",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000040",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000041",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2257848",
+      "nome_aluno": "Bruna Santos Oliveira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000042",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000001",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000002",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000003",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000004",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000005",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000006",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000007",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000008",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000009",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000010",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000011",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000012",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000013",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2557498",
+      "nome_aluno": "Enzo Gabriel Oliveira Costa",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000014",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000071",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000072",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000073",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000074",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000075",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000076",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000077",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000078",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000079",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000080",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000081",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000082",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000083",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2572796",
+      "nome_aluno": "Gabriela da Silva Conceição",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000084",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000043",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000044",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000045",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000046",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000047",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000048",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000049",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000050",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000051",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000052",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000053",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000054",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000055",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2590991",
+      "nome_aluno": "Hector Harthur Morais Rodrigues",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000056",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000057",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000058",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000059",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000060",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000061",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000062",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000063",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000064",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000065",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000066",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000067",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000068",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000069",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2595270",
+      "nome_aluno": "Enzo Samuel Alves R. Carvalho",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000070",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-01",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000015",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-04",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000016",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-05",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000017",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-06",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000018",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-07",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000019",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-08",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000020",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-11",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000021",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-12",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000022",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-13",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000023",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-14",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000024",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-15",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000025",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-18",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000026",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-19",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "F",
+      "id": "freq_2024_000027",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    },
+    {
+      "data": "2024-08-20",
+      "codigo_aluno": "2639458",
+      "nome_aluno": "Alberto de Jesus Sousa Pereira",
+      "turma": "6A",
+      "marcacao": "P",
+      "id": "freq_2024_000028",
+      "created_at": "2024-08-20T15:30:00.000Z"
+    }
+  ]
+}

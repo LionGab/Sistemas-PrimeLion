@@ -1,0 +1,37 @@
+{
+  "mcpServers": {
+    "sequential-thinking": {
+      "command": "mcp-server-sequential-thinking",
+      "args": []
+    },
+    "filesystem": {
+      "command": "mcp-server-filesystem", 
+      "args": ["C:/Users/User"]
+    },
+    "puppeteer": {
+      "command": "mcp-server-puppeteer",
+      "args": []
+    },
+    "basic-memory": {
+      "command": "uvx",
+      "args": ["basic-memory", "tool", "serve"]
+    }
+  },
+  "allowedTools": [
+    "mcp_filesystem*",
+    "mcp_sequential-thinking*", 
+    "mcp_puppeteer*",
+    "mcp_basic-memory*",
+    "Bash(git *)",
+    "Bash(ls *)",
+    "Bash(cd *)",
+    "Bash(mkdir *)",
+    "Bash(npm *)",
+    "Bash(python *)",
+    "Read",
+    "Edit",
+    "Write",
+    "Glob", 
+    "Grep"
+  ]
+}

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análises - Dashboard Disciplinar</title>
+    
+    <!-- CSS Externos -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    
+    <!-- Sistema Local de Banco de Dados -->
+    <script src="../assets/js/local-db.js"></script>
+    <script src="../assets/js/local-auth.js"></script>
+    <script src="../assets/js/populate-db.js"></script>
+    
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <!-- BARRA SUPERIOR -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <div class="app-launcher">
+                <span></span><span></span><span></span>
+                <span></span><span></span><span></span>
+                <span></span><span></span><span></span>
+            </div>
+            <span class="app-name">Dashboard Disciplinar</span>
+        </div>
+        <div class="top-bar-center">
+            <input type="text" class="search-box" placeholder="Pesquisar análises...">
+        </div>
+        <div class="top-bar-right">
+            <div class="user-profile">A</div>
+        </div>
+    </div>
+
+    <!-- LAYOUT PRINCIPAL -->
+    <div class="main-layout">
+        
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">Módulos Principais</div>
+                
+                <a href="../index.html" class="sidebar-item">
+                    <span class="sidebar-icon">🏠</span>
+                    <span class="sidebar-text">Dashboard</span>
+                </a>
+                
+                
+                <a href="gestao-alunos.html" class="sidebar-item">
+                    <span class="sidebar-icon">👥</span>
+                    <span class="sidebar-text">Gestão de Alunos</span>
+                </a>
+                
+                <a href="medidas-disciplinares.html" class="sidebar-item">
+                    <span class="sidebar-icon">📋</span>
+                    <span class="sidebar-text">Medidas Disciplinares</span>
+                </a>
+                
+                <a href="frequencia.html" class="sidebar-item">
+                    <span class="sidebar-icon">📅</span>
+                    <span class="sidebar-text">Controle de Frequência</span>
+                </a>
+                
+                <a href="relatorios.html" class="sidebar-item">
+                    <span class="sidebar-icon">📊</span>
+                    <span class="sidebar-text">Relatórios</span>
+                </a>
+                
+                <a href="analises.html" class="sidebar-item active">
+                    <span class="sidebar-icon">📈</span>
+                    <span class="sidebar-text">Análises</span>
+                </a>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-title">Ferramentas</div>
+                
+                <a href="configuracoes.html" class="sidebar-item">
+                    <span class="sidebar-icon">⚙️</span>
+                    <span class="sidebar-text">Configurações</span>
+                </a>
+                
+                <a href="comunicacao.html" class="sidebar-item">
+                    <span class="sidebar-icon">📱</span>
+                    <span class="sidebar-text">Comunicação</span>
+                </a>
+                
+                <a href="login.html" class="sidebar-item">
+                    <span class="sidebar-icon">🔐</span>
+                    <span class="sidebar-text">Login/Logout</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- ÁREA DE CONTEÚDO -->
+        <div class="content-area">
+            <div class="main-content">
+                
+                <!-- TÍTULO -->
+                <div class="module-title">
+                    📈 Módulo de Análises
+                </div>
+
+                <!-- CONTROLES DE ANÁLISE -->
+                <div class="analytics-controls">
+                    <div class="period-selector">
+                        <label class="period-label">📅 Período de Análise:</label>
+                        <div class="period-buttons">
+                            <button class="period-btn active" onclick="setPeriod('30')">30 dias</button>
+                            <button class="period-btn" onclick="setPeriod('90')">90 dias</button>
+                            <button class="period-btn" onclick="setPeriod('180')">6 meses</button>
+                            <button class="period-btn" onclick="setPeriod('365')">1 ano</button>
+                            <button class="period-btn" onclick="setPeriod('todos')">Todos</button>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-actions">
+                        <button class="btn btn-primary" onclick="atualizarAnalises()">
+                            🔄 Atualizar Análises
+                        </button>
+                        <button class="btn btn-secondary" onclick="exportarAnalises()">
+                            📊 Exportar Dados
+                        </button>
+                        <button class="btn btn-info" onclick="gerarRelatorioAnalitico()">
+                            📋 Relatório Analítico
+                        </button>
+                    </div>
+                </div>
+
+                <!-- INSIGHTS INTELIGENTES -->
+                <div class="insights-section" id="insightsSection">
+                    <div class="insights-title">
+                        🧠 Insights Inteligentes
+                    </div>
+                    <div id="insightsContainer" class="insights-container">
+                        <div class="loading-state">
+                            <div class="loading-spinner"></div>
+                            <p>Gerando insights...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GRÁFICOS E ANÁLISES -->
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <div class="analytics-header">
+                            <div class="analytics-title">📈 Tendência de Faltas</div>
+                            <div class="analytics-subtitle">Evolução ao longo do tempo</div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="trendChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <div class="analytics-header">
+                            <div class="analytics-title">📊 Comparativo por Turma</div>
+                            <div class="analytics-subtitle">Faltas por turma</div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="turmaChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <div class="analytics-header">
+                            <div class="analytics-title">🎯 Tipos de Faltas</div>
+                            <div class="analytics-subtitle">Distribuição percentual</div>
+                        </div>
+                        <div class="chart-container chart-small">
+                            <canvas id="tipoChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <div class="analytics-header">
+                            <div class="analytics-title">⚖️ Medidas Disciplinares</div>
+                            <div class="analytics-subtitle">Tipos aplicados</div>
+                        </div>
+                        <div class="chart-container chart-small">
+                            <canvas id="medidasChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card analytics-wide">
+                        <div class="analytics-header">
+                            <div class="analytics-title">🔥 Ranking de Alunos</div>
+                            <div class="analytics-subtitle">Alunos com mais registros</div>
+                        </div>
+                        <div id="rankingContainer" class="ranking-container">
+                            <div class="loading-state">
+                                <div class="loading-spinner"></div>
+                                <p>Carregando ranking...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card analytics-wide">
+                        <div class="analytics-header">
+                            <div class="analytics-title">📅 Heatmap Semanal</div>
+                            <div class="analytics-subtitle">Padrões por dia da semana</div>
+                        </div>
+                        <div id="heatmapContainer" class="heatmap-container">
+                            <div class="loading-state">
+                                <div class="loading-spinner"></div>
+                                <p>Gerando heatmap...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <div class="analytics-header">
+                            <div class="analytics-title">📚 Análise por Disciplina</div>
+                            <div class="analytics-subtitle">Faltas por matéria</div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="disciplinaChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <div class="analytics-header">
+                            <div class="analytics-title">⚡ Gravidade das Medidas</div>
+                            <div class="analytics-subtitle">Distribuição por gravidade</div>
+                        </div>
+                        <div class="chart-container chart-small">
+                            <canvas id="gravidadeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ANÁLISE PREDITIVA -->
+                <div class="management-section" id="analisePreditiva">
+                    <div class="management-title">
+                        🔮 Análise Preditiva
+                    </div>
+                    <div id="predicaoContainer">
+                        <div class="loading-state">
+                            <div class="loading-spinner"></div>
+                            <p>Processando análise preditiva...</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    
+    <script src="../assets/js/main.js" defer></script>
+    <script src="../assets/js/gestao.js" defer></script>
+    <script src="../assets/js/medidas.js" defer></script>
+    <script src="../assets/js/relatorios.js" defer></script>
+    <script src="../assets/js/analises.js" defer></script>
+    
+    <script>
+        // Inicialização da página
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📈 Página de Análises carregada');
+            inicializarModuloAnalises();
+        });
+
+        // Função de inicialização específica
+        async function inicializarModuloAnalises() {
+            try {
+                showMessage('Carregando análises...', 'loading');
+                
+                // Aguardar Sistema Local
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                if (window.localDb && window.localDb.loaded) {
+                    // Carregar dados se necessário
+                    if (!window.processedDataRelatorios || window.processedDataRelatorios.length === 0) {
+                        if (typeof carregarDadosRelatorios === 'function') {
+                            await carregarDadosRelatorios();
+                        }
+                    }
+
+                    // Gerar análises
+                    if (typeof atualizarAnalises === 'function') {
+                        await atualizarAnalises();
+                    } else {
+                        console.warn('Função atualizarAnalises não encontrada');
+                    }
+                    showMessage('✅ Análises carregadas!', 'success');
+                } else {
+                    showMessage('⚠️ Sistema Local não conectado - usando dados demo', 'error');
+                    carregarDadosDemoAnalises();
+                }
+            } catch (error) {
+                console.error('Erro ao carregar análises:', error);
+                showMessage('Erro ao carregar análises', 'error');
+            }
+        }
+
+        // Carregar dados de demonstração
+        function carregarDadosDemoAnalises() {
+            document.getElementById('insightsContainer').innerHTML = `
+                <div class="insight-item">
+                    <div class="insight-text">📊 Sistema configurado para ver análises detalhadas!</div>
+                </div>
+            `;
+            
+            document.getElementById('rankingContainer').innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">🎉</div>
+                    <h3>Dados Demo</h3>
+                    <p>Sistema configurado para ver ranking real</p>
+                </div>
+            `;
+        }
+    </script>
+    <script>
+        // Proteger página - requer autenticação
+        requireAuth({
+            loginPath: 'login.html',
+            onAuth: function(user) {
+                console.log('Usuário logado nas análises:', user.email);
+                // Página já inicializa automaticamente via DOMContentLoaded
+            }
+        });
+    </script>
+
+</body>
+</html>

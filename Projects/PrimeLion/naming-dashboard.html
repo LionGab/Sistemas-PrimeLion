@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Comparativo - Naming Strategy LinkedIn</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #2d3748;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        tr:hover {
+            background: #f7fafc;
+            transform: scale(1.01);
+            transition: all 0.3s ease;
+        }
+        .score {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .score-high { background: #48bb78; color: white; }
+        .score-medium { background: #ed8936; color: white; }
+        .score-low { background: #f56565; color: white; }
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        #radarChart {
+            max-width: 100%;
+            height: 400px;
+        }
+        .winner {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        .tooltip {
+            position: absolute;
+            background: #2d3748;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            display: none;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Dashboard Estratégico de Naming</h1>
+        
+        <div class="metrics-grid">
+            <div>
+                <table id="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Opção de Naming</th>
+                            <th>Autoridade</th>
+                            <th>Conversão</th>
+                            <th>Clareza</th>
+                            <th>Diferenciação</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Sistema ROI 3X</strong></td>
+                            <td><span class="score score-high" data-detail="Promessa numérica clara">9</span></td>
+                            <td><span class="score score-high" data-detail="Alta taxa de clique">10</span></td>
+                            <td><span class="score score-high" data-detail="Extremamente direto">10</span></td>
+                            <td><span class="score score-medium" data-detail="Ousado mas comum">8</span></td>
+                            <td><strong>37</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Framework de Escala Validado</strong></td>
+                            <td><span class="score score-high" data-detail="Sugere expertise">10</span></td>
+                            <td><span class="score score-medium" data-detail="Converte bem B2B">7</span></td>
+                            <td><span class="score score-medium" data-detail="Requer contexto">7</span></td>
+                            <td><span class="score score-high" data-detail="Único no mercado">9</span></td>
+                            <td><strong>33</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Aceleração de Receita Recorrente</strong></td>
+                            <td><span class="score score-medium" data-detail="Sólido mas genérico">8</span></td>
+                            <td><span class="score score-high" data-detail="Foco em resultado">9</span></td>
+                            <td><span class="score score-high" data-detail="Muito claro">9</span></td>
+                            <td><span class="score score-medium" data-detail="Moderadamente único">7</span></td>
+                            <td><strong>33</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Consultoria de Alta Performance</strong></td>
+                            <td><span class="score score-medium" data-detail="Tradicional">7</span></td>
+                            <td><span class="score score-medium" data-detail="Converte médio">6</span></td>
+                            <td><span class="score score-high" data-detail="Universal">9</span></td>
+                            <td><span class="score score-low" data-detail="Muito comum">5</span></td>
+                            <td><strong>27</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Metodologia Faturamento Previsível</strong></td>
+                            <td><span class="score score-high" data-detail="Método proprietário">9</span></td>
+                            <td><span class="score score-medium" data-detail="Atrai CFOs">8</span></td>
+                            <td><span class="score score-medium" data-detail="Técnico demais">8</span></td>
+                            <td><span class="score score-medium" data-detail="Diferenciado">8</span></td>
+                            <td><strong>33</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Programas Expansão Estratégica</strong></td>
+                            <td><span class="score score-medium" data-detail="Corporativo">7</span></td>
+                            <td><span class="score score-medium" data-detail="Conversão média">7</span></td>
+                            <td><span class="score score-medium" data-detail="Amplo demais">6</span></td>
+                            <td><span class="score score-medium" data-detail="Pouco memorável">6</span></td>
+                            <td><strong>26</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Transformação Executiva 90 Dias</strong></td>
+                            <td><span class="score score-medium" data-detail="Premium">8</span></td>
+                            <td><span class="score score-high" data-detail="Urgência clara">9</span></td>
+                            <td><span class="score score-medium" data-detail="Claro com prazo">8</span></td>
+                            <td><span class="score score-medium" data-detail="Prazo diferencia">8</span></td>
+                            <td><strong>33</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="chart-container">
+                <h2>Análise Radar Comparativa</h2>
+                <canvas id="radarChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="winner">
+            <h2>🏆 VENCEDOR: Sistema ROI 3X</h2>
+            <p>Score Total: 37/40 | Melhor combinação de conversão e clareza</p>
+        </div>
+    </div>
+    
+    <div class="tooltip" id="tooltip"></div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Tooltip functionality
+        document.querySelectorAll('.score').forEach(score => {
+            score.addEventListener('mouseenter', (e) => {
+                const tooltip = document.getElementById('tooltip');
+                tooltip.textContent = e.target.dataset.detail;
+                tooltip.style.display = 'block';
+                tooltip.style.left = e.pageX + 10 + 'px';
+                tooltip.style.top = e.pageY - 30 + 'px';
+            });
+            score.addEventListener('mouseleave', () => {
+                document.getElementById('tooltip').style.display = 'none';
+            });
+        });
+        
+        // Radar Chart
+        const ctx = document.getElementById('radarChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['Autoridade', 'Conversão', 'Clareza', 'Diferenciação'],
+                datasets: [{
+                    label: 'Sistema ROI 3X',
+                    data: [9, 10, 10, 8],
+                    borderColor: '#48bb78',
+                    backgroundColor: 'rgba(72, 187, 120, 0.2)',
+                }, {
+                    label: 'Framework Escala',
+                    data: [10, 7, 7, 9],
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                }, {
+                    label: 'Aceleração Receita',
+                    data: [8, 9, 9, 7],
+                    borderColor: '#ed8936',
+                    backgroundColor: 'rgba(237, 137, 54, 0.2)',
+                }]
+            },
+            options: {
+                scale: {
+                    ticks: {
+                        beginAtZero: true,
+                        max: 10
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

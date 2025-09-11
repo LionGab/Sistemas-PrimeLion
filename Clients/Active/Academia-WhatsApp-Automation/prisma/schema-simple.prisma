@@ -1,0 +1,74 @@
+// Simplified schema for SQLite - Academia WhatsApp Automation
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Academia {
+  id              String   @id @default(uuid())
+  nome            String
+  cnpj            String   @unique
+  telefone        String
+  whatsappNumber  String   @map("whatsapp_number")
+  
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  
+  alunos          Aluno[]
+  mensagens       Mensagem[]
+  
+  @@map("academias")
+}
+
+model Aluno {
+  id              String    @id @default(uuid())
+  nome            String
+  telefone        String
+  email           String?
+  
+  // Status simples para SQLite
+  status          String    @default("ATIVO") // ATIVO, INATIVO, VISITANTE, SUSPENSO
+  ultimaVisita    DateTime? @map("ultima_visita")
+  dataMatricula   DateTime  @default(now()) @map("data_matricula")
+  
+  valorMensalidade String?   @map("valor_mensalidade") // String temporário para SQLite
+  
+  permiteWhatsApp Boolean   @default(true) @map("permite_whatsapp")
+  
+  academiaId      String    @map("academia_id")
+  academia        Academia  @relation(fields: [academiaId], references: [id], onDelete: Cascade)
+  
+  mensagens       Mensagem[]
+  
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+  
+  @@unique([telefone, academiaId])
+  @@map("alunos")
+}
+
+model Mensagem {
+  id              String      @id @default(uuid())
+  conteudo        String
+  tipo            String      // ENTRADA, SAIDA, AUTOMATICA, MANUAL
+  status          String      @default("ENVIADA") // PENDENTE, ENVIADA, ENTREGUE, LIDA
+  
+  whatsappId      String?     @map("whatsapp_id")
+  
+  alunoId         String?     @map("aluno_id")
+  aluno           Aluno?      @relation(fields: [alunoId], references: [id], onDelete: SetNull)
+  
+  academiaId      String      @map("academia_id")
+  academia        Academia    @relation(fields: [academiaId], references: [id], onDelete: Cascade)
+  
+  enviadaEm       DateTime?   @map("enviada_em")
+  respondida      Boolean     @default(false)
+  
+  createdAt       DateTime    @default(now()) @map("created_at")
+  
+  @@map("mensagens")
+}

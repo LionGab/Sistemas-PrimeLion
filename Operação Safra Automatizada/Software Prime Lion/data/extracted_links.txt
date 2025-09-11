@@ -1,0 +1,55 @@
+Links extraídos do documento MelhoresPráticas-UsoCC.md:
+
+REDDIT POSTS:
+https://www.reddit.com/r/ClaudeAI/comments/1n2djja/claude_code_with_mcp_is_all_you_need/
+https://www.reddit.com/r/ClaudeAI/comments/1mi59yk/we_prepared_a_collection_of_claude_code_subagents/
+https://www.reddit.com/r/ClaudeAI/comments/1mx7k09/stop_overcomplicating_claude_code_the_dead_simple/
+https://www.reddit.com/r/ClaudeCode/comments/1mguoia/absolutely_insane_improvement_of_claude_code/
+https://www.reddit.com/r/ClaudeAI/comments/1mx3vdw/i_built_a_saas_in_20_days_without_writing_any/
+https://www.reddit.com/r/ClaudeAI/comments/1mpeefp/my_claude_code_tips_for_newer_users/
+https://www.reddit.com/r/ClaudeAI/comments/1m1af6a/3_years_of_daily_heavy_llm_use_the_best_claude/
+https://www.reddit.com/r/ClaudeAI/comments/1msk88r/insights_after_one_month_of_claude_code_max/
+https://www.reddit.com/r/ClaudeAI/comments/1n28m2s/essential_resources_for_claude_code/
+https://www.reddit.com/r/ClaudeAI/comments/1mvan49/weve_opensourced_our_claude_code_project/
+https://www.reddit.com/r/ClaudeAI/comments/1n1ejnj/claude_code_is_for_everyone_and_only_for_coders/
+https://www.reddit.com/r/ClaudeAI/comments/1n1po2k/collation_of_claude_code_best_practices/
+
+GITHUB REPOSITORIES:
+https://github.com/rohittcodes/linea
+https://github.com/VoltAgent/awesome-claude-code-subagents
+https://github.com/ryoppippi/ccusage
+https://github.com/RichardAtCT/claude-code-openai-wrapper
+https://github.com/getzep/graphiti
+https://github.com/basicmachines-co/basic-memory/tree/main/docs
+https://github.com/arben-adm/mcp-sequential-thinking
+https://github.com/SuperClaude-Org/SuperClaude_Framework
+https://github.com/exa-labs/exa-mcp-server
+https://github.com/rosmur/claudecode-best-practices/blob/main/claudecode_bestpractices.md
+https://github.com/centminmod/my-claude-code-setup
+https://github.com/microsoft/playwright-mcp
+https://github.com/hangwin/mcp-chrome
+https://github.com/oraios/serena
+https://github.com/jamubc/gemini-mcp-tool
+https://github.com/automazeio/ccpm
+
+OFFICIAL DOCUMENTATION:
+https://docs.anthropic.com/en/docs/claude-code/common-workflows
+https://docs.anthropic.com/en/docs/claude-code/hooks
+
+BLOG POSTS:
+https://composio.dev/blog/cluade-code-with-mcp-is-all-you-need
+https://go.adaline.ai/ncri0xa
+https://blog.puzzmo.com/posts/2025/07/30/six-weeks-of-claude-code/
+https://dwyer.co.za/static/claude-code-is-all-you-need.html
+https://www.dzombak.com/blog/2025/08/getting-good-results-from-claude-code/
+https://www.sabrina.dev/p/ultimate-ai-coding-guide-claude-code
+https://betweentheprompts.com/design-partner/
+https://minusx.ai/blog/decoding-claude-code/
+
+ANTHROPIC OFFICIAL:
+https://www.anthropic.com/engineering/claude-code-best-practices
+https://www.anthropic.com/news/how-anthropic-teams-use-claude-code
+
+CLAUDE SHARE:
+https://claude.ai/share/5c082ca8-3ad4-4f3c-803f-6daa64f9dfe0
+

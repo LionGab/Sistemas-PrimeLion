@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrossel LinkedIn - CEOs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f3f2ef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .carousel-container {
+            width: 1080px;
+            max-width: 100%;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .carousel-wrapper {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .slide {
+            min-width: 100%;
+            width: 1080px;
+            height: 1080px;
+            background: #FFFFFF;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 80px;
+            position: relative;
+        }
+        
+        .slide-number {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            color: #0077B5;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .slide h1 {
+            color: #0077B5;
+            font-size: 72px;
+            font-weight: bold;
+            line-height: 1.2;
+            margin-bottom: 40px;
+        }
+        
+        .slide h2 {
+            color: #000000;
+            font-size: 56px;
+            font-weight: bold;
+            line-height: 1.3;
+            margin-bottom: 30px;
+        }
+        
+        .slide h3 {
+            color: #0077B5;
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        
+        .slide p {
+            color: #000000;
+            font-size: 42px;
+            line-height: 1.4;
+            font-weight: regular;
+        }
+        
+        .slide.capa h1 {
+            font-size: 86px;
+        }
+        
+        .erro-icon {
+            font-size: 80px;
+            margin-bottom: 30px;
+        }
+        
+        .check-icon {
+            color: #0077B5;
+            font-size: 80px;
+            margin-bottom: 30px;
+        }
+        
+        .highlight {
+            color: #0077B5;
+            font-weight: bold;
+        }
+        
+        .small-text {
+            font-size: 32px;
+            color: #666;
+            margin-top: 20px;
+        }
+        
+        .proof-box {
+            background: #f8f8f8;
+            border: 3px solid #0077B5;
+            border-radius: 12px;
+            padding: 40px;
+            margin: 20px 0;
+        }
+        
+        .cta-button {
+            background: #0077B5;
+            color: white;
+            font-size: 48px;
+            font-weight: bold;
+            padding: 30px 60px;
+            border-radius: 8px;
+            margin-top: 40px;
+            display: inline-block;
+        }
+        
+        .navigation {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+        
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .nav-dot.active {
+            background: #0077B5;
+        }
+        
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #0077B5;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s;
+            z-index: 10;
+        }
+        
+        .nav-arrow:hover {
+            opacity: 0.8;
+        }
+        
+        .nav-arrow.prev {
+            left: 20px;
+        }
+        
+        .nav-arrow.next {
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel-container">
+        <div class="carousel-wrapper" id="carouselWrapper">
+            <!-- Slide 1: CAPA -->
+            <div class="slide capa">
+                <span class="slide-number">1/10</span>
+                <h1>CEOs perdem R$ 100k/mês<br>no LinkedIn por estes 5 erros<br><span class="small-text">(você comete pelo menos 3)</span></h1>
+            </div>
+            
+            <!-- Slide 2: ERRO #1 -->
+            <div class="slide">
+                <span class="slide-number">2/10</span>
+                <div class="erro-icon">❌</div>
+                <h3>ERRO #1</h3>
+                <h2>Perfil-currículo</h2>
+                <p>LinkedIn não é RH.<br><strong>É pipeline de negócios.</strong></p>
+            </div>
+            
+            <!-- Slide 3: ERRO #2 -->
+            <div class="slide">
+                <span class="slide-number">3/10</span>
+                <div class="erro-icon">❌</div>
+                <h3>ERRO #2</h3>
+                <h2>Postar e sumir</h2>
+                <p>1x/mês = invisível<br><strong>3x/semana = autoridade</strong></p>
+            </div>
+            
+            <!-- Slide 4: ERRO #3 -->
+            <div class="slide">
+                <span class="slide-number">4/10</span>
+                <div class="erro-icon">❌</div>
+                <h3>ERRO #3</h3>
+                <h2>Só falar da empresa</h2>
+                <p>Pessoas compram de pessoas.<br><strong>Não de CNPJs.</strong></p>
+            </div>
+            
+            <!-- Slide 5: ERRO #4 -->
+            <div class="slide">
+                <span class="slide-number">5/10</span>
+                <div class="erro-icon">❌</div>
+                <h3>ERRO #4</h3>
+                <h2>Texto sem sangue</h2>
+                <p>Histórias vendem <strong>10x mais</strong><br>que press releases.</p>
+            </div>
+            
+            <!-- Slide 6: ERRO #5 -->
+            <div class="slide">
+                <span class="slide-number">6/10</span>
+                <div class="erro-icon">❌</div>
+                <h3>ERRO #5</h3>
+                <h2>Fazer sozinho</h2>
+                <p>CEO sem ghostwriter =<br><strong>perfil abandonado em 60 dias</strong></p>
+            </div>
+            
+            <!-- Slide 7: A SOLUÇÃO -->
+            <div class="slide">
+                <span class="slide-number">7/10</span>
+                <div class="check-icon">✅</div>
+                <h3>A SOLUÇÃO</h3>
+                <h2>Sistema A.P.N:</h2>
+                <p><span class="highlight">Autoridade</span> (posicionamento)<br>
+                <span class="highlight">Pipeline</span> (conteúdo que converte)<br>
+                <span class="highlight">Negócios</span> (DMs virando contratos)</p>
+            </div>
+            
+            <!-- Slide 8: PROVA -->
+            <div class="slide">
+                <span class="slide-number">8/10</span>
+                <h3>PROVA REAL</h3>
+                <div class="proof-box">
+                    <h2>"15 leads qualificados<br>em 30 dias<br>via LinkedIn"</h2>
+                </div>
+                <p class="small-text">Cliente real • Resultado verificado</p>
+            </div>
+            
+            <!-- Slide 9: OFERTA -->
+            <div class="slide">
+                <span class="slide-number">9/10</span>
+                <h3>OFERTA EXCLUSIVA</h3>
+                <h2>Quer 10-20 leads<br>premium/mês<br>entrando no seu LinkedIn?</h2>
+                <p class="highlight" style="font-size: 48px; margin-top: 40px;">Tenho 3 vagas este mês.</p>
+            </div>
+            
+            <!-- Slide 10: AÇÃO -->
+            <div class="slide">
+                <span class="slide-number">10/10</span>
+                <h3>PRÓXIMO PASSO</h3>
+                <h2>Mande <span class="highlight">'PIPELINE'</span><br>no meu inbox</h2>
+                <p style="margin-top: 40px;">ou</p>
+                <div class="cta-button">WhatsApp: [seu número]</div>
+            </div>
+        </div>
+        
+        <!-- Navigation -->
+        <button class="nav-arrow prev" onclick="changeSlide(-1)">‹</button>
+        <button class="nav-arrow next" onclick="changeSlide(1)">›</button>
+        
+        <div class="navigation">
+            <span class="nav-dot active" onclick="goToSlide(0)"></span>
+            <span class="nav-dot" onclick="goToSlide(1)"></span>
+            <span class="nav-dot" onclick="goToSlide(2)"></span>
+            <span class="nav-dot" onclick="goToSlide(3)"></span>
+            <span class="nav-dot" onclick="goToSlide(4)"></span>
+            <span class="nav-dot" onclick="goToSlide(5)"></span>
+            <span class="nav-dot" onclick="goToSlide(6)"></span>
+            <span class="nav-dot" onclick="goToSlide(7)"></span>
+            <span class="nav-dot" onclick="goToSlide(8)"></span>
+            <span class="nav-dot" onclick="goToSlide(9)"></span>
+        </div>
+    </div>
+    
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 10;
+        const wrapper = document.getElementById('carouselWrapper');
+        const dots = document.querySelectorAll('.nav-dot');
+        
+        function updateSlidePosition() {
+            wrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+        
+        function changeSlide(direction) {
+            currentSlide += direction;
+            if (currentSlide < 0) currentSlide = totalSlides - 1;
+            if (currentSlide >= totalSlides) currentSlide = 0;
+            updateSlidePosition();
+        }
+        
+        function goToSlide(slideIndex) {
+            currentSlide = slideIndex;
+            updateSlidePosition();
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+    </script>
+</body>
+</html>

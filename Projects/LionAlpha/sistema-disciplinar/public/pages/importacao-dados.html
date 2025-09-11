@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Importação de Dados - Sistema Disciplinar</title>
+  
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/dashboard.css">
+  
+  <!-- Biblioteca para leitura de Excel -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  
+  <!-- Sistema Local de Banco de Dados -->
+  <script src="../assets/js/local-db.js"></script>
+  <script src="../assets/js/local-auth.js"></script>
+  <script src="../assets/js/populate-db.js"></script>
+  
+  
+  
+  
+  
+</head>
+<body>
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <div class="app-launcher">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+      <span class="app-name">Importação de Dados</span>
+    </div>
+    <div class="top-bar-right">
+      <div class="user-profile" title="Usuário">A</div>
+      <button id="btnLogout" class="btn-logout">Sair</button>
+    </div>
+  </div>
+
+  <div class="main-layout">
+    <div class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Módulos Principais</div>
+        <a href="../index.html" class="sidebar-item"><span class="sidebar-icon">🏠</span><span class="sidebar-text">Dashboard</span></a>
+        <a href="gestao-alunos.html" class="sidebar-item"><span class="sidebar-icon">👥</span><span class="sidebar-text">Gestão de Alunos</span></a>
+        <a href="medidas-disciplinares.html" class="sidebar-item"><span class="sidebar-icon">📋</span><span class="sidebar-text">Medidas Disciplinares</span></a>
+        <a href="importacao-dados.html" class="sidebar-item active"><span class="sidebar-icon">📤</span><span class="sidebar-text">Importação de Dados</span></a>
+      </div>
+    </div>
+
+    <div class="content-area">
+      <div class="main-content">
+        <div class="module-title">📤 Importação de Dados</div>
+        
+        <div class="cards-grid">
+          <!-- Importar Alunos -->
+          <div class="card">
+            <div class="card-header">
+              <h3>👥 Importar Gestão de Alunos</h3>
+            </div>
+            <div class="card-content">
+              <p><strong>Estrutura esperada (colunas A-H):</strong></p>
+              <ul style="font-size: 14px; margin: 10px 0;">
+                <li><strong>A:</strong> Código (matrícula)</li>
+                <li><strong>B:</strong> Nome Completo</li>
+                <li><strong>C:</strong> Turma</li>
+                <li><strong>D:</strong> Responsável</li>
+                <li><strong>E:</strong> CPF do Responsável</li>
+                <li><strong>F:</strong> Telefone 1</li>
+                <li><strong>G:</strong> Telefone 2</li>
+                <li><strong>H:</strong> Email do Responsável</li>
+              </ul>
+              
+              <div style="background: #e3f2fd; padding: 10px; border-radius: 4px; margin: 10px 0; font-size: 13px;">
+                <strong>📝 Dica para CSV:</strong> Salve o arquivo CSV com codificação UTF-8 para preservar acentos e caracteres especiais (ç, ã, é, etc.)
+              </div>
+              
+              <input type="file" id="fileAlunos" accept=".xlsx,.xls,.csv" style="margin: 10px 0;">
+              <br>
+              <button id="btnImportarAlunos" class="btn btn-primary" disabled style="background: linear-gradient(135deg, #ff6b35, #ff8c42); border: none;">
+                🔄 Sincronizar Base Completa
+              </button>
+              <p style="font-size: 12px; color: #666; margin-top: 5px;">
+                ⚠️ <strong>Atenção:</strong> Esta operação substitui TODOS os alunos pelos dados do CSV
+              </p>
+              
+              <div id="previewAlunos" style="display:none; margin-top: 15px;">
+                <h4>Preview dos dados:</h4>
+                <div id="previewAlunosContent"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Importar Medidas -->
+          <div class="card">
+            <div class="card-header">
+              <h3>📋 Importar Medidas Disciplinares</h3>
+            </div>
+            <div class="card-content">
+              <p><strong>Estrutura esperada (colunas A-H):</strong></p>
+              <ul style="font-size: 14px; margin: 10px 0;">
+                <li><strong>A:</strong> Código (matrícula)</li>
+                <li><strong>B:</strong> Nome Completo</li>
+                <li><strong>C:</strong> Turma</li>
+                <li><strong>D:</strong> Data</li>
+                <li><strong>E:</strong> Especificação</li>
+                <li><strong>F:</strong> Observação</li>
+                <li><strong>G:</strong> Tipo de Medida</li>
+                <li><strong>H:</strong> Nr da Medida</li>
+              </ul>
+              
+              <div style="background: #e3f2fd; padding: 10px; border-radius: 4px; margin: 10px 0; font-size: 13px;">
+                <strong>📝 Dica para CSV:</strong> Salve o arquivo CSV com codificação UTF-8 para preservar acentos e caracteres especiais (ç, ã, é, etc.)
+              </div>
+              
+              <input type="file" id="fileMedidas" accept=".xlsx,.xls,.csv" style="margin: 10px 0;">
+              <br>
+              <button id="btnImportarMedidas" class="btn btn-primary" disabled>
+                📥 Importar Medidas
+              </button>
+              
+              <div id="previewMedidas" style="display:none; margin-top: 15px;">
+                <h4>Preview dos dados:</h4>
+                <div id="previewMedidasContent"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ferramentas de Limpeza -->
+        <div class="card">
+          <div class="card-header">
+            <h3>🧹 Ferramentas de Limpeza</h3>
+          </div>
+          <div class="card-content">
+            <p style="font-size: 14px; margin-bottom: 15px;">Use estas ferramentas se você tem problemas com dados duplicados:</p>
+            
+            <button onclick="removerDuplicatas()" class="btn btn-warning" style="background: linear-gradient(135deg, #ffc107, #ffb300); border: none; margin-right: 10px;">
+              🔍 Remover Apenas Duplicatas
+            </button>
+            
+            <p style="font-size: 12px; color: #666; margin-top: 10px;">
+              ℹ️ <strong>Remover Duplicatas:</strong> Remove registros duplicados mantendo o mais recente (não importa novos dados)
+            </p>
+          </div>
+        </div>
+
+        <!-- Log de Importação -->
+        <div class="card">
+          <div class="card-header">
+            <h3>📋 Log de Operações</h3>
+          </div>
+          <div class="card-content">
+            <div id="logImportacao" style="background: #f5f5f5; padding: 10px; border-radius: 4px; min-height: 100px; font-family: monospace; font-size: 12px; white-space: pre-wrap;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Proteger página - requer autenticação
+    requireAuth({
+      loginPath: 'login.html',
+      onAuth: function(user) {
+        console.log('Usuário logado:', user.email);
+      }
+    });
+  </script>
+  <script src="../assets/js/importacao-dados.js"></script>
+</body>
+</html>

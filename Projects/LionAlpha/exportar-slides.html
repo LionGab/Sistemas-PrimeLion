@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exportador de Slides - LinkedIn CEOs</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f0f2f5;
+            padding: 20px;
+        }
+        
+        .controls {
+            max-width: 1080px;
+            margin: 0 auto 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .export-btn {
+            background: #0077B5;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        
+        .export-btn:hover {
+            background: #005885;
+        }
+        
+        .export-all-btn {
+            background: #7CB342;
+            padding: 15px 30px;
+            font-size: 16px;
+            margin: 10px;
+        }
+        
+        .slide-container {
+            width: 1080px;
+            height: 1080px;
+            margin: 0 auto 20px;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        .slide {
+            width: 1080px;
+            height: 1080px;
+            background: #FFFFFF;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 119, 181, 0.03) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .slide-number {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            background: #0077B5;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: 600;
+            z-index: 10;
+        }
+        
+        .slide h1 {
+            color: #0077B5;
+            font-size: 72px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            z-index: 5;
+        }
+        
+        .slide h2 {
+            color: #000;
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            z-index: 5;
+        }
+        
+        .slide h3 {
+            color: #0077B5;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            z-index: 5;
+        }
+        
+        .slide p {
+            color: #333;
+            font-size: 42px;
+            line-height: 1.3;
+            font-weight: 400;
+            z-index: 5;
+        }
+        
+        .slide p strong {
+            color: #0077B5;
+            font-weight: 700;
+        }
+        
+        .icon {
+            font-size: 100px;
+            margin-bottom: 30px;
+            z-index: 5;
+        }
+        
+        .slide.capa {
+            background: linear-gradient(135deg, #0077B5 0%, #004d73 100%);
+            color: white;
+        }
+        
+        .slide.capa h1 {
+            color: white;
+            font-size: 76px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .slide.capa .subtitle {
+            color: #FFD700;
+            font-size: 36px;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        
+        .error-slide {
+            background: linear-gradient(to bottom, #fff 0%, #fafafa 100%);
+        }
+        
+        .error-number {
+            display: inline-block;
+            background: #ff4444;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .solution-slide {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .proof-box {
+            background: white;
+            border: 4px solid #0077B5;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 119, 181, 0.2);
+            z-index: 5;
+        }
+        
+        .proof-box h2 {
+            color: #0077B5;
+            font-size: 48px;
+            margin: 0;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, #0077B5 0%, #004d73 100%);
+            color: white;
+            font-size: 36px;
+            font-weight: 700;
+            padding: 25px 50px;
+            border-radius: 50px;
+            margin-top: 30px;
+            display: inline-block;
+            box-shadow: 0 10px 30px rgba(0, 119, 181, 0.3);
+            text-decoration: none;
+            z-index: 5;
+        }
+        
+        .apn-list {
+            text-align: left;
+            font-size: 38px;
+            margin-top: 30px;
+            z-index: 5;
+        }
+        
+        .apn-item {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .apn-item .letter {
+            background: #0077B5;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 20px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <h2 style="margin-bottom: 20px; color: #0077B5;">Exportador de Slides LinkedIn</h2>
+        <p style="margin-bottom: 20px; color: #666;">Clique nos botões para baixar cada slide como imagem PNG 1080x1080px</p>
+        
+        <button class="export-btn export-all-btn" onclick="exportAllSlides()">
+            📥 BAIXAR TODOS OS SLIDES
+        </button>
+        <br>
+        
+        <button class="export-btn" onclick="exportSlide(0)">Slide 1 - Capa</button>
+        <button class="export-btn" onclick="exportSlide(1)">Slide 2 - Erro #1</button>
+        <button class="export-btn" onclick="exportSlide(2)">Slide 3 - Erro #2</button>
+        <button class="export-btn" onclick="exportSlide(3)">Slide 4 - Erro #3</button>
+        <button class="export-btn" onclick="exportSlide(4)">Slide 5 - Erro #4</button>
+        <br>
+        <button class="export-btn" onclick="exportSlide(5)">Slide 6 - Erro #5</button>
+        <button class="export-btn" onclick="exportSlide(6)">Slide 7 - Solução</button>
+        <button class="export-btn" onclick="exportSlide(7)">Slide 8 - Prova</button>
+        <button class="export-btn" onclick="exportSlide(8)">Slide 9 - Oferta</button>
+        <button class="export-btn" onclick="exportSlide(9)">Slide 10 - CTA</button>
+    </div>
+
+    <!-- Slide 1: Capa -->
+    <div class="slide-container">
+        <div class="slide capa" id="slide-0">
+            <span class="slide-number">1/10</span>
+            <h1>CEOs perdem R$ 100k/mês no LinkedIn por estes 5 erros</h1>
+            <p class="subtitle">(você comete pelo menos 3)</p>
+        </div>
+    </div>
+    
+    <!-- Slide 2: Erro #1 -->
+    <div class="slide-container">
+        <div class="slide error-slide" id="slide-1">
+            <span class="slide-number">2/10</span>
+            <div class="icon">❌</div>
+            <div class="error-number">ERRO #1</div>
+            <h2>Perfil-currículo</h2>
+            <p>LinkedIn não é RH.<br><strong>É pipeline de negócios.</strong></p>
+        </div>
+    </div>
+    
+    <!-- Slide 3: Erro #2 -->
+    <div class="slide-container">
+        <div class="slide error-slide" id="slide-2">
+            <span class="slide-number">3/10</span>
+            <div class="icon">❌</div>
+            <div class="error-number">ERRO #2</div>
+            <h2>Postar e sumir</h2>
+            <p>1x/mês = invisível<br><strong>3x/semana = autoridade</strong></p>
+        </div>
+    </div>
+    
+    <!-- Slide 4: Erro #3 -->
+    <div class="slide-container">
+        <div class="slide error-slide" id="slide-3">
+            <span class="slide-number">4/10</span>
+            <div class="icon">❌</div>
+            <div class="error-number">ERRO #3</div>
+            <h2>Só falar da empresa</h2>
+            <p>Pessoas compram de pessoas.<br><strong>Não de CNPJs.</strong></p>
+        </div>
+    </div>
+    
+    <!-- Slide 5: Erro #4 -->
+    <div class="slide-container">
+        <div class="slide error-slide" id="slide-4">
+            <span class="slide-number">5/10</span>
+            <div class="icon">❌</div>
+            <div class="error-number">ERRO #4</div>
+            <h2>Texto sem sangue</h2>
+            <p>Histórias vendem <strong>10x mais</strong><br>que press releases.</p>
+        </div>
+    </div>
+    
+    <!-- Slide 6: Erro #5 -->
+    <div class="slide-container">
+        <div class="slide error-slide" id="slide-5">
+            <span class="slide-number">6/10</span>
+            <div class="icon">❌</div>
+            <div class="error-number">ERRO #5</div>
+            <h2>Fazer sozinho</h2>
+            <p>CEO sem ghostwriter =<br><strong>perfil abandonado em 60 dias</strong></p>
+        </div>
+    </div>
+    
+    <!-- Slide 7: Solução -->
+    <div class="slide-container">
+        <div class="slide solution-slide" id="slide-6">
+            <span class="slide-number">7/10</span>
+            <div class="icon">✅</div>
+            <h3>A SOLUÇÃO</h3>
+            <h2>Sistema A.P.N</h2>
+            <div class="apn-list">
+                <div class="apn-item">
+                    <span class="letter">A</span>
+                    <span><strong>Autoridade</strong> (posicionamento)</span>
+                </div>
+                <div class="apn-item">
+                    <span class="letter">P</span>
+                    <span><strong>Pipeline</strong> (conteúdo que converte)</span>
+                </div>
+                <div class="apn-item">
+                    <span class="letter">N</span>
+                    <span><strong>Negócios</strong> (DMs virando contratos)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Slide 8: Prova -->
+    <div class="slide-container">
+        <div class="slide" id="slide-7">
+            <span class="slide-number">8/10</span>
+            <h3>PROVA REAL</h3>
+            <div class="proof-box">
+                <h2>15 leads qualificados<br>em 30 dias<br>via LinkedIn</h2>
+            </div>
+            <p style="font-size: 24px; margin-top: 30px; color: #666;">Cliente verificado • Resultado garantido</p>
+        </div>
+    </div>
+    
+    <!-- Slide 9: Oferta -->
+    <div class="slide-container">
+        <div class="slide" id="slide-8">
+            <span class="slide-number">9/10</span>
+            <h3>OFERTA EXCLUSIVA</h3>
+            <h2>Quer 10-20 leads premium/mês<br>no seu LinkedIn?</h2>
+            <p style="color: #ff4444; font-weight: 700; margin-top: 40px;">Tenho 3 vagas este mês.</p>
+        </div>
+    </div>
+    
+    <!-- Slide 10: CTA -->
+    <div class="slide-container">
+        <div class="slide" id="slide-9" style="background: linear-gradient(135deg, #0077B5 0%, #004d73 100%);">
+            <span class="slide-number" style="background: white; color: #0077B5;">10/10</span>
+            <h2 style="color: white; font-size: 64px;">Mande <span style="color: #FFD700;">"PIPELINE"</span><br>no meu inbox</h2>
+            <p style="color: white; margin: 30px 0;">ou</p>
+            <div class="cta-button">WhatsApp: [número]</div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        function exportSlide(slideIndex) {
+            const slide = document.getElementById(`slide-${slideIndex}`);
+            const slideNames = [
+                'CEO-LinkedIn-Erros-Capa',
+                'CEO-LinkedIn-Erro-1-Perfil-Curriculo', 
+                'CEO-LinkedIn-Erro-2-Postar-Sumir',
+                'CEO-LinkedIn-Erro-3-Falar-Empresa',
+                'CEO-LinkedIn-Erro-4-Texto-Sem-Sangue',
+                'CEO-LinkedIn-Erro-5-Fazer-Sozinho',
+                'CEO-LinkedIn-Solucao-Sistema-APN',
+                'CEO-LinkedIn-Prova-Real-Leads',
+                'CEO-LinkedIn-Oferta-Exclusiva',
+                'CEO-LinkedIn-CTA-Pipeline'
+            ];
+            
+            // Configure html2canvas options for better quality
+            const options = {
+                width: 1080,
+                height: 1080,
+                scale: 2, // Higher resolution
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: '#ffffff',
+                logging: false,
+                removeContainer: true,
+                imageTimeout: 0,
+                onclone: function(clonedDoc) {
+                    // Ensure fonts are loaded in cloned document
+                    const link = clonedDoc.createElement('link');
+                    link.href = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap';
+                    link.rel = 'stylesheet';
+                    clonedDoc.head.appendChild(link);
+                }
+            };
+            
+            html2canvas(slide, options).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `${slideNames[slideIndex]}.png`;
+                link.href = canvas.toDataURL('image/png', 1.0);
+                link.click();
+            }).catch(err => {
+                console.error('Erro ao exportar slide:', err);
+                alert('Erro ao exportar slide. Tente novamente.');
+            });
+        }
+        
+        function exportAllSlides() {
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    exportSlide(i);
+                }, i * 1000); // Delay entre exports para evitar problemas
+            }
+        }
+        
+        // Preload Google Fonts
+        const link = document.createElement('link');
+        link.href = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap';
+        link.rel = 'preload';
+        link.as = 'style';
+        document.head.appendChild(link);
+        
+        // Wait for fonts to load before enabling export
+        document.fonts.ready.then(() => {
+            console.log('Fontes carregadas. Pronto para exportar.');
+        });
+    </script>
+</body>
+</html>

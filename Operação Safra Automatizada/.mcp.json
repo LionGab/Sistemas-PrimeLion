@@ -1,0 +1,150 @@
+{
+  "description": "MCP servers configuration for Operação Safra Automatizada",
+  "servers": {
+    "_comment": "MCP servers - Serena active, others in progress",
+    "sequential-thinking": {
+      "command": "npx -y @modelcontextprotocol/server-sequential-thinking",
+      "description": "Complex agribusiness analysis and strategic planning - ACTIVE ✅",
+      "capabilities": [
+        "Multi-step reasoning for complex agricultural processes",
+        "Strategic planning decomposition for safra operations", 
+        "Interdependent workflow analysis and optimization",
+        "Enhanced problem-solving for multi-farm scenarios",
+        "Step-by-step execution planning with validation gates",
+        "Complex decision trees for agribusiness automation"
+      ],
+      "status": "connected",
+      "agro_use_cases": [
+        "Safra planning: planting → cultivation → harvest → storage",
+        "TOTVS integration: assessment → integration → validation → optimization", 
+        "Compliance workflows: NFP-e generation → validation → transmission → monitoring",
+        "Multi-farm rollout: pilot → scaling → standardization → maintenance"
+      ]
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "C:\\Users\\User\\OneDrive\\Sistemas PrimeLion\\Operação Safra Automatizada\\src",
+        "C:\\Users\\User\\OneDrive\\Sistemas PrimeLion\\Operação Safra Automatizada\\scripts",
+        "C:\\Users\\User\\OneDrive\\Sistemas PrimeLion\\Operação Safra Automatizada\\nfpe-fazenda-brasil",
+        "C:\\Users\\User\\OneDrive\\Sistemas PrimeLion\\Operação Safra Automatizada\\docs"
+      ],
+      "description": "Secure filesystem access for agro projects with restricted scope - ACTIVE ✅",
+      "capabilities": [
+        "Multi-farm project file operations (read/write/move)",
+        "Secure directory access with explicit allow-list",
+        "Bulk file processing for TOTVS integration patterns",
+        "Safe NFP-e data file management",
+        "Project structure optimization for large agro codebases"
+      ],
+      "status": "configured",
+      "security_model": {
+        "allowed_directories": [
+          "src/ (source code operations)",
+          "scripts/ (automation utilities)", 
+          "nfpe-fazenda-brasil/ (client-specific implementations)",
+          "docs/ (technical documentation)"
+        ],
+        "restricted_access": [
+          "validation_results/ (contains sensitive test data)",
+          "screenshots/ (contains client ROI data)",
+          "marketing/audit/ (contains confidential client information)"
+        ]
+      },
+      "agro_use_cases": [
+        "Multi-farm codebase synchronization and updates",
+        "TOTVS integration file template generation", 
+        "NFP-e schema validation across multiple fazendas",
+        "Automated backup and versioning of critical agro configurations",
+        "Bulk migration of legacy ERP integration patterns"
+      ]
+    },
+    "basic-memory": {
+      "command": "uv",
+      "args": ["tool", "run", "basic-memory", "--project=operacao-safra-agro"],
+      "description": "Agribusiness knowledge indexing with semantic graph - ACTIVE ✅",
+      "capabilities": [
+        "Persistent knowledge base in Markdown format",
+        "TOTVS Agro API patterns and integration schemas", 
+        "NFP-e compliance rules and SEFAZ-MT requirements",
+        "Multi-farm implementation patterns and best practices",
+        "Semantic search across agribusiness domain expertise",
+        "Relationship mapping between farms, processes, and compliance"
+      ],
+      "status": "configured",
+      "knowledge_structure": {
+        "entities": [
+          "TOTVS Multicultivo (ERP system with farm-specific APIs)",
+          "NFP-e SEFAZ-MT (tax compliance with schema validation)",
+          "Fazenda Brasil (reference client with multi-talhão ops)",
+          "SPED Fiscal (automated tax reporting workflows)"
+        ],
+        "relations": [
+          "TOTVS → integrates_with → NFP-e Generation",
+          "NFP-e → validates → Farm Tax Data",
+          "Fazenda Brasil → uses → TOTVS Agro System",
+          "SPED Fiscal → processes → TOTVS Transaction Data"
+        ],
+        "search_patterns": [
+          "Semantic: 'Como integrar TOTVS com NFP-e?'",
+          "Exact: 'SEFAZ-MT API endpoints'",
+          "Contextual: 'Fazenda Brasil implementation patterns'",
+          "Temporal: 'Latest NFP-e schema updates'"
+        ]
+      },
+      "agro_use_cases": [
+        "Instant retrieval of TOTVS integration patterns during development",
+        "NFP-e compliance validation rules lookup",
+        "Multi-farm implementation templates and configurations",
+        "Historical decision rationale for similar agro projects",
+        "Regulatory update tracking and impact assessment"
+      ]
+    },
+    "serena": {
+      "command": "uvx --from git+https://github.com/oraios/serena serena start-mcp-server",
+      "description": "Enhanced codebase understanding and semantic search for agro systems - ACTIVE ✅",
+      "capabilities": [
+        "Semantic code search and analysis",
+        "Intelligent refactoring suggestions", 
+        "Symbol-level code navigation",
+        "20x-30x performance improvement over traditional search",
+        "28x token reduction for complex refactoring tasks"
+      ],
+      "status": "connected"
+    },
+    "playwright": {
+      "command": "uvx playwright-mcp",
+      "description": "Web automation and testing for agribusiness applications - ACTIVE ✅",
+      "capabilities": [
+        "Automated web testing and validation",
+        "Visual regression testing for UIs",
+        "Form automation and data entry",
+        "Screenshot capture and comparison",
+        "E2E testing workflows",
+        "Performance monitoring of web applications"
+      ],
+      "status": "connected",
+      "use_case": "Testing ROI calculator, landing pages, and agro web interfaces"
+    }
+  },
+  "agro_specialization": {
+    "knowledge_domains": [
+      "TOTVS Agro Multicultivo API patterns",
+      "NFP-e generation and SEFAZ-MT compliance",
+      "SPED Fiscal automation workflows", 
+      "Geospatial data processing (PostGIS)",
+      "Agribusiness ERP integration architectures",
+      "Brazilian agricultural tax compliance",
+      "Crop management and harvest optimization"
+    ],
+    "integration_priorities": [
+      "TOTVS Agro APIs",
+      "SEFAZ-MT fiscal services",
+      "Cooperfibra systems",
+      "PostGIS geospatial databases",
+      "Celery + Redis async processing"
+    ]
+  }
+}

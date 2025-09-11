@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sequência de 5 Emails - Diagnóstico Estratégico</title>
+    <style>
+        /* Estilos base para todos os emails */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        .email-template {
+            max-width: 600px;
+            margin: 20px auto;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .email-header {
+            background: linear-gradient(135deg, #0077b5, #00a0dc);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .email-content {
+            padding: 30px;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .email-footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #0077b5, #00a0dc);
+            color: white !important;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .highlight {
+            background: linear-gradient(90deg, rgba(0,119,181,0.1), rgba(0,160,220,0.1));
+            padding: 15px;
+            border-left: 4px solid #0077b5;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .checklist {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .checklist ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .checklist li {
+            padding: 5px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .checklist li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .preview-header {
+            background: #2d3748;
+            color: white;
+            padding: 10px 20px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ================================================================ -->
+<!-- EMAIL 1: CONFIRMAÇÃO INSTANTÂNEA (ENVIAR EM 2 MINUTOS) -->
+<!-- ================================================================ -->
+
+<div class="preview-header">EMAIL 1: Confirmação Instantânea - Enviar em 2 minutos</div>
+<div class="email-template">
+    <div class="email-header">
+        <h1>🎯 Seu Diagnóstico Estratégico foi Agendado!</h1>
+        <p>Data: {{DATA_REUNIAO}} às {{HORA_REUNIAO}}</p>
+    </div>
+    
+    <div class="email-content">
+        <p>Olá {{NOME}},</p>
+        
+        <p><strong>Perfeito!</strong> Acabei de receber seu agendamento para o Diagnóstico Estratégico.</p>
+        
+        <div class="highlight">
+            <p><strong>📅 DETALHES DA SUA REUNIÃO:</strong></p>
+            <p>• <strong>Data:</strong> {{DATA_REUNIAO}}</p>
+            <p>• <strong>Horário:</strong> {{HORA_REUNIAO}} (horário de Brasília)</p>
+            <p>• <strong>Duração:</strong> 30 minutos</p>
+            <p>• <strong>Local:</strong> Zoom (link será enviado 1h antes)</p>
+        </div>
+        
+        <p><strong>O que vamos analisar em 30 minutos:</strong></p>
+        
+        <div class="checklist">
+            <ul>
+                <li>Os 3 maiores gargalos que estão limitando seu crescimento</li>
+                <li>Quanto dinheiro você está perdendo mensalmente (cálculo real)</li>
+                <li>Plano de ação específico para sua empresa</li>
+                <li>Próximos passos para implementação (se fizer sentido)</li>
+            </ul>
+        </div>
+        
+        <p><strong>⚠️ IMPORTANTE:</strong> Para maximizar nosso tempo juntos, por favor:</p>
+        
+        <p>1. <strong>Tenha em mãos:</strong> Faturamento dos últimos 6 meses, principais métricas de vendas</p>
+        <p>2. <strong>Ambiente tranquilo:</strong> Reserve um local sem interrupções</p>
+        <p>3. <strong>Mente aberta:</strong> Vou ser direto sobre oportunidades e gargalos</p>
+        
+        <div class="highlight">
+            <p><strong>🎁 BÔNUS EXCLUSIVO:</strong></p>
+            <p>Vou compartilhar a mesma planilha de análise ROI que uso com clientes pagos (valor: R$497).</p>
+        </div>
+        
+        <p>Qualquer dúvida, responda este email.</p>
+        
+        <p>Ansioso para nossa conversa!</p>
+        
+        <p><strong>{{SEU_NOME}}</strong><br>
+        Especialista em Sistema ROI 3X<br>
+        WhatsApp: {{SEU_WHATSAPP}}</p>
+    </div>
+    
+    <div class="email-footer">
+        <p>Se precisar remarcar: <a href="{{CALENDLY_LINK}}">clique aqui</a></p>
+        <p>{{SUA_EMPRESA}} • {{SEU_SITE}} • {{SEU_EMAIL}}</p>
+    </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- EMAIL 2: LEMBRETE 24H ANTES + CASE STUDY -->
+<!-- ================================================================ -->
+
+<div class="preview-header">EMAIL 2: Lembrete 24h Antes + Case Study</div>
+<div class="email-template">
+    <div class="email-header">
+        <h1>⏰ Amanhã às {{HORA_REUNIAO}} - Seu Diagnóstico</h1>
+        <p>+ Case de empresa similar à sua</p>
+    </div>
+    
+    <div class="email-content">
+        <p>Oi {{NOME}},</p>
+        
+        <p>Lembrete: <strong>amanhã às {{HORA_REUNIAO}}</strong> temos seu Diagnóstico Estratégico agendado.</p>
+        
+        <p>Estava analisando as informações que você preencheu ({{PRINCIPAL_GARGALO}}) e me lembrei de um caso muito similar...</p>
+        
+        <div class="highlight">
+            <p><strong>📊 CASE STUDY: {{EMPRESA_SIMILAR}}</strong></p>
+            <p><strong>Situação inicial:</strong> Faturamento R${{FATURAMENTO_CASO}}, mesmo gargalo que você mencionou</p>
+            <p><strong>Diagnóstico revelou:</strong> R${{VALOR_PERDIDO}}/mês em oportunidades perdidas</p>
+            <p><strong>3 ajustes implementados:</strong></p>
+            <p>1. {{AJUSTE_1}}</p>
+            <p>2. {{AJUSTE_2}}</p>
+            <p>3. {{AJUSTE_3}}</p>
+            <p><strong>Resultado em 90 dias:</strong> +{{CRESCIMENTO}}% no faturamento</p>
+        </div>
+        
+        <p>Sua situação tem potencial similar. Vamos descobrir amanhã!</p>
+        
+        <p><strong>📋 PREPARAÇÃO PARA NOSSA REUNIÃO:</strong></p>
+        
+        <div class="checklist">
+            <ul>
+                <li>Faturamento dos últimos 6 meses (se possível, mensal)</li>
+                <li>Principais métricas: leads/mês, taxa de conversão, ticket médio</li>
+                <li>Maior gargalo atual (você já mencionou, mas vamos detalhar)</li>
+                <li>Meta de crescimento para 2024/2025</li>
+            </ul>
+        </div>
+        
+        <p><strong>⚡ LINK DA REUNIÃO:</strong></p>
+        
+        <center>
+            <a href="{{ZOOM_LINK}}" class="cta-button">
+                🎯 ENTRAR NA REUNIÃO AMANHÃ
+            </a>
+        </center>
+        
+        <p><em>Salve este link! Será o mesmo que usaremos amanhã.</em></p>
+        
+        <p>Até amanhã,</p>
+        
+        <p><strong>{{SEU_NOME}}</strong></p>
+    </div>
+    
+    <div class="email-footer">
+        <p>Precisa remarcar? <a href="{{CALENDLY_LINK}}">Clique aqui</a></p>
+        <p>WhatsApp: {{SEU_WHATSAPP}} • Email: {{SEU_EMAIL}}</p>
+    </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- EMAIL 3: LEMBRETE 1H ANTES + LINK -->
+<!-- ================================================================ -->
+
+<div class="preview-header">EMAIL 3: Lembrete 1h Antes + Link da Reunião</div>
+<div class="email-template">
+    <div class="email-header">
+        <h1>🚨 EM 1 HORA: Seu Diagnóstico</h1>
+        <p>Link da reunião dentro ↓</p>
+    </div>
+    
+    <div class="email-content">
+        <p>{{NOME}},</p>
+        
+        <p><strong>Em 1 hora</strong> ({{HORA_REUNIAO}}) começamos seu Diagnóstico Estratégico!</p>
+        
+        <center>
+            <a href="{{ZOOM_LINK}}" class="cta-button">
+                🎯 ENTRAR NA REUNIÃO AGORA
+            </a>
+        </center>
+        
+        <div class="highlight">
+            <p><strong>📞 DETALHES FINAIS:</strong></p>
+            <p>• <strong>Horário:</strong> {{HORA_REUNIAO}} (em 1 hora)</p>
+            <p>• <strong>Duração:</strong> 30 minutos</p>
+            <p>• <strong>Zoom:</strong> Link acima</p>
+            <p>• <strong>Backup:</strong> WhatsApp {{SEU_WHATSAPP}}</p>
+        </div>
+        
+        <p><strong>⚡ ÚLTIMAS DICAS:</strong></p>
+        
+        <p>• Teste seu microfone/câmera 5 min antes</p>
+        <p>• Tenha papel e caneta à mão (vai sair muito insight)</p>
+        <p>• Se tiver atraso, me chama no WhatsApp</p>
+        
+        <p><strong>Estou ansioso para nossa conversa!</strong></p>
+        
+        <p>{{SEU_NOME}}</p>
+    </div>
+    
+    <div class="email-footer">
+        <p>Problemas técnicos? WhatsApp: {{SEU_WHATSAPP}}</p>
+        <p>Faltou algo? Email: {{SEU_EMAIL}}</p>
+    </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- EMAIL 4: FOLLOW-UP PÓS-REUNIÃO + RESUMO -->
+<!-- ================================================================ -->
+
+<div class="preview-header">EMAIL 4: Follow-up Pós-Reunião - Enviar em 2 horas</div>
+<div class="email-template">
+    <div class="email-header">
+        <h1>📋 Resumo do seu Diagnóstico</h1>
+        <p>Próximos passos + materiais prometidos</p>
+    </div>
+    
+    <div class="email-content">
+        <p>{{NOME}}, que conversa incrível!</p>
+        
+        <p>Conforme prometido, aqui está o <strong>resumo do seu Diagnóstico Estratégico</strong> + materiais exclusivos.</p>
+        
+        <div class="highlight">
+            <p><strong>🎯 PRINCIPAIS DESCOBERTAS:</strong></p>
+            <p>• <strong>Gargalo #1:</strong> {{GARGALO_1}}</p>
+            <p>• <strong>Gargalo #2:</strong> {{GARGALO_2}}</p>
+            <p>• <strong>Gargalo #3:</strong> {{GARGALO_3}}</p>
+            <p>• <strong>Oportunidade perdida:</strong> R${{VALOR_PERDIDO}}/mês</p>
+            <p>• <strong>Potencial de crescimento:</strong> {{POTENCIAL_CRESCIMENTO}}</p>
+        </div>
+        
+        <p><strong>📊 PLANO DE AÇÃO PERSONALIZADO:</strong></p>
+        
+        <div class="checklist">
+            <ul>
+                <li><strong>Ação Imediata (7 dias):</strong> {{ACAO_IMEDIATA}}</li>
+                <li><strong>Otimização (30 dias):</strong> {{ACAO_30_DIAS}}</li>
+                <li><strong>Escala (90 dias):</strong> {{ACAO_90_DIAS}}</li>
+            </ul>
+        </div>
+        
+        <p><strong>🎁 MATERIAIS PROMETIDOS:</strong></p>
+        
+        <p>1. <strong>Planilha de Análise ROI</strong> - <a href="{{LINK_PLANILHA}}">Baixar aqui</a></p>
+        <p>2. <strong>Checklist de Implementação</strong> - <a href="{{LINK_CHECKLIST}}">Baixar aqui</a></p>
+        <p>3. <strong>Case Study completo</strong> (empresa similar) - <a href="{{LINK_CASE}}">Baixar aqui</a></p>
+        
+        <div class="highlight">
+            <p><strong>💭 MINHA RECOMENDAÇÃO HONESTA:</strong></p>
+            <p>{{RECOMENDACAO_PERSONALIZADA}}</p>
+            <p>Sua empresa tem <strong>potencial real</strong> de crescer {{POTENCIAL}}X nos próximos 90 dias.</p>
+            <p>{{SE_QUALIFICOU}} {{PROXIMOS_PASSOS}}</p>
+        </div>
+        
+        <p><strong>Dúvidas ou quer discutir algo específico?</strong></p>
+        <p>Responda este email ou me chama no WhatsApp.</p>
+        
+        <p>Grande abraço,</p>
+        
+        <p><strong>{{SEU_NOME}}</strong><br>
+        Especialista em Sistema ROI 3X</p>
+    </div>
+    
+    <div class="email-footer">
+        <p>WhatsApp: {{SEU_WHATSAPP}} • LinkedIn: {{SEU_LINKEDIN}}</p>
+        <p>Quer mais conteúdo como este? <a href="{{NEWSLETTER_LINK}}">Entre na newsletter</a></p>
+    </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- EMAIL 5: PROPOSTA SPRINT 90 DIAS (ENVIAR EM 24H) -->
+<!-- ================================================================ -->
+
+<div class="preview-header">EMAIL 5: Proposta Sprint 90 Dias - Enviar em 24h</div>
+<div class="email-template">
+    <div class="email-header">
+        <h1>🚀 Sprint 90 Dias - {{NOME_EMPRESA}}</h1>
+        <p>Proposta personalizada baseada no seu diagnóstico</p>
+    </div>
+    
+    <div class="email-content">
+        <p>{{NOME}},</p>
+        
+        <p>Passei as últimas 24h analisando a fundo sua situação.</p>
+        
+        <p>Como mencionei, sua empresa tem <strong>potencial real de crescer {{CRESCIMENTO_ESTIMADO}}X</strong> nos próximos 90 dias.</p>
+        
+        <p>Baseado no que conversamos, preparei uma <strong>proposta personalizada</strong> para implementarmos juntos:</p>
+        
+        <div class="highlight">
+            <p><strong>🎯 SPRINT 90 DIAS - {{NOME_EMPRESA}}</strong></p>
+            <p><strong>Objetivo:</strong> {{OBJETIVO_PRINCIPAL}}</p>
+            <p><strong>Meta:</strong> {{META_NUMERICA}}</p>
+            <p><strong>ROI Projetado:</strong> {{ROI_PROJETADO}}</p>
+        </div>
+        
+        <p><strong>📋 METODOLOGIA (Sistema ROI 3X):</strong></p>
+        
+        <div class="checklist">
+            <ul>
+                <li><strong>Mês 1:</strong> {{FASE_1_DESCRICAO}}</li>
+                <li><strong>Mês 2:</strong> {{FASE_2_DESCRICAO}}</li>
+                <li><strong>Mês 3:</strong> {{FASE_3_DESCRICAO}}</li>
+            </ul>
+        </div>
+        
+        <p><strong>🔥 O QUE ESTÁ INCLUSO:</strong></p>
+        
+        <p>• {{ENTREGAVEL_1}}</p>
+        <p>• {{ENTREGAVEL_2}}</p>
+        <p>• {{ENTREGAVEL_3}}</p>
+        <p>• {{ENTREGAVEL_4}}</p>
+        <p>• {{ENTREGAVEL_5}}</p>
+        
+        <div class="highlight">
+            <p><strong>💰 INVESTIMENTO:</strong></p>
+            <p>• <strong>Valor:</strong> R${{VALOR_PROPOSTA}}</p>
+            <p>• <strong>Parcelamento:</strong> {{CONDICOES_PAGAMENTO}}</p>
+            <p>• <strong>Garantia:</strong> {{GARANTIA}}</p>
+            <p>• <strong>Bônus:</strong> {{BONUS_INCLUSO}}</p>
+        </div>
+        
+        <p><strong>⏰ CONDIÇÕES ESPECIAIS:</strong></p>
+        
+        <p>Como você foi super transparente no diagnóstico, tenho <strong>2 condições especiais</strong> até {{DATA_LIMITE}}:</p>
+        
+        <p>1. <strong>{{CONDICAO_1}}</strong></p>
+        <p>2. <strong>{{CONDICAO_2}}</strong></p>
+        
+        <center>
+            <a href="{{LINK_PROPOSTA}}" class="cta-button">
+                📄 VER PROPOSTA COMPLETA
+            </a>
+        </center>
+        
+        <p><strong>Quer conversar sobre a proposta?</strong></p>
+        <p>Responda este email ou agenda 15 minutos comigo: {{CALENDLY_FOLLOWUP}}</p>
+        
+        <p>Independente da sua decisão, foi um prazer te conhecer!</p>
+        
+        <p>Abraço,</p>
+        
+        <p><strong>{{SEU_NOME}}</strong><br>
+        Especialista em Sistema ROI 3X<br>
+        150+ empresas transformadas</p>
+        
+        <div class="highlight">
+            <p><strong>P.S.:</strong> Só trabalho com 3 clientes por vez para garantir resultado máximo.</p>
+            <p>Atualmente tenho {{VAGAS_DISPONIVEIS}} vaga(s) disponível(eis).</p>
+        </div>
+    </div>
+    
+    <div class="email-footer">
+        <p>Dúvidas? WhatsApp: {{SEU_WHATSAPP}} • Email: {{SEU_EMAIL}}</p>
+        <p>{{SUA_EMPRESA}} • {{SEU_SITE}} • {{SEU_LINKEDIN}}</p>
+    </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- CONFIGURAÇÕES DE IMPLEMENTAÇÃO -->
+<!-- ================================================================ -->
+
+<div class="preview-header">CONFIGURAÇÕES DE IMPLEMENTAÇÃO</div>
+<div style="max-width: 800px; margin: 20px auto; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+    <h2>📧 COMO CONFIGURAR ESTA SEQUÊNCIA:</h2>
+    
+    <h3>1. VARIÁVEIS PARA PERSONALIZAR:</h3>
+    <ul>
+        <li><strong>{{NOME}}</strong> - Nome do prospect</li>
+        <li><strong>{{NOME_EMPRESA}}</strong> - Nome da empresa</li>
+        <li><strong>{{DATA_REUNIAO}}</strong> - Data formatada da reunião</li>
+        <li><strong>{{HORA_REUNIAO}}</strong> - Horário da reunião</li>
+        <li><strong>{{PRINCIPAL_GARGALO}}</strong> - Resposta da pergunta 2 do Calendly</li>
+        <li><strong>{{ZOOM_LINK}}</strong> - Link da reunião Zoom</li>
+        <li><strong>{{SEU_NOME}}</strong> - Seu nome</li>
+        <li><strong>{{SEU_WHATSAPP}}</strong> - Seu WhatsApp</li>
+        <li><strong>{{CALENDLY_LINK}}</strong> - Link do seu Calendly</li>
+    </ul>
+    
+    <h3>2. TIMING DOS EMAILS:</h3>
+    <ul>
+        <li><strong>Email 1:</strong> 2 minutos após agendamento</li>
+        <li><strong>Email 2:</strong> 24 horas antes da reunião</li>
+        <li><strong>Email 3:</strong> 1 hora antes da reunião</li>
+        <li><strong>Email 4:</strong> 2 horas após a reunião</li>
+        <li><strong>Email 5:</strong> 24 horas após o Email 4</li>
+    </ul>
+    
+    <h3>3. INTEGRAÇÃO RECOMENDADA:</h3>
+    <ul>
+        <li><strong>Calendly Webhook</strong> → Zapier → ActiveCampaign/Mailchimp</li>
+        <li><strong>Variáveis dinâmicas</strong> usando dados do formulário Calendly</li>
+        <li><strong>Segmentação</strong> baseada nas respostas qualificadoras</li>
+        <li><strong>A/B Test</strong> nos subject lines para otimizar abertura</li>
+    </ul>
+    
+    <h3>4. MÉTRICAS PARA ACOMPANHAR:</h3>
+    <ul>
+        <li><strong>Taxa de abertura:</strong> Meta >40% (Email 1), >60% (Email 3)</li>
+        <li><strong>Taxa de clique:</strong> Meta >8% nos CTAs principais</li>
+        <li><strong>Show rate:</strong> Meta >75% (agendados que aparecem)</li>
+        <li><strong>Conversion rate:</strong> Meta >25% (reuniões → propostas)</li>
+    </ul>
+    
+    <h3>5. SUBJECT LINES OTIMIZADOS:</h3>
+    <ul>
+        <li><strong>Email 1:</strong> "✅ Confirmado: Seu diagnóstico {{DATA_REUNIAO}}"</li>
+        <li><strong>Email 2:</strong> "⏰ Amanhã {{HORA_REUNIAO}} + case similar ao seu"</li>
+        <li><strong>Email 3:</strong> "🚨 EM 1H: Link da reunião dentro"</li>
+        <li><strong>Email 4:</strong> "📋 Seu plano personalizado (como prometido)"</li>
+        <li><strong>Email 5:</strong> "🚀 Proposta Sprint 90 Dias - {{NOME_EMPRESA}}"</li>
+    </ul>
+</div>
+
+<script>
+// Script para testar visualização dos emails
+document.addEventListener('DOMContentLoaded', function() {
+    // Adiciona funcionalidade de preview
+    console.log('Email sequence templates carregados com sucesso!');
+    
+    // Função para exportar templates individuais
+    window.exportTemplate = function(templateNumber) {
+        const template = document.querySelectorAll('.email-template')[templateNumber - 1];
+        const blob = new Blob([template.outerHTML], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `email-template-${templateNumber}.html`;
+        a.click();
+    };
+});
+</script>
+
+</body>
+</html>

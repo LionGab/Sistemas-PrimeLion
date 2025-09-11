@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 DIAGNÓSTICO DIGITAL | Revolução IA</title>
+    
+    <!-- Preload fontes para performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Confetti apenas quando necessário -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.6.0/confetti.browser.min.js" defer></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Cores principais */
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #12c2e9;
+            --success: #4ade80;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gold: #ffd700;
+            
+            /* Gradientes simplificados */
+            --primary-gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --success-gradient: linear-gradient(135deg, var(--success), var(--accent));
+            --danger-gradient: linear-gradient(135deg, var(--danger), #ff8a80);
+            --gold-gradient: linear-gradient(135deg, #f7971e, var(--gold));
+            
+            /* Cores de texto */
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.85);
+            --text-muted: rgba(255, 255, 255, 0.65);
+            
+            /* Glass morphism */
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            
+            /* Espaçamentos mobile first */
+            --space-xs: 8px;
+            --space-sm: 16px;
+            --space-md: 24px;
+            --space-lg: 32px;
+            --space-xl: 48px;
+            
+            /* Tamanhos de fonte mobile first */
+            --text-xs: 0.75rem;
+            --text-sm: 0.875rem;
+            --text-base: 1rem;
+            --text-lg: 1.125rem;
+            --text-xl: 1.25rem;
+            --text-2xl: 1.5rem;
+            --text-3xl: 1.875rem;
+            --text-4xl: 2.25rem;
+        }
+
+        /* Responsivo - tamanhos maiores para desktop */
+        @media (min-width: 768px) {
+            :root {
+                --space-xs: 12px;
+                --space-sm: 20px;
+                --space-md: 32px;
+                --space-lg: 48px;
+                --space-xl: 64px;
+                
+                --text-sm: 1rem;
+                --text-base: 1.125rem;
+                --text-lg: 1.25rem;
+                --text-xl: 1.5rem;
+                --text-2xl: 1.875rem;
+                --text-3xl: 2.25rem;
+                --text-4xl: 3rem;
+            }
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            font-size: var(--text-base);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* Background otimizado para mobile */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.15) 0%, transparent 50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: var(--space-sm);
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 768px;
+                padding: var(--space-md);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 900px;
+            }
+        }
+
+        /* Header Hero - Mobile First */
+        .hero {
+            text-align: center;
+            padding: var(--space-lg) var(--space-sm);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            margin-bottom: var(--space-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .hero {
+                padding: var(--space-xl) var(--space-lg);
+                border-radius: 24px;
+            }
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-badge {
+            background: var(--success-gradient);
+            color: white;
+            padding: var(--space-xs) var(--space-md);
+            border-radius: 50px;
+            font-size: var(--text-xs);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: var(--space-md);
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero-title {
+            font-size: var(--text-3xl);
+            font-weight: 800;
+            background: var(--primary-gradient);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: var(--space-sm);
+            line-height: 1.2;
+        }
+
+        @media (min-width: 768px) {
+            .hero-title {
+                font-size: var(--text-4xl);
+                margin-bottom: var(--space-md);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: var(--text-lg);
+            color: var(--text-secondary);
+            margin-bottom: var(--space-md);
+            font-weight: 500;
+        }
+
+        @media (min-width: 768px) {
+            .hero-subtitle {
+                font-size: var(--text-xl);
+                margin-bottom: var(--space-lg);
+            }
+        }
+
+        .hero-warning {
+            background: var(--danger-gradient);
+            color: white;
+            padding: var(--space-sm) var(--space-md);
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: var(--text-sm);
+            display: inline-block;
+            max-width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .hero-warning {
+                padding: var(--space-md) var(--space-lg);
+                border-radius: 16px;
+                font-size: var(--text-base);
+            }
+        }
+
+        /* Progress Section - Simplificado para mobile */
+        .progress-section {
+            display: flex;
+            justify-content: center;
+            margin-bottom: var(--space-lg);
+            padding: var(--space-md);
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+        }
+
+        .progress-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+
+        @media (min-width: 768px) {
+            .progress-container {
+                width: 160px;
+                height: 160px;
+            }
+        }
+
+        .progress-ring {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .progress-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.1);
+            stroke-width: 8;
+        }
+
+        .progress-fill {
+            fill: none;
+            stroke: url(#progressGradient);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 377;
+            stroke-dashoffset: 377;
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        .progress-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .progress-percentage {
+            font-size: var(--text-xl);
+            font-weight: 800;
+            background: var(--primary-gradient);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: var(--space-xs);
+        }
+
+        @media (min-width: 768px) {
+            .progress-percentage {
+                font-size: var(--text-2xl);
+            }
+        }
+
+        .progress-label {
+            font-size: var(--text-xs);
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Question Card - Mobile First */
+        .question-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: var(--space-md);
+            margin-bottom: var(--space-lg);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        @media (min-width: 768px) {
+            .question-card {
+                padding: var(--space-lg);
+                border-radius: 24px;
+            }
+        }
+
+        .question-card.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .question-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: var(--space-lg);
+        }
+
+        @media (min-width: 768px) {
+            .question-header {
+                flex-direction: row;
+                text-align: left;
+            }
+        }
+
+        .question-number {
+            background: var(--primary-gradient);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: var(--text-xl);
+            margin-bottom: var(--space-sm);
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 768px) {
+            .question-number {
+                width: 80px;
+                height: 80px;
+                font-size: var(--text-2xl);
+                margin-right: var(--space-md);
+                margin-bottom: 0;
+            }
+        }
+
+        .question-content {
+            flex: 1;
+        }
+
+        .question-category {
+            background: var(--gold-gradient);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: var(--text-xs);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: var(--space-xs);
+            display: inline-block;
+        }
+
+        .question-text {
+            font-size: var(--text-lg);
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.3;
+            margin-bottom: var(--space-sm);
+        }
+
+        @media (min-width: 768px) {
+            .question-text {
+                font-size: var(--text-xl);
+            }
+        }
+
+        .question-subtitle {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* Options Grid - Mobile First */
+        .options-grid {
+            display: grid;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-lg);
+            grid-template-columns: 1fr;
+        }
+
+        @media (min-width: 480px) {
+            .options-grid.options-2,
+            .options-grid.options-4 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .options-grid.options-3 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .option {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: var(--space-md);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-weight: 600;
+            font-size: var(--text-base);
+            text-align: center;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: inherit;
+            font-family: inherit;
+            /* Touch target otimizado */
+            min-width: 44px;
+            min-height: 44px;
+        }
+
+        @media (min-width: 768px) {
+            .option {
+                min-height: 100px;
+                padding: var(--space-lg);
+            }
+        }
+
+        .option:focus {
+            outline: 2px solid var(--success);
+            outline-offset: 2px;
+        }
+
+        .option-emoji {
+            font-size: 1.5rem;
+            margin-bottom: var(--space-xs);
+        }
+
+        @media (min-width: 768px) {
+            .option-emoji {
+                font-size: 2rem;
+                margin-bottom: var(--space-sm);
+            }
+        }
+
+        .option-text {
+            line-height: 1.4;
+            font-size: var(--text-sm);
+        }
+
+        @media (min-width: 768px) {
+            .option-text {
+                font-size: var(--text-base);
+            }
+        }
+
+        .option:hover,
+        .option:focus-visible {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--accent);
+            background: rgba(18, 194, 233, 0.15);
+            box-shadow: 0 15px 30px rgba(18, 194, 233, 0.3);
+        }
+
+        .option.selected {
+            background: var(--success-gradient);
+            color: white;
+            transform: scale(1.02);
+            border-color: var(--success);
+            box-shadow: 0 10px 25px rgba(74, 222, 128, 0.4);
+        }
+
+        /* Input personalizado */
+        .input-container {
+            margin-bottom: var(--space-lg);
+        }
+
+        .custom-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: var(--space-md);
+            font-size: var(--text-base);
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .custom-input::placeholder {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .custom-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(18, 194, 233, 0.1);
+            box-shadow: 0 5px 15px rgba(18, 194, 233, 0.3);
+        }
+
+        /* Impact section */
+        .impact-section {
+            background: var(--gold-gradient);
+            border-radius: 12px;
+            padding: var(--space-md);
+            margin-top: var(--space-md);
+            color: white;
+            font-weight: 600;
+            font-size: var(--text-sm);
+            display: flex;
+            align-items: center;
+        }
+
+        .impact-icon {
+            font-size: var(--text-lg);
+            margin-right: var(--space-sm);
+            flex-shrink: 0;
+        }
+
+        /* Solução 1: Progress Circle Interativo */
+        .progress-section {
+            display: flex;
+            justify-content: center;
+            margin-bottom: var(--space-lg);
+            padding: var(--space-md);
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .progress-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .progress-section.clickable {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .progress-section.clickable::after {
+            content: 'Toque para avançar →';
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .progress-section.clickable:hover::after {
+            opacity: 1;
+        }
+
+
+        /* Solução 3: Auto-advance mais sutil */
+        .auto-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background: var(--success-gradient);
+            width: 0%;
+            transition: width 0.1s linear;
+            border-radius: 0 0 16px 16px;
+        }
+
+        /* Solução 4: Micro-interaction no card */
+        .question-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: var(--space-md);
+            margin-bottom: var(--space-lg);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+
+        .question-card.ready-to-advance {
+            box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.5);
+            animation: readyPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes readyPulse {
+            0%, 100% { 
+                box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.5);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.3);
+                transform: scale(1.01);
+            }
+        }
+
+        /* Solução 5: Voice Command Indicator */
+        .voice-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            z-index: 1000;
+        }
+
+        .voice-indicator.show {
+            opacity: 1;
+        }
+
+        .voice-indicator.listening {
+            animation: voicePulse 1s ease-in-out infinite;
+            background: rgba(74, 222, 128, 0.2);
+        }
+
+        @keyframes voicePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Botão tradicional */
+        .next-button {
+            background: var(--success-gradient);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: var(--space-md) var(--space-lg);
+            font-size: var(--text-base);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            min-height: 44px;
+            margin-top: var(--space-md);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .next-button:hover,
+        .next-button:focus-visible {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(74, 222, 128, 0.4);
+        }
+
+        .next-button.hidden {
+            display: none;
+        }
+
+        /* Result Section - Mobile First */
+        .result-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: var(--space-lg) var(--space-md);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        @media (min-width: 768px) {
+            .result-section {
+                padding: var(--space-xl) var(--space-lg);
+                border-radius: 24px;
+            }
+        }
+
+        .result-section.show {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .result-crown {
+            font-size: 3rem;
+            margin-bottom: var(--space-md);
+            animation: float 2s ease-in-out infinite;
+        }
+
+        @media (min-width: 768px) {
+            .result-crown {
+                font-size: 4rem;
+                margin-bottom: var(--space-lg);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .result-title {
+            font-size: var(--text-2xl);
+            font-weight: 800;
+            margin-bottom: var(--space-sm);
+            line-height: 1.2;
+        }
+
+        @media (min-width: 768px) {
+            .result-title {
+                font-size: var(--text-3xl);
+                margin-bottom: var(--space-md);
+            }
+        }
+
+        .result-subtitle {
+            font-size: var(--text-base);
+            color: var(--text-secondary);
+            margin-bottom: var(--space-lg);
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        @media (min-width: 768px) {
+            .result-subtitle {
+                font-size: var(--text-lg);
+            }
+        }
+
+        .result-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-sm);
+            margin: var(--space-lg) 0;
+        }
+
+        @media (min-width: 768px) {
+            .result-metrics {
+                grid-template-columns: repeat(4, 1fr);
+                gap: var(--space-md);
+            }
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: var(--space-md);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .metric-value {
+            font-size: var(--text-xl);
+            font-weight: 800;
+            margin-bottom: var(--space-xs);
+        }
+
+        @media (min-width: 768px) {
+            .metric-value {
+                font-size: var(--text-2xl);
+            }
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: var(--text-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .cta-section {
+            background: var(--danger-gradient);
+            border-radius: 16px;
+            padding: var(--space-lg);
+            margin: var(--space-lg) 0;
+        }
+
+        .cta-button {
+            background: white;
+            color: #1a1a2e;
+            border: none;
+            border-radius: 12px;
+            padding: var(--space-md) var(--space-lg);
+            font-size: var(--text-base);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: 100%;
+            /* Touch target otimizado */
+            min-height: 44px;
+        }
+
+        @media (min-width: 768px) {
+            .cta-button {
+                padding: var(--space-lg) var(--space-xl);
+                font-size: var(--text-lg);
+                border-radius: 50px;
+                width: auto;
+            }
+        }
+
+        .cta-button:hover,
+        .cta-button:focus-visible {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .bonus-list {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: var(--space-lg);
+            margin-top: var(--space-lg);
+            text-align: left;
+        }
+
+        .bonus-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: var(--space-sm);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        @media (min-width: 768px) {
+            .bonus-item {
+                font-size: var(--text-base);
+            }
+        }
+
+        .bonus-icon {
+            font-size: var(--text-lg);
+            margin-right: var(--space-sm);
+            width: 24px;
+            flex-shrink: 0;
+        }
+
+        /* Remove elementos antigos não utilizados */
+
+        /* Utility classes necessárias */
+        .hidden {
+            display: none;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Animações simplificadas para mobile */
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background otimizado -->
+    <div class="bg-overlay"></div>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <header class="hero" role="banner">
+            <div class="hero-badge">🚀 DIAGNÓSTICO GRATUITO</div>
+            <h1 class="hero-title">DIAGNÓSTICO DIGITAL</h1>
+            <p class="hero-subtitle">Descubra o potencial de crescimento do seu negócio</p>
+            <div class="hero-warning" role="note">
+                Identifique oportunidades de melhoria e otimização
+            </div>
+        </header>
+
+        <!-- Progress Section - Agora interativo -->
+        <section class="progress-section" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" onclick="handleProgressClick()">
+            <div class="progress-container">
+                <svg class="progress-ring" viewBox="0 0 120 120" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#667eea"/>
+                            <stop offset="50%" style="stop-color:#764ba2"/>
+                            <stop offset="100%" style="stop-color:#12c2e9"/>
+                        </linearGradient>
+                    </defs>
+                    <circle cx="60" cy="60" r="60" class="progress-bg"/>
+                    <circle cx="60" cy="60" r="60" class="progress-fill" id="progressRing"/>
+                </svg>
+                <div class="progress-center">
+                    <div class="progress-percentage" id="progressPercent" aria-live="polite">0%</div>
+                    <div class="progress-label" id="progressStage" aria-live="polite">INICIANDO</div>
+                </div>
+                <div class="auto-progress" id="autoProgress"></div>
+            </div>
+        </section>
+
+
+        <!-- Voice Indicator -->
+        <div class="voice-indicator" id="voiceIndicator" onclick="toggleVoiceCommand()">
+            🎤
+        </div>
+
+        <!-- Quiz Container -->
+        <div id="quizContainer">
+            <!-- Perguntas serão inseridas aqui -->
+        </div>
+
+        <!-- Result Container -->
+        <div id="resultContainer" class="hidden">
+            <!-- Resultado será inserido aqui -->
+        </div>
+    </div>
+
+    <script>
+        // Configuração simplificada e otimizada
+        let startTime = Date.now();
+        let currentQuestion = 0;
+        let totalScore = 0;
+        let responses = [];
+        let autoAdvanceTimer = null;
+        let autoAdvanceSeconds = 3;
+
+        // Dados das perguntas otimizadas
+        const questions = [
+            {
+                id: 0,
+                category: "IDENTIFICAÇÃO",
+                question: "Qual é o nome da sua empresa e instagram?",
+                subtitle: "📹 Para personalizar completamente sua análise.",
+                type: "text",
+                placeholder: "Ex: Tech Solutions - @techsolutions",
+                impact: "👉 Identificação para análise personalizada."
+            },
+            {
+                id: 1,
+                category: "ATENDIMENTO NO WHATSAPP",
+                question: "Como você atende seus clientes no WhatsApp hoje?",
+                subtitle: "📹 Quando o atendimento demora mais de 5 minutos, a chance de venda cai até 70%.",
+                type: "multiple",
+                options: [
+                    { text: "Atendo 24h com IA (fluxos + repasse humano)", emoji: "🤖", score: 20, color: "#4ade80" },
+                    { text: "Chatbot básico com respostas prontas", emoji: "💬", score: 12, color: "#60a5fa" },
+                    { text: "Respondo apenas em horário comercial", emoji: "⏰", score: 6, color: "#f59e0b" },
+                    { text: "Respondo quando consigo", emoji: "📱", score: 0, color: "#ef4444" }
+                ],
+                impact: "👉 Impacto: atendimento imediato aumenta conversão em até 70%."
+            },
+            {
+                id: 2,
+                category: "CONTEÚDO PARA REDES",
+                question: "Como você cria posts e conteúdos para suas redes sociais?",
+                subtitle: "📹 Conteúdo consistente gera 3x mais engajamento.",
+                type: "multiple",
+                options: [
+                    { text: "IA cria em segundos + revisão humana", emoji: "⚡", score: 15, color: "#4ade80" },
+                    { text: "Uso Canva com templates", emoji: "🎨", score: 10, color: "#60a5fa" },
+                    { text: "Produzo básico sem padrão", emoji: "📊", score: 5, color: "#f59e0b" },
+                    { text: "Quase não posto", emoji: "😴", score: 0, color: "#ef4444" }
+                ],
+                impact: "👉 Impacto: consistência + padrão visual triplicam alcance."
+            },
+            {
+                id: 3,
+                category: "TRÁFEGO PAGO",
+                question: "Você investe em anúncios (Facebook, Google, Instagram, TikTok)?",
+                subtitle: "📹 Apenas 15% dos negócios locais usam tráfego de forma correta.",
+                type: "multiple",
+                options: [
+                    { text: "Sim, otimizado por IA", emoji: "🚀", score: 15, color: "#4ade80" },
+                    { text: "Faço campanhas manuais", emoji: "📈", score: 10, color: "#60a5fa" },
+                    { text: "Já testei, mas não deu resultado", emoji: "😞", score: 3, color: "#f59e0b" },
+                    { text: "Nunca fiz", emoji: "🤷", score: 0, color: "#ef4444" }
+                ],
+                impact: "👉 Impacto: campanhas com IA reduzem custo por cliente."
+            },
+            {
+                id: 4,
+                category: "DADOS & FERRAMENTAS",
+                question: "Como você acompanha o desempenho do seu negócio?",
+                subtitle: "📹 Decisões em tempo real aumentam lucro em até 25%.",
+                type: "multiple",
+                options: [
+                    { text: "Dashboards integrados com IA", emoji: "📊", score: 15, color: "#4ade80" },
+                    { text: "Google Analytics e relatórios básicos", emoji: "📈", score: 10, color: "#60a5fa" },
+                    { text: "Planilhas no Excel", emoji: "📋", score: 5, color: "#f59e0b" },
+                    { text: "Só pelo extrato bancário", emoji: "🏦", score: 0, color: "#ef4444" }
+                ],
+                impact: "👉 Impacto: visão consolidada identifica oportunidades escondidas."
+            },
+            {
+                id: 5,
+                category: "CONCORRÊNCIA",
+                question: "Como você monitora seus concorrentes?",
+                subtitle: "📹 Quem não monitora perde até 60% das oportunidades.",
+                type: "multiple",
+                options: [
+                    { text: "IA monitora automaticamente", emoji: "🕵️", score: 10, color: "#4ade80" },
+                    { text: "Acompanho redes sociais deles", emoji: "👀", score: 7, color: "#60a5fa" },
+                    { text: "Olho de vez em quando", emoji: "🤔", score: 3, color: "#f59e0b" },
+                    { text: "Não monitoro", emoji: "🙈", score: 0, color: "#ef4444" }
+                ],
+                impact: "👉 Impacto: inteligência competitiva mostra brechas exploráveis."
+            },
+            {
+                id: 6,
+                category: "LEADS E VENDAS",
+                question: "Quantos leads qualificados você gera por mês?",
+                subtitle: "📹 Lead qualificado = pessoa interessada com potencial de compra real.",
+                type: "multiple",
+                options: [
+                    { text: "Mais de 200 leads", emoji: "🚀", score: 15, color: "#4ade80" },
+                    { text: "50-200 leads", emoji: "💪", score: 10, color: "#60a5fa" },
+                    { text: "10-50 leads", emoji: "📈", score: 6, color: "#f59e0b" },
+                    { text: "Menos de 10 leads", emoji: "😢", score: 0, color: "#ef4444" }
+                ],
+                impact: "👉 IA pode gerar 10x mais leads qualificados com mesmo orçamento."
+            },
+            {
+                id: 7,
+                category: "MAIOR PROBLEMA HOJE",
+                question: "Qual é o maior desafio do seu negócio neste momento?",
+                subtitle: "📹 Exemplo: poucos clientes novos, vendas baixas, concorrência forte, falta de tempo...",
+                type: "text",
+                placeholder: "Descreva seu principal desafio atual...",
+                impact: "👉 Sua resposta gera um plano de ação imediato."
+            },
+            {
+                id: 8,
+                category: "OBJETIVO EM 90 DIAS",
+                question: "Qual seu principal objetivo para os próximos 90 dias?",
+                subtitle: "📹 Exemplo: dobrar faturamento, automatizar vendas, reduzir custos, ganhar mercado...",
+                type: "text",
+                placeholder: "Descreva seu objetivo principal...",
+                impact: "👉 Objetivo claro = estratégia personalizada."
+            }
+        ];
+
+        // Inicialização otimizada
+        document.addEventListener('DOMContentLoaded', function() {
+            showQuestion();
+        });
+
+        function updateProgress() {
+            const progress = (currentQuestion / questions.length) * 100;
+            const circumference = 2 * Math.PI * 60;
+            const offset = circumference - (progress / 100) * circumference;
+            
+            const ring = document.getElementById('progressRing');
+            if (ring) {
+                ring.style.strokeDashoffset = offset;
+            }
+            
+            const percent = document.getElementById('progressPercent');
+            if (percent) {
+                percent.textContent = Math.round(progress) + '%';
+            }
+            
+            const stages = ['INICIANDO', 'ANALISANDO', 'DESCOBRINDO', 'REVELANDO', 'FINALIZANDO'];
+            const stageIndex = Math.min(Math.floor(progress / 25), stages.length - 1);
+            const stage = document.getElementById('progressStage');
+            if (stage) {
+                stage.textContent = stages[stageIndex];
+            }
+        }
+
+        function showQuestion() {
+            if (currentQuestion >= questions.length) {
+                showResult();
+                return;
+            }
+
+            const question = questions[currentQuestion];
+            const container = document.getElementById('quizContainer');
+            
+            let optionsHTML = '';
+            if (question.type === 'multiple') {
+                const gridClass = `options-${question.options.length}`;
+                optionsHTML = `
+                    <div class="options-grid ${gridClass}">
+                        ${question.options.map((option, index) => `
+                            <button class="option" 
+                                    onclick="selectOption(${index}, ${option.score}, '${option.color}')" 
+                                    type="button"
+                                    role="radio"
+                                    aria-pressed="false"
+                                    tabindex="0">
+                                <div class="option-emoji" aria-hidden="true">${option.emoji}</div>
+                                <div class="option-text">${option.text}</div>
+                            </button>
+                        `).join('')}
+                    </div>
+                `;
+            } else if (question.type === 'text') {
+                optionsHTML = `
+                    <div class="input-container">
+                        <textarea class="custom-input" 
+                                  placeholder="${question.placeholder}"
+                                  id="textInput"
+                                  oninput="saveTextResponse(this.value)"
+                                  aria-label="${question.question}"></textarea>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = `
+                <div class="question-card fade-in">
+                    <div class="question-header">
+                        <div class="question-number">${currentQuestion + 1}</div>
+                        <div class="question-content">
+                            <div class="question-category">${question.category}</div>
+                            <h2 class="question-text">${question.question}</h2>
+                            <p class="question-subtitle">${question.subtitle}</p>
+                        </div>
+                    </div>
+                    
+                    ${optionsHTML}
+                    
+                    <div class="impact-section">
+                        <span class="impact-icon">💎</span>
+                        <span>${question.impact}</span>
+                    </div>
+                    
+                    <button class="next-button hidden" id="nextButton" onclick="nextQuestion()">
+                        PRÓXIMA PERGUNTA
+                    </button>
+                </div>
+            `;
+
+            updateProgress();
+            
+            setTimeout(() => {
+                const card = document.querySelector('.question-card');
+                if (card) {
+                    card.classList.add('active');
+                }
+            }, 100);
+        }
+
+        function selectOption(optionIndex, score, color) {
+            // Parar auto-advance se estiver rodando
+            clearAutoAdvance();
+            
+            const options = document.querySelectorAll('.option');
+            options.forEach((option, index) => {
+                option.classList.toggle('selected', index === optionIndex);
+                option.setAttribute('aria-pressed', index === optionIndex ? 'true' : 'false');
+            });
+            
+            // Vibração tátil simplificada
+            if (navigator.vibrate) {
+                navigator.vibrate(score > 10 ? [50] : [100]);
+            }
+
+            // Confetti otimizado para respostas excelentes
+            if (score >= 15 && typeof confetti !== 'undefined') {
+                confetti({
+                    particleCount: 30,
+                    spread: 50,
+                    origin: { y: 0.8 },
+                    colors: [color, '#ffffff']
+                });
+            }
+            
+            // Salvar resposta
+            totalScore += score;
+            responses.push({
+                questionId: questions[currentQuestion].id,
+                score: score,
+                optionIndex: optionIndex,
+                timestamp: Date.now() - startTime
+            });
+            
+            showNextButton();
+        }
+
+        function saveTextResponse(value) {
+            if (value.trim()) {
+                // Parar auto-advance se estiver rodando
+                clearAutoAdvance();
+                
+                // Remover resposta anterior da mesma pergunta
+                responses = responses.filter(r => r.questionId !== questions[currentQuestion].id);
+                
+                responses.push({
+                    questionId: questions[currentQuestion].id,
+                    textResponse: value,
+                    timestamp: Date.now() - startTime
+                });
+                
+                showAdvanceOptions();
+            } else {
+                hideAdvanceOptions();
+            }
+        }
+
+        function showAdvanceOptions() {
+            canAdvance = true;
+            
+            // Mostrar botão próxima pergunta
+            showNextButton();
+            
+            // Ativar círculo de progresso como clicável
+            const progressSection = document.querySelector('.progress-section');
+            progressSection.classList.add('clickable');
+            
+            
+            // Card fica "pronto" para avançar
+            const questionCard = document.querySelector('.question-card');
+            questionCard.classList.add('ready-to-advance');
+            
+            // Auto-advance apenas para opções múltiplas
+            if (questions[currentQuestion].type === 'multiple') {
+                startAutoAdvance();
+            }
+        }
+
+        function hideAdvanceOptions() {
+            canAdvance = false;
+            
+            // Ocultar botão próxima pergunta
+            hideNextButton();
+            
+            const progressSection = document.querySelector('.progress-section');
+            progressSection.classList.remove('clickable');
+            
+            
+            const questionCard = document.querySelector('.question-card');
+            questionCard.classList.remove('ready-to-advance');
+            
+            clearAutoAdvance();
+        }
+
+        function startAutoAdvance() {
+            const autoProgress = document.getElementById('autoProgress');
+            
+            let progress = 0;
+            const increment = 100 / (autoAdvanceSeconds * 10); // 10 updates per second
+            
+            autoAdvanceTimer = setInterval(() => {
+                progress += increment;
+                autoProgress.style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearAutoAdvance();
+                    nextQuestion();
+                }
+            }, 100);
+        }
+
+        function clearAutoAdvance() {
+            if (autoAdvanceTimer) {
+                clearInterval(autoAdvanceTimer);
+                autoAdvanceTimer = null;
+            }
+            
+            const autoProgress = document.getElementById('autoProgress');
+            if (autoProgress) {
+                autoProgress.style.width = '0%';
+            }
+        }
+
+        function nextQuestion() {
+            // Limpar auto-advance
+            clearAutoAdvance();
+            
+            const currentCard = document.querySelector('.question-card');
+            
+            if (currentCard) {
+                currentCard.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                currentCard.style.transform = 'translateX(-50px)';
+                currentCard.style.opacity = '0';
+            }
+            
+            setTimeout(() => {
+                currentQuestion++;
+                showQuestion();
+            }, 300);
+        }
+
+        function showResult() {
+            const container = document.getElementById('quizContainer');
+            container.classList.add('hidden');
+            
+            const resultContainer = document.getElementById('resultContainer');
+            resultContainer.classList.remove('hidden');
+            
+            // Confetti final otimizado
+            setTimeout(() => {
+                if (typeof confetti !== 'undefined') {
+                    confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { y: 0.6 },
+                        colors: ['#667eea', '#764ba2', '#12c2e9', '#4ade80']
+                    });
+                }
+            }, 500);
+            
+            const resultData = calculateResult();
+            const totalTime = Math.floor((Date.now() - startTime) / 1000);
+            
+            // Extrair respostas específicas
+            const textResponses = responses.filter(r => r.textResponse);
+            const businessProblem = textResponses.find(r => r.questionId === 7)?.textResponse || 'Não informado';
+            const mainGoal = textResponses.find(r => r.questionId === 8)?.textResponse || 'Crescimento acelerado';
+            const nameAndCompany = textResponses.find(r => r.questionId === 0)?.textResponse || 'Não informado';
+            
+            // Compilar respostas para WhatsApp
+            let detailedResponses = '';
+            questions.forEach((q) => {
+                const response = responses.find(r => r.questionId === q.id);
+                if (response && q.id !== 0) {
+                    if (q.type === 'multiple') {
+                        const selectedOption = q.options[response.optionIndex];
+                        detailedResponses += `Q${q.id}: ${q.question}%0A`;
+                        detailedResponses += `R: ${selectedOption.text}%0A%0A`;
+                    } else if (q.type === 'text') {
+                        detailedResponses += `Q${q.id}: ${q.question}%0A`;
+                        detailedResponses += `R: ${response.textResponse || 'Não respondido'}%0A%0A`;
+                    }
+                }
+            });
+            
+            resultContainer.innerHTML = `
+                <div class="result-section">
+                    <div class="result-crown">${resultData.icon}</div>
+                    <h1 class="result-title" style="color: ${resultData.color}">${resultData.title}</h1>
+                    <p class="result-subtitle">${resultData.description}</p>
+                    
+                    <div class="result-metrics">
+                        <div class="metric-card">
+                            <div class="metric-value" style="color: ${resultData.color}">${totalScore}/100</div>
+                            <div class="metric-label">Score Digital</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" style="color: #4ade80">${resultData.priority}</div>
+                            <div class="metric-label">Foco Principal</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" style="color: #60a5fa">${totalTime}s</div>
+                            <div class="metric-label">Tempo Total</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" style="color: #f59e0b">${Math.round(totalTime / questions.length)}s</div>
+                            <div class="metric-label">Média/Pergunta</div>
+                        </div>
+                    </div>
+                    
+                    <div class="cta-section">
+                        <h3 style="margin-bottom: 16px; font-size: 1.5rem;">🚨 ANÁLISE GRATUITA PERSONALIZADA</h3>
+                        <p style="margin-bottom: 24px; font-size: 1rem; opacity: 0.9;">
+                            Baseado nas suas respostas, criamos um plano específico para você
+                        </p>
+                        <a href="https://wa.me/556699301589?text=🔥 DIAGNÓSTICO DIGITAL COMPLETO%0A%0A👤 CLIENTE: ${nameAndCompany}%0A🏆 SCORE FINAL: ${totalScore}/100%0A⏱ Tempo: ${totalTime}s%0A%0A📊 RESPOSTAS DETALHADAS:%0A${detailedResponses}%0A🔴 PROBLEMA PRINCIPAL:%0A${businessProblem}%0A%0A🎯 OBJETIVO 90 DIAS:%0A${mainGoal}%0A%0A📩 QUERO MINHA ANÁLISE PERSONALIZADA!" 
+                           class="cta-button">
+                            💬 FALAR AGORA NO WHATSAPP
+                        </a>
+                    </div>
+                    
+                    <div class="bonus-list">
+                        <h4 style="margin-bottom: 24px; font-size: 1.25rem; text-align: center;">🎁 BÔNUS EXCLUSIVOS INCLUSOS</h4>
+                        <div class="bonus-item">
+                            <span class="bonus-icon">✅</span>
+                            <span>Auditoria completa personalizada para seu negócio</span>
+                        </div>
+                        <div class="bonus-item">
+                            <span class="bonus-icon">✅</span>
+                            <span>Plano de ação para resolver: "${businessProblem}"</span>
+                        </div>
+                        <div class="bonus-item">
+                            <span class="bonus-icon">✅</span>
+                            <span>Estratégia específica para: "${mainGoal}"</span>
+                        </div>
+                        <div class="bonus-item">
+                            <span class="bonus-icon">✅</span>
+                            <span>Demo ao vivo das ferramentas de IA funcionando</span>
+                        </div>
+                        <div class="bonus-item">
+                            <span class="bonus-icon">✅</span>
+                            <span>Análise detalhada do seu potencial de crescimento</span>
+                        </div>
+                        <div class="bonus-item">
+                            <span class="bonus-icon">✅</span>
+                            <span>45 minutos de consultoria VIP sem custo</span>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 24px; padding: 16px; background: rgba(239, 68, 68, 0.1); border-radius: 12px;">
+                            <strong>⏰ URGENTE: Apenas 3 análises por dia</strong><br>
+                            📱 Resposta garantida em 10 minutos<br>
+                            💰 Consulta especializada gratuita
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                const resultSection = resultContainer.querySelector('.result-section');
+                if (resultSection) {
+                    resultSection.classList.add('show');
+                }
+            }, 200);
+        }
+
+        function showNextButton() {
+            const nextButton = document.getElementById('nextButton');
+            if (nextButton) {
+                nextButton.classList.remove('hidden');
+            }
+        }
+
+        function hideNextButton() {
+            const nextButton = document.getElementById('nextButton');
+            if (nextButton) {
+                nextButton.classList.add('hidden');
+            }
+        }
+
+        function handleProgressClick() {
+            if (canAdvance) {
+                nextQuestion();
+            }
+        }
+
+        function toggleVoiceCommand() {
+            // Implementação básica do comando de voz
+            console.log('Voice command clicked');
+        }
+
+        // Variável para controlar se pode avançar
+        let canAdvance = false;
+
+        function calculateResult() {
+            if (totalScore >= 80) {
+                return {
+                    title: "ELITE DIGITAL - NÍVEL MÁXIMO",
+                    icon: "👑",
+                    color: "#4ade80",
+                    description: `Score: ${totalScore}/100. Excelente! Você está no nível elite. Identificamos oportunidades de otimização para maximizar ainda mais seus resultados.`,
+                    priority: "OTIMIZAÇÃO"
+                };
+            } else if (totalScore >= 60) {
+                return {
+                    title: "FORTE COM POTENCIAL",
+                    icon: "🚀",
+                    color: "#60a5fa",
+                    description: `Score: ${totalScore}/100. Muito bom! Você tem uma base forte. Identificamos pontos estratégicos que podem acelerar seu crescimento.`,
+                    priority: "ACELERAÇÃO"
+                };
+            } else if (totalScore >= 30) {
+                return {
+                    title: "EM EVOLUÇÃO COM POTENCIAL EXPLOSIVO",
+                    icon: "💎",
+                    color: "#f59e0b",
+                    description: `Score: ${totalScore}/100. Bom progresso! Você já iniciou sua transformação digital. Há oportunidades importantes para expandir.`,
+                    priority: "EXPANSÃO"
+                };
+            } else {
+                return {
+                    title: "INICIANTE - GRANDE POTENCIAL",
+                    icon: "🚨",
+                    color: "#ef4444",
+                    description: `Score: ${totalScore}/100. Início da jornada! Há muito potencial para crescimento. Vamos criar um plano personalizado para acelerar sua evolução.`,
+                    priority: "TRANSFORMAÇÃO"
+                };
+            }
+        }
+    </script>
+</body>
+</html>

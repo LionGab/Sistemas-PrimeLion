@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora ROI - Operação Safra Automatizada | Lion Consultoria</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .calculator-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            color: #667eea;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .title {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 18px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        label {
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        input, select {
+            padding: 15px;
+            border: 2px solid #e0e6ed;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .calculate-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+            width: 100%;
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .results-container {
+            margin-top: 30px;
+            padding: 30px;
+            background: #f8fafc;
+            border-radius: 15px;
+            display: none;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .metric-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .metric-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .metric-label {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .recommendation {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .recommendation h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0 10px;
+        }
+        
+        .calendly-btn {
+            background: #0069FF;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .calculator-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator-container">
+        <div class="header">
+            <div class="logo">🦁 LION CONSULTORIA</div>
+            <h1 class="title">Calculadora ROI</h1>
+            <p class="subtitle">Operação Safra Automatizada - Descubra sua economia</p>
+        </div>
+        
+        <form id="roiForm">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="farmName">Nome da Fazenda</label>
+                    <input type="text" id="farmName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="hectares">Hectares Totais</label>
+                    <input type="number" id="hectares" min="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="annualRevenue">Faturamento Anual (R$)</label>
+                    <input type="number" id="annualRevenue" min="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="currentErp">ERP Atual</label>
+                    <select id="currentErp" required>
+                        <option value="">Selecione...</option>
+                        <option value="totvs">TOTVS Protheus Agro</option>
+                        <option value="sap">SAP Rural</option>
+                        <option value="aegro">Aegro</option>
+                        <option value="granular">Granular</option>
+                        <option value="other">Outro</option>
+                        <option value="none">Não utiliza ERP</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="nfpeMonthly">NFP-e por mês (manual)</label>
+                    <input type="number" id="nfpeMonthly" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="timePerNfpe">Tempo por NFP-e (minutos)</label>
+                    <input type="number" id="timePerNfpe" value="45" min="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="hourlyRate">Valor/hora fiscal (R$)</label>
+                    <input type="number" id="hourlyRate" value="150" min="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="errorRate">Taxa de erro atual (%)</label>
+                    <input type="number" id="errorRate" value="5" min="0" max="50" required>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="email">Email para receber relatório detalhado</label>
+                    <input type="email" id="email" required>
+                </div>
+            </div>
+            
+            <button type="submit" class="calculate-btn">
+                🚀 Calcular Minha Economia
+            </button>
+        </form>
+        
+        <div id="results" class="results-container">
+            <h2>💰 Seu Potencial de Economia Anual</h2>
+            
+            <div class="results-grid">
+                <div class="metric-card">
+                    <div class="metric-value" id="annualSavings">R$ 0</div>
+                    <div class="metric-label">Economia Anual</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-value" id="timeReduction">0h</div>
+                    <div class="metric-label">Horas Economizadas/Mês</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-value" id="roiPercentage">0%</div>
+                    <div class="metric-label">ROI em 12 meses</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-value" id="paybackPeriod">0</div>
+                    <div class="metric-label">Meses para ROI</div>
+                </div>
+            </div>
+            
+            <div class="recommendation">
+                <h3>📊 Recomendação Personalizada</h3>
+                <p id="recommendationText"></p>
+            </div>
+            
+            <div class="cta-section">
+                <h3>🎯 Quer implementar na sua fazenda?</h3>
+                <p>Agende uma conversa gratuita para discutir sua implementação</p>
+                <a href="#" class="whatsapp-btn" id="whatsappBtn">
+                    📱 WhatsApp (Resposta em 1h)
+                </a>
+                <a href="#" class="calendly-btn" id="calendlyBtn">
+                    📅 Agendar Reunião
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('roiForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            calculateROI();
+        });
+
+        function calculateROI() {
+            // Get form data
+            const farmName = document.getElementById('farmName').value;
+            const hectares = parseFloat(document.getElementById('hectares').value);
+            const annualRevenue = parseFloat(document.getElementById('annualRevenue').value);
+            const currentErp = document.getElementById('currentErp').value;
+            const nfpeMonthly = parseFloat(document.getElementById('nfpeMonthly').value);
+            const timePerNfpe = parseFloat(document.getElementById('timePerNfpe').value);
+            const hourlyRate = parseFloat(document.getElementById('hourlyRate').value);
+            const errorRate = parseFloat(document.getElementById('errorRate').value);
+            const email = document.getElementById('email').value;
+
+            // ROI Calculations based on Operação Safra real data
+            const monthlyHoursSaved = (nfpeMonthly * timePerNfpe) / 60; // Hours saved per month
+            const automatedTimePerNfpe = 3.2 / 60; // 3.2 seconds automated vs 45 minutes manual
+            const newMonthlyHours = nfpeMonthly * automatedTimePerNfpe;
+            const actualHoursSaved = monthlyHoursSaved - newMonthlyHours;
+            
+            const monthlySavings = actualHoursSaved * hourlyRate;
+            const annualSavings = monthlySavings * 12;
+            
+            // Error reduction savings
+            const errorCostPerNfpe = 200; // Average cost per error (fines, corrections, etc.)
+            const monthlyErrors = (nfpeMonthly * errorRate) / 100;
+            const monthlyErrorSavings = monthlyErrors * errorCostPerNfpe;
+            const annualErrorSavings = monthlyErrorSavings * 12;
+            
+            const totalAnnualSavings = annualSavings + annualErrorSavings;
+            
+            // Investment calculation (based on Lion pricing)
+            let investment = 15000; // Base diagnosis
+            if (hectares > 5000) investment += 35000;
+            else if (hectares > 1000) investment += 25000;
+            else investment += 15000;
+            
+            if (currentErp !== 'totvs') investment += 10000; // Integration complexity
+            
+            const roiPercentage = ((totalAnnualSavings - investment) / investment) * 100;
+            const paybackMonths = investment / (monthlySavings + monthlyErrorSavings);
+
+            // Display results
+            document.getElementById('annualSavings').textContent = 
+                new Intl.NumberFormat('pt-BR', { 
+                    style: 'currency', 
+                    currency: 'BRL' 
+                }).format(totalAnnualSavings);
+
+            document.getElementById('timeReduction').textContent = 
+                Math.round(actualHoursSaved) + 'h';
+
+            document.getElementById('roiPercentage').textContent = 
+                Math.round(roiPercentage) + '%';
+
+            document.getElementById('paybackPeriod').textContent = 
+                Math.round(paybackMonths);
+
+            // Generate personalized recommendation
+            let recommendation = `Com base nos dados da ${farmName}, `;
+            
+            if (roiPercentage > 300) {
+                recommendation += `você tem um potencial EXCEPCIONAL de economia! ` +
+                    `Com ${nfpeMonthly} NFP-e mensais, a automação gerará um ROI de ${Math.round(roiPercentage)}% ` +
+                    `no primeiro ano. Recomendamos implementação imediata.`;
+            } else if (roiPercentage > 150) {
+                recommendation += `você tem um excelente potencial de ROI! ` +
+                    `A automação se pagará em ${Math.round(paybackMonths)} meses e gerará ` +
+                    `${new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(totalAnnualSavings)} ` +
+                    `de economia anual.`;
+            } else {
+                recommendation += `você ainda pode se beneficiar da automação, mas recomendamos ` +
+                    `uma análise mais detalhada para identificar oportunidades adicionais de otimização.`;
+            }
+
+            document.getElementById('recommendationText').textContent = recommendation;
+
+            // Update CTA buttons
+            const whatsappMessage = encodeURIComponent(
+                `Olá! Calculei minha economia com a Operação Safra Automatizada:\n\n` +
+                `🏢 Fazenda: ${farmName}\n` +
+                `📊 Economia anual: ${new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(totalAnnualSavings)}\n` +
+                `📈 ROI: ${Math.round(roiPercentage)}%\n\n` +
+                `Gostaria de agendar uma conversa para discutir a implementação.`
+            );
+            
+            document.getElementById('whatsappBtn').href = `https://wa.me/5565999999999?text=${whatsappMessage}`;
+            document.getElementById('calendlyBtn').href = `https://calendly.com/lion-consultoria/diagnostico-fazenda?prefill_custom_1=${farmName}`;
+
+            // Show results
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+
+            // Analytics tracking (GA4)
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'roi_calculation_completed', {
+                    'farm_name': farmName,
+                    'hectares': hectares,
+                    'annual_savings': totalAnnualSavings,
+                    'roi_percentage': roiPercentage,
+                    'current_erp': currentErp
+                });
+            }
+
+            // Send lead data to backend (simulated)
+            console.log('Lead data:', {
+                farmName, hectares, annualRevenue, currentErp,
+                nfpeMonthly, email, totalAnnualSavings, roiPercentage
+            });
+        }
+    </script>
+
+    <!-- Google Analytics 4 (Production: replace with real measurement ID) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+
+    <!-- Facebook Pixel (Production: replace with real pixel ID) -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window,document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 'YOUR_PIXEL_ID');
+        fbq('track', 'PageView');
+    </script>
+</body>
+</html>

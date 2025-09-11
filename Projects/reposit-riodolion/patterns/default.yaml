@@ -1,0 +1,7 @@
+name: "Default Research Pattern"
+agents: 4
+questions:
+  - "Factual research and direct information"
+  - "Analysis and metrics"
+  - "Alternative perspectives and criticisms"
+  - "Verification and fact-checking"

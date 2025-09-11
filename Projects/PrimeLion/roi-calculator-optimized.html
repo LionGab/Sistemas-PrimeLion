@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>💰 Calculadora ROI - Descubra Quanto Você Está Perdendo</title>
+    <meta name="description" content="Calcule gratuitamente quanto dinheiro sua empresa está perdendo mensalmente. Diagnóstico em 30 segundos.">
+    
+    <!-- Preload crítico -->
+    <link rel="preload" as="style" href="data:text/css;base64,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    
+    <style>
+        /* CSS crítico inline para carregamento instantâneo */
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,#0066cc 0%,#0099ff 100%);min-height:100vh;overflow-x:hidden}
+        .container{max-width:100%;margin:0;background:#fff;min-height:100vh}
+        .header{background:linear-gradient(135deg,#1a202c,#2d3748);color:#fff;padding:20px 16px;text-align:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+        .header h1{font-size:1.8rem;margin-bottom:8px;font-weight:700}
+        .header p{font-size:1rem;opacity:.9;font-weight:400}
+        .main{padding:0}
+        .step{padding:20px 16px;border-bottom:1px solid #f0f0f0;display:none}
+        .step.active{display:block;animation:slideIn .3s ease}
+        .step:last-child{border-bottom:none}
+        @keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+        .form-group{margin-bottom:20px}
+        label{display:block;margin-bottom:8px;color:#2d3748;font-weight:600;font-size:14px}
+        .input-wrapper{position:relative}
+        input,select{width:100%;padding:16px;border:2px solid #e2e8f0;border-radius:12px;font-size:16px;background:#fff;-webkit-appearance:none;appearance:none}
+        input:focus,select:focus{outline:none;border-color:#0066cc;box-shadow:0 0 0 3px rgba(0,102,204,.1)}
+        .currency-prefix{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:#666;font-weight:600;pointer-events:none}
+        .currency-input{padding-left:50px}
+        .btn{width:100%;padding:18px;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;transition:all .2s;text-align:center;display:block}
+        .btn-primary{background:linear-gradient(135deg,#0066cc,#0099ff);color:#fff;box-shadow:0 4px 15px rgba(0,102,204,.3)}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,102,204,.4)}
+        .btn-primary:active{transform:translateY(0)}
+        .progress-bar{height:4px;background:#e2e8f0;position:relative;margin:0 16px}
+        .progress{height:100%;background:linear-gradient(90deg,#0066cc,#0099ff);transition:width .3s ease;border-radius:2px}
+        .step-indicator{background:#f8f9fa;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#666;border-bottom:1px solid #e2e8f0}
+        .result-card{background:linear-gradient(135deg,#f8faff,#eef4ff);margin:16px;border-radius:16px;padding:20px;border:1px solid #e2e8f0}
+        .result-value{font-size:2.2rem;font-weight:700;color:#0066cc;margin:8px 0}
+        .result-label{color:#666;font-size:14px;margin-bottom:8px}
+        .improvement{color:#16a34a;font-weight:600;font-size:14px}
+        .cta-section{background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;padding:24px 16px;margin-top:20px;text-align:center}
+        .cta-button{display:block;background:#fff;color:#16a34a;padding:16px 20px;border-radius:25px;text-decoration:none;font-weight:600;margin:16px 0;font-size:16px;box-shadow:0 4px 15px rgba(0,0,0,.2)}
+        .impact-highlight{background:#fef3c7;border:2px solid #f59e0b;border-radius:12px;padding:16px;margin:16px;text-align:center}
+        .impact-value{font-size:2.8rem;font-weight:700;color:#d97706;margin:8px 0}
+        .comparison{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px;padding:0}
+        .comparison-item{padding:16px;border-radius:12px;text-align:center}
+        .before{background:#fee2e2;color:#dc2626}
+        .after{background:#d1fae5;color:#16a34a}
+        .chart-container{margin:16px;background:#fff;border-radius:12px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+        .urgency{background:#fef2f2;border-left:4px solid #ef4444;padding:12px 16px;margin:16px;border-radius:0 8px 8px 0}
+        .urgency-text{color:#dc2626;font-weight:600;font-size:14px}
+        .floating-cta{position:fixed;bottom:20px;left:20px;right:20px;z-index:200;display:none}
+        .floating-cta.show{display:block;animation:slideUp .3s ease}
+        @keyframes slideUp{from{opacity:0;transform:translateY(100px)}to{opacity:1;transform:translateY(0)}}
+        
+        /* Otimizações mobile específicas */
+        @media (max-width: 480px) {
+            .header h1{font-size:1.6rem}
+            .header p{font-size:0.9rem}
+            .result-value{font-size:2rem}
+            .impact-value{font-size:2.4rem}
+            input,select,.btn{padding:14px;font-size:16px}
+            .step{padding:16px 12px}
+            .result-card,.chart-container{margin:12px}
+        }
+        
+        /* PWA e performance */
+        .loader{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,.9);z-index:999;align-items:center;justify-content:center}
+        .spinner{width:40px;height:40px;border:4px solid #f3f3f3;border-top:4px solid #0066cc;border-radius:50%;animation:spin 1s linear infinite}
+        @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+    </style>
+</head>
+<body>
+    <div class="loader" id="loader">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>💰 Calculadora ROI</h1>
+            <p>Descubra em 60 segundos quanto você está perdendo</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress" id="progressBar" style="width: 20%"></div>
+        </div>
+
+        <div class="step-indicator">
+            <span>Passo <span id="currentStep">1</span> de 4</span>
+            <span id="timeLeft">⏱️ ~45s restantes</span>
+        </div>
+
+        <div class="main">
+            <!-- STEP 1: Faturamento -->
+            <div class="step active" id="step1">
+                <h2 style="color: #2d3748; margin-bottom: 16px;">📊 Qual seu faturamento mensal?</h2>
+                <div class="form-group">
+                    <div class="input-wrapper">
+                        <span class="currency-prefix">R$</span>
+                        <input type="tel" id="revenue" class="currency-input" 
+                               placeholder="120.000" 
+                               inputmode="numeric"
+                               autocomplete="off"
+                               oninput="formatCurrency(this); validateStep1()">
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0;">
+                    <button type="button" onclick="setRevenue(50000)" class="btn-quick">R$ 50k</button>
+                    <button type="button" onclick="setRevenue(100000)" class="btn-quick">R$ 100k</button>
+                    <button type="button" onclick="setRevenue(200000)" class="btn-quick">R$ 200k</button>
+                    <button type="button" onclick="setRevenue(500000)" class="btn-quick">R$ 500k</button>
+                </div>
+
+                <button type="button" id="nextBtn1" class="btn btn-primary" onclick="nextStep()" disabled>
+                    Próximo → Leads Mensais
+                </button>
+            </div>
+
+            <!-- STEP 2: Leads -->
+            <div class="step" id="step2">
+                <h2 style="color: #2d3748; margin-bottom: 16px;">🎯 Quantos leads qualificados por mês?</h2>
+                <div class="form-group">
+                    <input type="number" id="leads" 
+                           placeholder="80" 
+                           inputmode="numeric"
+                           oninput="validateStep2()">
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 16px 0;">
+                    <button type="button" onclick="setLeads(30)" class="btn-quick">30</button>
+                    <button type="button" onclick="setLeads(50)" class="btn-quick">50</button>
+                    <button type="button" onclick="setLeads(80)" class="btn-quick">80</button>
+                    <button type="button" onclick="setLeads(120)" class="btn-quick">120</button>
+                    <button type="button" onclick="setLeads(200)" class="btn-quick">200</button>
+                    <button type="button" onclick="setLeads(300)" class="btn-quick">300+</button>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 12px;">
+                    <button type="button" onclick="prevStep()" class="btn" style="background: #f3f4f6; color: #6b7280;">← Voltar</button>
+                    <button type="button" id="nextBtn2" class="btn btn-primary" onclick="nextStep()" disabled>
+                        Próximo → Taxa Conversão
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 3: Conversão -->
+            <div class="step" id="step3">
+                <h2 style="color: #2d3748; margin-bottom: 16px;">📈 Taxa de conversão atual (%)?</h2>
+                <div class="form-group">
+                    <input type="number" id="conversion" 
+                           placeholder="12" 
+                           min="0" max="100" step="0.1"
+                           inputmode="decimal"
+                           oninput="validateStep3()">
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 16px 0;">
+                    <button type="button" onclick="setConversion(5)" class="btn-quick">5%</button>
+                    <button type="button" onclick="setConversion(10)" class="btn-quick">10%</button>
+                    <button type="button" onclick="setConversion(15)" class="btn-quick">15%</button>
+                    <button type="button" onclick="setConversion(20)" class="btn-quick">20%</button>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 12px;">
+                    <button type="button" onclick="prevStep()" class="btn" style="background: #f3f4f6; color: #6b7280;">← Voltar</button>
+                    <button type="button" id="nextBtn3" class="btn btn-primary" onclick="nextStep()" disabled>
+                        Próximo → Ticket Médio
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 4: Ticket Médio -->
+            <div class="step" id="step4">
+                <h2 style="color: #2d3748; margin-bottom: 16px;">💰 Ticket médio por venda?</h2>
+                <div class="form-group">
+                    <div class="input-wrapper">
+                        <span class="currency-prefix">R$</span>
+                        <input type="tel" id="ticket" class="currency-input"
+                               placeholder="15.000" 
+                               inputmode="numeric"
+                               oninput="formatCurrency(this); validateStep4()">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0;">
+                    <button type="button" onclick="setTicket(5000)" class="btn-quick">R$ 5k</button>
+                    <button type="button" onclick="setTicket(10000)" class="btn-quick">R$ 10k</button>
+                    <button type="button" onclick="setTicket(25000)" class="btn-quick">R$ 25k</button>
+                    <button type="button" onclick="setTicket(50000)" class="btn-quick">R$ 50k</button>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 12px;">
+                    <button type="button" onclick="prevStep()" class="btn" style="background: #f3f4f6; color: #6b7280;">← Voltar</button>
+                    <button type="button" id="calculateBtn" class="btn btn-primary" onclick="calculate()" disabled>
+                        🧮 CALCULAR MEU POTENCIAL
+                    </button>
+                </div>
+            </div>
+
+            <!-- RESULTS -->
+            <div class="step" id="results" style="padding: 0;">
+                <div class="impact-highlight">
+                    <div style="font-size: 18px; color: #92400e; margin-bottom: 8px;">
+                        💡 <strong>Você pode estar perdendo:</strong>
+                    </div>
+                    <div class="impact-value" id="lostValue">R$ 0</div>
+                    <div style="font-size: 14px; color: #92400e;">por mês em oportunidades</div>
+                </div>
+
+                <div class="comparison">
+                    <div class="comparison-item before">
+                        <div style="font-weight: 600; margin-bottom: 8px;">❌ HOJE</div>
+                        <div id="currentSales" style="font-size: 18px; font-weight: 700;">0 vendas</div>
+                        <div id="currentRevenue" style="font-size: 14px;">R$ 0/mês</div>
+                    </div>
+                    <div class="comparison-item after">
+                        <div style="font-weight: 600; margin-bottom: 8px;">✅ COM SISTEMA ROI 3X</div>
+                        <div id="optimizedSales" style="font-size: 18px; font-weight: 700;">0 vendas</div>
+                        <div id="optimizedRevenue" style="font-size: 14px;">R$ 0/mês</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3 style="text-align: center; margin-bottom: 16px; color: #2d3748;">📈 Projeção 90 Dias</h3>
+                    <canvas id="chart" width="300" height="150"></canvas>
+                </div>
+
+                <div class="urgency">
+                    <div class="urgency-text">⚠️ ATENÇÃO: Cada dia de atraso = R$ <span id="dailyLoss">0</span> perdidos</div>
+                </div>
+
+                <div class="cta-section">
+                    <h2 style="margin-bottom: 16px;">🚀 Quer Recuperar Essa Receita?</h2>
+                    <p style="margin-bottom: 20px; font-size: 16px; opacity: 0.95;">
+                        Diagnóstico GRATUITO de 30 minutos.<br>
+                        Descubra exatamente como implementar.
+                    </p>
+                    
+                    <a href="#" id="ctaButton" class="cta-button">
+                        📅 AGENDAR DIAGNÓSTICO GRATUITO
+                    </a>
+                    
+                    <div style="margin-top: 20px; font-size: 14px; opacity: 0.9;">
+                        ✅ 100% Gratuito • ✅ 30 Minutos • ✅ Sem Compromisso
+                    </div>
+                </div>
+
+                <div style="padding: 16px; text-align: center; background: #f8f9fa; border-top: 1px solid #e2e8f0;">
+                    <button onclick="restart()" style="background: transparent; border: 1px solid #6b7280; color: #6b7280; padding: 12px 24px; border-radius: 20px; font-size: 14px; cursor: pointer;">
+                        🔄 Calcular Novamente
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating CTA -->
+    <div class="floating-cta" id="floatingCTA">
+        <a href="#" id="floatingCtaButton" class="cta-button" style="margin: 0; box-shadow: 0 8px 30px rgba(0,0,0,0.3);">
+            📅 AGENDAR DIAGNÓSTICO - R$ <span id="floatingLoss">0</span>/mês perdidos
+        </a>
+    </div>
+
+    <style>
+        /* Estilos adicionais carregados após o crítico */
+        .btn-quick {
+            padding: 12px 8px;
+            border: 1px solid #d1d5db;
+            background: #f9fafb;
+            border-radius: 8px;
+            color: #374151;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-quick:hover {
+            background: #e5e7eb;
+            border-color: #9ca3af;
+        }
+        .btn-quick:active {
+            background: #0066cc;
+            color: white;
+            border-color: #0066cc;
+        }
+    </style>
+
+    <script>
+        // Variáveis globais otimizadas
+        let currentStep = 1;
+        let startTime = Date.now();
+        let calculationData = {};
+        let chart = null;
+
+        // Inicialização ultra-rápida
+        document.addEventListener('DOMContentLoaded', function() {
+            hideLoader();
+            loadSavedData();
+            updateTimer();
+            setupEventListeners();
+            
+            // Preload próxima step
+            setTimeout(preloadNextStep, 1000);
+        });
+
+        function hideLoader() {
+            document.getElementById('loader').style.display = 'none';
+        }
+
+        function setupEventListeners() {
+            // Enter key navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    if (currentStep < 4) nextStep();
+                    else if (currentStep === 4) calculate();
+                }
+            });
+
+            // Scroll tracking para floating CTA
+            let scrollTimer;
+            window.addEventListener('scroll', function() {
+                clearTimeout(scrollTimer);
+                scrollTimer = setTimeout(checkFloatingCTA, 100);
+            });
+
+            // Auto-save inputs
+            const inputs = ['revenue', 'leads', 'conversion', 'ticket'];
+            inputs.forEach(id => {
+                const input = document.getElementById(id);
+                if (input) {
+                    input.addEventListener('input', saveData);
+                }
+            });
+        }
+
+        function formatCurrency(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value) {
+                value = parseInt(value).toLocaleString('pt-BR');
+                input.value = value;
+            }
+        }
+
+        function setRevenue(value) {
+            document.getElementById('revenue').value = value.toLocaleString('pt-BR');
+            validateStep1();
+        }
+
+        function setLeads(value) {
+            document.getElementById('leads').value = value;
+            validateStep2();
+        }
+
+        function setConversion(value) {
+            document.getElementById('conversion').value = value;
+            validateStep3();
+        }
+
+        function setTicket(value) {
+            document.getElementById('ticket').value = value.toLocaleString('pt-BR');
+            validateStep4();
+        }
+
+        function validateStep1() {
+            const revenue = parseFloat(document.getElementById('revenue').value.replace(/\D/g, ''));
+            const btn = document.getElementById('nextBtn1');
+            btn.disabled = !revenue || revenue < 10000;
+            return !btn.disabled;
+        }
+
+        function validateStep2() {
+            const leads = parseInt(document.getElementById('leads').value);
+            const btn = document.getElementById('nextBtn2');
+            btn.disabled = !leads || leads < 1;
+            return !btn.disabled;
+        }
+
+        function validateStep3() {
+            const conversion = parseFloat(document.getElementById('conversion').value);
+            const btn = document.getElementById('nextBtn3');
+            btn.disabled = !conversion || conversion < 0.1 || conversion > 100;
+            return !btn.disabled;
+        }
+
+        function validateStep4() {
+            const ticket = parseFloat(document.getElementById('ticket').value.replace(/\D/g, ''));
+            const btn = document.getElementById('calculateBtn');
+            btn.disabled = !ticket || ticket < 100;
+            return !btn.disabled;
+        }
+
+        function nextStep() {
+            if (currentStep < 4) {
+                document.getElementById(`step${currentStep}`).classList.remove('active');
+                currentStep++;
+                document.getElementById(`step${currentStep}`).classList.add('active');
+                updateProgress();
+                updateStepIndicator();
+                
+                // Focus no primeiro input
+                const firstInput = document.querySelector(`#step${currentStep} input`);
+                if (firstInput) {
+                    setTimeout(() => firstInput.focus(), 300);
+                }
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                document.getElementById(`step${currentStep}`).classList.remove('active');
+                currentStep--;
+                document.getElementById(`step${currentStep}`).classList.add('active');
+                updateProgress();
+                updateStepIndicator();
+            }
+        }
+
+        function updateProgress() {
+            const progress = (currentStep / 4) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function updateStepIndicator() {
+            document.getElementById('currentStep').textContent = currentStep;
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const remaining = Math.max(0, 60 - elapsed);
+            document.getElementById('timeLeft').textContent = `⏱️ ~${remaining}s restantes`;
+        }
+
+        function updateTimer() {
+            setInterval(updateStepIndicator, 1000);
+        }
+
+        function calculate() {
+            // Mostrar loader
+            document.getElementById('loader').style.display = 'flex';
+
+            // Simular processamento
+            setTimeout(() => {
+                performCalculation();
+                showResults();
+                hideLoader();
+            }, 1500);
+        }
+
+        function performCalculation() {
+            const revenue = parseFloat(document.getElementById('revenue').value.replace(/\D/g, ''));
+            const leads = parseInt(document.getElementById('leads').value);
+            const conversion = parseFloat(document.getElementById('conversion').value);
+            const ticket = parseFloat(document.getElementById('ticket').value.replace(/\D/g, ''));
+
+            // Cálculos atuais
+            const currentSales = (leads * conversion) / 100;
+            const currentRevenue = currentSales * ticket;
+
+            // Cálculos otimizados (Sistema ROI 3X)
+            const optimizedConversion = Math.min(conversion * 1.45, 85); // +45% conversão
+            const optimizedTicket = ticket * 1.20; // +20% ticket
+            const optimizedSales = (leads * optimizedConversion) / 100;
+            const optimizedRevenue = optimizedSales * optimizedTicket;
+
+            // Dados finais
+            const lostRevenue = optimizedRevenue - currentRevenue;
+            const dailyLoss = Math.floor(lostRevenue / 30);
+
+            // Armazenar para uso posterior
+            calculationData = {
+                currentSales,
+                currentRevenue,
+                optimizedSales,
+                optimizedRevenue,
+                lostRevenue,
+                dailyLoss,
+                revenue,
+                leads,
+                conversion,
+                ticket
+            };
+
+            // Salvar no localStorage
+            localStorage.setItem('roiCalculation', JSON.stringify(calculationData));
+        }
+
+        function showResults() {
+            const data = calculationData;
+
+            // Formatadores
+            const formatCurrency = (value) => {
+                return new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                    maximumFractionDigits: 0
+                }).format(value);
+            };
+
+            const formatNumber = (value) => {
+                return new Intl.NumberFormat('pt-BR', {
+                    maximumFractionDigits: 1
+                }).format(value);
+            };
+
+            // Atualizar interface
+            document.getElementById('lostValue').textContent = formatCurrency(data.lostRevenue);
+            document.getElementById('currentSales').textContent = formatNumber(data.currentSales) + ' vendas';
+            document.getElementById('currentRevenue').textContent = formatCurrency(data.currentRevenue);
+            document.getElementById('optimizedSales').textContent = formatNumber(data.optimizedSales) + ' vendas';
+            document.getElementById('optimizedRevenue').textContent = formatCurrency(data.optimizedRevenue);
+            document.getElementById('dailyLoss').textContent = formatCurrency(data.dailyLoss).replace('R$', '').trim();
+            
+            // Floating CTA
+            document.getElementById('floatingLoss').textContent = formatCurrency(data.lostRevenue).replace('R$', '').trim();
+
+            // CTAs com dados
+            const ctaUrl = `https://calendly.com/seulink?prefill_revenue=${data.revenue}&prefill_potential=${Math.round(data.lostRevenue)}`;
+            document.getElementById('ctaButton').href = ctaUrl;
+            document.getElementById('floatingCtaButton').href = ctaUrl;
+
+            // Mostrar step de resultados
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.getElementById('results').classList.add('active');
+
+            // Criar gráfico
+            setTimeout(createChart, 500);
+
+            // Tracking
+            trackCalculation();
+        }
+
+        function createChart() {
+            const canvas = document.getElementById('chart');
+            const ctx = canvas.getContext('2d');
+            const data = calculationData;
+
+            // Dados do gráfico
+            const current = data.currentRevenue;
+            const optimized = data.optimizedRevenue;
+            const months = ['Hoje', '30 dias', '60 dias', '90 dias'];
+            const values = [
+                current,
+                current + ((optimized - current) * 0.3),
+                current + ((optimized - current) * 0.7),
+                optimized
+            ];
+
+            // Limpar canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Configurações
+            const padding = 40;
+            const chartWidth = canvas.width - (padding * 2);
+            const chartHeight = canvas.height - (padding * 2);
+            const maxValue = Math.max(...values) * 1.1;
+
+            // Desenhar grid
+            ctx.strokeStyle = '#f0f0f0';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 5; i++) {
+                const y = padding + (chartHeight / 5) * i;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(canvas.width - padding, y);
+                ctx.stroke();
+            }
+
+            // Desenhar linha
+            ctx.strokeStyle = '#0066cc';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+
+            values.forEach((value, index) => {
+                const x = padding + (chartWidth / (values.length - 1)) * index;
+                const y = padding + chartHeight - ((value / maxValue) * chartHeight);
+                
+                if (index === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+
+                // Pontos
+                ctx.fillStyle = '#0066cc';
+                ctx.beginPath();
+                ctx.arc(x, y, 4, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            ctx.stroke();
+
+            // Labels dos meses
+            ctx.fillStyle = '#666';
+            ctx.font = '12px -apple-system, BlinkMacSystemFont, sans-serif';
+            ctx.textAlign = 'center';
+            months.forEach((month, index) => {
+                const x = padding + (chartWidth / (months.length - 1)) * index;
+                ctx.fillText(month, x, canvas.height - 10);
+            });
+
+            // Valores
+            ctx.fillStyle = '#0066cc';
+            ctx.font = 'bold 11px -apple-system, BlinkMacSystemFont, sans-serif';
+            values.forEach((value, index) => {
+                const x = padding + (chartWidth / (values.length - 1)) * index;
+                const y = padding + chartHeight - ((value / maxValue) * chartHeight) - 10;
+                const formattedValue = new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                    maximumFractionDigits: 0,
+                    notation: 'compact'
+                }).format(value);
+                ctx.fillText(formattedValue, x, y);
+            });
+        }
+
+        function restart() {
+            currentStep = 1;
+            startTime = Date.now();
+            
+            // Reset inputs
+            document.getElementById('revenue').value = '';
+            document.getElementById('leads').value = '';
+            document.getElementById('conversion').value = '';
+            document.getElementById('ticket').value = '';
+
+            // Reset buttons
+            document.getElementById('nextBtn1').disabled = true;
+            document.getElementById('nextBtn2').disabled = true;
+            document.getElementById('nextBtn3').disabled = true;
+            document.getElementById('calculateBtn').disabled = true;
+
+            // Show first step
+            document.getElementById('results').classList.remove('active');
+            document.getElementById('step1').classList.add('active');
+
+            // Reset progress
+            updateProgress();
+            updateStepIndicator();
+
+            // Hide floating CTA
+            document.getElementById('floatingCTA').classList.remove('show');
+
+            // Clear localStorage
+            localStorage.removeItem('roiCalculation');
+            localStorage.removeItem('roiInputs');
+        }
+
+        function saveData() {
+            const data = {
+                revenue: document.getElementById('revenue').value,
+                leads: document.getElementById('leads').value,
+                conversion: document.getElementById('conversion').value,
+                ticket: document.getElementById('ticket').value
+            };
+            localStorage.setItem('roiInputs', JSON.stringify(data));
+        }
+
+        function loadSavedData() {
+            const saved = localStorage.getItem('roiInputs');
+            if (saved) {
+                const data = JSON.parse(saved);
+                Object.keys(data).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element && data[key]) {
+                        element.value = data[key];
+                        // Trigger validation
+                        if (key === 'revenue') validateStep1();
+                        if (key === 'leads') validateStep2();
+                        if (key === 'conversion') validateStep3();
+                        if (key === 'ticket') validateStep4();
+                    }
+                });
+            }
+        }
+
+        function checkFloatingCTA() {
+            const results = document.getElementById('results');
+            if (results.classList.contains('active')) {
+                const rect = results.getBoundingClientRect();
+                const cta = document.getElementById('floatingCTA');
+                
+                if (rect.bottom < window.innerHeight / 2) {
+                    cta.classList.add('show');
+                } else {
+                    cta.classList.remove('show');
+                }
+            }
+        }
+
+        function preloadNextStep() {
+            // Preload assets for better performance
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.as = 'script';
+            link.href = 'https://calendly.com/assets/external/widget.js';
+            document.head.appendChild(link);
+        }
+
+        function trackCalculation() {
+            const data = calculationData;
+            
+            // Analytics tracking
+            console.log('ROI Calculation:', {
+                lost_revenue: data.lostRevenue,
+                current_revenue: data.currentRevenue,
+                optimized_revenue: data.optimizedRevenue,
+                timestamp: new Date().toISOString()
+            });
+
+            // Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'calculate_roi', {
+                    event_category: 'calculator',
+                    event_label: 'mobile_optimized',
+                    value: Math.round(data.lostRevenue)
+                });
+            }
+
+            // Facebook Pixel
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'ViewContent', {
+                    content_type: 'calculator_result',
+                    value: data.lostRevenue,
+                    currency: 'BRL'
+                });
+            }
+        }
+
+        // Service Worker para PWA (opcional)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+
+        // Performance monitoring
+        window.addEventListener('load', () => {
+            if ('performance' in window) {
+                const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
+                console.log('Page load time:', loadTime + 'ms');
+                
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'page_load_time', {
+                        event_category: 'performance',
+                        value: loadTime
+                    });
+                }
+            }
+        });
+    </script>
+
+    <!-- Lazy load de scripts não críticos -->
+    <script>
+        // Carregar scripts de terceiros após interação
+        let scriptsLoaded = false;
+        function loadExternalScripts() {
+            if (scriptsLoaded) return;
+            scriptsLoaded = true;
+
+            // Google Analytics
+            const gaScript = document.createElement('script');
+            gaScript.async = true;
+            gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID';
+            document.head.appendChild(gaScript);
+
+            gaScript.onload = () => {
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'GA_TRACKING_ID');
+            };
+
+            // Facebook Pixel
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window,document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', 'YOUR_PIXEL_ID');
+            fbq('track', 'PageView');
+        }
+
+        // Carregar scripts após primeira interação
+        ['touchstart', 'click', 'keydown', 'scroll'].forEach(event => {
+            document.addEventListener(event, loadExternalScripts, { once: true, passive: true });
+        });
+
+        // Fallback após 3 segundos
+        setTimeout(loadExternalScripts, 3000);
+    </script>
+</body>
+</html>

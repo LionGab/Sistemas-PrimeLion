@@ -1,0 +1,111 @@
+{
+  "event_name": "Diagnóstico Estratégico - Sistema ROI 3X",
+  "description": "Análise gratuita de 30 minutos para identificar gargalos de crescimento e oportunidades de ROI em empresas entre R$500k-5M",
+  "duration": 30,
+  "buffer_before": 15,
+  "buffer_after": 10,
+  "location": {
+    "type": "zoom",
+    "details": "Link será enviado 24h antes da reunião"
+  },
+  "availability": {
+    "timezone": "America/Sao_Paulo",
+    "days": ["tuesday", "wednesday", "thursday"],
+    "slots": ["09:00", "10:00", "14:00", "15:00", "16:00"],
+    "max_bookings_per_day": 2,
+    "advance_notice": "24h"
+  },
+  "qualifying_questions": [
+    {
+      "id": "q1",
+      "required": true,
+      "question": "Qual o faturamento anual atual da sua empresa?",
+      "type": "dropdown",
+      "options": [
+        "Abaixo de R$500k (não qualificado)",
+        "R$500k - R$1M",
+        "R$1M - R$3M", 
+        "R$3M - R$5M",
+        "Acima de R$5M"
+      ],
+      "disqualifier": "Abaixo de R$500k (não qualificado)"
+    },
+    {
+      "id": "q2",
+      "required": true,
+      "question": "Qual seu principal gargalo de crescimento hoje?",
+      "type": "textarea",
+      "placeholder": "Ex: Vendas imprevisíveis, alto CAC, baixa conversão, time sobrecarregado..."
+    },
+    {
+      "id": "q3",
+      "required": true,
+      "question": "Qual a urgência para resolver este problema?",
+      "type": "dropdown",
+      "options": [
+        "Urgente - preciso resolver em 30 dias",
+        "Importante - 1-3 meses",
+        "Planejando - 3-6 meses",
+        "Apenas pesquisando - sem prazo"
+      ],
+      "scoring": {
+        "Urgente - preciso resolver em 30 dias": 10,
+        "Importante - 1-3 meses": 8,
+        "Planejando - 3-6 meses": 5,
+        "Apenas pesquisando - sem prazo": 2
+      }
+    },
+    {
+      "id": "q4",
+      "required": false,
+      "question": "Já investiu em consultoria/mentoria antes? Qual valor aproximado?",
+      "type": "textarea",
+      "placeholder": "Ex: Sim, R$30k com [empresa]. Ou: Não, seria a primeira vez."
+    },
+    {
+      "id": "q5",
+      "required": true,
+      "question": "LinkedIn da sua empresa (para análise prévia)",
+      "type": "url",
+      "placeholder": "https://linkedin.com/company/suaempresa"
+    },
+    {
+      "id": "q6",
+      "required": true,
+      "question": "Seu WhatsApp (para lembretes)",
+      "type": "phone_number"
+    }
+  ],
+  "confirmation_settings": {
+    "redirect_url": "https://seusite.com/diagnostico-confirmado",
+    "custom_message": "Perfeito! Seu Diagnóstico Estratégico foi agendado. Você receberá:\n\n✅ Confirmação por email em 2 minutos\n✅ Lembrete 24h antes com preparação\n✅ Lembrete 1h antes com link da reunião\n\nNos vemos em breve!",
+    "calendar_invite": true
+  },
+  "notification_settings": {
+    "email_reminders": {
+      "24h_before": true,
+      "1h_before": true,
+      "follow_up": true
+    },
+    "sms_reminders": {
+      "24h_before": true,
+      "15min_before": true
+    }
+  },
+  "webhook_endpoints": [
+    {
+      "url": "https://seusite.com/webhook/calendly",
+      "events": ["invitee.created", "invitee.canceled"]
+    }
+  ],
+  "custom_fields": {
+    "internal_notes": "Lead qualificado via LinkedIn",
+    "lead_source": "LinkedIn Organic",
+    "campaign": "Diagnóstico Gratuito Q4 2024"
+  },
+  "cancellation_policy": {
+    "minimum_notice": "4h",
+    "reschedule_limit": 2,
+    "custom_message": "Entendemos que imprevistos acontecem. Você pode remarcar até 2x."
+  }
+}

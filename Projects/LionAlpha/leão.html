@@ -1,0 +1,1734 @@
+
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arsenal da Sabedoria - Consultor Interativo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        color: #e0e0e0;
+        line-height: 1.6;
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    header {
+        background: rgba(0,0,0,0.4);
+        padding: 25px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,107,107,0.3);
+    }
+
+    h1 {
+        color: #ff6b6b;
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        text-shadow: 0 0 20px rgba(255,107,107,0.5);
+    }
+
+    .subtitle {
+        color: #4ecdc4;
+        font-size: 1.2em;
+        opacity: 0.9;
+    }
+
+    .main-nav {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+    }
+
+    .nav-btn {
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        transform: translateY(0);
+    }
+
+    .nav-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(255,107,107,0.4);
+    }
+
+    .nav-btn.active {
+        background: linear-gradient(45deg, #4ecdc4, #ff6b6b);
+        box-shadow: 0 5px 15px rgba(78,205,196,0.4);
+    }
+
+    .section {
+        display: none;
+        background: rgba(0,0,0,0.3);
+        padding: 30px;
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.1);
+        margin-bottom: 20px;
+    }
+
+    .section.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CONSULTOR VIRTUAL */
+    .consultant-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .question-input {
+        width: 100%;
+        background: rgba(0,0,0,0.4);
+        border: 2px solid rgba(78,205,196,0.3);
+        border-radius: 15px;
+        padding: 20px;
+        color: #e0e0e0;
+        font-size: 1.1em;
+        margin-bottom: 20px;
+        resize: vertical;
+        min-height: 80px;
+        transition: border-color 0.3s ease;
+    }
+
+    .question-input:focus {
+        outline: none;
+        border-color: #4ecdc4;
+        box-shadow: 0 0 20px rgba(78,205,196,0.3);
+    }
+
+    .question-input::placeholder {
+        color: rgba(224,224,224,0.5);
+    }
+
+    .analyze-btn {
+        background: linear-gradient(45deg, #4ecdc4, #45b7b8);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1.1em;
+        margin-bottom: 30px;
+        transition: all 0.3s ease;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .analyze-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(78,205,196,0.4);
+    }
+
+    .response-container {
+        background: rgba(0,0,0,0.5);
+        border-radius: 15px;
+        padding: 25px;
+        border-left: 5px solid #4ecdc4;
+        display: none;
+    }
+
+    .response-container.show {
+        display: block;
+        animation: slideIn 0.6s ease;
+    }
+
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateX(-20px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+
+    .response-section {
+        margin-bottom: 25px;
+    }
+
+    .response-section h3 {
+        color: #ff6b6b;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .response-section .icon {
+        font-size: 1.2em;
+    }
+
+    .quick-examples {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .example-card {
+        background: rgba(255,107,107,0.1);
+        padding: 15px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255,107,107,0.2);
+    }
+
+    .example-card:hover {
+        background: rgba(255,107,107,0.2);
+        transform: translateY(-2px);
+    }
+
+    .example-card h4 {
+        color: #ff6b6b;
+        margin-bottom: 8px;
+    }
+
+    /* ARSENAL RÁPIDO */
+    .arsenal-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .tactic-card {
+        background: rgba(0,0,0,0.4);
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.1);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .tactic-card:hover {
+        border-color: #4ecdc4;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(78,205,196,0.2);
+    }
+
+    .tactic-card h3 {
+        color: #ff6b6b;
+        margin-bottom: 10px;
+    }
+
+    .tactic-card .preview {
+        color: rgba(224,224,224,0.8);
+        margin-bottom: 15px;
+    }
+
+    .tactic-card .expand-content {
+        display: none;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .tactic-card.expanded .expand-content {
+        display: block;
+    }
+
+    .defense-highlight {
+        background: rgba(78,205,196,0.1);
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #4ecdc4;
+        margin-top: 15px;
+    }
+
+    .defense-highlight h4 {
+        color: #4ecdc4;
+        margin-bottom: 10px;
+    }
+
+    /* BUSCA */
+    .search-container {
+        margin-bottom: 30px;
+        position: relative;
+    }
+
+    .search-input {
+        width: 100%;
+        background: rgba(0,0,0,0.4);
+        border: 2px solid rgba(255,107,107,0.3);
+        border-radius: 25px;
+        padding: 15px 50px 15px 20px;
+        color: #e0e0e0;
+        font-size: 1.1em;
+    }
+
+    .search-input:focus {
+        outline: none;
+        border-color: #ff6b6b;
+        box-shadow: 0 0 20px rgba(255,107,107,0.3);
+    }
+
+    .search-btn {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #ff6b6b;
+        border: none;
+        border-radius: 20px;
+        padding: 10px 15px;
+        color: white;
+        cursor: pointer;
+    }
+
+    /* RESPONSIVO */
+    @media (max-width: 768px) {
+        .container {
+            padding: 15px;
+        }
+        
+        h1 {
+            font-size: 2em;
+        }
+        
+        .arsenal-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .quick-examples {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .emergency-btn {
+        background: linear-gradient(45deg, #ff4757, #ff3838);
+        color: white;
+        border: none;
+        padding: 20px;
+        border-radius: 15px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1.2em;
+        margin: 10px;
+        transition: all 0.3s ease;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7); }
+        70% { box-shadow: 0 0 0 10px rgba(255, 71, 87, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0); }
+    }
+
+    .highlight {
+        background: linear-gradient(120deg, rgba(255,107,107,0.2) 0%, rgba(78,205,196,0.2) 100%);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛡️ Arsenal da Sabedoria</h1>
+            <p class="subtitle">Consultor Interativo de Defesa Mental & Influência Estratégica</p>
+        </header>
+
+```
+    <nav class="main-nav">
+        <button class="nav-btn active" onclick="showSection('consultant')">🤖 Consultor Virtual</button>
+        <button class="nav-btn" onclick="showSection('emergency')">🚨 Emergência</button>
+        <button class="nav-btn" onclick="showSection('dominio')">👑 Domínio Social</button>
+        <button class="nav-btn" onclick="showSection('arsenal')">⚔️ Arsenal Completo</button>
+        <button class="nav-btn" onclick="showSection('seduction')">🎭 Influência Avançada</button>
+    </nav>
+
+    <!-- CONSULTOR VIRTUAL -->
+    <section id="consultant" class="section active">
+        <div class="consultant-container">
+            <h2 style="color: #4ecdc4; text-align: center; margin-bottom: 30px;">
+                🤖 Consultor Virtual de Situações
+            </h2>
+            
+            <div class="quick-examples">
+                <div class="example-card" onclick="fillQuestion('Como agir quando meu chefe me pressiona para tomar decisões rápidas?')">
+                    <h4>💼 Pressão no Trabalho</h4>
+                    <p>Como agir quando me pressionam para decidir rápido?</p>
+                </div>
+                <div class="example-card" onclick="fillQuestion('Como me sobressair em uma negociação onde a outra parte usa manipulação?')">
+                    <h4>🤝 Negociação Hostil</h4>
+                    <p>Como me sobressair contra manipulação?</p>
+                </div>
+                <div class="example-card" onclick="fillQuestion('Como seduzir uma mulher poderosa e bonita que tem ego alto?')">
+                    <h4>🎭 Mulher Poderosa</h4>
+                    <p>Como seduzir a "boss final" do ego?</p>
+                </div>
+                <div class="example-card" onclick="fillQuestion('Como detectar se alguém está usando técnicas de sedução psicológica em mim?')">
+                    <h4>💘 Relacionamentos</h4>
+                    <p>Como detectar sedução psicológica?</p>
+                </div>
+                <div class="example-card" onclick="fillQuestion('Como responder a alguém que está fazendo gaslighting comigo?')">
+                    <h4>🌪️ Gaslighting</h4>
+                    <p>Como responder ao gaslighting?</p>
+                </div>
+                <div class="example-card" onclick="fillQuestion('Como usar linguagem de poder para dominar uma conversa?')">
+                    <h4>⚔️ Black Secrets</h4>
+                    <p>Como aplicar linguagem de poder?</p>
+                </div>
+                <div class="example-card" onclick="fillQuestion('Como criar atração sombria e ser irresistível sem parecer forçado?')">
+                    <h4>🖤 Atração Sombria</h4>
+                    <p>Como ser magnético sem agradar?</p>
+                </div>
+                <div class="example-card" onclick="fillQuestion('Como dominar uma reunião onde todos me veem como inferior?')">
+                    <h4>👑 Domínio Social</h4>
+                    <p>Como assumir controle de grupo hostil?</p>
+                </div>
+                <div class="example-card" onclick="fillQuestion('Como desarmar alguém que está tentando me diminuir na frente de todos?')">
+                    <h4>⚔️ Contra-Ataque</h4>
+                    <p>Como inverter tentativa de humilhação?</p>
+                </div>
+            </div>
+
+            <textarea 
+                id="questionInput" 
+                class="question-input" 
+                placeholder="Digite sua situação ou pergunta...
+```
+
+Exemplos de Defesa:
+• Como agir diante de [situação específica]?
+• Como detectar se [pessoa/situação] está [comportamento]?
+• Como me defender de [tática específica]?
+• Qual a melhor resposta para [frase/atitude]?
+
+Exemplos de Domínio Social:
+• Como dominar uma reunião onde me veem como inferior?
+• Como desarmar quem tenta me diminuir publicamente?
+• Como assumir liderança em grupo hostil?
+• Como sair de uma situação mantendo autoridade?
+
+Exemplos de Sedução:
+• Como seduzir uma mulher [tipo específico]?
+• Como aplicar [Black Secret específico]?
+• Como criar atração sombria em [situação]?
+• Como usar linguagem de poder para [objetivo]?”
+></textarea>
+
+```
+            <button class="analyze-btn" onclick="analyzeQuestion()">
+                🔍 Analisar Situação & Gerar Estratégia
+            </button>
+
+            <div id="responseContainer" class="response-container">
+                <div class="response-section">
+                    <h3><span class="icon">🎯</span>Análise da Situação</h3>
+                    <div id="situationAnalysis"></div>
+                </div>
+
+                <div class="response-section">
+                    <h3><span class="icon">⚔️</span>Táticas Identificadas</h3>
+                    <div id="tacticsIdentified"></div>
+                </div>
+
+                <div class="response-section">
+                    <h3><span class="icon">🛡️</span>Estratégia de Defesa</h3>
+                    <div id="defenseStrategy"></div>
+                </div>
+
+                <div class="response-section">
+                    <h3><span class="icon">🚀</span>Como se Sobressair</h3>
+                    <div id="dominanceStrategy"></div>
+                </div>
+
+                <div class="response-section">
+                    <h3><span class="icon">💬</span>Scripts Práticos</h3>
+                    <div id="practicalScripts"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ARSENAL COMPLETO -->
+
+    <!-- MODO EMERGÊNCIA -->
+    <section id="emergency" class="section">
+        <h2 style="color: #ff4757; text-align: center; margin-bottom: 30px;">
+            🚨 Modo Emergência - Defesa Imediata
+        </h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+            <button class="emergency-btn" onclick="showEmergencyResponse('gaslighting')">
+                🌪️ GASLIGHTING<br>
+                <small>Estão distorcendo minha realidade</small>
+            </button>
+            <button class="emergency-btn" onclick="showEmergencyResponse('pressure')">
+                ⚡ PRESSÃO EXTREMA<br>
+                <small>Me forçando a decidir agora</small>
+            </button>
+            <button class="emergency-btn" onclick="showEmergencyResponse('lovebombing')">
+                💣 LOVE BOMBING<br>
+                <small>Afeto excessivo suspeito</small>
+            </button>
+            <button class="emergency-btn" onclick="showEmergencyResponse('guilt')">
+                😔 MANIPULAÇÃO POR CULPA<br>
+                <small>Me fazendo sentir culpado</small>
+            </button>
+            <button class="emergency-btn" onclick="showEmergencyResponse('authority')">
+                👑 FALSA AUTORIDADE<br>
+                <small>Usando status para me controlar</small>
+            </button>
+        </div>
+
+        <div id="emergencyResponse" style="margin-top: 30px; display: none;">
+            <!-- Resposta de emergência aparece aqui -->
+        </div>
+    </section>
+
+    <!-- DOMÍNIO SOCIAL -->
+    <section id="dominio" class="section">
+        <h2 style="color: #ff6b6b; text-align: center; margin-bottom: 30px;">
+            👑 Manual Operacional: Domínio Social Absoluto
+        </h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px;">
+            
+            <!-- LEITURA DE CAMPO -->
+            <div class="tactic-card" style="background: rgba(255,107,107,0.1); border: 2px solid rgba(255,107,107,0.3);">
+                <h3>📊 1. LEITURA DE CAMPO</h3>
+                <div class="expand-content" style="display: block;">
+                    <h4>🎯 Mapeamento Instantâneo (5 segundos):</h4>
+                    <ul>
+                        <li><strong>Quem fala mais alto?</strong> = Insegurança disfarçada de poder</li>
+                        <li><strong>Quem olha para você quando ri?</strong> = Busca validação</li>
+                        <li><strong>Quem evita seu olhar direto?</strong> = Te reconhece como ameaça</li>
+                        <li><strong>Quem interrompe outros?</strong> = Compensação por falta de substância</li>
+                    </ul>
+                    
+                    <h4>⚡ Brechas de Exploração:</h4>
+                    <ul>
+                        <li><strong>O "líder" que se justifica demais</strong> → Questione com calma, ele implodirá</li>
+                        <li><strong>O bajulador que muda de lado</strong> → Use como informante, descarte depois</li>
+                        <li><strong>O rival que te provoca</strong> → Ignore, responda a outros sobre ele</li>
+                    </ul>
+
+                    <h4>🔍 Dinâmica de Grupo:</h4>
+                    <ul>
+                        <li>Identifique o <strong>"kingmaker"</strong> (influencia mas não lidera)</li>
+                        <li>Localize o <strong>"ponto fraco"</strong> (respeitado mas inseguro)</li>
+                        <li>Mapeie <strong>alianças</strong> (quem sussurra com quem)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- POSTURA EXTERNA -->
+            <div class="tactic-card" style="background: rgba(78,205,196,0.1); border: 2px solid rgba(78,205,196,0.3);">
+                <h3>🚶 2. POSTURA EXTERNA</h3>
+                <div class="expand-content" style="display: block;">
+                    <h4>🚪 Entrada Dominante:</h4>
+                    <ul>
+                        <li><strong>Passo firme, ritmo próprio</strong> (nunca se ajuste aos outros)</li>
+                        <li><strong>Olhar ambiente, depois pessoas</strong> (analise, não busque aprovação)</li>
+                        <li><strong>Posição central/estratégica</strong> (nunca canto/parede)</li>
+                    </ul>
+                    
+                    <h4>🎭 Controle de Presença:</h4>
+                    <ul>
+                        <li><strong>Respiração lenta e visível</strong> (peito expandido, calma aparente)</li>
+                        <li><strong>Mãos abertas, gestos controlados</strong> (nunca defensivo)</li>
+                        <li><strong>Silêncio como arma</strong> (3 segundos antes de responder)</li>
+                    </ul>
+
+                    <h4>👑 Hierarchy Signals:</h4>
+                    <ul>
+                        <li><strong>Sente-se por último</strong> (observe posições primeiro)</li>
+                        <li><strong>Sua voz define o tom</strong> (baixo = todos diminuem)</li>
+                        <li><strong>Quando levantar, outros param</strong> (teste sutilmente)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- COMANDOS DE LINGUAGEM -->
+            <div class="tactic-card" style="background: rgba(255,193,7,0.1); border: 2px solid rgba(255,193,7,0.3);">
+                <h3>💬 3. COMANDOS DE LINGUAGEM</h3>
+                <div class="expand-content" style="display: block;">
+                    <h4>🛡️ Neutralizar Ataques:</h4>
+                    <ul>
+                        <li>"Interessante perspectiva. Quais dados sustentam isso?"</li>
+                        <li>"Entendo seu ponto. Agora vamos focar no que funciona."</li>
+                        <li>"Você parece muito investido nessa opinião. Por quê?"</li>
+                    </ul>
+                    
+                    <h4>⚔️ Desarmar Opositores:</h4>
+                    <ul>
+                        <li>"Eu respeito sua paixão pelo tema. Vamos ver os fatos."</li>
+                        <li>"Isso é emocional ou estratégico? Porque preciso entender."</li>
+                        <li>"Continue. Quero ver onde você quer chegar com isso."</li>
+                    </ul>
+
+                    <h4>👑 Instalar Autoridade:</h4>
+                    <ul>
+                        <li>"Vou ser direto. A situação é [X]. A solução é [Y]."</li>
+                        <li>"Baseado na minha experiência, isso vai dar errado por [motivo]."</li>
+                        <li>"Eu já vi isso antes. O resultado foi [exemplo específico]."</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- TÁTICA DE INVERSÃO -->
+            <div class="tactic-card" style="background: rgba(156,39,176,0.1); border: 2px solid rgba(156,39,176,0.3);">
+                <h3>🔄 4. TÁTICA DE INVERSÃO</h3>
+                <div class="expand-content" style="display: block;">
+                    <h4>🎯 Transformar Críticas em Poder:</h4>
+                    <div class="defense-highlight">
+                        <strong>Crítica:</strong> "Você sempre acha que sabe de tudo"<br>
+                        <strong>Inversão:</strong> "Eu valorizo precisão. Se isso incomoda, podemos discutir por quê."
+                    </div>
+                    
+                    <h4>🔥 Neutralizar Ironias:</h4>
+                    <div class="defense-highlight">
+                        <strong>Ironia:</strong> "Nossa, que insight revolucionário!"<br>
+                        <strong>Inversão:</strong> "Eu noto sarcasmo. Isso geralmente indica frustração com algo específico."
+                    </div>
+
+                    <h4>⚡ Reverter Tentativas de Diminuição:</h4>
+                    <div class="defense-highlight">
+                        <strong>Ataque:</strong> "Você não entende como funciona aqui"<br>
+                        <strong>Inversão:</strong> "Ótimo. Me explique. Eu ouço quando alguém tem algo real a ensinar."
+                    </div>
+
+                    <h4>🎭 Fórmula Universal:</h4>
+                    <p><strong>ACKNOWLEDGE → REFRAME → REDIRECT</strong></p>
+                    <p>"Entendo seu ponto [acknowledge]. A questão real é [reframe]. Vamos focar em [redirect]."</p>
+                </div>
+            </div>
+
+            <!-- SAÍDA COM PODER -->
+            <div class="tactic-card" style="background: rgba(76,175,80,0.1); border: 2px solid rgba(76,175,80,0.3);">
+                <h3>🚪 5. SAÍDA COM PODER</h3>
+                <div class="expand-content" style="display: block;">
+                    <h4>👑 Encerramento Dominante:</h4>
+                    <ul>
+                        <li>"Bom, acho que cobrimos o essencial. Vou pensar nisso."</li>
+                        <li>"Interessante conversa. Tenho algumas ideias que vou desenvolver."</li>
+                        <li>"Preciso processar isso com calma. Retomo em breve."</li>
+                    </ul>
+                    
+                    <h4>🎯 Deixar Marca Simbólica:</h4>
+                    <ul>
+                        <li>"Se precisarem de clareza sobre isso, me chamem."</li>
+                        <li>"Vou analisar os pontos cegos que vocês mencionaram."</li>
+                        <li>"Quando tiverem dados concretos, conversamos."</li>
+                    </ul>
+
+                    <h4>⚡ Saída Física Dominante:</h4>
+                    <ul>
+                        <li><strong>Levante primeiro</strong> (você decide quando acabou)</li>
+                        <li><strong>Aperto de mão firme</strong> (3 segundos de contato visual)</li>
+                        <li><strong>Última palavra sempre sua</strong> (mesmo que seja só "obrigado")</li>
+                    </ul>
+
+                    <div class="defense-highlight">
+                        <h4>🔥 Script de Encerramento Absoluto:</h4>
+                        <p><strong>"Foi produtivo. Vou estruturar algumas coisas baseado no que discutimos e retomo com vocês."</strong></p>
+                        <p><em>(Isso implica que você vai decidir o próximo passo)</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COMANDOS DE EMERGÊNCIA -->
+            <div class="tactic-card" style="background: rgba(244,67,54,0.1); border: 2px solid rgba(244,67,54,0.3); grid-column: span 2;">
+                <h3>🚨 COMANDOS DE EMERGÊNCIA - SITUAÇÕES HOSTIS</h3>
+                <div class="expand-content" style="display: block;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h4>⚔️ Ataque Direto Recebido:</h4>
+                            <ul>
+                                <li><strong>"Você parece alterado. Vamos conversar quando estiver mais calmo."</strong></li>
+                                <li><strong>"Interessante. Continue, quero ver onde você quer chegar."</strong></li>
+                                <li><strong>"Você tem todo o direito de pensar isso. Eu discordo pelos seguintes motivos..."</strong></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>🎯 Grupo Se Voltando Contra Você:</h4>
+                            <ul>
+                                <li><strong>"Percebo resistência. Vamos identificar a raiz disso."</strong></li>
+                                <li><strong>"Vocês parecem já ter decidido. Qual é a real agenda aqui?"</strong></li>
+                                <li><strong>"Estou vendo emoção, não estratégia. Vamos refocus."</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px; background: rgba(255,0,0,0.1); padding: 15px; border-radius: 8px;">
+                        <h4>🔥 ÚLTIMO RECURSO - DOMINAÇÃO ABSOLUTA:</h4>
+                        <p><strong>"Vou ser cristalino: vocês podem continuar essa dinâmica, mas eu não vou participar. Quando quiserem uma conversa produtiva, vocês sabem onde me encontrar."</strong></p>
+                        <p><em>(Levante e saia. Nunca olhe para trás. Isso quebra o frame deles completamente.)</em></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <section id="arsenal" class="section">
+        <h2 style="color: #4ecdc4; text-align: center; margin-bottom: 30px;">
+            ⚔️ Arsenal Completo de Táticas
+        </h2>
+
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="Buscar tática, situação ou palavra-chave..." onkeyup="searchTactics()">
+            <button class="search-btn">🔍</button>
+        </div>
+
+        <div class="arsenal-grid" id="arsenalGrid">
+            <!-- Táticas carregadas via JavaScript -->
+        </div>
+    </section>
+
+    <!-- INFLUÊNCIA AVANÇADA -->
+    <section id="seduction" class="section">
+        <h2 style="color: #ff6b6b; text-align: center; margin-bottom: 30px;">
+            🎭 Influência Avançada & Black Secrets
+        </h2>
+
+        <div class="arsenal-grid" id="seductionGrid">
+            <!-- Black Secrets carregados via JavaScript -->
+        </div>
+    </section>
+</div>
+
+<script>
+    // BASE DE CONHECIMENTO COMPLETA INTEGRADA
+    const knowledgeBase = {
+        tactics: {
+            gaslighting: {
+                name: "Gaslighting",
+                concept: "Distorção sistemática da realidade para fazer a vítima duvidar da própria percepção",
+                howItWorks: "O manipulador nega fatos, minimiza sentimentos e cria versões alternativas dos eventos",
+                examples: ["Você está exagerando", "Isso nunca aconteceu", "Você é muito sensível"],
+                defense: "Documente fatos, mantenha registros, confie na sua percepção inicial",
+                scripts: ["Eu vou verificar isso por escrito", "Minha percepção é válida", "Vamos focar nos fatos documentados"]
+            },
+            lovebombing: {
+                name: "Love Bombing",
+                concept: "Bombardeio de afeto e validação para criar dependência emocional rápida",
+                howItWorks: "Excesso de atenção, presentes e elogios para quebrar defesas emocionais",
+                examples: ["Você é perfeito", "Nunca conheci alguém como você", "Somos almas gêmeas"],
+                defense: "Mantenha ceticismo saudável, não tome decisões importantes sob influência emocional",
+                scripts: ["Preciso de tempo para processar isso", "Vamos com calma", "Prefiro conhecer melhor primeiro"]
+            },
+            pressure: {
+                name: "Pressão por Decisão",
+                concept: "Criar urgência artificial para forçar decisões sem análise adequada",
+                howItWorks: "Limites de tempo falsos, escassez artificial, consequências exageradas",
+                examples: ["Só hoje", "Última oportunidade", "Se você não decidir agora..."],
+                defense: "Sempre pedir tempo, questionar a urgência, buscar segunda opinião",
+                scripts: ["Preciso consultar meu conselheiro", "Vou pensar até amanhã", "Qual o verdadeiro prazo?"]
+            },
+            manipulation: {
+                name: "Manipulação Mental",
+                concept: "Instalar ideias/comportamentos por emoção, contornando defesas racionais",
+                howItWorks: "Usa necessidades emocionais contra a vítima: ser amado, reconhecido, especial",
+                examples: ["Só eu te entendo assim", "Você é especial para mim", "Ninguém mais vai te aceitar"],
+                defense: "Identifique vulnerabilidades emocionais, mantenha rede de apoio externa",
+                scripts: ["Preciso consultar outras pessoas", "Vou refletir sobre isso", "Minha percepção é diferente"]
+            },
+            darknlp: {
+                name: "Dark NLP",
+                concept: "Técnicas de linguagem para infiltrar no inconsciente e moldar comportamento",
+                howItWorks: "Comandos embutidos, espelhamento, reframing manipulador, ancoragem emocional",
+                examples: ["E talvez agora... você comece a perceber", "Se você fosse inteligente...", "Como você já sabe..."],
+                defense: "Desconfie de frases cadenciadas, quebre padrões, reflita antes de agir por impulso",
+                scripts: ["Vou pensar sobre isso", "Preciso processar essa informação", "Vou buscar outras perspectivas"]
+            }
+        },
+        
+        blackSecrets: {
+            linguagemPoder: {
+                name: "Linguagem de Poder",
+                concept: "Moldar desejo feminino com palavras que imprimem, não convencem",
+                techniques: [
+                    "Posicionamento verbal sem busca de aprovação",
+                    "Construção de ambiente verbal (imagética)",
+                    "Quebra de padrão + domínio da pausa"
+                ],
+                examples: [
+                    "Você parece perigosa, e eu gosto disso. Mas também sei que às vezes quem é perigosa por fora... só quer ser domada por dentro.",
+                    "Eu te escuto diferente. Suas palavras parecem ter algo por trás. Você tem um caos bonito — e isso me atrai.",
+                    "Tem algo em você que me faz imaginar você num lugar mais escuro, mais silencioso... talvez com música baixa..."
+                ],
+                application: "Criar tensão, desafio e loops mentais. Ativar conexão misteriosa ao invés de elogios rasos."
+            },
+            atracaoSombria: {
+                name: "Atração Sombria",
+                concept: "Ser magnético, imprevisível, denso e enigmático - o arquétipo do 'não deveria gostar dele, mas não consigo evitar'",
+                techniques: [
+                    "Olhar penetrante mas calmo",
+                    "Falar devagar, sem pressa de convencer", 
+                    "Nunca disputar atenção - você É a atenção",
+                    "Silêncio que pesa mais que palavras"
+                ],
+                examples: [
+                    "Você tem uma energia de quem controla tudo. Menos o que sente quando é olhada do jeito certo.",
+                    "Bonita demais pra ser insegura. Intensa demais pra não ser um pouco cruel.",
+                    "O pior de te notar... É saber que te entender talvez me destrua um pouco."
+                ],
+                application: "Gerar tensão emocional viciante - ela se sente provocada mas sem armas para te decifrar"
+            },
+            submissaoSimbolica: {
+                name: "Submissão Simbólica",
+                concept: "Como ela entrega controle sem perceber - arquitetura de dominação emocional",
+                techniques: [
+                    "Comandos sem parecer comando",
+                    "Recompensas verbais por comportamento alinhado",
+                    "Correção com charme"
+                ],
+                examples: [
+                    "Senta aqui. Quero olhar no teu olho enquanto você mente sorrindo.",
+                    "Eu gosto quando você se comporta como mulher decidida... mas com a doçura certa.",
+                    "Se eu fosse você... eu não usaria esse tom comigo. Mas eu gosto da sua ousadia."
+                ],
+                application: "Estado de submissão emocional leve - segura, respeitada, desafiada, dominada sem se sentir fraca"
+            },
+            energiaSexual: {
+                name: "Energia Sexual Não-Verbal",
+                concept: "Despertar desejo sem tocar - só existindo no ambiente certo",
+                techniques: [
+                    "Respiração lenta e consciente",
+                    "Movimento controlado como se o mundo acompanhasse seu ritmo",
+                    "Contato visual que não pede desculpa"
+                ],
+                examples: [
+                    "Você respira como quem domina o próprio corpo",
+                    "Levanta o copo devagar, ajusta postura com firmeza",
+                    "Olha, mantém, sorri com um lado só da boca"
+                ],
+                application: "Corpo dela entra em alerta sem entender o porquê. Tensão sexual criada nos microgestos."
+            },
+            oratoriaDominacao: {
+                name: "Oratória de Submissão Emocional", 
+                concept: "Frases que ativam o emocional e colocam em ciclo de obediência simbólica",
+                techniques: [
+                    "Afirmar, desafiar e conduzir por meio da palavra",
+                    "Fala entra como brincadeira mas imprime comando",
+                    "Nunca justificar, dar comandos com suavidade simbólica"
+                ],
+                examples: [
+                    "Você é mais bonita quando não tenta agradar.",
+                    "Fala assim comigo de novo... mas com aquela coragem que você ainda não descobriu que tem.",
+                    "Você tem esse ar de liberdade, mas no fundo... tá só esperando alguém que saiba domar sem te prender.",
+                    "Se você continuar olhando assim, vai acabar entregando mais do que deveria."
+                ],
+                application: "Cada frase é uma âncora psicológica. Ela se molda emocionalmente para estar à altura da sua fala."
+            },
+            controleEmocional: {
+                name: "Controle Emocional Absoluto",
+                concept: "Se você não se dobra internamente, o mundo se curva ao seu redor",
+                techniques: [
+                    "Nunca reagir - sempre responder",
+                    "Sentir mas não expor tudo", 
+                    "Nunca disputar - escolher",
+                    "Sumir quando precisa e voltar mais forte"
+                ],
+                examples: [
+                    "Preciso de um tempo pra mim. (Não é fuga. É domínio.)",
+                    "Se ela consegue bagunçar seu equilíbrio... você nunca vai dominar o dela.",
+                    "Mulheres testam. E ela precisa sentir: 'Eu posso entrar em caos... que ele vai continuar em paz.'"
+                ],
+                application: "Ela testa com provocações emocionais. Você sorri como quem já viu aquilo 100 vezes."
+            },
+            jogoPosencontro: {
+                name: "Jogo Pós-Encontro",
+                concept: "Como manter ela viciada mesmo longe - onde o vício realmente começa",
+                techniques: [
+                    "Nunca encerrar no ápice",
+                    "Mensagem pós-encontro: curta, simbólica, inesquecível",
+                    "Sumir com propósito",
+                    "Voltar com intensidade calibrada"
+                ],
+                examples: [
+                    "Ainda tô processando tua última risada. Parece que ficou no ar.",
+                    "Te deixei em casa, mas parece que tua presença voltou comigo.",
+                    "Senti saudade. Mas não sei se foi sua... ou do que você ativou em mim."
+                ],
+                application: "Se a última coisa que ela sentiu foi ausência carregada de desejo... ela vai te desejar mesmo quando estiver com outro."
+            },
+            silencioSexual: {
+                name: "Poder do Silêncio Sexual",
+                concept: "Quando o que você não diz excita mais que qualquer elogio ou promessa",
+                techniques: [
+                    "Deixar espaços entre frases durante conversa",
+                    "Responder perguntas diretas com olhar e meio sorriso",
+                    "Silêncio carregado durante contato físico"
+                ],
+                examples: [
+                    "Eu poderia falar o que tô pensando... mas prefiro deixar você imaginar.",
+                    "Você não tem ideia do que isso acabou de despertar em mim. (E se calar de novo)",
+                    "Quando o silêncio tem intenção... ele vale mais que qualquer gemido."
+                ],
+                application: "Ausência de palavra gera excitação porque o corpo completa o enigma."
+            },
+            arquetipoPerdaControlada: {
+                name: "Arquétipo da Perda Controlada",
+                concept: "Ela precisa sentir que pode te perder para começar a te valorizar como ninguém",
+                techniques: [
+                    "Estabelecer que você é único, não fixo",
+                    "Pequenas retiradas de presença",
+                    "Sempre deixar uma dúvida no ar"
+                ],
+                examples: [
+                    "Eu não sou do tipo que insiste. Mas também não sou do tipo que volta atrás se sentir que não vale.",
+                    "Às vezes acho que a gente se encontrou fora de hora. Mas ainda assim... não consegui ignorar.",
+                    "Você é um presente. E quem não honra... sente a falta."
+                ],
+                application: "Ela só vai lutar por você de verdade quando perceber que você é capaz de ir embora sorrindo."
+            },
+            desaparecer: {
+                name: "Desaparecimento Estratégico",
+                concept: "Sumir na hora certa é mais marcante que ficar dizendo o quanto gostou",
+                techniques: [
+                    "Criar conexão real antes de sumir",
+                    "Deixar algo não resolvido",
+                    "Sumir sem drama, reaparecer com intensidade"
+                ],
+                examples: [
+                    "Tem uma coisa sobre você que eu ainda vou te falar. Mas não hoje.",
+                    "Depois eu te conto o que senti naquela hora.",
+                    "Tava com saudade do jeito que você me desarma. E você?"
+                ],
+                application: "Sumir é arte. Mas reaparecer no momento exato... é domínio."
+            },
+            imagemOculta: {
+                name: "Imagem Oculta",
+                concept: "Fazer ela se apaixonar pelo que você representa, não pelo que você mostra",
+                techniques: [
+                    "Criar contrastes internos",
+                    "Ter frases-chave que viram ecos mentais", 
+                    "Evitar exposição emocional gratuita"
+                ],
+                examples: [
+                    "Você vai lembrar disso quando eu não estiver.",
+                    "Cuidado com o que você sente perto de mim.",
+                    "Algumas conexões não deviam acontecer... mas já que aconteceram, deixa eu te mostrar algo."
+                ],
+                application: "Ela não quer saber quem você é. Ela quer sentir algo que ninguém mais fez ela sentir."
+            },
+            dominacaoEmocional: {
+                name: "Dominação Emocional Ética",
+                concept: "Você não prende com correntes. Prende com ausência. E quando aparece... ela se reconstrói pra te merecer.",
+                techniques: [
+                    "Previsibilidade é morte do desejo",
+                    "Ritmo é poder",
+                    "Ela tem que se sentir escolhida mas nunca segura",
+                    "Nunca explodir, explicar ou implorar"
+                ],
+                examples: [
+                    "Te vi num sonho. E foi estranho o suficiente pra eu preferir não te contar.",
+                    "Tem algo em você que me prende... mas ainda não decidi se é isso que eu quero agora.",
+                    "Fala menos, olha mais. Some com elegância, aparece com propósito."
+                ],
+                application: "Quando você deixa sua ausência mais poderosa que a presença de qualquer outro... você virou lenda."
+            }
+        },
+        
+        situationalResponses: {
+            mulherPoderosa: {
+                name: "Mulher Poderosa/Egocêntrica",
+                concept: "A 'boss final' - bonita, desejada, autoestima inflada, acostumada com bajulação",
+                strategy: "Ser o ÚNICO que não está tentando agradar. Desarmar o ego com classe.",
+                examples: [
+                    "Olhei essa foto 2 vezes. A primeira achei você linda. A segunda... achei você previsível.",
+                    "Você é muito bonita, mas o jeito que você se acha te faz parecer mais comum do que pensa.",
+                    "Todo esse teatro de poder aí é bonito. Mas eu ainda tô tentando entender qual parte de você tá tentando se proteger."
+                ],
+                scripts: [
+                    "Você não precisa de mais um fã. Você precisa de alguém que te desafie no olhar.",
+                    "Ser desejada por todos te anestesiou. Por isso você se assusta com quem não precisa te aplaudir.",
+                    "Você é o tipo de mulher que ninguém tem coragem de conduzir. Eu não tenho medo nem respeito."
+                ]
+            },
+            pressaoTrabalho: {
+                name: "Pressão no Trabalho", 
+                concept: "Chefe ou colega usando autoridade para pressionar decisões",
+                strategy: "Documentar tudo, buscar testemunhas, manter profissionalismo",
+                examples: [
+                    "Preciso que você decida isso agora",
+                    "Se não fizer isso, vai prejudicar toda a equipe",
+                    "Você não está sendo um team player"
+                ],
+                scripts: [
+                    "Vou revisar isso com minha equipe e dar um retorno até [data]",
+                    "Pode me explicar a lógica por trás dessa decisão?",
+                    "Minha disponibilidade para isso é [especificar]"
+                ]
+            }
+        }
+    };
+
+    // ANALISADOR DE SITUAÇÕES
+    function analyzeQuestion() {
+        const question = document.getElementById('questionInput').value;
+        if (!question.trim()) {
+            alert('Por favor, digite sua situação ou pergunta.');
+            return;
+        }
+
+        const analysis = processQuestion(question);
+        displayResponse(analysis);
+    }
+
+    function processQuestion(question) {
+        const lowerQuestion = question.toLowerCase();
+        
+        // Detecta contexto
+        let context = detectContext(lowerQuestion);
+        
+        // Detecta táticas mencionadas
+        let tactics = detectTactics(lowerQuestion);
+        
+        // Detecta intenção (defesa vs domínio)
+        let intention = detectIntention(lowerQuestion);
+        
+        return {
+            context: context,
+            tactics: tactics,
+            intention: intention,
+            rawQuestion: question
+        };
+    }
+
+    function detectContext(question) {
+        if (question.includes('trabalho') || question.includes('chefe') || question.includes('colega') || question.includes('reunião') || question.includes('empresa')) {
+            return 'trabalho';
+        } else if (question.includes('relacionamento') || question.includes('namorado') || question.includes('namorada') || question.includes('parceiro')) {
+            return 'relacionamento';
+        } else if (question.includes('vendas') || question.includes('vendedor') || question.includes('comprar') || question.includes('negociação')) {
+            return 'vendas';
+        } else if (question.includes('família') || question.includes('pai') || question.includes('mãe') || question.includes('parente')) {
+            return 'família';
+        } else {
+            return 'geral';
+        }
+    }
+
+    function detectTactics(question) {
+        let detectedTactics = [];
+        
+        // Táticas de manipulação
+        if (question.includes('gaslighting') || question.includes('realidade') || question.includes('memória') || question.includes('aconteceu')) {
+            detectedTactics.push('gaslighting');
+        }
+        if (question.includes('pressão') || question.includes('urgente') || question.includes('decidir') || question.includes('rápido')) {
+            detectedTactics.push('pressure');
+        }
+        if (question.includes('culpa') || question.includes('culpado') || question.includes('responsável')) {
+            detectedTactics.push('guilt');
+        }
+        if (question.includes('autoridade') || question.includes('chefe') || question.includes('superior') || question.includes('status')) {
+            detectedTactics.push('authority');
+        }
+        if (question.includes('afeto') || question.includes('amor') || question.includes('carinho') || question.includes('especial')) {
+            detectedTactics.push('lovebombing');
+        }
+        if (question.includes('manipulação') || question.includes('manipular') || question.includes('controlar')) {
+            detectedTactics.push('manipulation');
+        }
+        if (question.includes('nlp') || question.includes('linguagem') || question.includes('hipnose') || question.includes('ancoragem')) {
+            detectedTactics.push('darknlp');
+        }
+        
+        // Contextos de sedução/influência
+        if (question.includes('sedução') || question.includes('seduzir') || question.includes('conquista') || question.includes('atrair')) {
+            detectedTactics.push('seduction');
+        }
+        if (question.includes('mulher poderosa') || question.includes('mulher bonita') || question.includes('ego') || question.includes('autoestima alta')) {
+            detectedTactics.push('powerfulWoman');
+        }
+        if (question.includes('dominar') || question.includes('controle emocional') || question.includes('liderança')) {
+            detectedTactics.push('dominance');
+        }
+        
+        // Contextos de domínio social
+        if (question.includes('reunião') || question.includes('grupo') || question.includes('equipe') || question.includes('todos me')) {
+            detectedTactics.push('socialDominance');
+        }
+        if (question.includes('diminuir') || question.includes('humilhação') || question.includes('desrespeito') || question.includes('na frente de')) {
+            detectedTactics.push('publicAttack');
+        }
+        if (question.includes('autoridade') || question.includes('respeito') || question.includes('poder') || question.includes('controle')) {
+            detectedTactics.push('powerPlay');
+        }
+        
+        return detectedTactics;
+    }
+
+    function detectIntention(question) {
+        if (question.includes('sobressair') || question.includes('dominar') || question.includes('vencer') || question.includes('controlar')) {
+            return 'dominance';
+        } else if (question.includes('defender') || question.includes('proteger') || question.includes('escapar') || question.includes('detectar')) {
+            return 'defense';
+        } else {
+            return 'balanced';
+        }
+    }
+
+    function displayResponse(analysis) {
+        const container = document.getElementById('responseContainer');
+        
+        // Análise da situação
+        document.getElementById('situationAnalysis').innerHTML = generateSituationAnalysis(analysis);
+        
+        // Táticas identificadas
+        document.getElementById('tacticsIdentified').innerHTML = generateTacticsAnalysis(analysis);
+        
+        // Estratégia de defesa
+        document.getElementById('defenseStrategy').innerHTML = generateDefenseStrategy(analysis);
+        
+        // Como se sobressair
+        document.getElementById('dominanceStrategy').innerHTML = generateDominanceStrategy(analysis);
+        
+        // Scripts práticos
+        document.getElementById('practicalScripts').innerHTML = generateScripts(analysis);
+        
+        container.classList.add('show');
+        container.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function generateSituationAnalysis(analysis) {
+        let contextMsg = '';
+        switch(analysis.context) {
+            case 'trabalho':
+                contextMsg = '💼 <strong>Contexto Profissional:</strong> Situação de hierarquia e dinâmicas de poder corporativo.';
+                break;
+            case 'relacionamento':
+                contextMsg = '💘 <strong>Contexto Pessoal:</strong> Dinâmicas de intimidade e vínculos emocionais.';
+                break;
+            case 'vendas':
+                contextMsg = '💰 <strong>Contexto Comercial:</strong> Pressão para decisão financeira ou compra.';
+                break;
+            case 'família':
+                contextMsg = '👨‍👩‍👧‍👦 <strong>Contexto Familiar:</strong> Dinâmicas de culpa, obrigação e vínculos familiares.';
+                break;
+            default:
+                contextMsg = '🎯 <strong>Situação Geral:</strong> Análise baseada em padrões de manipulação comuns.';
+        }
+        
+        return `
+            ${contextMsg}<br><br>
+            <strong>Pergunta Original:</strong> "${analysis.rawQuestion}"<br><br>
+            <span class="highlight">Nível de Alerta:</span> ${analysis.tactics.length > 0 ? '🔴 Alto' : '🟡 Médio'} - 
+            ${analysis.tactics.length} tática(s) de manipulação detectada(s).
+        `;
+    }
+
+    function generateTacticsAnalysis(analysis) {
+        if (analysis.tactics.length === 0) {
+            return `
+                <p>✅ Nenhuma tática específica detectada na sua pergunta.</p>
+                <p>📋 Análise preventiva será baseada no contexto e melhores práticas de defesa.</p>
+            `;
+        }
+        
+        dominanceHtml += '</div>';
+        return dominanceHtml;
+        
+        let tacticsHtml = '<ul>';
+        analysis.tactics.forEach(tactic => {
+            if (knowledgeBase.tactics[tactic]) {
+                const tacticData = knowledgeBase.tactics[tactic];
+                tacticsHtml += `
+                    <li>
+                        <strong class="highlight">${tacticData.name}:</strong> 
+                        ${tacticData.concept}
+                        <br><em>Como funciona:</em> ${tacticData.howItWorks}
+                    </li><br>
+                `;
+            }
+        });
+        tacticsHtml += '</ul>';
+        
+        return tacticsHtml;
+    }
+
+    function generateDefenseStrategy(analysis) {
+        let defenseHtml = '<div>';
+        
+        // Defesas específicas para táticas detectadas
+        if (analysis.tactics.length > 0) {
+            defenseHtml += '<h4>🛡️ Defesas Específicas:</h4>';
+            analysis.tactics.forEach(tactic => {
+                if (knowledgeBase.tactics[tactic]) {
+                    const tacticData = knowledgeBase.tactics[tactic];
+                    defenseHtml += `<div class="defense-highlight">
+                        <strong>${tacticData.name}:</strong> ${tacticData.defense}
+                    </div>`;
+                }
+            });
+        }
+        
+        // Defesas gerais por contexto
+        defenseHtml += '<h4>🎯 Estratégia Contextual:</h4>';
+        switch(analysis.context) {
+            case 'trabalho':
+                defenseHtml += `
+                    <ul>
+                        <li><strong>Documente tudo:</strong> E-mails, conversas importantes</li>
+                        <li><strong>Busque testemunhas:</strong> Inclua colegas nas discussões</li>
+                        <li><strong>Conheça seus direitos:</strong> Políticas da empresa, leis trabalhistas</li>
+                        <li><strong>Mantenha profissionalismo:</strong> Nunca responda com emoção</li>
+                    </ul>
+                `;
+                break;
+            case 'relacionamento':
+                defenseHtml += `
+                    <ul>
+                        <li><strong>Mantenha sua rede social:</strong> Não se isole de amigos/família</li>
+                        <li><strong>Confie na sua intuição:</strong> Se algo parece errado, provavelmente está</li>
+                        <li><strong>Estabeleça limites claros:</strong> E mantenha-os sem exceção</li>
+                        <li><strong>Preserve sua identidade:</strong> Não mude quem você é para agradar</li>
+                    </ul>
+                `;
+                break;
+            default:
+                defenseHtml += `
+                    <ul>
+                        <li><strong>Pause antes de reagir:</strong> "Preciso pensar sobre isso"</li>
+                        <li><strong>Questione a urgência:</strong> Pressão real vs artificial</li>
+                        <li><strong>Busque segunda opinião:</strong> Perspectiva externa confiável</li>
+                        <li><strong>Mantenha seus valores:</strong> Não negocie princípios fundamentais</li>
+                    </ul>
+                `;
+        }
+        
+        defenseHtml += '</div>';
+        return defenseHtml;
+    }
+
+    function generateDominanceStrategy(analysis) {
+        let dominanceHtml = '<div>';
+        
+        if (analysis.intention === 'dominance') {
+            dominanceHtml += '<h4>⚔️ Estratégias de Dominância Ética & Black Secrets:</h4>';
+        } else {
+            dominanceHtml += '<h4>🚀 Como se Sobressair (Aplicando Black Secrets):</h4>';
+        }
+        
+        // Estratégias específicas baseadas no contexto
+        switch(analysis.context) {
+            case 'trabalho':
+                dominanceHtml += `
+                    <div class="highlight"><strong>🎯 Presença Alfa no Trabalho:</strong></div>
+                    <ul>
+                        <li><strong>Controle Emocional Absoluto:</strong> Nunca reaja - sempre responda. "Preciso analisar os dados primeiro."</li>
+                        <li><strong>Linguagem de Poder:</strong> Fale pausadamente, não justifique decisões. "Minha posição é baseada em [fatos]."</li>
+                        <li><strong>Arquétipo da Autoridade Natural:</strong> Seja consultado, não consulte excessivamente</li>
+                        <li><strong>Silêncio Estratégico:</strong> Use pausas para criar peso nas suas palavras</li>
+                    </ul>
+                    <div class="highlight">
+                        <strong>Script Black:</strong> "Vou analisar isso com a profundidade que merece e dar um retorno estruturado."
+                    </div>
+                `;
+                break;
+            case 'relacionamento':
+                dominanceHtml += `
+                    <div class="highlight"><strong>🎭 Dominação Emocional Ética:</strong></div>
+                    <ul>
+                        <li><strong>Atração Sombria:</strong> Seja magnético sem precisar agradar. Olhar penetrante, fala pausada</li>
+                        <li><strong>Princípio do Vazio Cósmico:</strong> Ausência com significado. Some elegantemente, reapareça com propósito</li>
+                        <li><strong>Controle da Narrativa:</strong> "Isso tem cara de coisa que vai dar errado... ou muito certo. Ainda não decidi se quero arriscar."</li>
+                        <li><strong>Arquétipo da Perda Controlada:</strong> "Eu não sou do tipo que insiste. Mas também não volto atrás se sentir que não vale."</li>
+                    </ul>
+                    <div class="highlight">
+                        <strong>Frame Master:</strong> "Você é perigosa. Me deixa com uma vontade que nem sei se quero alimentar."
+                    </div>
+                `;
+                break;
+            case 'vendas':
+                dominanceHtml += `
+                    <ul>
+                        <li><strong>Autoridade Demonstrada:</strong> Mostre competência através de perguntas inteligentes</li>
+                        <li><strong>Controle do Ritmo:</strong> Você define a velocidade da negociação</li>
+                        <li><strong>Escassez Genuína:</strong> "Trabalho apenas com clientes que valorizam qualidade"</li>
+                        <li><strong>Desenquadramento:</strong> "A questão não é se você pode pagar, mas se está pronto para o resultado"</li>
+                    </ul>
+                `;
+                break;
+            default:
+                dominanceHtml += `
+                    <div class="highlight"><strong>🔥 Arsenal Black Secrets Universal:</strong></div>
+                    <ul>
+                        <li><strong>Energia Sexual Não-Verbal:</strong> Respiração controlada, movimentos intencionais, contato visual sem desculpas</li>
+                        <li><strong>Oratória de Submissão:</strong> "Você é mais interessante quando não tenta impressionar"</li>
+                        <li><strong>Silêncio Sexual:</strong> O que você não diz excita mais que qualquer elogio</li>
+                        <li><strong>Desaparecimento Estratégico:</strong> "Tem uma coisa sobre você que eu ainda vou te falar. Mas não hoje."</li>
+                    </ul>
+                    <div class="highlight">
+                        <strong>Mentalidade Alpha:</strong> "Quem controla o ritmo da entrega... controla o apego da pessoa."
+                    </div>
+                `;
+        }
+        
+        // Adiciona Black Secrets específicos se sedução foi detectada
+        if (analysis.tactics.includes('seduction') || analysis.tactics.includes('powerfulWoman')) {
+            dominanceHtml += `
+                <div style="margin-top: 20px;">
+                    <h4>🎭 Black Secrets para Sedução:</h4>
+                    <div style="background: rgba(255,107,107,0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <strong>Para Mulher Poderosa/Egocêntrica:</strong><br>
+                        • "Você é muito bonita, mas o jeito que você se acha te faz parecer mais comum do que pensa."<br>
+                        • "Todo esse teatro de poder aí é bonito. Mas eu ainda tô tentando entender qual parte de você tá tentando se proteger."<br>
+                        • "Você não precisa de mais um fã. Você precisa de alguém que te desafie no olhar."
+                    </div>
+                    <div style="background: rgba(78,205,196,0.1); padding: 15px; border-radius: 8px;">
+                        <strong>Linguagem que Fica na Pele:</strong><br>
+                        • "Tem algo em você que me dá vontade de ser perigoso... mas só se você souber lidar."<br>
+                        • "Se você soubesse como te vi naquele segundo em silêncio, teria se arrepiado também."<br>
+                        • "Fica calma... ainda nem começou."
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Adiciona estratégias de Domínio Social se detectadas
+        if (analysis.tactics.includes('socialDominance') || analysis.tactics.includes('publicAttack') || analysis.tactics.includes('powerPlay')) {
+            dominanceHtml += `
+                <div style="margin-top: 20px;">
+                    <h4>👑 Estratégias de Domínio Social:</h4>
+                    <div style="background: rgba(255,107,107,0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <strong>🎯 Leitura de Campo:</strong><br>
+                        • Identifique quem fala mais alto (insegurança disfarçada)<br>
+                        • Observe quem evita seu olhar (te reconhece como ameaça)<br>
+                        • Localize o "kingmaker" (influencia mas não lidera)
+                    </div>
+                    <div style="background: rgba(78,205,196,0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <strong>⚔️ Comandos de Neutralização:</strong><br>
+                        • "Interessante perspectiva. Quais dados sustentam isso?"<br>
+                        • "Você parece muito investido nessa opinião. Por quê?"<br>
+                        • "Entendo seu ponto. Agora vamos focar no que funciona."
+                    </div>
+                    <div style="background: rgba(255,193,7,0.1); padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <strong>🔄 Tática de Inversão:</strong><br>
+                        • Crítica recebida → "Eu valorizo precisão. Se isso incomoda, podemos discutir por quê."<br>
+                        • Tentativa de diminuição → "Ótimo. Me explique. Eu ouço quando alguém tem algo real a ensinar."<br>
+                        • Ironia/sarcasmo → "Eu noto sarcasmo. Isso geralmente indica frustração com algo específico."
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    function generateScripts(analysis) {
+        let scriptsHtml = '<div>';
+        
+        // Scripts específicos para táticas detectadas
+        if (analysis.tactics.length > 0) {
+            scriptsHtml += '<h4>💬 Respostas Específicas:</h4>';
+            analysis.tactics.forEach(tactic => {
+                if (knowledgeBase.tactics[tactic]) {
+                    const tacticData = knowledgeBase.tactics[tactic];
+                    scriptsHtml += `<div style="margin-bottom: 15px;">
+                        <strong>${tacticData.name}:</strong>
+                        <ul>`;
+                    tacticData.scripts.forEach(script => {
+                        scriptsHtml += `<li>"${script}"</li>`;
+                    });
+                    scriptsHtml += '</ul></div>';
+                }
+            });
+        }
+        
+        // Scripts gerais por contexto
+        scriptsHtml += '<h4>🎯 Scripts Contextuais:</h4>';
+        switch(analysis.context) {
+            case 'trabalho':
+                scriptsHtml += `
+                    <ul>
+                        <li><strong>Para ganhar tempo:</strong> "Vou revisar isso com minha equipe e dar um retorno até [data]"</li>
+                        <li><strong>Para questionar:</strong> "Pode me explicar a lógica por trás dessa decisão?"</li>
+                        <li><strong>Para estabelecer limites:</strong> "Minha disponibilidade para isso é [especificar]"</li>
+                        <li><strong>Para redirecionar:</strong> "Vamos focar no que vai gerar mais resultado para o projeto"</li>
+                    </ul>
+                `;
+                break;
+            case 'relacionamento':
+                scriptsHtml += `
+                    <ul>
+                        <li><strong>Para estabelecer limites:</strong> "Eu entendo sua perspectiva, mas minha decisão é essa"</li>
+                        <li><strong>Para manter mistério:</strong> "Talvez... vamos ver como as coisas evoluem"</li>
+                        <li><strong>Para mostrar valor:</strong> "Eu valorizo nossa relação, mas não abro mão de [princípio]"</li>
+                        <li><strong>Para desengate:</strong> "Preciso de um tempo para processar isso"</li>
+                    </ul>
+                `;
+                break;
+            default:
+                scriptsHtml += `
+                    <ul>
+                        <li><strong>Pausa estratégica:</strong> "Interessante. Deixe-me processar isso um momento"</li>
+                        <li><strong>Questionamento suave:</strong> "Estou curioso sobre sua perspectiva. Pode elaborar?"</li>
+                        <li><strong>Redirecionamento:</strong> "Entendo seu ponto. E se olharmos por este ângulo...?"</li>
+                        <li><strong>Saída elegante:</strong> "Vou refletir sobre isso e retomo o contato"</li>
+                    </ul>
+                `;
+        }
+        
+        scriptsHtml += '</div>';
+        return scriptsHtml;
+    }
+
+    function fillQuestion(question) {
+        document.getElementById('questionInput').value = question;
+    }
+
+    // OUTRAS FUNÇÕES
+    function showSection(sectionName) {
+        // Esconde todas as seções
+        const sections = document.querySelectorAll('.section');
+        sections.forEach(section => section.classList.remove('active'));
+        
+        // Remove active dos botões
+        const buttons = document.querySelectorAll('.nav-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        
+        // Mostra seção selecionada
+        document.getElementById(sectionName).classList.add('active');
+        event.target.classList.add('active');
+        
+        // Carrega conteúdo se necessário
+        if (sectionName === 'arsenal') {
+            loadArsenal();
+        } else if (sectionName === 'seduction') {
+            loadSeduction();
+        } else if (sectionName === 'dominio') {
+            // Domínio Social já está carregado estaticamente
+        }
+    }
+
+    function showEmergencyResponse(type) {
+        const responseDiv = document.getElementById('emergencyResponse');
+        let response = '';
+        
+        switch(type) {
+            case 'gaslighting':
+                response = `
+                    <div class="defense-highlight">
+                        <h3>🌪️ RESPOSTA IMEDIATA AO GASLIGHTING</h3>
+                        <h4>🚨 AÇÃO IMEDIATA:</h4>
+                        <ol>
+                            <li><strong>PARE</strong> - Não questione sua sanidade</li>
+                            <li><strong>DOCUMENTE</strong> - Anote o que realmente aconteceu</li>
+                            <li><strong>VALIDE</strong> - Confie na sua percepção inicial</li>
+                        </ol>
+                        <h4>💬 RESPOSTA VERBAL:</h4>
+                        <p><strong>"Minha percepção dos fatos é diferente da sua. Vou manter minha versão."</strong></p>
+                        <h4>📋 PRÓXIMOS PASSOS:</h4>
+                        <ul>
+                            <li>Busque testemunhas dos fatos</li>
+                            <li>Documente tudo por escrito</li>
+                            <li>Converse com pessoa de confiança</li>
+                        </ul>
+                    </div>
+                `;
+                break;
+            case 'pressure':
+                response = `
+                    <div class="defense-highlight">
+                        <h3>⚡ RESPOSTA À PRESSÃO EXTREMA</h3>
+                        <h4>🚨 AÇÃO IMEDIATA:</h4>
+                        <ol>
+                            <li><strong>RESPIRE</strong> - Conte até 5 antes de responder</li>
+                            <li><strong>QUESTIONE</strong> - "Por que a urgência?"</li>
+                            <li><strong>GANHE TEMPO</strong> - "Preciso consultar X pessoa"</li>
+                        </ol>
+                        <h4>💬 SCRIPTS DE EMERGÊNCIA:</h4>
+                        <p><strong>"Entendo a situação. Preciso de 24h para uma decisão responsável."</strong></p>
+                        <p><strong>"Qual é o verdadeiro prazo? Vou verificar isso."</strong></p>
+                        <h4>🛡️ LEMBRE-SE:</h4>
+                        <p>Urgência real raramente exige decisão em segundos. Pressão é quase sempre artificial.</p>
+                    </div>
+                `;
+                break;
+            case 'lovebombing':
+                response = `
+                    <div class="defense-highlight">
+                        <h3>💣 RESPOSTA AO LOVE BOMBING</h3>
+                        <h4>🚨 AÇÃO IMEDIATA:</h4>
+                        <ol>
+                            <li><strong>DESACELERE</strong> - Não tome decisões sob emoção intensa</li>
+                            <li><strong>QUESTIONE</strong> - "Por que tanto interesse tão rápido?"</li>
+                            <li><strong>MANTENHA DISTÂNCIA</strong> - Não se isole de amigos/família</li>
+                        </ol>
+                        <h4>💬 RESPOSTA VERBAL:</h4>
+                        <p><strong>"Estou lisonjeado, mas prefiro conhecer melhor antes de me envolver mais."</strong></p>
+                        <h4>🛡️ LEMBRE-SE:</h4>
+                        <p>Love bombing genuíno seria gradual e respeitoso. Bombardeio súbito é sempre suspeito.</p>
+                    </div>
+                `;
+                break;
+            case 'darknlp':
+                response = `
+                    <div class="defense-highlight">
+                        <h3>🧠 RESPOSTA AO DARK NLP</h3>
+                        <h4>🚨 AÇÃO IMEDIATA:</h4>
+                        <ol>
+                            <li><strong>QUEBRE O PADRÃO</strong> - Mude postura ou assunto repentinamente</li>
+                            <li><strong>QUESTIONE</strong> - "Pode repetir isso de forma mais clara?"</li>
+                            <li><strong>REFLITA</strong> - Antes de agir por impulso emocional</li>
+                        </ol>
+                        <h4>💬 SCRIPTS DE DEFESA:</h4>
+                        <p><strong>"Preciso processar essa informação com calma."</strong></p>
+                        <p><strong>"Vou buscar outras perspectivas sobre isso."</strong></p>
+                        <h4>🔍 DETECTE:</h4>
+                        <p>Frases cadenciadas, comandos embutidos ("E talvez agora você..."), espelhamento excessivo.</p>
+                    </div>
+                `;
+                break;
+        }
+        
+        responseDiv.innerHTML = response;
+        responseDiv.style.display = 'block';
+        responseDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function loadArsenal() {
+        const grid = document.getElementById('arsenalGrid');
+        if (grid.innerHTML !== '') return; // Já carregado
+        
+        const tactics = [
+            {
+                name: "Manipulação Mental",
+                preview: "Instalar ideias sem resistência usando necessidades emocionais",
+                defense: "Identifique suas vulnerabilidades emocionais e mantenha rede de apoio",
+                examples: "Guru que isola seguidores, relacionamento que exige dependência total"
+            },
+            {
+                name: "Gaslighting",
+                preview: "Distorcer realidade para fazer a vítima duvidar da própria sanidade",
+                defense: "Documente fatos, confie na percepção inicial, busque validação externa",
+                examples: "'Isso nunca aconteceu', 'Você está exagerando', 'Você é muito sensível'"
+            },
+            {
+                name: "Love Bombing",
+                preview: "Bombardeio de afeto para criar dependência emocional rápida",
+                defense: "Mantenha ceticismo saudável, não tome decisões sob emoção intensa",
+                examples: "Elogios excessivos, presentes caros logo no início, declarações extremas"
+            },
+            {
+                name: "Dark NLP",
+                preview: "Técnicas de linguagem para infiltrar no inconsciente e moldar comportamento",
+                defense: "Desconfie de frases cadenciadas, quebre padrões, reflita antes de agir",
+                examples: "Comandos embutidos, espelhamento falso, reframing manipulador, ancoragem emocional"
+            },
+            {
+                name: "Pressão por Decisão",
+                preview: "Urgência artificial para forçar escolhas sem análise adequada",
+                defense: "Sempre questione a urgência real, peça tempo para consultar",
+                examples: "'Só hoje', 'Última chance', 'Se não decidir agora vai perder'"
+            },
+            {
+                name: "Falsa Autoridade",
+                preview: "Usar status fabricado ou real para bypassar pensamento crítico",
+                defense: "Separe a mensagem do mensageiro, questione qualificações",
+                examples: "Títulos pomposos, apelo à expertise, uniformes/símbolos de poder"
+            },
+            {
+                name: "Isolamento Social",
+                preview: "Cortar conexões da vítima para aumentar dependência",
+                defense: "Mantenha círculo social diverso, comunique-se regularmente com rede",
+                examples: "'Seus amigos não te entendem', 'Sua família é tóxica', 'Só eu te apoio'"
+            },
+            {
+                name: "Controle Mental",
+                preview: "Reprogramação progressiva de pensamentos e comportamentos por ciclos emocionais",
+                defense: "Mantenha múltiplas fontes de referência, questione mantras repetitivos",
+                examples: "Quebra de identidade antiga, isolamento crítico, nova linguagem, recompensa/punição"
+            },
+            {
+                name: "Engenharia Social",
+                preview: "Hackear pessoas explorando vieses de confiança para obter informações/ações",
+                defense: "Verifique identidades, não compartilhe informações sensíveis facilmente",
+                examples: "Fingir ser autoridade, criar senso de urgência, explorar reciprocidade"
+            },
+            {
+                name: "Anulação da Identidade",
+                preview: "Desconstrução da autoimagem original para criar dependência total",
+                defense: "Cultive interesses próprios, mantenha valores fundamentais, rede externa",
+                examples: "Crítica constante ao 'eu antigo', imposição de nova identidade, isolamento de referências"
+            },
+            {
+                name: "Jogos de Poder",
+                preview: "Estratégias sutis para conquistar/manter domínio social e psicológico",
+                defense: "Reconheça dinâmicas de poder, mantenha autonomia, não entre em jogos",
+                examples: "Testes de obediência, chantagem emocional, criação de hierarquias artificiais"
+            },
+            {
+                name: "Domínio de Contexto",
+                preview: "Adaptar comunicação e comportamento para controlar ambiente social",
+                defense: "Questione por que alguém muda tanto entre contextos, mantenha autenticidade",
+                examples: "Camaleão social perfeito, espelhamento excessivo, domínio de códigos sociais"
+            }
+        ];
+        
+        tactics.forEach(tactic => {
+            const card = document.createElement('div');
+            card.className = 'tactic-card';
+            card.innerHTML = `
+                <h3>${tactic.name}</h3>
+                <p class="preview">${tactic.preview}</p>
+                <div class="expand-content">
+                    <div class="defense-highlight">
+                        <h4>🛡️ Como se Defender:</h4>
+                        <p>${tactic.defense}</p>
+                    </div>
+                    <p><strong>Exemplos:</strong> ${tactic.examples}</p>
+                </div>
+            `;
+            card.onclick = () => card.classList.toggle('expanded');
+            grid.appendChild(card);
+        });
+    }
+
+    function loadSeduction() {
+        const grid = document.getElementById('seductionGrid');
+        if (grid.innerHTML !== '') return; // Já carregado
+        
+        const secrets = [
+            {
+                name: "BLACK 1 - Linguagem de Poder",
+                preview: "Moldar desejo feminino só com as palavras certas - você imprime, não convence",
+                technique: "Posicionamento verbal + construção de ambiente verbal + quebra de padrão",
+                application: "Exemplo: 'Você parece perigosa, e eu gosto disso. Mas também sei que às vezes quem é perigosa por fora... só quer ser domada por dentro.'"
+            },
+            {
+                name: "BLACK SECRETS 1 - Atração Sombria",
+                preview: "O poder do homem que não pede permissão para existir",
+                technique: "Magnético, imprevisível, denso, sexual e enigmático. Nunca força presença - você É a presença",
+                application: "Olhar penetrante mas calmo, falar devagar, silêncio que pesa mais que palavras. Gera tensão emocional altamente viciante."
+            },
+            {
+                name: "BLACK SECRETS 2 - Submissão Simbólica",
+                preview: "Como ela entrega controle sem perceber",
+                technique: "Comandos sem parecer comando + recompensas verbais + correção com charme",
+                application: "'Senta aqui. Quero olhar no teu olho enquanto você mente sorrindo.' - Ela ri, mas obedece."
+            },
+            {
+                name: "BLACK SECRETS 4 - Energia Sexual Não-Verbal",
+                preview: "Despertar desejo sem tocar - só existindo no ambiente certo",
+                technique: "Respiração controlada, movimento consciente, contato visual sem desculpas",
+                application: "Corpo dela entra em alerta sem entender o porquê - tensão sexual nos microgestos"
+            },
+            {
+                name: "BLACK SECRETS 5 - Oratória de Submissão",
+                preview: "Frases que ativam o emocional e colocam em ciclo de obediência simbólica",
+                technique: "Afirmar, desafiar e conduzir por meio da palavra. Fala entra como brincadeira, imprime comando",
+                application: "'Você é mais bonita quando não tenta agradar.' - Cada frase é uma âncora psicológica."
+            },
+            {
+                name: "BLACK SECRETS 6 - Jogo Pós-Encontro",
+                preview: "Como manter ela viciada mesmo longe - onde o vício realmente começa",
+                technique: "Nunca encerrar no ápice + mensagem simbólica + sumir com propósito + voltar com intensidade",
+                application: "'Ainda tô processando tua última risada. Parece que ficou no ar.' - Você não agradece. Você marca."
+            },
+            {
+                name: "BLACK SECRETS 7 - Controle Emocional Absoluto",
+                preview: "Se você não se dobra internamente, o mundo se curva ao seu redor",
+                technique: "Nunca reagir - sempre responder. Sentir mas não expor tudo. Sumir quando precisa.",
+                application: "Mulheres testam. Ela precisa sentir: 'Eu posso entrar em caos... que ele vai continuar em paz.'"
+            },
+            {
+                name: "BLACK SECRETS 10 - Silêncio Sexual",
+                preview: "Quando o que você não diz excita mais que qualquer elogio",
+                technique: "Espaços entre frases, responder com olhar, silêncio carregado durante contato físico",
+                application: "'Eu poderia falar o que tô pensando... mas prefiro deixar você imaginar.' - Ausência de palavra gera excitação."
+            },
+            {
+                name: "BLACK SECRETS 13 - Arquétipo da Perda Controlada",
+                preview: "Ela precisa sentir que pode te perder para começar a te valorizar",
+                technique: "Estabelecer que você é único, não fixo + pequenas retiradas + sempre deixar dúvida",
+                application: "'Eu não sou do tipo que insiste. Mas também não volto atrás se sentir que não vale.'"
+            },
+            {
+                name: "Mulher Poderosa/Egocêntrica - BOSS FINAL",
+                preview: "Como seduzir a 'rainha do ego' - bonita, desejada, autoestima inflada",
+                technique: "Ser o ÚNICO que não está tentando agradar. Desarmar ego com classe e domínio.",
+                application: "'Você é muito bonita, mas o jeito que você se acha te faz parecer mais comum do que pensa. Quase um filtro a mais.'"
+            },
+            {
+                name: "Linguagem que Fica na Pele",
+                preview: "Frases que ecoam por dias na mente dela, mesmo depois que você some",
+                technique: "Misturar sensualidade simbólica com desafio mental + criar imagem interna + nunca dizer tudo",
+                application: "'Tem algo em você que me dá vontade de ser perigoso... mas só se você souber lidar.'"
+            },
+            {
+                name: "Desaparecimento Estratégico",
+                preview: "Sumir na hora certa é mais marcante que ficar dizendo o quanto gostou",
+                technique: "Criar conexão real + deixar algo não resolvido + sumir sem drama + reaparecer com intensidade",
+                application: "'Tem uma coisa sobre você que eu ainda vou te falar. Mas não hoje.' - Sumir é arte. Reaparecer no momento exato é domínio."
+            }
+        ];
+        
+        secrets.forEach(secret => {
+            const card = document.createElement('div');
+            card.className = 'tactic-card';
+            card.innerHTML = `
+                <h3>${secret.name}</h3>
+                <p class="preview">${secret.preview}</p>
+                <div class="expand-content">
+                    <p><strong>Técnica:</strong> ${secret.technique}</p>
+                    <div class="defense-highlight">
+                        <h4>⚡ Aplicação Prática:</h4>
+                        <p>${secret.application}</p>
+                    </div>
+                </div>
+            `;
+            card.onclick = () => card.classList.toggle('expanded');
+            grid.appendChild(card);
+        });
+    }
+
+    function searchTactics() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        const cards = document.querySelectorAll('#arsenalGrid .tactic-card');
+        
+        cards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            if (text.includes(searchTerm) || searchTerm === '') {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', function() {
+        loadArsenal();
+    });
+</script>
+```
+
+</body>
+</html>

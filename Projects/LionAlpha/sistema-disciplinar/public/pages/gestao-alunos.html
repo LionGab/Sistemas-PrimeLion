@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestão de Alunos - Dashboard Disciplinar</title>
+
+  <!-- CSS do seu projeto -->
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/dashboard.css">
+
+  <!-- Sistema Local de Banco de Dados -->
+  <script src="../assets/js/local-db.js"></script>
+  <script src="../assets/js/local-auth.js"></script>
+  <script src="../assets/js/populate-db.js"></script>
+
+  <!-- Scripts da aplicação (opcional) -->
+  <script defer src="../assets/js/main.js"></script>
+
+  <!-- CRUD de Alunos (integra com Firestore) -->
+  <script defer src="../assets/js/gestao.js"></script>
+  
+  <!-- Sincronização em Tempo Real -->
+  <script src="../assets/js/github-sync.js"></script>
+  <script defer src="../assets/js/real-time-sync.js"></script>
+</head>
+
+<body>
+  <!-- BARRA SUPERIOR -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <div class="app-launcher">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+      <span class="app-name">Dashboard Disciplinar</span>
+    </div>
+    <div class="top-bar-center">
+      <!-- Conectado ao filtro do gestao.js -->
+      <input id="busca" type="text" class="search-box" placeholder="Pesquisar alunos...">
+    </div>
+    <div class="top-bar-right">
+      <div class="user-profile">A</div>
+    </div>
+  </div>
+
+  <!-- LAYOUT PRINCIPAL -->
+  <div class="main-layout">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Módulos Principais</div>
+        <a href="../index.html" class="sidebar-item"><span class="sidebar-icon">🏠</span><span class="sidebar-text">Dashboard</span></a>
+        <a href="gestao-alunos.html" class="sidebar-item active"><span class="sidebar-icon">👥</span><span class="sidebar-text">Gestão de Alunos</span></a>
+        <a href="medidas-disciplinares.html" class="sidebar-item"><span class="sidebar-icon">📋</span><span class="sidebar-text">Medidas Disciplinares</span></a>
+        <a href="frequencia.html" class="sidebar-item"><span class="sidebar-icon">📅</span><span class="sidebar-text">Controle de Frequência</span></a>
+        <a href="relatorios.html" class="sidebar-item"><span class="sidebar-icon">📊</span><span class="sidebar-text">Relatórios</span></a>
+        <a href="analises.html" class="sidebar-item"><span class="sidebar-icon">📈</span><span class="sidebar-text">Análises</span></a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-title">Ferramentas</div>
+        <a href="configuracoes.html" class="sidebar-item"><span class="sidebar-icon">⚙️</span><span class="sidebar-text">Configurações</span></a>
+        <a href="comunicacao.html" class="sidebar-item"><span class="sidebar-icon">📱</span><span class="sidebar-text">Comunicação</span></a>
+        <a href="login.html" class="sidebar-item"><span class="sidebar-icon">🔐</span><span class="sidebar-text">Login/Logout</span></a>
+      </div>
+    </div>
+
+    <!-- CONTEÚDO -->
+    <div class="content-area">
+      <div class="main-content">
+        <!-- TÍTULO -->
+        <div class="module-title">👥 Gestão de Alunos</div>
+        
+        <!-- BOTÕES DE AÇÃO -->
+        <div style="margin: 20px 0; text-align: right;">
+          <button onclick="window.location.href='importacao-dados.html'" class="btn btn-primary" style="background: linear-gradient(135deg, #28a745, #20c997); border: none; padding: 12px 20px; border-radius: 8px; color: white; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+            📊 Importar Dados do Excel
+          </button>
+        </div>
+
+        <!-- CADASTRO / EDIÇÃO -->
+        <div class="management-section">
+          <div class="management-title">👤 Cadastrar / Editar Aluno</div>
+
+          <!-- Form ÚNICO esperado pelo gestao.js -->
+          <form id="alunoForm" class="form-grid" autocomplete="off">
+            <div class="form-group">
+              <label class="form-label" for="fld-id">Matrícula (ID) *</label>
+              <input class="form-input" id="fld-id" name="id" placeholder="Ex.: 2025A001" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="fld-nome">Nome Completo *</label>
+              <input class="form-input" id="fld-nome" name="nome" required placeholder="Digite o nome completo do aluno" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="fld-turma">Turma *</label>
+              <select class="form-select" id="fld-turma" name="turma" required>
+                <option value="">Selecione a turma...</option>
+                <optgroup label="Anos Iniciais">
+                  <option value="1B">1º B</option>
+                  <option value="1C">1º C</option>
+                  <option value="2A">2º A</option>
+                </optgroup>
+                <optgroup label="Anos Finais - 6º Ano">
+                  <option value="6A">6º A</option>
+                  <option value="6B">6º B</option>
+                </optgroup>
+                <optgroup label="Anos Finais - 7º Ano">
+                  <option value="7A">7º A</option>
+                  <option value="7B">7º B</option>
+                </optgroup>
+                <optgroup label="Anos Finais - 8º Ano">
+                  <option value="8A">8º A</option>
+                  <option value="8B">8º B</option>
+                </optgroup>
+                <optgroup label="Anos Finais - 9º Ano">
+                  <option value="9A">9º A</option>
+                  <option value="9B">9º B</option>
+                  <option value="9E">9º E</option>
+                </optgroup>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="fld-status">Status *</label>
+              <select class="form-select" id="fld-status" name="status" required>
+                <option value="ativo">Ativo</option>
+                <option value="inativo">Inativo</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="fld-resp">Responsável</label>
+              <input class="form-input" id="fld-resp" name="responsavel" placeholder="Nome do responsável" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="fld-tel1">Telefone 1</label>
+              <input class="form-input" id="fld-tel1" name="telefone1" placeholder="+5566999999999" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="fld-tel2">Telefone 2</label>
+              <input class="form-input" id="fld-tel2" name="telefone2" placeholder="+5566888888888" />
+            </div>
+
+            <div class="form-actions">
+              <button id="btnCancelar" type="button" class="btn btn-secondary">🔄 Limpar</button>
+              <button id="btnExcluir" type="button" class="btn btn-danger" style="display: none;">🗑️ Excluir</button>
+              <button id="btnSalvar" type="submit" class="btn btn-success">✅ Salvar</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- ESTATÍSTICAS RÁPIDAS -->
+        <div class="quick-stats">
+          <div class="stat-card stat-primary">
+            <div class="stat-icon">👥</div>
+            <div class="stat-content">
+              <div class="stat-number" id="totalAlunosAtivos">0</div>
+              <div class="stat-label">Alunos Ativos</div>
+            </div>
+          </div>
+
+          <div class="stat-card stat-info">
+            <div class="stat-icon">🏫</div>
+            <div class="stat-content">
+              <div class="stat-number" id="totalTurmas">0</div>
+              <div class="stat-label">Turmas</div>
+            </div>
+          </div>
+
+          <div class="stat-card stat-success">
+            <div class="stat-icon">📅</div>
+            <div class="stat-content">
+              <div class="stat-number" id="cadastrosHoje">0</div>
+              <div class="stat-label">Cadastros Hoje</div>
+            </div>
+          </div>
+
+          <div class="stat-card stat-warning">
+            <div class="stat-icon">⚠️</div>
+            <div class="stat-content">
+              <div class="stat-number" id="dadosIncompletos">0</div>
+              <div class="stat-label">Dados Incompletos</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LISTA -->
+        <div class="table-container">
+          <div class="table-header">
+            <div class="table-title">👥 Lista de Alunos Cadastrados</div>
+            <div class="table-actions">
+              <select id="filtroTurma" class="filter-select" onchange="filtrarAlunosPorTurma()">
+                <option value="todos">Todos os alunos</option>
+              </select>
+              <span class="badge">Total: <strong id="totalAlunos">0</strong></span>
+            </div>
+          </div>
+
+          <div class="table-content">
+            <table id="alunosTable" class="data-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nome</th>
+                  <th>Turma</th>
+                  <th>Status</th>
+                  <th>Responsável</th>
+                  <th>Telefone 1</th>
+                  <th>Telefone 2</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="alunosTableBody">
+                <!-- Preenchido em tempo real pelo gestao.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast para mensagens do gestao.js -->
+  <div id="toast"></div>
+
+  <!-- Guard de Autenticação -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const wait = setInterval(() => {
+        if (window.localDb && window.localDb.loaded) {
+          clearInterval(wait);
+          try {
+            window.localAuth.onAuthStateChanged(user => {
+              if (!user) {
+                window.location.href = 'login.html';
+              } else {
+                console.log('Usuário logado:', user.email);
+                // A listagem em tempo real é automática via gestao.js
+              }
+            });
+          } catch (e) {
+            console.error('Erro ao iniciar auth guard:', e);
+          }
+        }
+      }, 100);
+    });
+  </script>
+
+  <!-- Fallback simples para mensagens globais -->
+  <script>
+    window.showMessage = window.showMessage || function (t, type) {
+      console[type === 'error' ? 'error' : 'log'](t);
+    };
+  </script>
+</body>
+</html>

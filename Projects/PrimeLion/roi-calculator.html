@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora ROI - Diagnóstico Estratégico</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0077b5 0%, #00a0dc 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2d3748, #4a5568);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .calculator {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .calculator {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        
+        .inputs {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2d3748;
+            font-weight: 600;
+        }
+        
+        .input-wrapper {
+            position: relative;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #0077b5;
+        }
+        
+        .currency-prefix {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .currency-input {
+            padding-left: 45px;
+        }
+        
+        .results {
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            padding: 30px;
+            border-radius: 15px;
+        }
+        
+        .results h2 {
+            color: #2d3748;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+        
+        .metric {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .metric-label {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0077b5;
+        }
+        
+        .metric-improvement {
+            font-size: 14px;
+            color: #48bb78;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .impact-section {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .impact-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .impact-value {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 20px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            margin: 20px 10px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+        
+        .cta-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .assumptions {
+            background: #fff8dc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 5px solid #f6ad55;
+        }
+        
+        .assumptions h4 {
+            color: #744210;
+            margin-bottom: 10px;
+        }
+        
+        .assumptions ul {
+            color: #744210;
+            font-size: 14px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #48bb78, #38a169);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .tooltip {
+            position: relative;
+            cursor: help;
+        }
+        
+        .tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2d3748;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 1000;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(90deg, rgba(0,119,181,0.1), rgba(0,160,220,0.1));
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #0077b5;
+            margin: 20px 0;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .comparison-item {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .before {
+            background: #fed7d7;
+            color: #c53030;
+        }
+        
+        .after {
+            background: #c6f6d5;
+            color: #2d7d2d;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animated {
+            animation: slideIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 Calculadora de ROI</h1>
+            <p>Descubra quanto dinheiro você está perdendo mensalmente</p>
+        </div>
+        
+        <div class="calculator">
+            <div class="inputs">
+                <h2 style="color: #2d3748; margin-bottom: 25px;">📊 Dados da sua Empresa</h2>
+                
+                <div class="input-group">
+                    <label for="revenue">
+                        Faturamento Mensal Atual
+                        <span class="tooltip" data-tooltip="Receita bruta mensal média dos últimos 6 meses">ℹ️</span>
+                    </label>
+                    <div class="input-wrapper">
+                        <span class="currency-prefix">R$</span>
+                        <input type="number" id="revenue" class="currency-input" placeholder="120000" min="0">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="leads">
+                        Leads Qualificados por Mês
+                        <span class="tooltip" data-tooltip="Leads que realmente têm potencial de comprar">ℹ️</span>
+                    </label>
+                    <input type="number" id="leads" placeholder="80" min="0">
+                </div>
+                
+                <div class="input-group">
+                    <label for="conversion">
+                        Taxa de Conversão Atual (%)
+                        <span class="tooltip" data-tooltip="% de leads que viram clientes">ℹ️</span>
+                    </label>
+                    <input type="number" id="conversion" placeholder="12" min="0" max="100" step="0.1">
+                </div>
+                
+                <div class="input-group">
+                    <label for="ticket">
+                        Ticket Médio Atual
+                        <span class="tooltip" data-tooltip="Valor médio por venda">ℹ️</span>
+                    </label>
+                    <div class="input-wrapper">
+                        <span class="currency-prefix">R$</span>
+                        <input type="number" id="ticket" class="currency-input" placeholder="15000" min="0">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="industry">Seu Setor</label>
+                    <select id="industry">
+                        <option value="saas">SaaS/Tecnologia</option>
+                        <option value="consulting">Consultoria</option>
+                        <option value="ecommerce">E-commerce</option>
+                        <option value="services">Serviços B2B</option>
+                        <option value="manufacturing">Indústria</option>
+                        <option value="other">Outro</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="urgency">Urgência para Resolver Gargalos</label>
+                    <select id="urgency">
+                        <option value="high">Urgente (30 dias)</option>
+                        <option value="medium">Importante (1-3 meses)</option>
+                        <option value="low">Planejando (3-6 meses)</option>
+                    </select>
+                </div>
+                
+                <button onclick="calculateROI()" style="width: 100%; padding: 15px; background: linear-gradient(135deg, #0077b5, #00a0dc); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 20px;">
+                    🧮 CALCULAR POTENCIAL
+                </button>
+            </div>
+            
+            <div class="results" id="results" style="display: none;">
+                <h2>🎯 Seu Potencial de Crescimento</h2>
+                
+                <div class="metric">
+                    <div class="metric-label">Receita Perdida Mensalmente</div>
+                    <div class="metric-value" id="lostRevenue">R$ 0</div>
+                    <div class="metric-improvement">Oportunidade identificada</div>
+                </div>
+                
+                <div class="metric">
+                    <div class="metric-label">Potencial com Sistema ROI 3X</div>
+                    <div class="metric-value" id="newRevenue">R$ 0</div>
+                    <div class="metric-improvement" id="improvement">+0% de crescimento</div>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress" id="progressBar" style="width: 0%"></div>
+                </div>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-item before">
+                        <h4>❌ SITUAÇÃO ATUAL</h4>
+                        <div id="currentSales">0 vendas/mês</div>
+                        <div id="currentValue">R$ 0/mês</div>
+                    </div>
+                    <div class="comparison-item after">
+                        <h4>✅ COM OTIMIZAÇÃO</h4>
+                        <div id="optimizedSales">0 vendas/mês</div>
+                        <div id="optimizedValue">R$ 0/mês</div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <h3 style="text-align: center; margin-bottom: 20px;">📈 Projeção 90 Dias</h3>
+                    <canvas id="projectionChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="impact-section animated" id="impactSection" style="display: none;">
+            <h3>💡 Impact Real do Diagnóstico</h3>
+            <p>Com base nos seus dados, um diagnóstico estratégico pode identificar:</p>
+            <div class="impact-value" id="impactValue">R$ 0</div>
+            <p>em oportunidades perdidas mensalmente</p>
+            
+            <div class="highlight-box">
+                <h4>🎯 O que você descobrirá em 30 minutos:</h4>
+                <ul style="text-align: left; margin-top: 15px;">
+                    <li>Os 3 maiores vazamentos de receita</li>
+                    <li>Gargalos específicos do seu funil</li>
+                    <li>Plano de ação para os próximos 90 dias</li>
+                    <li>Projeção realista de crescimento</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="cta-section animated" id="ctaSection" style="display: none;">
+            <h2>🚀 Pronto para Descobrir seu Potencial Real?</h2>
+            <p>Diagnóstico Estratégico GRATUITO de 30 minutos</p>
+            <p style="font-size: 18px; margin: 20px 0;">
+                <strong>Baseado nos seus dados, você pode estar perdendo até 
+                <span id="ctaLostValue" style="color: #ffd700;">R$ 0</span> por mês.</strong>
+            </p>
+            
+            <a href="https://calendly.com/seulink?prefill_1={{revenue}}&prefill_2={{leads}}&prefill_3={{conversion}}" 
+               class="cta-button" id="primaryCTA">
+                📅 AGENDAR DIAGNÓSTICO GRATUITO
+            </a>
+            
+            <a href="https://wa.me/5511999999999?text=Oi!%20Vi%20a%20calculadora%20de%20ROI%20e%20quero%20saber%20mais%20sobre%20o%20diagnóstico%20gratuito." 
+               class="cta-button cta-secondary">
+                💬 FALAR NO WHATSAPP
+            </a>
+            
+            <div style="margin-top: 30px; font-size: 16px; opacity: 0.9;">
+                ⚡ <strong>Últimas vagas desta semana</strong><br>
+                ✅ 100% gratuito • ✅ Sem compromisso • ✅ 30 minutos
+            </div>
+        </div>
+        
+        <div class="assumptions">
+            <h4>📋 Metodologia de Cálculo:</h4>
+            <ul>
+                <li><strong>Taxa de conversão otimizada:</strong> +40% baseado na média de 150 empresas</li>
+                <li><strong>Ticket médio:</strong> +15% através de melhor qualificação</li>
+                <li><strong>Redução de vazamentos:</strong> -25% de leads perdidos no funil</li>
+                <li><strong>Tempo de implementação:</strong> 90 dias para resultados completos</li>
+                <li><strong>ROI conservador:</strong> Cálculos baseados no cenário mais realista</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Variáveis globais
+        let chart = null;
+        
+        // Função principal de cálculo
+        function calculateROI() {
+            const revenue = parseFloat(document.getElementById('revenue').value) || 0;
+            const leads = parseFloat(document.getElementById('leads').value) || 0;
+            const conversion = parseFloat(document.getElementById('conversion').value) || 0;
+            const ticket = parseFloat(document.getElementById('ticket').value) || 0;
+            const industry = document.getElementById('industry').value;
+            const urgency = document.getElementById('urgency').value;
+            
+            // Validação
+            if (revenue === 0 || leads === 0 || conversion === 0 || ticket === 0) {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
+            
+            // Fatores de melhoria baseados na indústria
+            const industryFactors = {
+                'saas': { conversionBoost: 45, ticketBoost: 20 },
+                'consulting': { conversionBoost: 40, ticketBoost: 25 },
+                'ecommerce': { conversionBoost: 35, ticketBoost: 10 },
+                'services': { conversionBoost: 40, ticketBoost: 15 },
+                'manufacturing': { conversionBoost: 30, ticketBoost: 12 },
+                'other': { conversionBoost: 35, ticketBoost: 15 }
+            };
+            
+            const factors = industryFactors[industry] || industryFactors['other'];
+            
+            // Cálculos atuais
+            const currentSales = (leads * conversion) / 100;
+            const currentMonthlyRevenue = currentSales * ticket;
+            
+            // Cálculos otimizados
+            const optimizedConversion = conversion * (1 + factors.conversionBoost / 100);
+            const optimizedTicket = ticket * (1 + factors.ticketBoost / 100);
+            const optimizedSales = (leads * Math.min(optimizedConversion, 85)) / 100; // Cap de 85%
+            const optimizedRevenue = optimizedSales * optimizedTicket;
+            
+            // Receita perdida
+            const lostRevenue = optimizedRevenue - currentMonthlyRevenue;
+            const improvementPercent = ((optimizedRevenue - currentMonthlyRevenue) / currentMonthlyRevenue * 100);
+            
+            // Atualizar interface
+            updateResults(currentSales, currentMonthlyRevenue, optimizedSales, optimizedRevenue, lostRevenue, improvementPercent);
+            
+            // Mostrar seções
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('impactSection').style.display = 'block';
+            document.getElementById('ctaSection').style.display = 'block';
+            
+            // Scroll suave para resultados
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Criar gráfico
+            createProjectionChart(currentMonthlyRevenue, optimizedRevenue);
+            
+            // Analytics tracking
+            trackCalculation(revenue, leads, conversion, ticket, lostRevenue);
+        }
+        
+        function updateResults(currentSales, currentRevenue, optimizedSales, optimizedRevenue, lostRevenue, improvementPercent) {
+            // Formatação de números
+            const formatCurrency = (value) => {
+                return new Intl.NumberFormat('pt-BR', { 
+                    style: 'currency', 
+                    currency: 'BRL',
+                    maximumFractionDigits: 0
+                }).format(value);
+            };
+            
+            const formatNumber = (value) => {
+                return new Intl.NumberFormat('pt-BR', { 
+                    maximumFractionDigits: 1
+                }).format(value);
+            };
+            
+            // Atualizar métricas
+            document.getElementById('lostRevenue').textContent = formatCurrency(lostRevenue);
+            document.getElementById('newRevenue').textContent = formatCurrency(optimizedRevenue);
+            document.getElementById('improvement').textContent = `+${formatNumber(improvementPercent)}% de crescimento`;
+            
+            // Atualizar comparação
+            document.getElementById('currentSales').textContent = `${formatNumber(currentSales)} vendas/mês`;
+            document.getElementById('currentValue').textContent = formatCurrency(currentRevenue);
+            document.getElementById('optimizedSales').textContent = `${formatNumber(optimizedSales)} vendas/mês`;
+            document.getElementById('optimizedValue').textContent = formatCurrency(optimizedRevenue);
+            
+            // Atualizar barra de progresso
+            const maxProgress = Math.min(improvementPercent, 200); // Cap em 200%
+            const progressWidth = (maxProgress / 200) * 100;
+            document.getElementById('progressBar').style.width = progressWidth + '%';
+            
+            // Atualizar seção de impacto
+            document.getElementById('impactValue').textContent = formatCurrency(lostRevenue);
+            document.getElementById('ctaLostValue').textContent = formatCurrency(lostRevenue);
+            
+            // Atualizar CTAs com dados
+            const revenue = document.getElementById('revenue').value;
+            const leads = document.getElementById('leads').value;
+            const conversion = document.getElementById('conversion').value;
+            
+            const ctaLink = document.getElementById('primaryCTA');
+            const baseUrl = ctaLink.href.split('?')[0];
+            ctaLink.href = `${baseUrl}?prefill_revenue=${revenue}&prefill_leads=${leads}&prefill_conversion=${conversion}&prefill_potential=${Math.round(lostRevenue)}`;
+        }
+        
+        function createProjectionChart(current, optimized) {
+            const ctx = document.getElementById('projectionChart').getContext('2d');
+            
+            // Destruir gráfico anterior se existir
+            if (chart) {
+                chart.destroy();
+            }
+            
+            // Dados de projeção (90 dias)
+            const months = ['Atual', 'Mês 1', 'Mês 2', 'Mês 3'];
+            const progressData = [
+                current,
+                current + ((optimized - current) * 0.3),
+                current + ((optimized - current) * 0.7),
+                optimized
+            ];
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Faturamento Mensal (R$)',
+                        data: progressData,
+                        borderColor: '#0077b5',
+                        backgroundColor: 'rgba(0,119,181,0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#0077b5',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return new Intl.NumberFormat('pt-BR', { 
+                                        style: 'currency', 
+                                        currency: 'BRL',
+                                        maximumFractionDigits: 0,
+                                        minimumFractionDigits: 0
+                                    }).format(value);
+                                }
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 2000,
+                        easing: 'easeOutQuart'
+                    }
+                }
+            });
+        }
+        
+        function trackCalculation(revenue, leads, conversion, ticket, potential) {
+            // Tracking para analytics (substitua com sua ferramenta)
+            console.log('Calculator Usage:', {
+                revenue,
+                leads,
+                conversion,
+                ticket,
+                potential,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Google Analytics event (se configurado)
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'calculate_roi', {
+                    'event_category': 'calculator',
+                    'event_label': 'diagnosis_calculator',
+                    'value': Math.round(potential)
+                });
+            }
+            
+            // Facebook Pixel event (se configurado)
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'CompleteRegistration', {
+                    value: potential,
+                    currency: 'BRL'
+                });
+            }
+        }
+        
+        // Auto-save inputs
+        function saveInputs() {
+            const inputs = ['revenue', 'leads', 'conversion', 'ticket', 'industry', 'urgency'];
+            const data = {};
+            
+            inputs.forEach(id => {
+                data[id] = document.getElementById(id).value;
+            });
+            
+            localStorage.setItem('roiCalculatorData', JSON.stringify(data));
+        }
+        
+        // Load saved inputs
+        function loadInputs() {
+            const saved = localStorage.getItem('roiCalculatorData');
+            if (saved) {
+                const data = JSON.parse(saved);
+                Object.keys(data).forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element && data[id]) {
+                        element.value = data[id];
+                    }
+                });
+            }
+        }
+        
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            loadInputs();
+            
+            // Auto-save on input change
+            const inputs = document.querySelectorAll('input, select');
+            inputs.forEach(input => {
+                input.addEventListener('change', saveInputs);
+            });
+            
+            // Enter key trigger
+            document.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    calculateROI();
+                }
+            });
+        });
+        
+        // Utility functions
+        function shareFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent('Descobri quanto dinheiro posso estar perdendo mensalmente com esta calculadora!');
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank');
+        }
+        
+        function shareLinkedIn() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent('Calculadora de ROI para empresas - descubra seu potencial de crescimento');
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}&summary=${text}`, '_blank');
+        }
+        
+        function shareWhatsApp() {
+            const text = encodeURIComponent('Olha essa calculadora interessante que encontrei: ' + window.location.href);
+            window.open(`https://wa.me/?text=${text}`, '_blank');
+        }
+        
+        // Urgency timer (optional)
+        function startUrgencyTimer() {
+            let timeLeft = 24 * 60 * 60; // 24 horas em segundos
+            
+            const timer = setInterval(() => {
+                const hours = Math.floor(timeLeft / 3600);
+                const minutes = Math.floor((timeLeft % 3600) / 60);
+                const seconds = timeLeft % 60;
+                
+                const display = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                const timerElement = document.getElementById('urgencyTimer');
+                if (timerElement) {
+                    timerElement.textContent = display;
+                }
+                
+                timeLeft--;
+                
+                if (timeLeft < 0) {
+                    clearInterval(timer);
+                }
+            }, 1000);
+        }
+        
+        // Exit intent popup (optional)
+        let exitIntentShown = false;
+        document.addEventListener('mouseleave', function(e) {
+            if (e.clientY <= 0 && !exitIntentShown) {
+                exitIntentShown = true;
+                // Implementar popup de exit intent aqui
+                console.log('Exit intent detected - show popup');
+            }
+        });
+    </script>
+    
+    <!-- Analytics Scripts (substitua pelos seus) -->
+    <!-- Google Analytics -->
+    <!--
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_TRACKING_ID');
+    </script>
+    -->
+    
+    <!-- Facebook Pixel -->
+    <!--
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window,document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 'YOUR_PIXEL_ID');
+        fbq('track', 'PageView');
+    </script>
+    -->
+</body>
+</html>

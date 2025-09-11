@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios - Dashboard Disciplinar</title>
+    
+    <!-- CSS Externos -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    
+    <!-- Sistema Local de Banco de Dados -->
+    <script src="../assets/js/local-db.js"></script>
+    <script src="../assets/js/local-auth.js"></script>
+    <script src="../assets/js/populate-db.js"></script>
+    
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+</head>
+
+<body>
+    <!-- BARRA SUPERIOR -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <div class="app-launcher">
+                <span></span><span></span><span></span>
+                <span></span><span></span><span></span>
+                <span></span><span></span><span></span>
+            </div>
+            <span class="app-name">Dashboard Disciplinar</span>
+        </div>
+        <div class="top-bar-center">
+            <input type="text" class="search-box" placeholder="Pesquisar relatórios...">
+        </div>
+        <div class="top-bar-right">
+            <div class="user-profile">A</div>
+        </div>
+    </div>
+
+    <!-- LAYOUT PRINCIPAL -->
+    <div class="main-layout">
+        
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">Módulos Principais</div>
+                
+                <a href="../index.html" class="sidebar-item">
+                    <span class="sidebar-icon">🏠</span>
+                    <span class="sidebar-text">Dashboard</span>
+                </a>
+                
+                
+                <a href="gestao-alunos.html" class="sidebar-item">
+                    <span class="sidebar-icon">👥</span>
+                    <span class="sidebar-text">Gestão de Alunos</span>
+                </a>
+                
+                <a href="medidas-disciplinares.html" class="sidebar-item">
+                    <span class="sidebar-icon">📋</span>
+                    <span class="sidebar-text">Medidas Disciplinares</span>
+                </a>
+                
+                <a href="frequencia.html" class="sidebar-item">
+                    <span class="sidebar-icon">📅</span>
+                    <span class="sidebar-text">Controle de Frequência</span>
+                </a>
+                
+                <a href="relatorios.html" class="sidebar-item active">
+                    <span class="sidebar-icon">📊</span>
+                    <span class="sidebar-text">Relatórios</span>
+                </a>
+                
+                <a href="analises.html" class="sidebar-item">
+                    <span class="sidebar-icon">📈</span>
+                    <span class="sidebar-text">Análises</span>
+                </a>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-title">Ferramentas</div>
+                
+                <a href="configuracoes.html" class="sidebar-item">
+                    <span class="sidebar-icon">⚙️</span>
+                    <span class="sidebar-text">Configurações</span>
+                </a>
+                
+                <a href="comunicacao.html" class="sidebar-item">
+                    <span class="sidebar-icon">📱</span>
+                    <span class="sidebar-text">Comunicação</span>
+                </a>
+                
+                <a href="login.html" class="sidebar-item">
+                    <span class="sidebar-icon">🔐</span>
+                    <span class="sidebar-text">Login/Logout</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- ÁREA DE CONTEÚDO -->
+        <div class="content-area">
+            <div class="main-content">
+                
+                <!-- TÍTULO -->
+                <div class="module-title">
+                    📊 Módulo de Relatórios
+                </div>
+
+                <!-- ESTATÍSTICAS RÁPIDAS -->
+                <div class="quick-stats">
+                    <div class="stat-card stat-primary">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="totalAlunos">0</div>
+                            <div class="stat-label">Total de Alunos</div>
+                            <div class="stat-trend">+0% vs mês anterior</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card stat-danger">
+                        <div class="stat-icon">❌</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="totalFaltas">0</div>
+                            <div class="stat-label">Total de Faltas</div>
+                            <div class="stat-trend">+0% vs mês anterior</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card stat-warning">
+                        <div class="stat-icon">⚖️</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="totalMedidas">0</div>
+                            <div class="stat-label">Medidas Aplicadas</div>
+                            <div class="stat-trend">+0% vs mês anterior</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card stat-info">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="mediaFaltas">0.0</div>
+                            <div class="stat-label">Média por Aluno</div>
+                            <div class="stat-trend">+0% vs mês anterior</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FILTROS E PESQUISA -->
+                <div class="filters-section">
+                    <div class="filters-title">
+                        🔍 Filtros e Pesquisa Avançada
+                    </div>
+                    
+                    <div class="filters-grid">
+                        <div class="filter-group">
+                            <label class="filter-label">🎯 Filtrar por Turma:</label>
+                            <select id="filtroTurma" class="filter-select" onchange="aplicarFiltros()">
+                                <option value="">Todas as turmas</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">👤 Filtrar por Aluno:</label>
+                            <select id="filtroAluno" class="filter-select" onchange="aplicarFiltros()">
+                                <option value="">Todos os alunos</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">📅 Período:</label>
+                            <select id="filtroPeriodo" class="filter-select" onchange="aplicarFiltros()">
+                                <option value="30">Últimos 30 dias</option>
+                                <option value="90">Últimos 3 meses</option>
+                                <option value="180">Últimos 6 meses</option>
+                                <option value="365">Último ano</option>
+                                <option value="todos">Todos os registros</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">📈 Ordenar por:</label>
+                            <select id="filtroOrdenacao" class="filter-select" onchange="aplicarFiltros()">
+                                <option value="nome">Nome (A-Z)</option>
+                                <option value="nomeDesc">Nome (Z-A)</option>
+                                <option value="totalFaltas">Total de Faltas (Maior)</option>
+                                <option value="faltasInjustificadas">Faltas Injustificadas</option>
+                                <option value="ultimaFalta">Última Falta</option>
+                                <option value="totalMedidas">Total de Medidas</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">📋 Tipo de Registro:</label>
+                            <select id="filtroTipo" class="filter-select" onchange="aplicarFiltros()">
+                                <option value="todos">Todos</option>
+                                <option value="faltas">Apenas Faltas</option>
+                                <option value="medidas">Apenas Medidas</option>
+                                <option value="criticos">Casos Críticos</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">🔍 Pesquisar:</label>
+                            <input 
+                                type="text" 
+                                id="pesquisaTexto" 
+                                class="filter-select" 
+                                placeholder="Nome do aluno..."
+                                onkeyup="aplicarFiltros()"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="filters-actions">
+                        <button class="btn btn-primary" onclick="aplicarFiltros()">
+                            🔍 Aplicar Filtros
+                        </button>
+                        <button class="btn btn-secondary" onclick="limparFiltros()">
+                            🔄 Limpar Filtros
+                        </button>
+                        <button class="btn btn-success" onclick="exportarRelatorio()">
+                            📊 Exportar Relatório
+                        </button>
+                        <button class="btn btn-info" onclick="gerarRelatorioCompleto()">
+                            📋 Relatório Completo
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO DE GRÁFICOS -->
+                <div class="charts-section">
+                    <div class="charts-title">
+                        📊 Análise Gráfica
+                    </div>
+                    
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div class="chart-title">📈 Medidas por Turma</div>
+                                <div class="chart-subtitle">Distribuição de medidas disciplinares</div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="chartMedidasPorTurma"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div class="chart-title">👥 Top 10 Alunos</div>
+                                <div class="chart-subtitle">Alunos com mais medidas disciplinares</div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="chartTopAlunos"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div class="chart-title">📋 Tipos de Medidas</div>
+                                <div class="chart-subtitle">Distribuição por tipo</div>
+                            </div>
+                            <div class="chart-container chart-small">
+                                <canvas id="chartTiposMedidas"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div class="chart-title">⚡ Status de Risco</div>
+                                <div class="chart-subtitle">Distribuição por nível de risco</div>
+                            </div>
+                            <div class="chart-container chart-small">
+                                <canvas id="chartStatusRisco"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RELATÓRIOS DETALHADOS -->
+                <div id="relatorioContainer" class="reports-container">
+                    <div class="loading-state">
+                        <div class="loading-spinner"></div>
+                        <p>Carregando relatórios...</p>
+                    </div>
+                </div>
+
+                <!-- RESUMO ESTATÍSTICO -->
+                <div class="management-section" id="resumoEstatistico" style="display: none;">
+                    <div class="management-title">
+                        📈 Resumo Estatístico
+                    </div>
+                    <div id="estatisticasResumo" class="student-stats">
+                        <!-- Estatísticas serão inseridas aqui -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    
+    <script src="../assets/js/main.js" defer></script>
+    <script src="../assets/js/gestao.js" defer></script>
+    <script src="../assets/js/medidas.js" defer></script>
+    <script src="../assets/js/relatorios.js" defer></script>
+    
+    <script>
+        // Inicialização da página
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📊 Página de Relatórios carregada');
+            inicializarModuloRelatorios();
+        });
+
+        // Carregar estatísticas do Firebase
+        async function carregarEstatisticas() {
+            try {
+                if (!window.db) {
+                    if (typeof window.localDb !== "undefined" && window.localDb.loaded) {
+                        window.db = window.db;
+                    } else {
+                        console.error('Sistema Local não carregado');
+                        return;
+                    }
+                }
+
+                // Buscar dados do Firebase
+                const alunosSnapshot = await db.collection('alunos').get();
+                const medidasSnapshot = await db.collection('medidas_disciplinares').get();
+                
+                const totalAlunos = alunosSnapshot.size;
+                const totalMedidas = medidasSnapshot.size;
+                const totalFaltas = 0; // Por enquanto 0 até implementarmos faltas
+                const mediaFaltas = totalAlunos > 0 ? (totalFaltas / totalAlunos).toFixed(1) : 0;
+
+                // Atualizar interface
+                const elemTotalAlunos = document.getElementById('totalAlunos');
+                const elemTotalFaltas = document.getElementById('totalFaltas');
+                const elemTotalMedidas = document.getElementById('totalMedidas');
+                const elemMediaFaltas = document.getElementById('mediaFaltas');
+
+                if (elemTotalAlunos) elemTotalAlunos.textContent = totalAlunos;
+                if (elemTotalFaltas) elemTotalFaltas.textContent = totalFaltas;
+                if (elemTotalMedidas) elemTotalMedidas.textContent = totalMedidas;
+                if (elemMediaFaltas) elemMediaFaltas.textContent = mediaFaltas;
+
+                console.log(`Estatísticas carregadas: ${totalAlunos} alunos, ${totalMedidas} medidas`);
+
+            } catch (error) {
+                console.error('Erro ao carregar estatísticas:', error);
+            }
+        }
+
+        // Preencher container de relatórios com dados reais
+        async function preencherRelatorioContainer() {
+            try {
+                const container = document.getElementById('relatorioContainer');
+                if (!container) return;
+
+                // Carregar dados se não existirem
+                if (!window.processedDataRelatorios || window.processedDataRelatorios.length === 0) {
+                    if (typeof carregarDadosRelatorios === 'function') {
+                        await carregarDadosRelatorios();
+                    } else {
+                        container.innerHTML = `
+                            <div class="empty-state">
+                                <div class="empty-icon">📊</div>
+                                <h3>Nenhum dado encontrado</h3>
+                                <p>Sistema Local não conectado ou sem dados</p>
+                            </div>
+                        `;
+                        return;
+                    }
+                }
+
+                const dados = window.processedDataRelatorios;
+                
+                if (!dados || dados.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">📊</div>
+                            <h3>Nenhum dado encontrado</h3>
+                            <p>Importe dados dos alunos para visualizar relatórios</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let html = `
+                    <div class="report-section">
+                        <h3>📋 Resumo Geral</h3>
+                        <div class="report-summary">
+                            <p><strong>Total de alunos:</strong> ${dados.length}</p>
+                            <p><strong>Alunos com medidas disciplinares:</strong> ${dados.filter(a => a.totalMedidas > 0).length}</p>
+                            <p><strong>Total de medidas aplicadas:</strong> ${dados.reduce((sum, a) => sum + a.totalMedidas, 0)}</p>
+                        </div>
+                    </div>
+
+                    <div class="report-section">
+                        <h3>🔍 Alunos com Medidas Disciplinares</h3>
+                        <div class="table-container">
+                `;
+
+                const alunosComMedidas = dados.filter(a => a.totalMedidas > 0);
+                
+                if (alunosComMedidas.length > 0) {
+                    html += `
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Turma</th>
+                                    <th>Medidas</th>
+                                    <th>Status</th>
+                                    <th>Última Ocorrência</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+                    
+                    alunosComMedidas.forEach(aluno => {
+                        const ultimaOcorrencia = aluno.ultimaOcorrencia ? 
+                            new Date(aluno.ultimaOcorrencia).toLocaleDateString('pt-BR') : 
+                            'N/A';
+                        
+                        html += `
+                            <tr>
+                                <td>${aluno.nome}</td>
+                                <td>${aluno.turma}</td>
+                                <td>${aluno.totalMedidas}</td>
+                                <td><span class="status-badge status-${aluno.statusRisco.toLowerCase()}">${aluno.statusRisco}</span></td>
+                                <td>${ultimaOcorrencia}</td>
+                            </tr>
+                        `;
+                    });
+                    
+                    html += `
+                            </tbody>
+                        </table>
+                    `;
+                } else {
+                    html += `<p>Nenhum aluno com medidas disciplinares encontrado.</p>`;
+                }
+
+                html += `
+                        </div>
+                    </div>
+                `;
+
+                container.innerHTML = html;
+
+            } catch (error) {
+                console.error('Erro ao preencher container de relatórios:', error);
+                document.getElementById('relatorioContainer').innerHTML = `
+                    <div class="error-state">
+                        <div class="error-icon">⚠️</div>
+                        <h3>Erro ao carregar relatórios</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Função de inicialização específica
+        async function inicializarModuloRelatorios() {
+            try {
+                showMessage('Carregando relatórios...', 'loading');
+                
+                // Aguardar Sistema Local
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                if (window.localDb.loaded) {
+                    await carregarEstatisticas();
+                    await carregarDadosRelatorios();
+                    await preencherRelatorioContainer();
+                    await carregarFiltros();
+                    atualizarGraficos();
+                    showMessage('✅ Relatórios carregados!', 'success');
+                } else {
+                    showMessage('⚠️ Sistema Local não conectado - usando dados demo', 'error');
+                    carregarDadosDemoRelatorios();
+                }
+            } catch (error) {
+                console.error('Erro ao carregar relatórios:', error);
+                showMessage('Erro ao carregar relatórios', 'error');
+            }
+        }
+
+        // Carregar dados de demonstração
+        function carregarDadosDemoRelatorios() {
+            document.getElementById('relatorioContainer').innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">📊</div>
+                    <h3>Relatórios Detalhados</h3>
+                    <p>Sistema configurado para visualizar relatórios completos dos alunos</p>
+                    <button class="btn btn-primary" onclick="inicializarModuloRelatorios()">
+                        🔄 Tentar Novamente
+                    </button>
+                </div>
+            `;
+        }
+
+        // ======= VARIÁVEIS GLOBAIS =======
+        let dadosFiltrados = [];
+        let chartInstances = {};
+        let todasTurmas = [];
+        let todosAlunos = [];
+
+        // ======= FUNÇÕES DE FILTROS E PESQUISA =======
+        
+        async function aplicarFiltros() {
+            try {
+                console.log('🔍 Aplicando filtros...');
+                
+                if (!window.processedDataRelatorios || window.processedDataRelatorios.length === 0) {
+                    console.warn('Dados não carregados ainda');
+                    return;
+                }
+
+                const filtroTurma = document.getElementById('filtroTurma').value;
+                const filtroAluno = document.getElementById('filtroAluno').value;
+                const filtroPeriodo = document.getElementById('filtroPeriodo').value;
+                const filtroOrdenacao = document.getElementById('filtroOrdenacao').value;
+                const filtroTipo = document.getElementById('filtroTipo').value;
+                const pesquisaTexto = document.getElementById('pesquisaTexto').value.toLowerCase();
+
+                let dados = [...window.processedDataRelatorios];
+
+                // Filtrar por turma
+                if (filtroTurma) {
+                    dados = dados.filter(aluno => aluno.turma === filtroTurma);
+                }
+
+                // Filtrar por aluno específico
+                if (filtroAluno) {
+                    dados = dados.filter(aluno => aluno.id === filtroAluno);
+                }
+
+                // Filtrar por tipo
+                if (filtroTipo === 'medidas') {
+                    dados = dados.filter(aluno => aluno.totalMedidas > 0);
+                } else if (filtroTipo === 'criticos') {
+                    dados = dados.filter(aluno => aluno.statusRisco === 'Crítico');
+                }
+
+                // Filtrar por período
+                if (filtroPeriodo !== 'todos') {
+                    const diasAtras = parseInt(filtroPeriodo);
+                    const dataLimite = new Date();
+                    dataLimite.setDate(dataLimite.getDate() - diasAtras);
+                    
+                    dados = dados.filter(aluno => {
+                        if (aluno.ultimaOcorrencia) {
+                            return new Date(aluno.ultimaOcorrencia) >= dataLimite;
+                        }
+                        return false;
+                    });
+                }
+
+                // Filtrar por pesquisa de texto
+                if (pesquisaTexto) {
+                    dados = dados.filter(aluno => 
+                        aluno.nome.toLowerCase().includes(pesquisaTexto) ||
+                        aluno.turma.toLowerCase().includes(pesquisaTexto)
+                    );
+                }
+
+                // Ordenar dados
+                dados.sort((a, b) => {
+                    switch (filtroOrdenacao) {
+                        case 'nome':
+                            return a.nome.localeCompare(b.nome);
+                        case 'nomeDesc':
+                            return b.nome.localeCompare(a.nome);
+                        case 'totalMedidas':
+                            return b.totalMedidas - a.totalMedidas;
+                        case 'ultimaFalta':
+                            const dataA = a.ultimaOcorrencia ? new Date(a.ultimaOcorrencia) : new Date(0);
+                            const dataB = b.ultimaOcorrencia ? new Date(b.ultimaOcorrencia) : new Date(0);
+                            return dataB - dataA;
+                        default:
+                            return a.nome.localeCompare(b.nome);
+                    }
+                });
+
+                dadosFiltrados = dados;
+                atualizarRelatoriosFiltrados(dados);
+                atualizarGraficos(dados);
+
+                console.log(`✅ Filtros aplicados: ${dados.length} registros`);
+                
+            } catch (error) {
+                console.error('Erro ao aplicar filtros:', error);
+            }
+        }
+
+        function limparFiltros() {
+            document.getElementById('filtroTurma').value = '';
+            document.getElementById('filtroAluno').value = '';
+            document.getElementById('filtroPeriodo').value = '30';
+            document.getElementById('filtroOrdenacao').value = 'nome';
+            document.getElementById('filtroTipo').value = 'todos';
+            document.getElementById('pesquisaTexto').value = '';
+            
+            aplicarFiltros();
+        }
+
+        function atualizarRelatoriosFiltrados(dados) {
+            const container = document.getElementById('relatorioContainer');
+            
+            if (dados.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🔍</div>
+                        <h3>Nenhum resultado encontrado</h3>
+                        <p>Tente ajustar os filtros de pesquisa</p>
+                        <button class="btn btn-secondary" onclick="limparFiltros()">🔄 Limpar Filtros</button>
+                    </div>
+                `;
+                return;
+            }
+
+            const alunosComMedidas = dados.filter(a => a.totalMedidas > 0);
+            
+            let html = `
+                <div class="report-section">
+                    <h3>📋 Resumo dos Filtros</h3>
+                    <div class="report-summary">
+                        <p><strong>Total filtrado:</strong> ${dados.length} aluno(s)</p>
+                        <p><strong>Com medidas disciplinares:</strong> ${alunosComMedidas.length} aluno(s)</p>
+                        <p><strong>Total de medidas:</strong> ${dados.reduce((sum, a) => sum + a.totalMedidas, 0)}</p>
+                    </div>
+                </div>
+
+                <div class="report-section">
+                    <h3>📊 Resultados Detalhados</h3>
+                    <div class="table-container">
+            `;
+
+            if (alunosComMedidas.length > 0) {
+                html += `
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Turma</th>
+                                <th>Medidas</th>
+                                <th>Status</th>
+                                <th>Última Ocorrência</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                
+                alunosComMedidas.forEach(aluno => {
+                    const ultimaOcorrencia = aluno.ultimaOcorrencia ? 
+                        new Date(aluno.ultimaOcorrencia).toLocaleDateString('pt-BR') : 
+                        'N/A';
+                    
+                    html += `
+                        <tr>
+                            <td>${aluno.nome}</td>
+                            <td>${aluno.turma}</td>
+                            <td>${aluno.totalMedidas}</td>
+                            <td><span class="status-badge status-${aluno.statusRisco.toLowerCase()}">${aluno.statusRisco}</span></td>
+                            <td>${ultimaOcorrencia}</td>
+                        </tr>
+                    `;
+                });
+                
+                html += `
+                        </tbody>
+                    </table>
+                `;
+            } else {
+                html += `<p>Nenhum aluno com medidas disciplinares nos filtros aplicados.</p>`;
+            }
+
+            html += `
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        // ======= FUNÇÕES DE GRÁFICOS =======
+        
+        function atualizarGraficos(dados = null) {
+            if (!dados) {
+                dados = window.processedDataRelatorios || [];
+            }
+            
+            gerarGraficoMedidasPorTurma(dados);
+            gerarGraficoTopAlunos(dados);
+            gerarGraficoTiposMedidas(dados);
+            gerarGraficoStatusRisco(dados);
+        }
+
+        function gerarGraficoMedidasPorTurma(dados) {
+            const canvas = document.getElementById('chartMedidasPorTurma');
+            if (!canvas || typeof Chart === 'undefined') return;
+
+            // Destruir gráfico anterior
+            if (chartInstances.medidasPorTurma) {
+                chartInstances.medidasPorTurma.destroy();
+            }
+
+            // Agrupar por turma
+            const turmas = {};
+            dados.forEach(aluno => {
+                if (!turmas[aluno.turma]) {
+                    turmas[aluno.turma] = { total: 0, medidas: 0 };
+                }
+                turmas[aluno.turma].total++;
+                turmas[aluno.turma].medidas += aluno.totalMedidas;
+            });
+
+            const labels = Object.keys(turmas).sort();
+            const dataMedidas = labels.map(turma => turmas[turma].medidas);
+
+            const ctx = canvas.getContext('2d');
+            chartInstances.medidasPorTurma = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Total de Medidas',
+                        data: dataMedidas,
+                        backgroundColor: 'rgba(220, 53, 69, 0.7)',
+                        borderColor: 'rgba(220, 53, 69, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    }
+                }
+            });
+        }
+
+        function gerarGraficoTopAlunos(dados) {
+            const canvas = document.getElementById('chartTopAlunos');
+            if (!canvas || typeof Chart === 'undefined') return;
+
+            if (chartInstances.topAlunos) {
+                chartInstances.topAlunos.destroy();
+            }
+
+            // Top 10 alunos com mais medidas
+            const alunosComMedidas = dados
+                .filter(a => a.totalMedidas > 0)
+                .sort((a, b) => b.totalMedidas - a.totalMedidas)
+                .slice(0, 10);
+
+            if (alunosComMedidas.length === 0) {
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.font = '16px Arial';
+                ctx.fillStyle = '#666';
+                ctx.textAlign = 'center';
+                ctx.fillText('Nenhum aluno com medidas', canvas.width / 2, canvas.height / 2);
+                return;
+            }
+
+            const labels = alunosComMedidas.map(a => a.nome.split(' ').slice(0, 2).join(' '));
+            const dataMedidas = alunosComMedidas.map(a => a.totalMedidas);
+
+            const ctx = canvas.getContext('2d');
+            chartInstances.topAlunos = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Medidas Disciplinares',
+                        data: dataMedidas,
+                        backgroundColor: 'rgba(255, 193, 7, 0.7)',
+                        borderColor: 'rgba(255, 193, 7, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    }
+                }
+            });
+        }
+
+        function gerarGraficoTiposMedidas(dados) {
+            const canvas = document.getElementById('chartTiposMedidas');
+            if (!canvas || typeof Chart === 'undefined') return;
+
+            if (chartInstances.tiposMedidas) {
+                chartInstances.tiposMedidas.destroy();
+            }
+
+            const tipos = {};
+            dados.forEach(aluno => {
+                if (aluno.medidas && aluno.medidas.length > 0) {
+                    aluno.medidas.forEach(medida => {
+                        const tipo = medida.tipo_medida || 'Não especificado';
+                        tipos[tipo] = (tipos[tipo] || 0) + 1;
+                    });
+                }
+            });
+
+            if (Object.keys(tipos).length === 0) {
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.font = '14px Arial';
+                ctx.fillStyle = '#666';
+                ctx.textAlign = 'center';
+                ctx.fillText('Sem dados de tipos', canvas.width / 2, canvas.height / 2);
+                return;
+            }
+
+            const labels = Object.keys(tipos);
+            const dataValues = Object.values(tipos);
+            const cores = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'];
+
+            const ctx = canvas.getContext('2d');
+            chartInstances.tiposMedidas = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: dataValues,
+                        backgroundColor: cores.slice(0, labels.length),
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function gerarGraficoStatusRisco(dados) {
+            const canvas = document.getElementById('chartStatusRisco');
+            if (!canvas || typeof Chart === 'undefined') return;
+
+            if (chartInstances.statusRisco) {
+                chartInstances.statusRisco.destroy();
+            }
+
+            const status = { 'Baixo': 0, 'Médio': 0, 'Alto': 0, 'Crítico': 0 };
+            dados.forEach(aluno => {
+                status[aluno.statusRisco] = (status[aluno.statusRisco] || 0) + 1;
+            });
+
+            const labels = Object.keys(status);
+            const dataValues = Object.values(status);
+            const cores = ['#28a745', '#ffc107', '#fd7e14', '#dc3545'];
+
+            const ctx = canvas.getContext('2d');
+            chartInstances.statusRisco = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: dataValues,
+                        backgroundColor: cores,
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // ======= FUNÇÕES DE EXPORTAÇÃO =======
+        
+        function exportarRelatorio() {
+            console.log('Exportando relatório...');
+            const dados = dadosFiltrados.length > 0 ? dadosFiltrados : window.processedDataRelatorios;
+            
+            if (!dados || dados.length === 0) {
+                alert('Nenhum dado para exportar');
+                return;
+            }
+            
+            // Criar CSV
+            let csv = 'Nome,Turma,Total Medidas,Status Risco,Última Ocorrência\n';
+            dados.forEach(aluno => {
+                const ultimaOcorrencia = aluno.ultimaOcorrencia ? 
+                    new Date(aluno.ultimaOcorrencia).toLocaleDateString('pt-BR') : 
+                    'N/A';
+                csv += `"${aluno.nome}","${aluno.turma}",${aluno.totalMedidas},"${aluno.statusRisco}","${ultimaOcorrencia}"\n`;
+            });
+            
+            // Download
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `relatorio_disciplinar_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        function gerarRelatorioCompleto() {
+            console.log('Gerando relatório completo...');
+            // Implementar geração de relatório completo se necessário
+            alert('Funcionalidade de relatório completo em desenvolvimento');
+        }
+
+        // ======= CARREGAR FILTROS =======
+        
+        function atualizarFiltroAlunosRelatorios(turmaSelecionada) {
+            const selectAluno = document.getElementById('filtroAluno');
+            if (!selectAluno) return;
+            
+            // Limpar valor atual do filtro de aluno
+            selectAluno.value = '';
+            
+            // Filtrar alunos pela turma selecionada
+            let alunosFiltrados = todosAlunos;
+            if (turmaSelecionada) {
+                alunosFiltrados = todosAlunos.filter(aluno => aluno.turma === turmaSelecionada);
+            }
+            
+            // Atualizar opções do select
+            selectAluno.innerHTML = '<option value="">Todos os alunos</option>';
+            alunosFiltrados.forEach(aluno => {
+                selectAluno.innerHTML += `<option value="${aluno.id}">${aluno.nome} (${aluno.turma})</option>`;
+            });
+            
+            // Aplicar filtros após atualização
+            aplicarFiltros();
+        }
+        
+        async function carregarFiltros() {
+            try {
+                if (!window.processedDataRelatorios || window.processedDataRelatorios.length === 0) {
+                    return;
+                }
+
+                const dados = window.processedDataRelatorios;
+                
+                // Extrair turmas únicas
+                todasTurmas = [...new Set(dados.map(a => a.turma))].sort();
+                
+                // Preencher select de turmas
+                const selectTurma = document.getElementById('filtroTurma');
+                if (selectTurma) {
+                    selectTurma.innerHTML = '<option value="">Todas as turmas</option>';
+                    todasTurmas.forEach(turma => {
+                        selectTurma.innerHTML += `<option value="${turma}">${turma}</option>`;
+                    });
+                    
+                    // Adicionar event listener para atualizar filtro de alunos
+                    selectTurma.addEventListener('change', function() {
+                        atualizarFiltroAlunosRelatorios(this.value);
+                    });
+                }
+
+                // Armazenar todos os alunos para uso no filtro dinâmico
+                todosAlunos = dados.sort((a, b) => a.nome.localeCompare(b.nome));
+                
+                // Carregar inicialmente todos os alunos
+                atualizarFiltroAlunosRelatorios('');
+
+                console.log(`Filtros carregados: ${todasTurmas.length} turmas, ${todosAlunos.length} alunos`);
+                
+                // Aplicar filtros iniciais
+                aplicarFiltros();
+                
+            } catch (error) {
+                console.error('Erro ao carregar filtros:', error);
+            }
+        }
+    </script>
+    <script>
+        // Proteger página - requer autenticação
+        requireAuth({
+            loginPath: 'login.html',
+            onAuth: function(user) {
+                console.log('Usuário logado nos relatórios:', user.email);
+                // Página já inicializa automaticamente via DOMContentLoaded
+            }
+        });
+    </script>
+
+</body>
+</html>

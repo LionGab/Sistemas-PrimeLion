@@ -1,0 +1,20 @@
+{
+  "servers": {
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-sequential-thinking"]
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-filesystem", "C:/Users/User/PrimeLion"]
+    },
+    "puppeteer": {
+      "command": "npx",
+      "args": ["puppeteer-mcp-server"]
+    },
+    "basic-memory": {
+      "command": "uvx",
+      "args": ["basic-memory", "tool", "serve"]
+    }
+  }
+}

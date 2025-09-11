@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Debug Rápido</title>
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script defer src="assets/js/firebase-config.js"></script>
+</head>
+<body>
+  <h1>🔍 DEBUG RÁPIDO - DADOS NO FIREBASE</h1>
+  <button id="verificar" style="padding: 15px; background: blue; color: white; font-size: 16px;">
+    ✅ VERIFICAR DADOS AGORA
+  </button>
+  <div id="resultado" style="white-space: pre-wrap; font-family: monospace; margin-top: 20px;"></div>
+
+  <script>
+    document.getElementById('verificar').addEventListener('click', async function() {
+      const resultado = document.getElementById('resultado');
+      
+      // Aguardar Firebase
+      while (!window.db) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+      
+      resultado.innerHTML = "🔍 VERIFICANDO FIREBASE...\n\n";
+      
+      try {
+        // Verificar coleção frequencia
+        const snapshot = await db.collection('frequencia').get();
+        resultado.innerHTML += `📄 DOCUMENTOS NA COLEÇÃO 'frequencia': ${snapshot.docs.length}\n\n`;
+        
+        if (snapshot.docs.length === 0) {
+          resultado.innerHTML += "❌ NENHUM DOCUMENTO ENCONTRADO!\n";
+          resultado.innerHTML += "🔧 Possíveis problemas:\n";
+          resultado.innerHTML += "   1. Dados não foram salvos\n";
+          resultado.innerHTML += "   2. Erro nas regras do Firebase\n";
+          resultado.innerHTML += "   3. Problema na estrutura de dados\n";
+          return;
+        }
+        
+        // Listar todos os documentos
+        for (const doc of snapshot.docs) {
+          resultado.innerHTML += `📁 DOCUMENTO: ${doc.id}\n`;
+          
+          // Verificar subcoleção alunos
+          const alunosSnapshot = await doc.ref.collection('alunos').get();
+          resultado.innerHTML += `   👥 ALUNOS: ${alunosSnapshot.docs.length}\n`;
+          
+          // Mostrar 2 alunos de exemplo
+          let count = 0;
+          for (const alunoDoc of alunosSnapshot.docs) {
+            if (count >= 2) break;
+            const dados = alunoDoc.data();
+            resultado.innerHTML += `      🧑 ${alunoDoc.id}: ${JSON.stringify(dados)}\n`;
+            count++;
+          }
+          resultado.innerHTML += "\n";
+        }
+        
+        resultado.innerHTML += "✅ VERIFICAÇÃO CONCLUÍDA!\n";
+        
+      } catch (error) {
+        resultado.innerHTML += `❌ ERRO: ${error.message}\n`;
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>

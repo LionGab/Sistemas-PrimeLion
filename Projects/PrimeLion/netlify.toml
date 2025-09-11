@@ -1,0 +1,82 @@
+[build]
+  # Diretório raiz do projeto no repositório
+  base = "."
+  
+  # Diretório de publicação (onde estão os arquivos finais)
+  publish = "."
+  
+  # Comando de build (não necessário para site estático simples)
+  command = "echo 'Static site - no build required'"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Headers para performance e segurança
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Cache otimizado para assets estáticos
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=300, s-maxage=300"
+
+# Compressão gzip/brotli
+[[headers]]
+  for = "*"
+  [headers.values]
+    Content-Encoding = "gzip"
+
+# Preload de recursos críticos
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Link = '''</styles.css>; rel=preload; as=style,
+              </script.js>; rel=preload; as=script,
+              <https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap>; rel=preload; as=style'''
+
+# Redirects e rewrites
+[[redirects]]
+  from = "/diagnostico"
+  to = "/#diagnostico"
+  status = 301
+
+[[redirects]]
+  from = "/whatsapp"
+  to = "https://wa.me/5511999999999?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20Sprint%20de%20Diagn%C3%B3stico%20Gratuito"
+  status = 302
+
+# Form handling (se necessário no futuro)
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
+
+# Plugin para otimização de imagens (se houver)
+[[plugins]]
+  package = "netlify-plugin-image-optim"

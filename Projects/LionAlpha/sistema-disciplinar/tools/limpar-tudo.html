@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Limpar Tudo</title>
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script defer src="assets/js/firebase-config.js"></script>
+</head>
+<body>
+  <h1>🧹 LIMPAR TODOS OS DADOS DE FREQUÊNCIA</h1>
+  <button id="btnLimpar" style="background: red; color: white; padding: 15px 30px; font-size: 18px;">
+    🗑️ DELETAR TUDO RELACIONADO À FREQUÊNCIA
+  </button>
+  <div id="output" style="white-space: pre-wrap; font-family: monospace; margin-top: 20px;"></div>
+
+  <script>
+    document.getElementById('btnLimpar').addEventListener('click', async function() {
+      const output = document.getElementById('output');
+      
+      if (!confirm('TEM CERTEZA? Isso vai deletar TUDO relacionado à frequência!')) {
+        return;
+      }
+      
+      // Aguardar Firebase estar pronto
+      while (!window.db) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+      
+      output.innerHTML = "🧹 LIMPANDO TODOS OS DADOS DE FREQUÊNCIA...\n\n";
+      
+      try {
+        // 1. Deletar coleção frequencia
+        const frequenciaSnapshot = await db.collection('frequencia').get();
+        output.innerHTML += `📄 Deletando ${frequenciaSnapshot.docs.length} documentos da coleção frequencia...\n`;
+        
+        for (const doc of frequenciaSnapshot.docs) {
+          // Deletar subcoleção alunos primeiro
+          const alunosSnapshot = await doc.ref.collection('alunos').get();
+          const batch1 = db.batch();
+          alunosSnapshot.docs.forEach(alunoDoc => {
+            batch1.delete(alunoDoc.ref);
+          });
+          if (alunosSnapshot.docs.length > 0) {
+            await batch1.commit();
+          }
+          
+          // Deletar documento principal
+          await doc.ref.delete();
+          output.innerHTML += `   ✅ ${doc.id} deletado\n`;
+        }
+        
+        output.innerHTML += "✅ LIMPEZA CONCLUÍDA!\n\n";
+        output.innerHTML += "🎯 AGORA VOCÊ PODE CRIAR UMA NOVA PÁGINA DE FREQUÊNCIA DO ZERO!\n";
+        
+      } catch (error) {
+        output.innerHTML += `❌ ERRO: ${error.message}\n`;
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>

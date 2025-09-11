@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Importar CSV — Sistema Disciplinar</title>
+
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif; padding:20px}
+    h1{font-size:20px;margin-bottom:10px}
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px;max-width:880px;margin:0 auto;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+    .row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+    .row > *{flex:1 1 240px}
+    input[type="file"]{padding:8px;border:1px solid #ddd;border-radius:8px;background:#fafafa}
+    select, input[type="text"], button{padding:10px;border:1px solid #ddd;border-radius:8px}
+    button{cursor:pointer}
+    table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
+    th, td{border:1px solid #eee;padding:6px 8px}
+    th{background:#f9fafb}
+    .muted{color:#6b7280;font-size:12px}
+    .ok{color:#0a7a3b}
+    .err{color:#b91c1c}
+    .badge{display:inline-block;background:#eef2ff;border:1px solid #c7d2fe;border-radius:999px;padding:2px 8px;font-size:12px}
+  </style>
+
+  <!-- Firebase (compat) -->
+  
+  
+  
+  
+
+  <!-- PapaParse para ler CSV -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  
+  <!-- Scripts do Sistema -->
+  <script src="../assets/js/local-auth.js"></script>
+  <script src="../assets/js/local-db.js"></script>
+</head>
+<body>
+  <h1>📥 Importar dados via CSV</h1>
+  <div class="card">
+    <div class="row">
+      <div>
+        <label>Coleção de destino</label><br/>
+        <select id="collection">
+          <option value="alunos">alunos</option>
+          <option value="turmas">turmas</option>
+          <option value="medidas">medidas</option>
+          <option value="faltas">faltas</option>
+        </select>
+      </div>
+      <div>
+        <label>Coluna para Doc ID (opcional)</label><br/>
+        <input type="text" id="idField" placeholder="ex.: id, matricula (deixe vazio para ID automático)"/>
+      </div>
+      <div>
+        <label>Arquivo CSV</label><br/>
+        <input type="file" id="file" accept=".csv" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div><label><input type="checkbox" id="hasHeader" checked/> Primeira linha é cabeçalho</label></div>
+      <div><label><input type="checkbox" id="dryRun" /> Simular (não grava)</label></div>
+      <div class="muted">Tipos auto: <span class="badge">true/false → boolean</span> <span class="badge">123 → number</span> <span class="badge">YYYY-MM-DD → date</span></div>
+    </div>
+
+    <div class="row">
+      <button id="btnPreview">🔎 Pré-visualizar</button>
+      <button id="btnImport" disabled>🚀 Importar</button>
+      <span id="status" class="muted"></span>
+    </div>
+
+    <div id="preview"></div>
+  </div>
+
+  <script>
+    // Garante login - com verificação de carregamento
+    document.addEventListener('DOMContentLoaded', () => {
+      const checkAuth = () => {
+        if (window.localAuth && typeof window.localAuth.onAuthStateChanged === 'function') {
+          window.localAuth.onAuthStateChanged(user => {
+            if (!user) {
+              alert("Faça login para importar.");
+              window.location.href = "login.html";
+            }
+          });
+        } else {
+          setTimeout(checkAuth, 500);
+        }
+      };
+      checkAuth();
+    });
+
+    const el = (id)=>document.getElementById(id);
+    const statusEl = el('status');
+
+    function toType(val){
+      if (val === null || val === undefined) return null;
+      const s = String(val).trim();
+      if (s === '') return ''; // mantém vazio como string vazia
+
+      // boolean
+      if (/^(true|false)$/i.test(s)) return s.toLowerCase() === 'true';
+
+      // number
+      if (/^-?\d+(\.\d+)?$/.test(s)) return Number(s);
+
+      // date YYYY-MM-DD
+      if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
+        const d = new Date(s + 'T00:00:00Z');
+        if (!isNaN(d.getTime())) return firebase.firestore.Timestamp.fromDate(d);
+      }
+      return s; // string
+    }
+
+    function chunk(arr, size){ const out=[]; for(let i=0;i<arr.length;i+=size) out.push(arr.slice(i,i+size)); return out; }
+
+    let parsed = null;
+
+    el('btnPreview').addEventListener('click', () => {
+      const file = el('file').files[0];
+      if (!file) { alert('Selecione um CSV.'); return; }
+
+      Papa.parse(file, {
+        header: el('hasHeader').checked,
+        skipEmptyLines: true,
+        complete: (res) => {
+          parsed = res.data;
+          if (!parsed || !parsed.length){ alert('Nenhuma linha encontrada.'); return; }
+          // Preview das primeiras 10 linhas
+          const rows = parsed.slice(0,10);
+          const keys = Object.keys(rows[0]);
+
+          // Tabela
+          let html = '<table><thead><tr>';
+          keys.forEach(k => html += `<th>${k}</th>`);
+          html += '</tr></thead><tbody>';
+          rows.forEach(r => {
+            html += '<tr>';
+            keys.forEach(k => html += `<td>${(r[k]??'')}</td>`);
+            html += '</tr>';
+          });
+          html += '</tbody></table>';
+          el('preview').innerHTML = html;
+
+          el('btnImport').disabled = false;
+          statusEl.textContent = `Pré-visualização pronta (${parsed.length} linhas).`;
+        },
+        error: (err) => {
+          console.error(err);
+          alert('Erro ao ler CSV: ' + err);
+        }
+      });
+    });
+
+    el('btnImport').addEventListener('click', async () => {
+      if (!parsed){ alert('Clique em Pré-visualizar antes.'); return; }
+      const collection = el('collection').value.trim();
+      const idField = el('idField').value.trim();
+      const dry = el('dryRun').checked;
+
+      if (!collection){ alert('Informe a coleção.'); return; }
+
+      statusEl.textContent = 'Processando...';
+      const total = parsed.length;
+      let done = 0, errors = 0;
+
+      // Converte tipos e cria lote
+      const docs = parsed.map(row => {
+        const out = {};
+        Object.keys(row).forEach(k => {
+          out[k] = toType(row[k]);
+        });
+        let id = null;
+        if (idField && row[idField] !== undefined && String(row[idField]).trim() !== '') {
+          id = String(row[idField]).trim();
+        }
+        return { id, data: out };
+      });
+
+      if (dry){
+        statusEl.innerHTML = `🔎 Simulação: importaria <b>${total}</b> documentos na coleção <b>${collection}</b>.`;
+        return;
+      }
+
+      // Lotes de até 450 (limite 500 por batch - margem de segurança)
+      for (const slice of chunk(docs, 450)) {
+        const batch = window.db.batch();
+        slice.forEach(doc => {
+          const ref = doc.id
+            ? window.db.collection(collection).doc(doc.id)
+            : window.db.collection(collection).doc();
+          batch.set(ref, doc.data, { merge: true });
+        });
+
+        try {
+          await batch.commit();
+          done += slice.length;
+          statusEl.innerHTML = `✅ Gravados: <b>${done}</b> / ${total}`;
+        } catch(e) {
+          console.error(e);
+          errors += slice.length;
+          statusEl.innerHTML = `⚠️ Erros em ${errors} itens. Ver console para detalhes.`;
+        }
+      }
+
+      if (errors === 0) {
+        statusEl.innerHTML = `🎉 Concluído: <b>${done}</b> documentos importados na coleção <b>${collection}</b>.`;
+      } else {
+        statusEl.innerHTML += `<br><span class="err">Concluído com erros: ${errors} itens não gravados.</span>`;
+      }
+    });
+  </script>
+</body>
+</html>

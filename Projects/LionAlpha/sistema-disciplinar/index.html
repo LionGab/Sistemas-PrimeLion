@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dashboard disciplinar para gestão escolar: alunos, medidas, relatórios e análises.">
+  <title>Dashboard Disciplinar - Sistema de Gestão Escolar</title>
+  <link rel="icon" type="image/jpeg" href="assets/images/logo-escola.jpeg">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+
+  <!-- Sistema Local de Banco de Dados -->
+  <script src="assets/js/local-db.js"></script>
+  <script src="assets/js/local-auth.js"></script>
+  <script src="assets/js/populate-db.js"></script>
+
+  <!-- (Opcional) Chart.js se precisar de gráficos nesta página -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+
+    <!-- Scripts do dashboard -->
+    <script src="assets/js/main.js" defer></script>
+    <script src="assets/js/dashboard-alunos.js" defer></script>
+  </head>
+<body>
+  <!-- Topbar -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <img src="assets/images/logo-escola.jpeg" alt="Logo da Escola" class="top-bar-logo" style="height: 40px; margin-right: 15px; border-radius: 4px;">
+      <div class="app-launcher">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+      <span class="app-name">Dashboard Disciplinar</span>
+    </div>
+    <div class="top-bar-center">
+      <input type="text" class="search-box" placeholder="Pesquisar alunos, turmas...">
+    </div>
+    <div class="top-bar-right">
+      <div class="user-profile" title="Usuário">A</div>
+      <button id="btnLogout" class="btn-logout" style="margin-left:12px;">Sair</button>
+    </div>
+  </div>
+
+  <div class="main-layout">
+    <div class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-title">Módulos Principais</div>
+        <a href="index.html" class="sidebar-item active"><span class="sidebar-icon">🏠</span><span class="sidebar-text">Dashboard</span></a>
+        <a href="pages/gestao-alunos.html" class="sidebar-item"><span class="sidebar-icon">👥</span><span class="sidebar-text">Gestão de Alunos</span></a>
+        <a href="pages/medidas-disciplinares.html" class="sidebar-item"><span class="sidebar-icon">📋</span><span class="sidebar-text">Medidas Disciplinares</span></a>
+        <a href="pages/frequencia.html" class="sidebar-item"><span class="sidebar-icon">📅</span><span class="sidebar-text">Controle de Frequência</span></a>
+        <a href="pages/relatorios.html" class="sidebar-item"><span class="sidebar-icon">📊</span><span class="sidebar-text">Relatórios</span></a>
+        <a href="pages/analises.html" class="sidebar-item"><span class="sidebar-icon">📈</span><span class="sidebar-text">Análises</span></a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-title">Ferramentas</div>
+        <a href="pages/configuracoes.html" class="sidebar-item"><span class="sidebar-icon">⚙️</span><span class="sidebar-text">Configurações</span></a>
+        <a href="pages/comunicacao.html" class="sidebar-item"><span class="sidebar-icon">📱</span><span class="sidebar-text">Comunicação</span></a>
+        <a href="#" id="sidebarLogout" class="sidebar-item"><span class="sidebar-icon">🚪</span><span class="sidebar-text">Logout</span></a>
+      </div>
+    </div>
+
+    <div class="content-area">
+      <div class="main-content">
+        <div class="module-title">🏠 Dashboard Geral</div>
+
+        <div class="quick-stats">
+          <div class="stat-card stat-primary">
+            <div class="stat-icon">👥</div>
+            <div class="stat-content">
+              <div class="stat-number" id="totalAlunos">0</div>
+              <div class="stat-label">Total de Alunos</div>
+              <div class="stat-trend">+0% vs mês anterior</div>
+            </div>
+          </div>
+          <div class="stat-card stat-danger">
+            <div class="stat-icon">❌</div>
+            <div class="stat-content">
+              <div class="stat-number" id="totalFaltas">0</div>
+              <div class="stat-label">Total de Faltas</div>
+              <div class="stat-trend">+0% vs mês anterior</div>
+            </div>
+          </div>
+          <div class="stat-card stat-warning">
+            <div class="stat-icon">⚖️</div>
+            <div class="stat-content">
+              <div class="stat-number" id="totalMedidas">0</div>
+              <div class="stat-label">Medidas Aplicadas</div>
+              <div class="stat-trend">+0% vs mês anterior</div>
+            </div>
+          </div>
+          <div class="stat-card stat-info">
+            <div class="stat-icon">📊</div>
+            <div class="stat-content">
+              <div class="stat-number" id="mediaFaltas">0.0</div>
+              <div class="stat-label">Média por Aluno</div>
+              <div class="stat-trend">+0% vs mês anterior</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="management-section">
+          <div class="management-title">📋 Resumo do Sistema</div>
+          <div class="insight-item">
+            <div class="insight-text">
+              Sistema funcionando normalmente. Acesse os módulos através do menu lateral para começar a gerenciar os dados da escola.
+            </div>
+            <span class="trend-indicator trend-stable">📊 Estável</span>
+          </div>
+        </div>
+
+          <div class="management-section">
+            <div class="management-title">🚀 Acesso Rápido</div>
+            <div class="form-grid">
+              <a href="pages/gestao-alunos.html" class="btn btn-primary" style="padding: 20px; text-align: center; text-decoration: none;">👥 Cadastrar Aluno</a>
+              <a href="pages/medidas-disciplinares.html" class="btn btn-warning" style="padding: 20px; text-align: center; text-decoration: none;">📋 Registrar Falta</a>
+              <a href="pages/relatorios.html" class="btn btn-info" style="padding: 20px; text-align: center; text-decoration: none;">📊 Ver Relatórios</a>
+              <a href="pages/analises.html" class="btn btn-success" style="padding: 20px; text-align: center; text-decoration: none;">📈 Ver Análises</a>
+            </div>
+          </div>
+
+       <div class="management-section" id="alunosCadastradosSection">
+  <div class="management-title">
+    👥 Alunos Cadastrados
+    <button id="toggleAlunosBtn" class="btn btn-info" style="margin-left:12px; padding:6px 10px; font-size:12px; cursor:pointer;">
+      Mostrar
+    </button>
+  </div>
+
+  <!-- Começa fechado por padrão -->
+  <div class="table-content" id="alunosSection" style="display:none;">
+    <table id="alunosDashboard" class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Turma</th>
+          <th>Nascimento</th>
+          <th>Responsável</th>
+          <th>CPF</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+  <!-- Guard + inicialização do dashboard (só logado) -->
+<script>
+  async function carregarEstatisticasDashboard() {
+    try {
+      if (typeof db !== 'undefined' && db) {
+        // Buscar todos os alunos (sem filtro de ativo)
+        const alunosSnapshot = await db.collection('alunos').get();
+
+        // Buscar medidas disciplinares (coleção correta)
+        const medidasSnapshot = await db.collection('medidas_disciplinares').get();
+
+        // Para faltas, vamos contar 0 por enquanto até implementarmos
+        const totalAlunos = alunosSnapshot.size;
+        const totalFaltas = 0; // Implementar quando tiver sistema de faltas
+        const totalMedidas = medidasSnapshot.size;
+        const mediaFaltas = totalAlunos > 0 ? (totalFaltas / totalAlunos).toFixed(1) : 0;
+
+        document.getElementById('totalAlunos').textContent  = totalAlunos;
+        document.getElementById('totalFaltas').textContent  = totalFaltas;
+        document.getElementById('totalMedidas').textContent = totalMedidas;
+        document.getElementById('mediaFaltas').textContent  = mediaFaltas;
+
+        console.log(`Estatísticas: ${totalAlunos} alunos, ${totalMedidas} medidas`);
+        if (typeof showMessage === 'function') showMessage('📊 Estatísticas atualizadas!', 'success');
+      }
+    } catch (e) {
+      console.error('Erro ao carregar estatísticas:', e);
+      if (typeof showMessage === 'function') showMessage('⚠️ Erro ao carregar estatísticas', 'error');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Verificar fallback de login antes do requireAuth
+    const loginFallback = localStorage.getItem('loginSuccess');
+    if (loginFallback && !window.localAuth?.getCurrentUser()) {
+      try {
+        const loginData = JSON.parse(loginFallback);
+        const isExpired = (Date.now() - loginData.timestamp) > (24 * 60 * 60 * 1000);
+        
+        if (!isExpired) {
+          console.log('📝 Usando fallback de login:', loginData.email);
+          // Simular usuário logado para o requireAuth
+          setTimeout(() => {
+            if (typeof carregarEstatisticasDashboard === 'function') {
+              carregarEstatisticasDashboard();
+              if (typeof carregarAlunosDashboard === 'function') {
+                carregarAlunosDashboard();
+              }
+            }
+          }, 1000);
+          return;
+        } else {
+          localStorage.removeItem('loginSuccess');
+        }
+      } catch (error) {
+        console.error('Erro ao processar fallback de login:', error);
+        localStorage.removeItem('loginSuccess');
+      }
+    }
+    
+    requireAuth({
+      loginPath: 'pages/login.html',
+      onAuth: (user) => {
+        if (typeof carregarEstatisticasDashboard === 'function') {
+          carregarEstatisticasDashboard();
+          if (typeof carregarAlunosDashboard === 'function') {
+            carregarAlunosDashboard();
+          }
+        }
+
+        // Função de logout compatible com local-auth
+        const btn = document.getElementById('btnLogout');
+        if (btn) {
+          btn.addEventListener('click', async () => {
+            try {
+              if (window.localAuth && typeof window.localAuth.signOut === 'function') {
+                await window.localAuth.signOut();
+                showMessage('👋 Logout realizado com sucesso!', 'success');
+                setTimeout(() => {
+                  window.location.href = 'pages/login.html';
+                }, 1000);
+              } else {
+                console.warn('Sistema de autenticação não disponível');
+                window.location.href = 'pages/login.html';
+              }
+            } catch (error) {
+              console.error('Erro no logout:', error);
+              window.location.href = 'pages/login.html';
+            }
+          });
+        }
+
+        // Logout da sidebar
+        const sidebarLogout = document.getElementById('sidebarLogout');
+        if (sidebarLogout) {
+          sidebarLogout.addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+              if (window.localAuth && typeof window.localAuth.signOut === 'function') {
+                await window.localAuth.signOut();
+                showMessage('👋 Logout realizado com sucesso!', 'success');
+                setTimeout(() => {
+                  window.location.href = 'pages/login.html';
+                }, 1000);
+              } else {
+                window.location.href = 'pages/login.html';
+              }
+            } catch (error) {
+              console.error('Erro no logout:', error);
+              window.location.href = 'pages/login.html';
+            }
+          });
+        }
+
+        // === Toggle "Alunos Cadastrados" ===
+        const toggleBtn = document.getElementById('toggleAlunosBtn');
+        const alunosSection = document.getElementById('alunosSection');
+        if (toggleBtn && alunosSection) {
+          toggleBtn.addEventListener('click', () => {
+            const hidden = alunosSection.style.display === 'none';
+            alunosSection.style.display = hidden ? 'block' : 'none';
+            toggleBtn.textContent = hidden ? 'Ocultar' : 'Mostrar';
+          });
+        }
+      }
+    });
+  });
+</script>
+<script src="assets/js/auth-utils.js" defer></script>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    if (typeof requireAuth === 'function') requireAuth();
+  });
+</script>
+</body>
+</html>

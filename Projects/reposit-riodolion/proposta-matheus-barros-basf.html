@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise Estratégica LinkedIn - Matheus Barros | BASF</title>
+    <meta name="description" content="Proposta de otimização do LinkedIn para Matheus Barros - Consultor BASF">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #003DA5 0%, #005BBF 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 40px rgba(0, 61, 165, 0.2);
+        }
+        
+        .header h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+        
+        .header .subtitle {
+            font-size: 22px;
+            color: #7CB342;
+            font-weight: 500;
+            margin-top: 15px;
+        }
+        
+        /* Main Grid */
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #003DA5;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .score {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .score-low {
+            background: #ffebee;
+            color: #c62828;
+        }
+        
+        .score-high {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .problem-list {
+            list-style: none;
+        }
+        
+        .problem-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .problem-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .problem-list i {
+            color: #d32f2f;
+            margin-top: 3px;
+        }
+        
+        .improvement-list {
+            list-style: none;
+        }
+        
+        .improvement-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .improvement-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .improvement-list i {
+            color: #7CB342;
+            margin-top: 3px;
+        }
+        
+        .headline-preview {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 4px solid #7CB342;
+        }
+        
+        .headline-preview h4 {
+            color: #003DA5;
+            margin-bottom: 8px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .headline-preview p {
+            color: #333;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        
+        /* Metrics Section */
+        .metrics-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .metrics-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #003DA5;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-bottom: 30px;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .metric-icon {
+            font-size: 32px;
+            color: #003DA5;
+            margin-bottom: 10px;
+        }
+        
+        .metric-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .metric-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .metric-change {
+            font-size: 14px;
+            color: #7CB342;
+            margin-top: 5px;
+        }
+        
+        /* Content Strategy */
+        .content-strategy {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .calendar-header {
+            text-align: center;
+            font-weight: 600;
+            color: #003DA5;
+            padding: 10px;
+            background: #f0f4f8;
+            border-radius: 8px;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: #f8f9fa;
+            padding: 10px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .calendar-day.post-day {
+            background: linear-gradient(135deg, #7CB342 0%, #8BC34A 100%);
+            color: white;
+            cursor: pointer;
+        }
+        
+        .calendar-day.post-day:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(124, 179, 66, 0.3);
+        }
+        
+        .day-number {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .post-type {
+            font-size: 10px;
+            text-align: center;
+        }
+        
+        /* Post Example */
+        .post-example {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .linkedin-post {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .post-header {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .post-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #003DA5, #7CB342);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+        }
+        
+        .post-info h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #000;
+        }
+        
+        .post-info p {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .post-content {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .post-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #7CB342 0%, #8BC34A 100%);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .post-stats {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* Beta Proposal */
+        .beta-proposal {
+            background: linear-gradient(135deg, #003DA5 0%, #005BBF 100%);
+            border-radius: 20px;
+            padding: 50px;
+            margin-bottom: 40px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .beta-proposal::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(124, 179, 66, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .beta-badge {
+            display: inline-block;
+            background: #7CB342;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .beta-title {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+        
+        .beta-price {
+            font-size: 48px;
+            font-weight: 800;
+            color: #7CB342;
+            margin-bottom: 10px;
+        }
+        
+        .beta-subtitle {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .beta-features {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .beta-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+        }
+        
+        .beta-feature i {
+            color: #7CB342;
+            font-size: 20px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #7CB342;
+            color: white;
+            padding: 20px 50px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(124, 179, 66, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(124, 179, 66, 0.4);
+            background: #8BC34A;
+        }
+        
+        /* Guarantees */
+        .guarantees {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .guarantees-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .guarantee-item {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .guarantee-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #7CB342 0%, #8BC34A 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 36px;
+            color: white;
+        }
+        
+        .guarantee-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #003DA5;
+            margin-bottom: 10px;
+        }
+        
+        .guarantee-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 32px;
+            }
+            
+            .header .subtitle {
+                font-size: 18px;
+            }
+            
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .calendar-grid {
+                grid-template-columns: repeat(7, 1fr);
+                gap: 5px;
+            }
+            
+            .calendar-day {
+                font-size: 12px;
+            }
+            
+            .beta-features {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .guarantees-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .container {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Análise Estratégica LinkedIn - Matheus Barros</h1>
+            <div class="subtitle">
+                <i class="fas fa-chart-line"></i>
+                Potencial: Tornar-se referência em Consultoria Agrícola B2B no Centro-Oeste
+            </div>
+        </header>
+
+        <!-- Analysis Grid -->
+        <div class="analysis-grid">
+            <!-- Current Diagnosis -->
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fas fa-clipboard-check"></i>
+                    Diagnóstico Atual
+                </h2>
+                <span class="score score-low">Score atual: 3/10</span>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <img src="https://i.imgur.com/K3WZNzo.png" alt="Perfil atual do Matheus no LinkedIn" style="width: 100%; max-width: 600px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12); margin: 15px auto; display: block;">
+                </div>
+                
+                <ul class="problem-list">
+                    <li>
+                        <i class="fas fa-times-circle"></i>
+                        <span><strong>Headline genérica</strong> - Não menciona resultados ou diferenciais</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-times-circle"></i>
+                        <span><strong>Banner padrão</strong> - Oportunidade perdida de branding</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-times-circle"></i>
+                        <span><strong>Sobre truncado</strong> - Valor e expertise não aparecem</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-times-circle"></i>
+                        <span><strong>Baixa frequência de posts</strong> - Invisibilidade no feed</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-times-circle"></i>
+                        <span><strong>Sem social proof visível</strong> - Faltam cases e números</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-times-circle"></i>
+                        <span><strong>Sem CTA claro</strong> - Visitantes não sabem próximo passo</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 30 Days Projection -->
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fas fa-rocket"></i>
+                    Projeção 30 Dias
+                </h2>
+                <span class="score score-high">Score projetado: 9/10</span>
+                
+                <ul class="improvement-list">
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span><strong>Headline otimizada</strong> - Com resultados e números</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span><strong>Banner personalizado</strong> - Identidade visual BASF + pessoal</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span><strong>Sobre completo</strong> - Storytelling + Cases + CTA</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span><strong>3 posts/semana</strong> - Consistência e autoridade</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span><strong>Seção em destaque</strong> - Resultados comprovados</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span><strong>Pipeline ativo</strong> - Leads qualificados mensais</span>
+                    </li>
+                </ul>
+                
+                <div class="headline-preview">
+                    <h4>Nova Headline Proposta:</h4>
+                    <p>Aumento produtividade em 20% com tecnologia BASF | Consultor que já impactou 10.000 hectares no MT | Especialista em Agricultura de Precisão</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metrics Section -->
+        <div class="metrics-section">
+            <h2 class="metrics-title">
+                <i class="fas fa-chart-bar"></i>
+                Métricas Projetadas - Evolução 30 Dias
+            </h2>
+            
+            <div class="chart-container">
+                <canvas id="metricsChart"></canvas>
+            </div>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="metric-label">Seguidores</div>
+                    <div class="metric-value">2.500</div>
+                    <div class="metric-change">+286%</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="metric-label">Visualizações/mês</div>
+                    <div class="metric-value">10.000</div>
+                    <div class="metric-change">+9.900%</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="metric-label">Leads/mês</div>
+                    <div class="metric-value">10-15</div>
+                    <div class="metric-change">Produtores qualificados</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <div class="metric-label">Convites</div>
+                    <div class="metric-value">2-3/mês</div>
+                    <div class="metric-change">Palestras e eventos</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Strategy -->
+        <div class="content-strategy">
+            <h2 class="card-title">
+                <i class="fas fa-calendar-alt"></i>
+                Estratégia de Conteúdo - 30 Dias
+            </h2>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <img src="https://i.imgur.com/WEcXBGm.png" alt="Atividade atual do Matheus no LinkedIn" style="width: 100%; max-width: 600px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12); margin: 15px auto; display: block;">
+            </div>
+
+            <div style="margin-top: 20px; margin-bottom: 30px;">
+                <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;">
+                    <div style="text-align: center;">
+                        <div style="width: 20px; height: 20px; background: #7CB342; border-radius: 4px; margin: 0 auto 5px;"></div>
+                        <span style="font-size: 14px;">Segunda: Cases de Campo</span>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 20px; height: 20px; background: #003DA5; border-radius: 4px; margin: 0 auto 5px;"></div>
+                        <span style="font-size: 14px;">Quarta: Tecnologia/Inovação</span>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 20px; height: 20px; background: #FFA726; border-radius: 4px; margin: 0 auto 5px;"></div>
+                        <span style="font-size: 14px;">Sexta: Dicas Práticas</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="calendar-grid">
+                <div class="calendar-header">Dom</div>
+                <div class="calendar-header">Seg</div>
+                <div class="calendar-header">Ter</div>
+                <div class="calendar-header">Qua</div>
+                <div class="calendar-header">Qui</div>
+                <div class="calendar-header">Sex</div>
+                <div class="calendar-header">Sáb</div>
+                
+                <!-- Week 1 -->
+                <div class="calendar-day"><span class="day-number">1</span></div>
+                <div class="calendar-day post-day" style="background: linear-gradient(135deg, #7CB342 0%, #8BC34A 100%);">
+                    <span class="day-number">2</span>
+                    <span class="post-type">Case</span>
+                </div>
+                <div class="calendar-day"><span class="day-number">3</span></div>
+                <div class="calendar-day post-day" style="background: linear-gradient(135deg, #003DA5 0%, #005BBF 100%);">
+                    <span class="day-number">4</span>
+                    <span class="post-type">Tech</span>
+                </div>
+                <div class="calendar-day"><span class="day-number">5</span></div>
+                <div class="calendar-day post-day" style="background: linear-gradient(135deg, #FFA726 0%, #FFB74D 100%);">
+                    <span class="day-number">6</span>
+                    <span class="post-type">Dicas</span>
+                </div>
+                <div class="calendar-day"><span class="day-number">7</span></div>
+                
+                <!-- Week 2 -->
+                <div class="calendar-day"><span class="day-number">8</span></div>
+                <div class="calendar-day post-day" style="background: linear-gradient(135deg, #7CB342 0%, #8BC34A 100%);">
+                    <span class="day-number">9</span>
+                    <span class="post-type">Case</span>
+                </div>
+                <div class="calendar-day"><span class="day-number">10</span></div>
+                <div class="calendar-day post-day" style="background: linear-gradient(135deg, #003DA5 0%, #005BBF 100%);">
+                    <span class="day-number">11</span>
+                    <span class="post-type">Tech</span>
+                </div>
+                <div class="calendar-day"><span class="day-number">12</span></div>
+                <div class="calendar-day post-day" style="background: linear-gradient(135deg, #FFA726 0%, #FFB74D 100%);">
+                    <span class="day-number">13</span>
+                    <span class="post-type">Dicas</span>
+                </div>
+                <div class="calendar-day"><span class="day-number">14</span></div>
+                
+                <!-- Week 3 -->
+                <div class="calendar-day"><span class="day-number">15</span></div>
+                <div class="calendar-day post-day" style="background: linear-gradient(135deg, #7CB342 0%, #8BC34A 100%);">
+                    <span class="day-number">16</span>
+                    <span class="post-type">Case</span>
+                </div>
+                <div class="calendar-day"><span class="day-number">17</span></div>
+                <div class="calendar-day post-day" style="background: linear-gradient(135deg, #003DA5 0%, #005BBF 100%);">
+                    <span class="day-number">18</span>
+                    <span class="post-type">Tech</span>
+                </div>
+                <div class="calendar-day"><span class="day-number">19</span></div>
+                <div class="calendar-day post-day" style="background: linear-gradient(135deg, #FFA726 0%, #FFB74D 100%);">
+                    <span class="day-number">20</span>
+                    <span class="post-type">Dicas</span>
+                </div>
+                <div class="calendar-day"><span class="day-number">21</span></div>
+                
+                <!-- Week 4 -->
+                <div class="calendar-day"><span class="day-number">22</span></div>
+                <div class="calendar-day post-day" style="background: linear-gradient(135deg, #7CB342 0%, #8BC34A 100%);">
+                    <span class="day-number">23</span>
+                    <span class="post-type">Case</span>
+                </div>
+                <div class="calendar-day"><span class="day-number">24</span></div>
+                <div class="calendar-day post-day" style="background: linear-gradient(135deg, #003DA5 0%, #005BBF 100%);">
+                    <span class="day-number">25</span>
+                    <span class="post-type">Tech</span>
+                </div>
+                <div class="calendar-day"><span class="day-number">26</span></div>
+                <div class="calendar-day post-day" style="background: linear-gradient(135deg, #FFA726 0%, #FFB74D 100%);">
+                    <span class="day-number">27</span>
+                    <span class="post-type">Dicas</span>
+                </div>
+                <div class="calendar-day"><span class="day-number">28</span></div>
+                
+                <!-- Week 5 -->
+                <div class="calendar-day"><span class="day-number">29</span></div>
+                <div class="calendar-day post-day" style="background: linear-gradient(135deg, #7CB342 0%, #8BC34A 100%);">
+                    <span class="day-number">30</span>
+                    <span class="post-type">Case</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Post Example -->
+        <div class="post-example">
+            <h2 class="card-title">
+                <i class="fab fa-linkedin"></i>
+                Exemplo de Post Otimizado
+            </h2>
+            
+            <div class="linkedin-post">
+                <div class="post-header">
+                    <div class="post-avatar">MB</div>
+                    <div class="post-info">
+                        <h3>Matheus Barros</h3>
+                        <p>Consultor BASF | +20% Produtividade em Soja | Campo Verde-MT</p>
+                        <p style="font-size: 12px; color: #999;">2d • 🌍</p>
+                    </div>
+                </div>
+                
+                <div class="post-content">
+                    <p><strong>Como um produtor de Primavera do Leste aumentou 18% na soja com 1 mudança simples...</strong></p>
+                    <p style="margin-top: 10px;">🎯 O problema: 65 sacas/ha há 3 safras</p>
+                    <p>💡 A solução: Ajuste fino no manejo de fungicidas BASF</p>
+                    <p>📈 O resultado: 77 sacas/ha na última safra</p>
+                    <p style="margin-top: 10px;">A chave? Timing de aplicação baseado em monitoramento diário + produto certo na dose certa.</p>
+                    <p style="margin-top: 10px;">Quer saber os 3 passos exatos? Comenta "PROTOCOLO" que envio no privado.</p>
+                    <p style="margin-top: 10px; color: #0077B5;">#AgriculturaDePrecisão #BASF #Soja #MatoGrosso #Produtividade</p>
+                </div>
+                
+                <div class="post-image">
+                    Gráfico de Produtividade
+                </div>
+                
+                <div class="post-stats">
+                    <span>👍 ❤️ 👏 234 pessoas</span>
+                    <span>42 comentários • 18 compartilhamentos</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Beta Proposal -->
+        <div class="beta-proposal">
+            <span class="beta-badge">Proposta Exclusiva</span>
+            <h2 class="beta-title">PROJETO PILOTO 30 DIAS</h2>
+            <div class="beta-price">R$ 0,00</div>
+            <p class="beta-subtitle">Em troca: Case de sucesso + Depoimento</p>
+            
+            <div class="beta-features">
+                <div class="beta-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>30 dias de gestão completa</span>
+                </div>
+                <div class="beta-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>12 posts estratégicos</span>
+                </div>
+                <div class="beta-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Perfil 100% otimizado</span>
+                </div>
+                <div class="beta-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Templates para continuar</span>
+                </div>
+            </div>
+            
+            <p style="margin-bottom: 30px; font-size: 20px; font-weight: 600;">
+                ⚡ Vagas: 1 consultor do agro
+            </p>
+            
+            <button class="cta-button" onclick="alert('Envie mensagem no LinkedIn ou WhatsApp para garantir sua vaga!')">
+                QUERO PARTICIPAR
+            </button>
+        </div>
+
+        <!-- Professional Credentials -->
+        <div class="guarantees" style="margin-bottom: 40px;">
+            <h2 class="card-title">
+                <i class="fas fa-certificate"></i>
+                Credenciais e Qualificações
+            </h2>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <img src="https://i.imgur.com/7Wuj95K.png" alt="Credenciais profissionais do Matheus" style="width: 100%; max-width: 600px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12); margin: 15px auto; display: block;">
+            </div>
+        </div>
+
+        <!-- Guarantees -->
+        <div class="guarantees">
+            <h2 class="card-title">
+                <i class="fas fa-shield-alt"></i>
+                Garantias do Projeto Piloto
+            </h2>
+            
+            <div class="guarantees-grid">
+                <div class="guarantee-item">
+                    <div class="guarantee-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3 class="guarantee-title">30 Dias Completos</h3>
+                    <p class="guarantee-desc">Gestão integral do seu LinkedIn durante todo o período piloto</p>
+                </div>
+                
+                <div class="guarantee-item">
+                    <div class="guarantee-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h3 class="guarantee-title">12 Posts Estratégicos</h3>
+                    <p class="guarantee-desc">Conteúdo de alta qualidade alinhado com objetivos BASF</p>
+                </div>
+                
+                <div class="guarantee-item">
+                    <div class="guarantee-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <h3 class="guarantee-title">Perfil Otimizado</h3>
+                    <p class="guarantee-desc">Headline, sobre, experiências e seções estratégicas</p>
+                </div>
+                
+                <div class="guarantee-item">
+                    <div class="guarantee-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3 class="guarantee-title">Templates Exclusivos</h3>
+                    <p class="guarantee-desc">Modelos prontos para você continuar após o piloto</p>
+                </div>
+                
+                <div class="guarantee-item">
+                    <div class="guarantee-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3 class="guarantee-title">Suporte WhatsApp</h3>
+                    <p class="guarantee-desc">Acompanhamento direto durante todo o projeto</p>
+                </div>
+                
+                <div class="guarantee-item">
+                    <div class="guarantee-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="guarantee-title">Relatório Final</h3>
+                    <p class="guarantee-desc">Análise completa dos resultados e próximos passos</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Metrics Chart
+        const ctx = document.getElementById('metricsChart').getContext('2d');
+        const metricsChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Hoje', 'Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
+                datasets: [
+                    {
+                        label: 'Seguidores',
+                        data: [647, 900, 1400, 2000, 2500],
+                        borderColor: '#003DA5',
+                        backgroundColor: 'rgba(0, 61, 165, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Visualizações (x100)',
+                        data: [1, 15, 40, 70, 100],
+                        borderColor: '#7CB342',
+                        backgroundColor: 'rgba(124, 179, 66, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

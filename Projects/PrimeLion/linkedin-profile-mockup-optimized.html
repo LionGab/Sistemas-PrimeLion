@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>🎨 LinkedIn Profile Preview - Sistema ROI 3X</title>
+    <meta name="description" content="Visualize como ficará seu perfil LinkedIn otimizado com o novo naming strategy">
+    
+    <style>
+        /* CSS crítico inline para carregamento instantâneo */
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f3f2ef;overflow-x:hidden}
+        .container{max-width:100%;margin:0;background:#f3f2ef;min-height:100vh;padding:0}
+        .controls{position:fixed;top:20px;right:20px;z-index:1000;display:flex;gap:8px;flex-direction:column}
+        .device-btn{padding:8px 16px;background:#fff;border:2px solid #0077b5;border-radius:20px;cursor:pointer;font-size:12px;font-weight:600;color:#0077b5;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+        .device-btn.active{background:#0077b5;color:#fff;transform:scale(1.05)}
+        .preview{transition:all .5s cubic-bezier(.25,.46,.45,.94);margin:0 auto;background:#fff;box-shadow:0 4px 20px rgba(0,0,0,.1)}
+        .preview.mobile{max-width:375px;border-radius:24px;margin:20px auto;overflow:hidden}
+        .preview.tablet{max-width:768px;border-radius:16px;margin:20px auto;overflow:hidden}
+        .preview.desktop{max-width:1200px;border-radius:8px;margin:0;overflow:visible}
+        .profile-header{background:linear-gradient(135deg,#0077b5,#00a0dc);height:200px;position:relative;overflow:hidden}
+        .mobile .profile-header{height:120px}
+        .banner-content{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;text-align:center;z-index:2}
+        .banner-title{font-size:2rem;font-weight:700;margin-bottom:8px;text-shadow:0 2px 4px rgba(0,0,0,.3)}
+        .mobile .banner-title{font-size:1.4rem}
+        .banner-subtitle{font-size:1rem;opacity:.9;font-weight:500}
+        .mobile .banner-subtitle{font-size:.9rem}
+        .profile-info{padding:0 24px 24px;position:relative}
+        .mobile .profile-info{padding:0 16px 16px}
+        .profile-picture{width:152px;height:152px;border-radius:50%;background:linear-gradient(135deg,#667eea,#764ba2);border:4px solid #fff;position:absolute;top:-76px;left:24px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:48px;font-weight:700;box-shadow:0 8px 30px rgba(0,0,0,.2);transition:all .3s}
+        .mobile .profile-picture{width:100px;height:100px;top:-50px;left:16px;font-size:32px}
+        .profile-picture:hover{transform:scale(1.05)}
+        .profile-details{margin-top:85px;animation:slideUp .8s ease}
+        .mobile .profile-details{margin-top:60px}
+        .name{font-size:24px;font-weight:700;color:#000;margin-bottom:8px}
+        .mobile .name{font-size:20px}
+        .headline{font-size:18px;color:#0077b5;margin-bottom:8px;font-weight:600;line-height:1.3;background:linear-gradient(90deg,#0077b5,#00a0dc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradient 3s ease infinite}
+        .mobile .headline{font-size:16px}
+        .location{color:#666;font-size:14px;margin-bottom:16px;display:flex;align-items:center;gap:4px}
+        .stats{display:flex;gap:20px;margin-bottom:20px;flex-wrap:wrap}
+        .mobile .stats{gap:12px}
+        .stat{color:#0077b5;font-weight:600;font-size:14px;display:flex;align-items:center;gap:4px}
+        .actions{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+        .mobile .actions{flex-direction:column;gap:8px}
+        .btn{padding:10px 20px;border-radius:24px;font-weight:600;cursor:pointer;transition:all .3s;font-size:14px;border:none;display:flex;align-items:center;gap:8px;justify-content:center}
+        .btn-primary{background:#0077b5;color:#fff;box-shadow:0 2px 8px rgba(0,119,181,.3)}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 4px 15px rgba(0,119,181,.4)}
+        .btn-secondary{background:#fff;color:#0077b5;border:2px solid #0077b5}
+        .btn-secondary:hover{background:#f8f9fa}
+        .section{background:#fff;border-radius:12px;margin:16px 0;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.05);border:1px solid #e2e8f0}
+        .mobile .section{margin:12px 0;padding:16px;border-radius:8px}
+        .section-title{font-size:20px;font-weight:700;color:#000;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .mobile .section-title{font-size:18px;margin-bottom:12px}
+        .featured-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+        .mobile .featured-grid{grid-template-columns:1fr;gap:12px}
+        .featured-item{border:1px solid #e2e8f0;border-radius:8px;padding:16px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+        .featured-item:hover{transform:translateY(-2px);box-shadow:0 4px 15px rgba(0,0,0,.1);border-color:#0077b5}
+        .featured-item-title{font-weight:600;color:#000;margin-bottom:8px;font-size:14px}
+        .featured-item-desc{color:#666;font-size:13px;line-height:1.4}
+        .featured-item-icon{position:absolute;top:12px;right:12px;font-size:20px;opacity:.7}
+        .about-content{color:#000;line-height:1.6;font-size:14px}
+        .about-content p{margin-bottom:12px}
+        .about-content strong{color:#0077b5}
+        .highlight{background:linear-gradient(90deg,rgba(0,119,181,.1),rgba(0,160,220,.1));padding:2px 6px;border-radius:4px;font-weight:600}
+        .cta-banner{background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;border-radius:12px;padding:20px;text-align:center;margin:16px 0;position:relative;overflow:hidden}
+        .mobile .cta-banner{padding:16px;margin:12px 0}
+        .cta-banner::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');opacity:.3}
+        .cta-title{font-size:18px;font-weight:700;margin-bottom:8px;position:relative;z-index:2}
+        .mobile .cta-title{font-size:16px}
+        .cta-subtitle{font-size:14px;opacity:.9;margin-bottom:16px;position:relative;z-index:2}
+        .mobile .cta-subtitle{font-size:13px;margin-bottom:12px}
+        .pulse{animation:pulse 2s infinite}
+        .float{animation:float 3s ease-in-out infinite}
+        .notification{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#16a34a;color:#fff;padding:12px 20px;border-radius:24px;font-size:14px;font-weight:600;z-index:1001;display:none;box-shadow:0 4px 20px rgba(22,163,74,.3)}
+        
+        @keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes gradient{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+        @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+        @keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(-10px)}}
+        
+        @media (max-width: 480px) {
+            .controls{top:10px;right:10px;flex-direction:row;gap:4px}
+            .device-btn{padding:6px 10px;font-size:11px}
+            .preview.mobile{margin:60px 10px 20px;border-radius:20px}
+        }
+    </style>
+</head>
+<body>
+    <div class="notification" id="notification"></div>
+
+    <div class="controls">
+        <button class="device-btn" onclick="setDevice('mobile')" data-device="mobile">📱</button>
+        <button class="device-btn active" onclick="setDevice('tablet')" data-device="tablet">📟</button>
+        <button class="device-btn" onclick="setDevice('desktop')" data-device="desktop">💻</button>
+    </div>
+
+    <div class="container">
+        <div class="preview tablet" id="preview">
+            <!-- Profile Header -->
+            <div class="profile-header">
+                <div class="banner-content">
+                    <div class="banner-title">🚀 Sistema ROI 3X</div>
+                    <div class="banner-subtitle">Transformação Empresarial Garantida</div>
+                </div>
+            </div>
+
+            <!-- Profile Info -->
+            <div class="profile-info">
+                <div class="profile-picture pulse">JD</div>
+                
+                <div class="profile-details">
+                    <h1 class="name">João da Silva</h1>
+                    <div class="headline">
+                        Especialista em Sistema ROI 3X | +R$50M gerados | CEO @ Growth Masters
+                    </div>
+                    <div class="location">
+                        📍 São Paulo, Brasil
+                    </div>
+                    
+                    <div class="stats">
+                        <div class="stat">
+                            👥 5.234 seguidores
+                        </div>
+                        <div class="stat">
+                            🤝 500+ conexões
+                        </div>
+                        <div class="stat">
+                            👁️ 2.1K views perfil
+                        </div>
+                    </div>
+                    
+                    <div class="actions">
+                        <button class="btn btn-primary" onclick="showNotification('🎯 Simulando agendamento de reunião!', 'success')">
+                            📅 Agendar Reunião
+                        </button>
+                        <button class="btn btn-secondary" onclick="showNotification('💬 Simulando mensagem privada!', 'info')">
+                            💬 Mensagem
+                        </button>
+                        <button class="btn btn-secondary" onclick="showNotification('🔗 Simulando nova conexão!', 'info')">
+                            ➕ Conectar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Banner -->
+            <div class="cta-banner">
+                <div class="cta-title">🎯 Diagnóstico Estratégico GRATUITO</div>
+                <div class="cta-subtitle">Descubra quanto $ você está perdendo mensalmente</div>
+                <button class="btn btn-primary" onclick="showNotification('📊 Redirecionando para calculadora ROI!', 'success')" style="background: white; color: #16a34a;">
+                    🧮 CALCULAR MEU POTENCIAL
+                </button>
+            </div>
+
+            <!-- Featured Section -->
+            <div class="section">
+                <h2 class="section-title">⭐ Destaques</h2>
+                <div class="featured-grid">
+                    <div class="featured-item float">
+                        <div class="featured-item-icon">📈</div>
+                        <div class="featured-item-title">Case: R$800k → R$3.2M</div>
+                        <div class="featured-item-desc">Como triplicamos o faturamento de uma SaaS em 8 meses usando o Sistema ROI 3X</div>
+                    </div>
+                    
+                    <div class="featured-item float" style="animation-delay: 0.5s;">
+                        <div class="featured-item-icon">🎁</div>
+                        <div class="featured-item-title">Framework Gratuito</div>
+                        <div class="featured-item-desc">Baixe o guia completo do Sistema ROI 3X - metodologia validada com 150+ empresas</div>
+                    </div>
+                    
+                    <div class="featured-item float" style="animation-delay: 1s;">
+                        <div class="featured-item-icon">🏆</div>
+                        <div class="featured-item-title">150+ Transformações</div>
+                        <div class="featured-item-desc">Portfólio completo de empresas que cresceram 3X+ com nossa metodologia</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Section -->
+            <div class="section">
+                <h2 class="section-title">📄 Sobre</h2>
+                <div class="about-content">
+                    <p><strong>🎯 Transformo empresas de R$500k em máquinas de R$5M através do Sistema ROI 3X.</strong></p>
+                    
+                    <p>Nos últimos 7 anos, desenvolvi uma metodologia que já gerou <span class="highlight">+R$50M em receita recorrente</span> para 150+ clientes.</p>
+                    
+                    <p><strong>━━━━━━━━━━━━━━━━━━━━━</strong></p>
+                    
+                    <p><strong>🔥 DIAGNÓSTICO GRATUITO DE 30 MINUTOS</strong></p>
+                    
+                    <p>Descubra GRATUITAMENTE:</p>
+                    <p>✓ Os 3 maiores gargalos do seu negócio<br>
+                    ✓ Quanto dinheiro você está perdendo mensalmente<br>
+                    ✓ Plano de ação para triplicar seu ROI em 90 dias<br>
+                    ✓ Análise personalizada do seu mercado</p>
+                    
+                    <p><strong>━━━━━━━━━━━━━━━━━━━━━</strong></p>
+                    
+                    <p><strong>📈 PARA QUEM É ESTE DIAGNÓSTICO:</strong></p>
+                    <p>• Empresas faturando entre R$500k e R$5M/ano<br>
+                    • CEOs que querem crescimento PREVISÍVEL<br>
+                    • Negócios com margem líquida mínima de 20%<br>
+                    • Líderes dispostos a investir em transformação</p>
+                    
+                    <p><strong>⚡ GARANTIA TOTAL:</strong></p>
+                    <p>Se em 30 minutos eu não identificar pelo menos R$50k em oportunidades perdidas, você ganha uma consultoria de 2h GRATUITA.</p>
+                </div>
+            </div>
+
+            <!-- Activity Section -->
+            <div class="section">
+                <h2 class="section-title">📊 Atividade</h2>
+                <div style="display: grid; gap: 16px;">
+                    <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">JD</div>
+                            <div>
+                                <div style="font-weight: 600; color: #000; font-size: 14px;">João da Silva</div>
+                                <div style="color: #666; font-size: 12px;">há 2 horas</div>
+                            </div>
+                        </div>
+                        <p style="color: #000; font-size: 14px; line-height: 1.5; margin-bottom: 12px;">
+                            🚨 Cliente chegou perdendo R$50k/mês...<br><br>
+                            8 meses depois: R$3.2M de faturamento anual.<br><br>
+                            O que mudamos com o Sistema ROI 3X? 👇
+                        </p>
+                        <div style="display: flex; gap: 16px; color: #666; font-size: 12px;">
+                            <div>👍 234 reações</div>
+                            <div>💬 45 comentários</div>
+                            <div>🔄 12 reposts</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuração de dispositivos
+        const deviceConfigs = {
+            mobile: {
+                maxWidth: '375px',
+                className: 'mobile',
+                borderRadius: '24px',
+                margin: '20px auto',
+                scale: 1
+            },
+            tablet: {
+                maxWidth: '768px', 
+                className: 'tablet',
+                borderRadius: '16px',
+                margin: '20px auto',
+                scale: 1
+            },
+            desktop: {
+                maxWidth: '1200px',
+                className: 'desktop', 
+                borderRadius: '8px',
+                margin: '0',
+                scale: 0.8
+            }
+        };
+
+        let currentDevice = 'tablet';
+
+        function setDevice(device) {
+            const preview = document.getElementById('preview');
+            const config = deviceConfigs[device];
+            
+            // Atualizar botões
+            document.querySelectorAll('.device-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Atualizar preview
+            preview.className = `preview ${config.className}`;
+            preview.style.maxWidth = config.maxWidth;
+            preview.style.borderRadius = config.borderRadius;
+            preview.style.margin = config.margin;
+            preview.style.transform = `scale(${config.scale})`;
+            
+            currentDevice = device;
+            
+            // Notificação
+            showNotification(`📱 Visualização alterada para ${device}`, 'info');
+            
+            // Analytics
+            trackDeviceChange(device);
+        }
+
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            
+            // Cores por tipo
+            const colors = {
+                success: '#16a34a',
+                info: '#0077b5', 
+                warning: '#f59e0b',
+                error: '#ef4444'
+            };
+            
+            notification.style.background = colors[type] || colors.info;
+            
+            // Animação de entrada
+            notification.style.animation = 'slideDown 0.3s ease';
+            
+            // Remover após 3 segundos
+            setTimeout(() => {
+                notification.style.animation = 'slideUp 0.3s ease';
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 300);
+            }, 2700);
+            
+            // Vibração no mobile (se suportado)
+            if (navigator.vibrate && currentDevice === 'mobile') {
+                navigator.vibrate(50);
+            }
+        }
+
+        function trackDeviceChange(device) {
+            // Analytics tracking
+            console.log('Device preview changed:', device);
+            
+            // Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'device_preview', {
+                    event_category: 'mockup',
+                    event_label: device
+                });
+            }
+        }
+
+        // Interações avançadas
+        function simulateConnection() {
+            showNotification('🤝 Conexão enviada com sucesso!', 'success');
+            
+            // Atualizar estatística
+            const connectionsEl = document.querySelector('.stat:nth-child(2)');
+            const currentConnections = parseInt(connectionsEl.textContent.match(/\d+/)[0]);
+            connectionsEl.innerHTML = `🤝 ${currentConnections + 1}+ conexões`;
+        }
+
+        function simulateMessage() {
+            showNotification('💬 Mensagem enviada! Resposta em até 2h.', 'success');
+        }
+
+        function simulateProfileView() {
+            const viewsEl = document.querySelector('.stat:nth-child(3)');
+            const currentViews = parseFloat(viewsEl.textContent.match(/[\d.]+/)[0]);
+            const newViews = (currentViews + 0.1).toFixed(1);
+            viewsEl.innerHTML = `👁️ ${newViews}K views perfil`;
+            
+            showNotification('👀 +1 visualização do perfil', 'info');
+        }
+
+        // Auto-simular interações
+        function startAutoInteractions() {
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    simulateProfileView();
+                }
+            }, 10000); // A cada 10 segundos
+
+            setInterval(() => {
+                if (Math.random() > 0.9) {
+                    simulateConnection();
+                }
+            }, 15000); // A cada 15 segundos
+        }
+
+        // Efeitos de hover dinâmicos
+        function setupHoverEffects() {
+            // Featured items
+            document.querySelectorAll('.featured-item').forEach((item, index) => {
+                item.addEventListener('mouseenter', () => {
+                    item.style.transform = 'translateY(-4px) scale(1.02)';
+                    item.style.borderColor = '#0077b5';
+                });
+                
+                item.addEventListener('mouseleave', () => {
+                    item.style.transform = 'translateY(-2px) scale(1)';
+                    item.style.borderColor = '#e2e8f0';
+                });
+                
+                item.addEventListener('click', () => {
+                    const titles = [
+                        'Abrindo case detalhado...',
+                        'Baixando framework gratuito...',
+                        'Carregando portfólio completo...'
+                    ];
+                    showNotification(titles[index], 'success');
+                });
+            });
+
+            // Profile picture
+            const profilePic = document.querySelector('.profile-picture');
+            profilePic.addEventListener('click', () => {
+                profilePic.style.animation = 'none';
+                setTimeout(() => {
+                    profilePic.style.animation = 'pulse 2s infinite';
+                }, 100);
+                showNotification('📸 Foto de perfil profissional!', 'info');
+            });
+
+            // Botões interativos
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('mouseenter', () => {
+                    if (btn.classList.contains('btn-primary')) {
+                        btn.style.transform = 'translateY(-2px) scale(1.05)';
+                    }
+                });
+                
+                btn.addEventListener('mouseleave', () => {
+                    btn.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        }
+
+        // Lazy loading de imagens (simulado)
+        function setupLazyLoading() {
+            // Simular carregamento de imagens
+            const images = document.querySelectorAll('[data-lazy]');
+            images.forEach(img => {
+                setTimeout(() => {
+                    img.src = img.dataset.lazy;
+                    img.classList.add('loaded');
+                }, Math.random() * 2000);
+            });
+        }
+
+        // Responsive breakpoints
+        function handleResponsiveChanges() {
+            const breakpoints = {
+                mobile: 480,
+                tablet: 768,
+                desktop: 1024
+            };
+
+            function checkBreakpoint() {
+                const width = window.innerWidth;
+                
+                if (width <= breakpoints.mobile && currentDevice !== 'mobile') {
+                    setDeviceInternal('mobile');
+                } else if (width <= breakpoints.tablet && width > breakpoints.mobile && currentDevice === 'desktop') {
+                    setDeviceInternal('tablet');
+                }
+            }
+
+            function setDeviceInternal(device) {
+                const config = deviceConfigs[device];
+                const preview = document.getElementById('preview');
+                preview.className = `preview ${config.className}`;
+                currentDevice = device;
+                
+                // Atualizar botão ativo
+                document.querySelectorAll('.device-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.device === device) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('resize', debounce(checkBreakpoint, 250));
+        }
+
+        // Performance monitoring
+        function monitorPerformance() {
+            if ('performance' in window) {
+                window.addEventListener('load', () => {
+                    const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+                    console.log(`Profile mockup loaded in ${loadTime}ms`);
+                    
+                    if (loadTime > 3000) {
+                        console.warn('Slow loading detected. Consider optimizations.');
+                    }
+                });
+            }
+        }
+
+        // Utility functions
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Keyboard shortcuts
+        function setupKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                if (e.altKey) {
+                    switch(e.key) {
+                        case '1':
+                            setDevice('mobile');
+                            e.preventDefault();
+                            break;
+                        case '2':
+                            setDevice('tablet');
+                            e.preventDefault();
+                            break;
+                        case '3':
+                            setDevice('desktop');
+                            e.preventDefault();
+                            break;
+                    }
+                }
+            });
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            setupHoverEffects();
+            setupLazyLoading();
+            handleResponsiveChanges();
+            setupKeyboardShortcuts();
+            monitorPerformance();
+            
+            // Delay para não interferir no carregamento
+            setTimeout(() => {
+                startAutoInteractions();
+            }, 5000);
+            
+            // Notificação de boas-vindas
+            setTimeout(() => {
+                showNotification('👋 Explore o mockup! Use Alt+1/2/3 para trocar dispositivos', 'info');
+            }, 1000);
+        });
+
+        // CSS adicional via JavaScript (não-crítico)
+        const additionalCSS = `
+            @keyframes slideDown {
+                from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+                to { opacity: 1; transform: translateX(-50%) translateY(0); }
+            }
+            @keyframes slideUp {
+                from { opacity: 1; transform: translateX(-50%) translateY(0); }
+                to { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+            }
+            .loaded {
+                animation: fadeIn 0.5s ease;
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+        `;
+
+        const style = document.createElement('style');
+        style.textContent = additionalCSS;
+        document.head.appendChild(style);
+
+        // Service Worker para PWA (opcional)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(() => console.log('SW registered'))
+                    .catch(() => console.log('SW registration failed'));
+            });
+        }
+    </script>
+</body>
+</html>

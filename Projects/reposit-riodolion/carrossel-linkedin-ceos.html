@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>5 Erros que CEOs cometem no LinkedIn</title>
+    
+    <!-- Meta tags Open Graph para LinkedIn/WhatsApp -->
+    <meta property="og:title" content="5 Erros que CEOs cometem no LinkedIn - Você comete pelo menos 3">
+    <meta property="og:description" content="CEOs perdem R$ 100k/mês no LinkedIn por estes 5 erros. Descubra quais são e como evitá-los para gerar mais negócios.">
+    <meta property="og:image" content="https://i.imgur.com/fyZ7FNq.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://liongab.github.io/claude-code-heavy/carrossel-linkedin-ceos.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="ClubeLion - LinkedIn Tools">
+    
+    <!-- Meta tags Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="5 Erros que CEOs cometem no LinkedIn">
+    <meta name="twitter:description" content="CEOs perdem R$ 100k/mês no LinkedIn por estes 5 erros. Você comete pelo menos 3?">
+    <meta name="twitter:image" content="https://i.imgur.com/fyZ7FNq.jpg">
+    
+    <!-- Meta tags adicionais -->
+    <meta name="description" content="Carrossel interativo sobre os 5 principais erros que CEOs cometem no LinkedIn e como corrigi-los para gerar mais negócios.">
+    <meta name="keywords" content="LinkedIn, CEOs, marketing digital, redes sociais, negócios, erros comuns">
+    <meta name="author" content="ClubeLion">
+    <link rel="canonical" href="https://liongab.github.io/claude-code-heavy/carrossel-linkedin-ceos.html">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .carousel-container {
+            width: 100%;
+            max-width: 1080px;
+            aspect-ratio: 1;
+            background: #fff;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+        }
+        
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            background: #FFFFFF;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 119, 181, 0.03) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .slide-number {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            background: #0077B5;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: 600;
+            z-index: 10;
+        }
+        
+        .slide h1 {
+            color: #0077B5;
+            font-size: 72px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .slide h2 {
+            color: #000;
+            font-size: 56px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+        
+        .slide h3 {
+            color: #0077B5;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .slide p {
+            color: #333;
+            font-size: 42px;
+            line-height: 1.3;
+            font-weight: 400;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+        
+        .slide p strong {
+            color: #0077B5;
+            font-weight: 700;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .icon {
+            font-size: 100px;
+            margin-bottom: 30px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .slide.capa {
+            background: linear-gradient(135deg, #0077B5 0%, #004d73 100%);
+            color: white;
+        }
+        
+        .slide.capa h1 {
+            color: white;
+            font-size: 76px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .slide.capa .subtitle {
+            color: #FFD700;
+            font-size: 36px;
+            font-weight: 600;
+            margin-top: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .error-slide {
+            background: linear-gradient(to bottom, #fff 0%, #fafafa 100%);
+        }
+        
+        .error-number {
+            display: inline-block;
+            background: #ff4444;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .solution-slide {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .proof-box {
+            background: white;
+            border: 4px solid #0077B5;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 119, 181, 0.2);
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .proof-box h2 {
+            color: #0077B5;
+            font-size: 48px;
+            margin: 0;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, #0077B5 0%, #004d73 100%);
+            color: white;
+            font-size: 36px;
+            font-weight: 700;
+            padding: 25px 50px;
+            border-radius: 50px;
+            margin-top: 30px;
+            display: inline-block;
+            box-shadow: 0 10px 30px rgba(0, 119, 181, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+            text-decoration: none;
+        }
+        
+        .navigation {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 20;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dot.active {
+            background: #0077B5;
+            transform: scale(1.3);
+        }
+        
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 119, 181, 0.9);
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 20;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .nav-arrow:hover {
+            background: #0077B5;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .nav-arrow.prev {
+            left: 30px;
+        }
+        
+        .nav-arrow.next {
+            right: 30px;
+        }
+        
+        .highlight {
+            color: #0077B5;
+            font-weight: 700;
+        }
+        
+        .apn-list {
+            text-align: left;
+            font-size: 38px;
+            margin-top: 30px;
+        }
+        
+        .apn-item {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .apn-item .letter {
+            background: #0077B5;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 30px;
+            }
+            
+            .slide h1 {
+                font-size: 48px;
+            }
+            
+            .slide h2 {
+                font-size: 36px;
+            }
+            
+            .slide h3 {
+                font-size: 32px;
+            }
+            
+            .slide p {
+                font-size: 28px;
+            }
+            
+            .icon {
+                font-size: 70px;
+            }
+            
+            .nav-arrow {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+            
+            .nav-arrow.prev {
+                left: 15px;
+            }
+            
+            .nav-arrow.next {
+                right: 15px;
+            }
+            
+            .cta-button {
+                font-size: 24px;
+                padding: 20px 40px;
+            }
+            
+            .slide-number {
+                font-size: 14px;
+                padding: 6px 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .slide h1 {
+                font-size: 36px;
+            }
+            
+            .slide h2 {
+                font-size: 28px;
+            }
+            
+            .slide p {
+                font-size: 20px;
+            }
+            
+            .slide.capa h1 {
+                font-size: 40px;
+            }
+            
+            .slide.capa .subtitle {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel-container">
+        <div class="carousel-track" id="carouselTrack">
+            <!-- Slide 1: Capa -->
+            <div class="slide capa">
+                <span class="slide-number">1/10</span>
+                <h1>CEOs perdem R$ 100k/mês no LinkedIn por estes 5 erros</h1>
+                <p class="subtitle">(você comete pelo menos 3)</p>
+            </div>
+            
+            <!-- Slide 2: Erro #1 -->
+            <div class="slide error-slide">
+                <span class="slide-number">2/10</span>
+                <div class="icon">❌</div>
+                <div class="error-number">ERRO #1</div>
+                <h2>Perfil-currículo</h2>
+                <p>LinkedIn não é RH.<br><strong>É pipeline de negócios.</strong></p>
+            </div>
+            
+            <!-- Slide 3: Erro #2 -->
+            <div class="slide error-slide">
+                <span class="slide-number">3/10</span>
+                <div class="icon">❌</div>
+                <div class="error-number">ERRO #2</div>
+                <h2>Postar e sumir</h2>
+                <p>1x/mês = invisível<br><strong>3x/semana = autoridade</strong></p>
+            </div>
+            
+            <!-- Slide 4: Erro #3 -->
+            <div class="slide error-slide">
+                <span class="slide-number">4/10</span>
+                <div class="icon">❌</div>
+                <div class="error-number">ERRO #3</div>
+                <h2>Só falar da empresa</h2>
+                <p>Pessoas compram de pessoas.<br><strong>Não de CNPJs.</strong></p>
+            </div>
+            
+            <!-- Slide 5: Erro #4 -->
+            <div class="slide error-slide">
+                <span class="slide-number">5/10</span>
+                <div class="icon">❌</div>
+                <div class="error-number">ERRO #4</div>
+                <h2>Texto sem sangue</h2>
+                <p>Histórias vendem <strong>10x mais</strong><br>que press releases.</p>
+            </div>
+            
+            <!-- Slide 6: Erro #5 -->
+            <div class="slide error-slide">
+                <span class="slide-number">6/10</span>
+                <div class="icon">❌</div>
+                <div class="error-number">ERRO #5</div>
+                <h2>Fazer sozinho</h2>
+                <p>CEO sem ghostwriter =<br><strong>perfil abandonado em 60 dias</strong></p>
+            </div>
+            
+            <!-- Slide 7: Solução -->
+            <div class="slide solution-slide">
+                <span class="slide-number">7/10</span>
+                <div class="icon">✅</div>
+                <h3>A SOLUÇÃO</h3>
+                <h2>Sistema A.P.N</h2>
+                <div class="apn-list">
+                    <div class="apn-item">
+                        <span class="letter">A</span>
+                        <span><strong>Autoridade</strong> (posicionamento)</span>
+                    </div>
+                    <div class="apn-item">
+                        <span class="letter">P</span>
+                        <span><strong>Pipeline</strong> (conteúdo que converte)</span>
+                    </div>
+                    <div class="apn-item">
+                        <span class="letter">N</span>
+                        <span><strong>Negócios</strong> (DMs virando contratos)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Slide 8: Prova -->
+            <div class="slide">
+                <span class="slide-number">8/10</span>
+                <h3>PROVA REAL</h3>
+                <div class="proof-box">
+                    <h2>15 leads qualificados<br>em 30 dias<br>via LinkedIn</h2>
+                </div>
+                <p style="font-size: 24px; margin-top: 30px; color: #666;">Cliente verificado • Resultado garantido</p>
+            </div>
+            
+            <!-- Slide 9: Oferta -->
+            <div class="slide">
+                <span class="slide-number">9/10</span>
+                <h3>OFERTA EXCLUSIVA</h3>
+                <h2>Quer 10-20 leads premium/mês<br>no seu LinkedIn?</h2>
+                <p style="color: #ff4444; font-weight: 700; margin-top: 40px;">Tenho 3 vagas este mês.</p>
+            </div>
+            
+            <!-- Slide 10: CTA -->
+            <div class="slide" style="background: linear-gradient(135deg, #0077B5 0%, #004d73 100%);">
+                <span class="slide-number" style="background: white; color: #0077B5;">10/10</span>
+                <h2 style="color: white; font-size: 64px;">Mande <span style="color: #FFD700;">"PIPELINE"</span><br>no meu inbox</h2>
+                <p style="color: white; margin: 30px 0;">ou</p>
+                <div class="cta-button">WhatsApp: [número]</div>
+            </div>
+        </div>
+        
+        <!-- Navigation -->
+        <button class="nav-arrow prev" onclick="changeSlide(-1)" aria-label="Slide anterior">‹</button>
+        <button class="nav-arrow next" onclick="changeSlide(1)" aria-label="Próximo slide">›</button>
+        
+        <div class="navigation">
+            <span class="dot active" onclick="goToSlide(0)"></span>
+            <span class="dot" onclick="goToSlide(1)"></span>
+            <span class="dot" onclick="goToSlide(2)"></span>
+            <span class="dot" onclick="goToSlide(3)"></span>
+            <span class="dot" onclick="goToSlide(4)"></span>
+            <span class="dot" onclick="goToSlide(5)"></span>
+            <span class="dot" onclick="goToSlide(6)"></span>
+            <span class="dot" onclick="goToSlide(7)"></span>
+            <span class="dot" onclick="goToSlide(8)"></span>
+            <span class="dot" onclick="goToSlide(9)"></span>
+        </div>
+    </div>
+    
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 10;
+        const track = document.getElementById('carouselTrack');
+        const dots = document.querySelectorAll('.dot');
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
+        
+        function updateSlide() {
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+            
+            // Reset animations
+            const activeSlide = track.children[currentSlide];
+            const elements = activeSlide.querySelectorAll('h1, h2, h3, p, .icon, .error-number, .proof-box, .apn-item');
+            elements.forEach(el => {
+                el.style.animation = 'none';
+                setTimeout(() => {
+                    el.style.animation = '';
+                }, 10);
+            });
+        }
+        
+        function changeSlide(direction) {
+            currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+            updateSlide();
+        }
+        
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlide();
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+            if (e.key >= '0' && e.key <= '9') {
+                const slideIndex = parseInt(e.key) - 1;
+                if (slideIndex >= 0 && slideIndex < totalSlides) {
+                    goToSlide(slideIndex);
+                }
+            }
+        });
+        
+        // Touch/swipe support
+        const container = document.querySelector('.carousel-container');
+        
+        container.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+        });
+        
+        container.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            currentX = e.touches[0].clientX;
+        });
+        
+        container.addEventListener('touchend', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            const diff = startX - currentX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    changeSlide(1);
+                } else {
+                    changeSlide(-1);
+                }
+            }
+        });
+        
+        // Mouse drag support
+        container.addEventListener('mousedown', (e) => {
+            startX = e.clientX;
+            isDragging = true;
+            e.preventDefault();
+        });
+        
+        container.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            currentX = e.clientX;
+        });
+        
+        container.addEventListener('mouseup', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            const diff = startX - currentX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    changeSlide(1);
+                } else {
+                    changeSlide(-1);
+                }
+            }
+        });
+        
+        container.addEventListener('mouseleave', () => {
+            isDragging = false;
+        });
+        
+        // Auto-play (optional - remove if not wanted)
+        let autoPlayInterval;
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(() => {
+                changeSlide(1);
+            }, 5000);
+        }
+        
+        function stopAutoPlay() {
+            clearInterval(autoPlayInterval);
+        }
+        
+        // Stop auto-play on user interaction
+        container.addEventListener('mouseenter', stopAutoPlay);
+        container.addEventListener('touchstart', stopAutoPlay);
+        document.addEventListener('keydown', stopAutoPlay);
+        
+        // Uncomment to enable auto-play
+        // startAutoPlay();
+    </script>
+</body>
+</html>

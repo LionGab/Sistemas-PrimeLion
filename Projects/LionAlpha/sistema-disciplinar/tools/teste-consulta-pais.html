@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste - Consulta dos Pais</title>
+</head>
+<body>
+    <h1>Teste da Consulta dos Pais</h1>
+    
+    <div>
+        <h2>Teste de Carregamento de Dados</h2>
+        <button onclick="testarCarregamentoDados()">Testar Carregamento</button>
+        <div id="resultadoDados"></div>
+    </div>
+    
+    <div>
+        <h2>Teste de Busca de Aluno</h2>
+        <input type="text" id="codigoTeste" placeholder="Código do aluno (ex: 2639458)" value="2639458">
+        <button onclick="testarBuscaAluno()">Buscar Aluno</button>
+        <div id="resultadoBusca"></div>
+    </div>
+    
+    <div>
+        <h2>Teste de Frequência</h2>
+        <button onclick="testarFrequencia()">Testar Frequência</button>
+        <div id="resultadoFrequencia"></div>
+    </div>
+
+    <script>
+        async function testarCarregamentoDados() {
+            const resultado = document.getElementById('resultadoDados');
+            resultado.innerHTML = 'Carregando...';
+            
+            try {
+                const response = await fetch('./data/db.json');
+                const data = await response.json();
+                const alunos = Object.values(data.alunos || {});
+                
+                resultado.innerHTML = `
+                    <p>✅ Dados carregados com sucesso!</p>
+                    <p>Total de alunos: ${alunos.length}</p>
+                    <p>Primeiro aluno: ${alunos[0].nome_completo} (${alunos[0].codigo})</p>
+                `;
+            } catch (error) {
+                resultado.innerHTML = `❌ Erro: ${error.message}`;
+            }
+        }
+        
+        async function testarBuscaAluno() {
+            const codigo = document.getElementById('codigoTeste').value;
+            const resultado = document.getElementById('resultadoBusca');
+            resultado.innerHTML = 'Buscando...';
+            
+            try {
+                const response = await fetch('./data/db.json');
+                const data = await response.json();
+                const alunos = Object.values(data.alunos || {});
+                const aluno = alunos.find(a => a.codigo === codigo);
+                
+                if (aluno) {
+                    resultado.innerHTML = `
+                        <p>✅ Aluno encontrado!</p>
+                        <p>Nome: ${aluno.nome_completo}</p>
+                        <p>Código: ${aluno.codigo}</p>
+                        <p>Turma: ${aluno.turma}</p>
+                        <p>Responsável: ${aluno.responsavel}</p>
+                    `;
+                } else {
+                    resultado.innerHTML = `❌ Aluno não encontrado para o código: ${codigo}`;
+                }
+            } catch (error) {
+                resultado.innerHTML = `❌ Erro: ${error.message}`;
+            }
+        }
+        
+        async function testarFrequencia() {
+            const resultado = document.getElementById('resultadoFrequencia');
+            resultado.innerHTML = 'Carregando frequência...';
+            
+            try {
+                const response = await fetch('./assets/js/dados-frequencia-agosto.js');
+                const jsContent = await response.text();
+                
+                // Extrair dados CSV
+                const csvMatch = jsContent.match(/const dadosCSV = `([^`]+)`/);
+                if (csvMatch && csvMatch[1]) {
+                    const csvData = csvMatch[1];
+                    const linhas = csvData.trim().split('\n');
+                    
+                    resultado.innerHTML = `
+                        <p>✅ Dados de frequência carregados!</p>
+                        <p>Total de linhas: ${linhas.length}</p>
+                        <p>Primeira linha: ${linhas[0].substring(0, 100)}...</p>
+                    `;
+                } else {
+                    resultado.innerHTML = '❌ Dados CSV não encontrados no arquivo';
+                }
+            } catch (error) {
+                resultado.innerHTML = `❌ Erro: ${error.message}`;
+            }
+        }
+        
+        // Teste automático ao carregar a página
+        window.addEventListener('load', function() {
+            console.log('🚀 Página de teste carregada');
+            testarCarregamentoDados();
+        });
+    </script>
+</body>
+</html>

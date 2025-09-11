@@ -1,0 +1,214 @@
+{
+  "project": "Operação Safra Automatizada",
+  "version": "2.0.0",
+  "description": "Security and permission settings for fiscal automation system",
+  
+  "security": {
+    "encryption": {
+      "algorithm": "AES-256-GCM",
+      "key_management": "HSM",
+      "certificate_storage": "encrypted_vault"
+    },
+    
+    "data_protection": {
+      "pii_masking": true,
+      "mask_patterns": {
+        "cpf": "XXX.XXX.XXX-XX",
+        "cnpj": "XX.XXX.XXX/XXXX-XX",
+        "bank_account": "****-X"
+      },
+      "audit_retention_years": 7,
+      "backup_frequency": "daily",
+      "backup_encryption": true
+    },
+    
+    "compliance": {
+      "lgpd": true,
+      "sefaz_mt": true,
+      "iso_27001": true
+    }
+  },
+  
+  "permissions": {
+    "allowed_without_confirmation": [
+      "Read:**/*.py",
+      "Read:**/*.md",
+      "Read:**/*.json",
+      "Read:**/*.yaml",
+      "Read:**/*.xml",
+      "Write:src/**",
+      "Write:tests/**",
+      "Write:docs/**",
+      "Write:.claude/**",
+      "Bash:git status",
+      "Bash:git diff*",
+      "Bash:git log*",
+      "Bash:git branch*",
+      "Bash:pytest*",
+      "Bash:python -m*",
+      "Bash:uvicorn*",
+      "Bash:alembic*"
+    ],
+    
+    "require_confirmation": [
+      "Bash:git push*",
+      "Bash:git merge*",
+      "Bash:git rebase*",
+      "Write:**/*.env",
+      "Write:**/*secret*",
+      "Write:**/*key*",
+      "MultiEdit:**"
+    ],
+    
+    "blocked": [
+      "Bash:rm -rf*",
+      "Bash:del /f*",
+      "Bash:DROP TABLE*",
+      "Bash:DROP DATABASE*",
+      "Bash:TRUNCATE*",
+      "Bash:DELETE FROM*",
+      "Write:/etc/**",
+      "Write:/usr/**",
+      "Write:C:\\Windows\\**",
+      "Write:C:\\Program Files\\**"
+    ]
+  },
+  
+  "fiscal_operations": {
+    "validation_gates": {
+      "pre_generation": true,
+      "pre_transmission": true,
+      "post_transmission": true
+    },
+    
+    "approval_workflow": {
+      "nfpe_generation": {
+        "below_1000_items": "automatic",
+        "above_1000_items": "manual_approval",
+        "test_environment": "automatic",
+        "production": "two_factor_approval"
+      },
+      
+      "sped_transmission": {
+        "monthly": "automatic_with_review",
+        "correction": "manual_approval",
+        "retification": "supervisor_approval"
+      }
+    },
+    
+    "rate_limits": {
+      "sefaz_api": {
+        "requests_per_minute": 60,
+        "burst_limit": 100,
+        "retry_after": 30
+      },
+      
+      "totvs_api": {
+        "requests_per_second": 10,
+        "concurrent_connections": 5,
+        "timeout_seconds": 30
+      }
+    }
+  },
+  
+  "monitoring": {
+    "alerts": {
+      "fiscal_error": {
+        "channel": "email,slack",
+        "severity": "critical",
+        "sla_minutes": 5
+      },
+      
+      "compliance_violation": {
+        "channel": "email,phone",
+        "severity": "critical",
+        "sla_minutes": 1
+      },
+      
+      "integration_failure": {
+        "channel": "email",
+        "severity": "high",
+        "sla_minutes": 15
+      },
+      
+      "performance_degradation": {
+        "channel": "slack",
+        "severity": "medium",
+        "sla_minutes": 30
+      }
+    },
+    
+    "metrics": {
+      "collect_interval_seconds": 60,
+      "retention_days": 90,
+      "aggregation_levels": ["1m", "5m", "1h", "1d"]
+    }
+  },
+  
+  "subagents": {
+    "fiscal_compliance": {
+      "model": "claude-opus-4.1",
+      "temperature": 0.1,
+      "max_tokens": 8000,
+      "validation_mode": "strict"
+    },
+    
+    "totvs_integration": {
+      "model": "claude-sonnet-3.5",
+      "temperature": 0.3,
+      "max_tokens": 4000,
+      "retry_strategy": "exponential"
+    },
+    
+    "validation_gate": {
+      "model": "claude-haiku-3",
+      "temperature": 0.0,
+      "max_tokens": 2000,
+      "parallel_validation": true
+    }
+  },
+  
+  "development": {
+    "test_mode": false,
+    "mock_sefaz": false,
+    "mock_totvs": false,
+    "verbose_logging": true,
+    "debug_mode": false
+  },
+  
+  "backup": {
+    "strategy": "incremental",
+    "frequency": "every_6_hours",
+    "retention": {
+      "daily": 7,
+      "weekly": 4,
+      "monthly": 12,
+      "yearly": 7
+    },
+    "locations": [
+      "local:/backups/fiscal",
+      "azure://safra-backups/fiscal",
+      "s3://safra-backup-mt/fiscal"
+    ]
+  },
+  
+  "emergency_contacts": {
+    "fiscal_compliance": {
+      "name": "Fiscal Team Lead",
+      "phone": "+55 65 99999-0001",
+      "email": "fiscal@lionconsultoria.com.br"
+    },
+    
+    "technical_support": {
+      "name": "DevOps Lead",
+      "phone": "+55 65 99999-0002",
+      "email": "devops@lionconsultoria.com.br"
+    },
+    
+    "business_owner": {
+      "name": "Product Owner",
+      "phone": "+55 65 99999-0003",
+      "email": "po@lionconsultoria.com.br"
+    }
+  }
+}

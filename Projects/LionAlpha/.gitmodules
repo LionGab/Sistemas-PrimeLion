@@ -1,0 +1,3 @@
+[submodule "sistema-disciplinar"]
+	path = sistema-disciplinar
+	url = https://github.com/AttilioJohner/sistema-disciplinar.git

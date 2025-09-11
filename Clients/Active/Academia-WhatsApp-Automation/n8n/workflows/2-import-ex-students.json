@@ -1,0 +1,204 @@
+{
+  "name": "2 - Import Ex-Students CSV",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "fileType": "csv",
+        "options": {
+          "delimiter": ",",
+          "enableBOM": false,
+          "headerRow": true
+        }
+      },
+      "id": "read-csv",
+      "name": "Read CSV File",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "typeVersion": 2,
+      "position": [440, 300]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data",
+        "options": {}
+      },
+      "id": "split-items",
+      "name": "Split Into Items",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 3,
+      "position": [640, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Calcular dias de inatividade e categorizar\nconst hoje = new Date();\nconst ultimoTreino = new Date($input.item.json.ultimo_treino);\nconst diasInativo = Math.floor((hoje - ultimoTreino) / (1000 * 60 * 60 * 24));\n\nlet categoria;\nlet mensagem;\nlet desconto = 0;\n\nif (diasInativo <= 30) {\n  categoria = \"QUENTE\";\n  mensagem = `Oi ${$input.item.json.nome}! Sentimos sua falta na Full Force Academia... Que tal 7 dias grátis para voltar? 💪`;\n} else if (diasInativo <= 60) {\n  categoria = \"MORNO\";\n  desconto = 50;\n  mensagem = `${$input.item.json.nome}, temos uma oferta especial! 50% de desconto por 2 meses para você voltar! 🔥`;\n} else {\n  categoria = \"FRIO\";\n  desconto = 100;\n  mensagem = `${$input.item.json.nome}, sem taxa de matrícula + R$ 89 no primeiro mês! Vamos treinar juntos novamente? 🚀`;\n}\n\n// Calcular ROI potencial\nconst valorAnterior = parseFloat($input.item.json.valor_anterior) || 89;\nconst roiMensal = valorAnterior * 0.3; // 30% de chance de conversão\n\nreturn {\n  nome: $input.item.json.nome,\n  telefone: $input.item.json.telefone,\n  email: $input.item.json.email,\n  ultimo_treino: $input.item.json.ultimo_treino,\n  plano_anterior: $input.item.json.plano_anterior,\n  valor_anterior: valorAnterior,\n  dias_inativo: diasInativo,\n  categoria: categoria,\n  mensagem_personalizada: mensagem,\n  desconto_percentual: desconto,\n  roi_potencial: roiMensal,\n  status: \"IMPORTADO\",\n  data_importacao: hoje.toISOString(),\n  data_ultimo_contato: null,\n  resposta_recebida: null,\n  interessado: null\n};"
+      },
+      "id": "calculate-data",
+      "name": "Calculate Categories & ROI",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [840, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "resource": "sheet",
+        "operation": "appendOrUpdate",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "ExAlunos",
+        "columnToMatchOn": "telefone",
+        "options": {
+          "createSheet": true,
+          "headerRow": 1
+        }
+      },
+      "id": "save-to-sheets",
+      "name": "Save to Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [1040, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "total_importados",
+              "name": "totalImportados",
+              "value": "={{ $json.length }}",
+              "type": "number"
+            },
+            {
+              "id": "quentes",
+              "name": "categoriasQuente",
+              "value": "={{ $json.filter(item => item.categoria === 'QUENTE').length }}",
+              "type": "number"
+            },
+            {
+              "id": "mornos",
+              "name": "categoriasMorno",
+              "value": "={{ $json.filter(item => item.categoria === 'MORNO').length }}",
+              "type": "number"
+            },
+            {
+              "id": "frios",
+              "name": "categoriasFrio",
+              "value": "={{ $json.filter(item => item.categoria === 'FRIO').length }}",
+              "type": "number"
+            },
+            {
+              "id": "roi_total",
+              "name": "roiPotentialTotal",
+              "value": "={{ $json.reduce((sum, item) => sum + item.roi_potencial, 0) }}",
+              "type": "number"
+            }
+          ]
+        }
+      },
+      "id": "calculate-summary",
+      "name": "Calculate Summary",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [1240, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@fullforceacademia.com",
+        "toEmail": "={{ $env.ADMIN_EMAIL }}",
+        "subject": "📊 Ex-Alunos Importados - Full Force Academia",
+        "message": "=📊 **IMPORTAÇÃO CONCLUÍDA - FULL FORCE ACADEMIA**\n\n**RESUMO DA IMPORTAÇÃO:**\n✅ Total de ex-alunos importados: {{ $json.totalImportados }}\n\n**CATEGORIZAÇÃO:**\n🔥 QUENTES (≤30 dias): {{ $json.categoriasQuente }}\n🔶 MORNOS (31-60 dias): {{ $json.categoriasMorno }}\n❄️ FRIOS (>60 dias): {{ $json.categoriasFrio }}\n\n**POTENCIAL FINANCEIRO:**\n💰 ROI Mensal Estimado: R$ {{ Math.round($json.roiPotentialTotal) }}\n📈 ROI Anual Estimado: R$ {{ Math.round($json.roiPotentialTotal * 12) }}\n\n**PRÓXIMOS PASSOS:**\n1. ✅ Dados salvos no Google Sheets\n2. 🚀 Executar Workflow 3: Campanha de Reativação\n3. 📱 Monitorar respostas no Workflow 4\n4. 📊 Acompanhar métricas no Dashboard\n\n**DADOS SALVOS EM:**\nGoogle Sheets: ExAlunos\nCategoria de maior potencial: {{ $json.categoriasQuente > $json.categoriasMorno ? ($json.categoriasQuente > $json.categoriasFrio ? 'QUENTE' : 'FRIO') : ($json.categoriasMorno > $json.categoriasFrio ? 'MORNO' : 'FRIO') }}\n\n🎯 **MATUPÁ-MT ESTÁ PRONTO PARA RECUPERAR EX-ALUNOS!**",
+        "options": {}
+      },
+      "id": "send-summary",
+      "name": "Send Import Summary",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1440, 300]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Read CSV File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read CSV File": {
+      "main": [
+        [
+          {
+            "node": "Split Into Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Into Items": {
+      "main": [
+        [
+          {
+            "node": "Calculate Categories & ROI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate Categories & ROI": {
+      "main": [
+        [
+          {
+            "node": "Save to Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save to Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Calculate Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate Summary": {
+      "main": [
+        [
+          {
+            "node": "Send Import Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "id": "2",
+  "tags": ["import", "csv", "ex-alunos", "academia"]
+}

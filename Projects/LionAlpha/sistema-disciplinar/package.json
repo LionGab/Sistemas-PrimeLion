@@ -1,0 +1,20 @@
+{
+  "name": "sistema-disciplinar",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "http-server public -p 5173 -c-1",
+    "build": "node scripts/build-public.js",
+    "clean": "rimraf public && mkdir public",
+    "import:csv": "node scripts/import-csv-completo.js",
+    "consolidar": "node scripts/consolidar-dados.js",
+    "process:medidas": "node scripts/process-medidas.js",
+    "sync:github": "node scripts/auto-sync-github.js",
+    "server": "node scripts/server.js"
+  },
+  "private": "true",
+  "devDependencies": {
+    "dotenv": "^17.2.1",
+    "http-server": "^14.1.1",
+    "rimraf": "^6.0.1"
+  }
+}

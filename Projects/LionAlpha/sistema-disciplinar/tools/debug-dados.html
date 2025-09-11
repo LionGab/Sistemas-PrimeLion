@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - Carregamento de Dados</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .log { background: #f5f5f5; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Debug - Carregamento de Dados</h1>
+    <div id="logs"></div>
+
+    <script src="assets/js/local-db.js"></script>
+    
+    <script>
+        const logs = document.getElementById('logs');
+        
+        function addLog(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `log ${type}`;
+            div.innerHTML = `<strong>${new Date().toLocaleTimeString()}</strong>: ${message}`;
+            logs.appendChild(div);
+            console.log(message);
+        }
+
+        async function debugCarregamento() {
+            try {
+                addLog('🔄 Iniciando debug...', 'info');
+                
+                // Verificar se localDb existe
+                if (!window.localDb) {
+                    addLog('❌ window.localDb não encontrado', 'error');
+                    return;
+                }
+                addLog('✅ window.localDb encontrado', 'success');
+                
+                // Verificar URL que será usada
+                addLog(`📡 URL do banco: ${window.localDb.baseUrl}`, 'info');
+                
+                // Aguardar carregamento
+                addLog('⏳ Aguardando carregamento dos dados...', 'info');
+                await window.localDb.waitForLoad();
+                
+                // Verificar se carregou
+                if (window.localDb.loaded) {
+                    addLog('✅ Dados carregados com sucesso!', 'success');
+                } else {
+                    addLog('❌ Falha no carregamento', 'error');
+                    return;
+                }
+                
+                // Verificar dados
+                const alunos = window.localDb.data?.alunos || {};
+                const totalAlunos = Object.keys(alunos).length;
+                addLog(`👥 Total de alunos: ${totalAlunos}`, totalAlunos > 0 ? 'success' : 'error');
+                
+                if (totalAlunos > 0) {
+                    // Mostrar primeiros 5 alunos
+                    const primeiros5 = Object.keys(alunos).slice(0, 5);
+                    addLog('📋 Primeiros 5 alunos:', 'info');
+                    primeiros5.forEach(id => {
+                        const aluno = alunos[id];
+                        addLog(`  • ${aluno.nome} (${aluno.codigo}) - Turma ${aluno.turma}`, 'info');
+                    });
+                }
+                
+                // Testar interface de compatibilidade
+                if (window.db) {
+                    addLog('✅ Interface window.db disponível', 'success');
+                    
+                    try {
+                        const collection = await window.db.collection('alunos').get();
+                        addLog(`📊 Query funcionando: ${collection.size} alunos via window.db`, 'success');
+                    } catch (err) {
+                        addLog(`❌ Erro na query: ${err.message}`, 'error');
+                    }
+                } else {
+                    addLog('❌ Interface window.db não encontrada', 'error');
+                }
+                
+            } catch (error) {
+                addLog(`❌ Erro no debug: ${error.message}`, 'error');
+                console.error('Erro completo:', error);
+            }
+        }
+
+        // Aguardar evento de carregamento ou timeout
+        window.addEventListener('localDbReady', () => {
+            addLog('🎯 Evento localDbReady disparado', 'success');
+            debugCarregamento();
+        });
+
+        // Fallback
+        setTimeout(() => {
+            if (logs.children.length === 0) {
+                addLog('⚠️ Evento não disparado, tentando debug direto...', 'info');
+                debugCarregamento();
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

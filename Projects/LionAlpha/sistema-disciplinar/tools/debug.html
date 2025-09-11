@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Firebase Debug</title>
+  <style>body{font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;margin:24px} code{background:#f4f4f4;padding:3px 6px;border-radius:6px}</style>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <!-- Ajuste o caminho abaixo para apontar para o SEU firebase-config.js na mesma estrutura do seu site -->
+  <script src="assets/js/firebase-config.js"></script>
+</head>
+<body>
+  <h1>Firebase Debug</h1>
+  <p id="status">Verificando...</p>
+  <pre id="log"></pre>
+  <script>
+    (function(){
+      const el = (id)=>document.getElementById(id);
+      function log(msg){ el('log').textContent += msg + "\n"; }
+      try {
+        log("firebase definido? " + (typeof firebase !== 'undefined'));
+        if (typeof firebase !== 'undefined'){
+          log("firebase.apps.length: " + (firebase.apps ? firebase.apps.length : 'sem firebase.apps'));
+        }
+        const ready = (typeof window.isFirebaseReady === 'function') ? window.isFirebaseReady() : '(isFirebaseReady não definido)';
+        log("isFirebaseReady(): " + ready);
+        el('status').textContent = (firebase?.apps?.length ? "✅ App inicializado" : "❌ App NÃO inicializado");
+      } catch (e){
+        el('status').textContent = "Erro ao verificar";
+        log(e && (e.stack || e.message) || e);
+      }
+    })();
+  </script>
+</body>
+</html>

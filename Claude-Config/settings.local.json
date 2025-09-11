@@ -1,0 +1,53 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh auth:*)",
+      "Bash(git remote get-url:*)",
+      "Bash(git clone:*)",
+      "Bash(rm:*)",
+      "Bash(npx create-next-app:*)",
+      "Bash(cat:*)",
+      "Bash(chmod:*)",
+      "Read(C:\\c\\Users\\User\\linea/**)",
+      "Read(C:\\c\\Users\\User\\linea/**)",
+      "Read(C:\\c\\Users\\User\\linea/**)",
+      "Read(C:\\c\\Users\\User\\linea/**)",
+      "Read(C:\\c\\Users\\User/**)",
+      "Bash(gh repo clone:*)",
+      "Bash(gh search repos:*)",
+      "Bash(pip install:*)",
+      "Bash(poetry install:*)",
+      "Bash(npm install)",
+      "Bash(uv tool install:*)",
+      "Bash(ls:*)",
+      "Bash(uvx basic-memory:*)",
+      "Bash(docker-compose up:*)",
+      "Bash(docker compose:*)",
+      "Bash(SuperClaude install:*)",
+      "Bash(npm install:*)",
+      "Bash(find:*)",
+      "Bash(uvx mcp-server-serena:*)",
+      "Bash(uvx:*)",
+      "Bash(npm search \"@modelcontextprotocol\")",
+      "Bash(mcp-server-sequential-thinking:*)",
+      "Bash(mcp-server-filesystem:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git pull:*)",
+      "Read(\\c\\Users\\User/**)",
+      "Read(\\c\\Users\\User/**)",
+      "Bash(pip search:*)",
+      "Bash(npm search:*)",
+      "Bash(npx @modelcontextprotocol/server-sequential-thinking:*)",
+      "WebFetch(domain:www.anthropic.com)",
+      "Read(C:\\c\\Users\\User/**)"
+    ],
+    "deny": [],
+    "ask": [],
+    "defaultMode": "acceptEdits",
+    "additionalDirectories": [
+      "C:\\Users"
+    ]
+  }
+}

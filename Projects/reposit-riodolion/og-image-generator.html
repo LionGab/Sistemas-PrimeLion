@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Open Graph Image Generator</title>
+</head>
+<body>
+    <canvas id="canvas" width="1200" height="630" style="border: 1px solid #000;"></canvas>
+    <br>
+    <button onclick="downloadImage()">Download Image</button>
+    
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Fundo gradiente
+        const gradient = ctx.createLinearGradient(0, 0, 1200, 630);
+        gradient.addColorStop(0, '#0077B5');
+        gradient.addColorStop(1, '#004d73');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 1200, 630);
+        
+        // Título principal
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 72px Arial, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('5 ERROS que CEOs', 600, 200);
+        ctx.fillText('cometem no LinkedIn', 600, 280);
+        
+        // Subtítulo
+        ctx.fillStyle = '#FFD700';
+        ctx.font = 'bold 48px Arial, sans-serif';
+        ctx.fillText('(você comete pelo menos 3)', 600, 360);
+        
+        // Badge
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 32px Arial, sans-serif';
+        ctx.fillText('ClubeLion.com.br', 600, 520);
+        
+        // Ícone LinkedIn (simples)
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(520, 420, 40, 40);
+        ctx.fillRect(580, 420, 40, 40);
+        ctx.fillRect(520, 480, 100, 20);
+        
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.download = 'og-image-ceos-linkedin.jpg';
+            link.href = canvas.toDataURL('image/jpeg', 0.9);
+            link.click();
+        }
+        
+        // Auto download após 2 segundos
+        setTimeout(downloadImage, 2000);
+    </script>
+</body>
+</html>

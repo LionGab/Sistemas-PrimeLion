@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>Arsenal da Sabedoria - IA Tática Mobile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #4ecdc4;
+            --dark: #1a1a2e;
+            --darker: #16213e;
+            --accent: #f95959;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+            --light: #e0e0e0;
+            --glass: rgba(255, 255, 255, 0.05);
+            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            --mobile-padding: 15px;
+            --desktop-padding: 30px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: var(--light);
+            min-height: 100vh;
+            padding-bottom: 80px;
+            overflow-x: hidden;
+        }
+
+        /* Mobile First Container */
+        .container {
+            width: 100%;
+            padding: var(--mobile-padding);
+            max-width: 100%;
+        }
+
+        /* Header Mobile Optimized */
+        header {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8em;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--secondary);
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        /* Status Bar Mobile */
+        .status-bar {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .status-item {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-icon {
+            font-size: 1.2em;
+        }
+
+        .status-value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .status-label {
+            font-size: 0.75em;
+            opacity: 0.8;
+        }
+
+        /* API Status Mobile */
+        .api-status {
+            background: var(--glass);
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .api-badge {
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+
+        .api-offline {
+            background: var(--warning);
+            color: var(--dark);
+        }
+
+        .api-online {
+            background: var(--success);
+            color: white;
+        }
+
+        /* Navigation Mobile */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-tab {
+            background: var(--glass);
+            border: 2px solid transparent;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            white-space: nowrap;
+            font-size: 0.9em;
+            flex-shrink: 0;
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* AI Panel Mobile */
+        .ai-panel {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px 15px;
+        }
+
+        /* Quick Examples Mobile */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .example-card {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(78, 205, 196, 0.1));
+            padding: 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .example-icon {
+            font-size: 1.5em;
+            min-width: 30px;
+        }
+
+        .example-content {
+            flex: 1;
+        }
+
+        .example-title {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .example-desc {
+            font-size: 0.8em;
+            opacity: 0.8;
+        }
+
+        /* Chat Input Mobile */
+        .chat-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(78, 205, 196, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            color: var(--light);
+            font-size: 1em;
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        /* Action Buttons Mobile */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, var(--secondary), #45b7b8);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, var(--danger), #ff4757);
+            color: white;
+        }
+
+        /* Response Container Mobile */
+        .response-container {
+            margin-top: 20px;
+            padding: 20px 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            border-left: 4px solid var(--secondary);
+            display: none;
+        }
+
+        .response-container.show {
+            display: block;
+        }
+
+        /* Loading Mobile */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3000;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Modal Mobile */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 9999;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--darker);
+            padding: 25px 20px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 500px;
+            border: 2px solid var(--secondary);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--light);
+            font-size: 0.9em;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--secondary);
+            border-radius: 10px;
+            color: var(--light);
+            font-size: 1em;
+        }
+
+        .form-help {
+            color: var(--warning);
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+
+        /* FAB Mobile */
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5em;
+            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
+            z-index: 1000;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            left: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            color: white;
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .notification.success {
+            background: var(--success);
+        }
+
+        .notification.error {
+            background: var(--danger);
+        }
+
+        .notification.warning {
+            background: var(--warning);
+            color: var(--dark);
+        }
+
+        /* Desktop Responsive */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: var(--desktop-padding);
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .subtitle {
+                font-size: 1.2em;
+            }
+
+            .status-bar {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .examples-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .action-buttons {
+                flex-direction: row;
+            }
+
+            .btn {
+                width: auto;
+                flex: 1;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .examples-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>🛡️ Arsenal da Sabedoria</h1>
+            <p class="subtitle">IA Tática com Análise Preditiva</p>
+        </header>
+
+        <!-- API Status -->
+        <div class="api-status">
+            <span>Status da IA:</span>
+            <div>
+                <span id="apiStatusBadge" class="api-badge api-offline">Modo Offline</span>
+                <button onclick="openAPIModal()" style="background: var(--success); color: white; border: none; padding: 5px 12px; border-radius: 15px; margin-left: 10px; font-size: 0.8em;">
+                    ⚙️ Config
+                </button>
+            </div>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-item">
+                <span class="status-icon">🎯</span>
+                <div>
+                    <div class="status-value" id="userLevel">1</div>
+                    <div class="status-label">Nível</div>
+                </div>
+            </div>
+            <div class="status-item">
+                <span class="status-icon">⚔️</span>
+                <div>
+                    <div class="status-value" id="tacticsCount">0</div>
+                    <div class="status-label">Táticas</div>
+                </div>
+            </div>
+            <div class="status-item">
+                <span class="status-icon">📊</span>
+                <div>
+                    <div class="status-value" id="successRate">0%</div>
+                    <div class="status-label">Sucesso</div>
+                </div>
+            </div>
+            <div class="status-item">
+                <span class="status-icon">⏱️</span>
+                <div>
+                    <div class="status-value" id="studyTime">0h</div>
+                    <div class="status-label">Estudo</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="nav-tabs">
+            <button class="nav-tab active" onclick="showSection('ai-consultant')">
+                🤖 Consultor
+            </button>
+            <button class="nav-tab" onclick="showSection('emergency')">
+                🚨 Emergência
+            </button>
+            <button class="nav-tab" onclick="showSection('training')">
+                🎮 Treino
+            </button>
+            <button class="nav-tab" onclick="showSection('tactics')">
+                📚 Biblioteca
+            </button>
+        </nav>
+
+        <!-- AI Consultant Section -->
+        <section id="ai-consultant" class="section active">
+            <div class="ai-panel">
+                <h2 style="color: var(--secondary); margin-bottom: 15px; font-size: 1.3em;">
+                    🤖 Consultor com IA
+                </h2>
+                
+                <!-- Quick Examples -->
+                <div class="examples-grid">
+                    <div class="example-card" onclick="fillQuestion('Análise: meu chefe está usando gaslighting')">
+                        <div class="example-icon">🌪️</div>
+                        <div class="example-content">
+                            <div class="example-title">Gaslighting</div>
+                            <div class="example-desc">Análise profunda</div>
+                        </div>
+                    </div>
+                    <div class="example-card" onclick="fillQuestion('Plano para reunião hostil amanhã')">
+                        <div class="example-icon">👑</div>
+                        <div class="example-content">
+                            <div class="example-title">Domínio Social</div>
+                            <div class="example-desc">Estratégia completa</div>
+                        </div>
+                    </div>
+                    <div class="example-card" onclick="fillQuestion('Detectar manipulação em conversa')">
+                        <div class="example-icon">🔍</div>
+                        <div class="example-content">
+                            <div class="example-title">Análise</div>
+                            <div class="example-desc">Identificar padrões</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Container -->
+                <div style="margin-top: 20px;">
+                    <textarea id="aiInput" class="chat-input" placeholder="Digite sua situação para análise..."></textarea>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="analyzeWithAI()">
+                            🧠 Analisar
+                        </button>
+                        <button class="btn btn-secondary" onclick="consultExplorarGPT()">
+                            🔍 EXPLORAR GPT
+                        </button>
+                        <button class="btn btn-danger" onclick="emergencyMode()">
+                            🚨 Emergência
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Response Container -->
+                <div id="aiResponse" class="response-container">
+                    <!-- Resposta aparece aqui -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Emergency Section -->
+        <section id="emergency" class="section">
+            <div class="ai-panel" style="border: 2px solid var(--danger);">
+                <h2 style="color: var(--danger); text-align: center; margin-bottom: 20px;">
+                    🚨 PROTOCOLO DE EMERGÊNCIA
+                </h2>
+
+                <div class="examples-grid">
+                    <div class="example-card" onclick="emergencyResponse('gaslighting')" style="background: rgba(255, 71, 87, 0.2);">
+                        <div class="example-icon">🌪️</div>
+                        <div class="example-content">
+                            <div class="example-title">GASLIGHTING ATIVO</div>
+                            <div class="example-desc">"Minha percepção é válida."</div>
+                        </div>
+                    </div>
+                    <div class="example-card" onclick="emergencyResponse('pressure')" style="background: rgba(255, 71, 87, 0.2);">
+                        <div class="example-icon">⚡</div>
+                        <div class="example-content">
+                            <div class="example-title">PRESSÃO EXTREMA</div>
+                            <div class="example-desc">"Preciso de 24h para decidir."</div>
+                        </div>
+                    </div>
+                    <div class="example-card" onclick="emergencyResponse('attack')" style="background: rgba(255, 71, 87, 0.2);">
+                        <div class="example-icon">🗡️</div>
+                        <div class="example-content">
+                            <div class="example-title">ATAQUE PÚBLICO</div>
+                            <div class="example-desc">"Vamos aos fatos."</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Training Section -->
+        <section id="training" class="section">
+            <div class="ai-panel" style="background: linear-gradient(135deg, rgba(156, 39, 176, 0.1), rgba(103, 58, 183, 0.1));">
+                <h2 style="color: var(--warning); margin-bottom: 20px;">
+                    🎮 Simulador de Treinamento
+                </h2>
+                <p>Em desenvolvimento...</p>
+            </div>
+        </section>
+
+        <!-- Tactics Section -->
+        <section id="tactics" class="section">
+            <div class="ai-panel">
+                <h2 style="color: var(--secondary); margin-bottom: 20px;">
+                    📚 Biblioteca de Táticas
+                </h2>
+                <p>Em desenvolvimento...</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- FAB -->
+    <button class="fab" onclick="openAPIModal()">
+        ⚙️
+    </button>
+
+    <!-- Loading -->
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- API Configuration Modal -->
+    <div id="apiModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-header">⚙️ Configuração da API OpenAI</h3>
+            
+            <div class="form-group">
+                <label class="form-label">🔑 Chave da API OpenAI:</label>
+                <input type="password" id="apiKeyInput" class="form-input" placeholder="sk-...">
+                <small class="form-help">⚠️ Sua chave é armazenada apenas localmente</small>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">🤖 Modelo:</label>
+                <select id="modelSelect" class="form-select">
+                    <option value="gpt-3.5-turbo">GPT-3.5 Turbo (Rápido e barato)</option>
+                    <option value="gpt-4o-mini">GPT-4o Mini (Equilibrado)</option>
+                    <option value="gpt-4o">GPT-4o (Mais preciso)</option>
+                </select>
+            </div>
+
+            <details style="margin: 20px 0;">
+                <summary style="cursor: pointer; color: var(--secondary);">📖 Como obter uma chave?</summary>
+                <div style="margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 10px; font-size: 0.85em;">
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>Acesse platform.openai.com</li>
+                        <li>Crie uma conta ou faça login</li>
+                        <li>Vá em "API Keys"</li>
+                        <li>Clique em "Create new secret key"</li>
+                        <li>Copie e cole aqui</li>
+                    </ol>
+                </div>
+            </details>
+
+            <div class="action-buttons">
+                <button onclick="testAPIConnection()" class="btn btn-secondary">
+                    🧪 Testar
+                </button>
+                <button onclick="saveAPIConfig()" class="btn btn-primary">
+                    💾 Salvar
+                </button>
+                <button onclick="closeAPIModal()" class="btn" style="background: var(--danger); color: white;">
+                    ❌ Cancelar
+                </button>
+            </div>
+
+            <div id="apiTestResult" style="margin-top: 20px; padding: 15px; border-radius: 10px; display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        // ========== CONFIGURAÇÃO E ESTADO ==========
+        let apiKey = localStorage.getItem('openai_api_key') || '';
+        let apiModel = localStorage.getItem('openai_model') || 'gpt-3.5-turbo';
+        const ASSISTANT_ID = 'asst_gdX1zMRnGvdbnHeoQ7zqOlWa';
+        let userLevel = parseInt(localStorage.getItem('userLevel') || '1');
+        let tacticsCount = parseInt(localStorage.getItem('tacticsCount') || '0');
+
+        // ========== INICIALIZAÇÃO ==========
+        function initApp() {
+            updateStats();
+            updateAPIStatus();
+            console.log('🚀 Arsenal Mobile Iniciado');
+        }
+
+        function updateStats() {
+            document.getElementById('userLevel').textContent = userLevel;
+            document.getElementById('tacticsCount').textContent = tacticsCount;
+            document.getElementById('successRate').textContent = '0%';
+            document.getElementById('studyTime').textContent = '0h';
+        }
+
+        function updateAPIStatus() {
+            const badge = document.getElementById('apiStatusBadge');
+            if (apiKey) {
+                badge.textContent = `API: ${apiModel}`;
+                badge.className = 'api-badge api-online';
+            } else {
+                badge.textContent = 'Modo Offline';
+                badge.className = 'api-badge api-offline';
+            }
+        }
+
+        // ========== NAVEGAÇÃO ==========
+        function showSection(sectionName) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            
+            document.getElementById(sectionName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ========== CHAT FUNCTIONS ==========
+        function fillQuestion(question) {
+            document.getElementById('aiInput').value = question;
+            document.getElementById('aiInput').focus();
+        }
+
+        async function analyzeWithAI() {
+            const input = document.getElementById('aiInput').value;
+            if (!input.trim()) {
+                showNotification('Por favor, descreva sua situação', 'warning');
+                return;
+            }
+            
+            showLoading(true);
+            
+            try {
+                let analysis;
+                
+                if (apiKey) {
+                    // Usar API
+                    analysis = await callOpenAI(input);
+                } else {
+                    // Modo offline
+                    analysis = analyzeOffline(input);
+                }
+                
+                displayResponse(analysis);
+                
+                // Gamificação
+                tacticsCount++;
+                localStorage.setItem('tacticsCount', tacticsCount);
+                updateStats();
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                showNotification('Erro na análise. Usando modo offline.', 'error');
+                displayResponse(analyzeOffline(input));
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function callOpenAI(input) {
+            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                },
+                body: JSON.stringify({
+                    model: apiModel,
+                    messages: [
+                        {
+                            role: 'system',
+                            content: `Você é um especialista em psicologia, táticas de influência e defesa mental. 
+                            Analise a situação e forneça:
+                            1. Identificação de táticas de manipulação
+                            2. Nível de perigo (alto/médio/baixo)
+                            3. Ações imediatas recomendadas
+                            4. Estratégia de longo prazo
+                            5. Scripts prontos para usar
+                            Seja direto e prático.`
+                        },
+                        {
+                            role: 'user',
+                            content: input
+                        }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 1000
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`API Error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data.choices[0].message.content;
+        }
+
+        async function callExplorarGPT(input) {
+            // Criar thread
+            const threadResponse = await fetch('https://api.openai.com/v1/threads', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`,
+                    'Content-Type': 'application/json',
+                    'OpenAI-Beta': 'assistants=v2'
+                }
+            });
+            
+            const thread = await threadResponse.json();
+            
+            // Enviar mensagem
+            await fetch(`https://api.openai.com/v1/threads/${thread.id}/messages`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`,
+                    'Content-Type': 'application/json',
+                    'OpenAI-Beta': 'assistants=v2'
+                },
+                body: JSON.stringify({
+                    role: 'user',
+                    content: input
+                })
+            });
+            
+            // Executar assistant
+            const runResponse = await fetch(`https://api.openai.com/v1/threads/${thread.id}/runs`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`,
+                    'Content-Type': 'application/json',
+                    'OpenAI-Beta': 'assistants=v2'
+                },
+                body: JSON.stringify({
+                    assistant_id: ASSISTANT_ID
+                })
+            });
+            
+            const run = await runResponse.json();
+            
+            // Aguardar resposta
+            let status = 'queued';
+            while (status !== 'completed') {
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                const statusResponse = await fetch(
+                    `https://api.openai.com/v1/threads/${thread.id}/runs/${run.id}`,
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${apiKey}`,
+                            'OpenAI-Beta': 'assistants=v2'
+                        }
+                    }
+                );
+                
+                const statusData = await statusResponse.json();
+                status = statusData.status;
+            }
+            
+            // Pegar mensagens
+            const messagesResponse = await fetch(
+                `https://api.openai.com/v1/threads/${thread.id}/messages`,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`,
+                        'OpenAI-Beta': 'assistants=v2'
+                    }
+                }
+            );
+            
+            const messages = await messagesResponse.json();
+            return messages.data[0].content[0].text.value;
+        }
+
+        async function consultExplorarGPT() {
+            const input = document.getElementById('aiInput').value;
+            if (!input) {
+                showNotification('Digite sua pergunta', 'warning');
+                return;
+            }
+            
+            if (!apiKey) {
+                showNotification('Configure sua API OpenAI primeiro', 'warning');
+                openAPIModal();
+                return;
+            }
+            
+            showLoading(true);
+            try {
+                const response = await callExplorarGPT(input);
+                displayResponse(`🔍 **EXPLORAR GPT Responde:**\n\n${response}`);
+                showNotification('Resposta do EXPLORAR GPT recebida!', 'success');
+            } catch (error) {
+                console.error('Erro:', error);
+                showNotification('Erro ao conectar com EXPLORAR GPT', 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function analyzeOffline(input) {
+            const lower = input.toLowerCase();
+            let response = '📊 **Análise Offline**\n\n';
+            
+            // Detecção simples
+            if (lower.includes('gaslighting') || lower.includes('duvidar')) {
+                response += '🔍 **Tática Detectada:** Gaslighting\n';
+                response += '⚠️ **Nível:** Alto\n';
+                response += '✅ **Ação Imediata:** "Minha percepção é válida. Vou verificar os fatos."\n';
+                response += '📝 **Estratégia:** Documente tudo, busque testemunhas, confie em sua percepção.\n';
+            } else if (lower.includes('pressão') || lower.includes('urgente')) {
+                response += '🔍 **Tática Detectada:** Pressão para decisão\n';
+                response += '⚠️ **Nível:** Médio\n';
+                response += '✅ **Ação Imediata:** "Preciso de 24h para uma decisão responsável."\n';
+                response += '📝 **Estratégia:** Nunca decida sob pressão. Tempo é seu aliado.\n';
+            } else {
+                response += '📝 **Análise Geral:**\n';
+                response += 'Mantenha calma, documente situações suspeitas, estabeleça limites claros.\n';
+            }
+            
+            return response;
+        }
+
+        function displayResponse(content) {
+            const responseDiv = document.getElementById('aiResponse');
+            
+            // Formata a resposta
+            const formattedContent = content
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n/g, '<br>')
+                .replace(/(\d+\.)/g, '<br>$1');
+            
+            responseDiv.innerHTML = `
+                <h3 style="color: var(--secondary); margin-bottom: 15px;">
+                    🧠 Análise ${apiKey ? 'com IA' : 'Offline'}
+                </h3>
+                <div style="line-height: 1.6;">
+                    ${formattedContent}
+                </div>
+                <div style="margin-top: 20px;">
+                    <button class="btn btn-secondary" onclick="copyResponse()" style="padding: 10px 20px; font-size: 0.9em;">
+                        📋 Copiar Resposta
+                    </button>
+                </div>
+            `;
+            
+            responseDiv.classList.add('show');
+            responseDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function copyResponse() {
+            const text = document.getElementById('aiResponse').innerText;
+            navigator.clipboard.writeText(text);
+            showNotification('Resposta copiada!', 'success');
+        }
+
+        // ========== EMERGENCY ==========
+        function emergencyMode() {
+            showSection('emergency');
+            showNotification('🚨 Modo Emergência Ativado', 'error');
+            if (navigator.vibrate) {
+                navigator.vibrate([200, 100, 200]);
+            }
+        }
+
+        function emergencyResponse(type) {
+            const responses = {
+                gaslighting: "Minha percepção é válida. Vou verificar os fatos documentados.",
+                pressure: "Preciso de 24 horas para uma decisão responsável.",
+                attack: "Interessante perspectiva. Vamos focar nos dados concretos."
+            };
+            
+            const response = responses[type];
+            navigator.clipboard.writeText(response);
+            showNotification(`Copiado: "${response}"`, 'success');
+        }
+
+        // ========== API CONFIGURATION ==========
+        function openAPIModal() {
+            document.getElementById('apiModal').classList.add('show');
+            document.getElementById('apiKeyInput').value = apiKey;
+            document.getElementById('modelSelect').value = apiModel;
+        }
+
+        function closeAPIModal() {
+            document.getElementById('apiModal').classList.remove('show');
+        }
+
+        function saveAPIConfig() {
+            apiKey = document.getElementById('apiKeyInput').value.trim();
+            apiModel = document.getElementById('modelSelect').value;
+            
+            localStorage.setItem('openai_api_key', apiKey);
+            localStorage.setItem('openai_model', apiModel);
+            
+            updateAPIStatus();
+            showNotification('Configurações salvas!', 'success');
+            closeAPIModal();
+        }
+
+        async function testAPIConnection() {
+            const testKey = document.getElementById('apiKeyInput').value.trim();
+            const resultDiv = document.getElementById('apiTestResult');
+            
+            if (!testKey) {
+                resultDiv.style.display = 'block';
+                resultDiv.style.background = 'rgba(255, 71, 87, 0.2)';
+                resultDiv.innerHTML = '❌ Insira uma chave de API';
+                return;
+            }
+            
+            resultDiv.style.display = 'block';
+            resultDiv.style.background = 'rgba(255, 193, 7, 0.2)';
+            resultDiv.innerHTML = '⏳ Testando conexão...';
+            
+            try {
+                const response = await fetch('https://api.openai.com/v1/models', {
+                    headers: {
+                        'Authorization': `Bearer ${testKey}`
+                    }
+                });
+                
+                if (response.ok) {
+                    resultDiv.style.background = 'rgba(0, 184, 148, 0.2)';
+                    resultDiv.innerHTML = '✅ Conexão bem-sucedida!';
+                } else {
+                    throw new Error('Chave inválida');
+                }
+            } catch (error) {
+                resultDiv.style.background = 'rgba(255, 71, 87, 0.2)';
+                resultDiv.innerHTML = '❌ Erro: Verifique sua chave';
+            }
+        }
+
+        // ========== UTILITIES ==========
+        function showLoading(show) {
+            document.getElementById('loading').classList.toggle('active', show);
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'fadeOut 0.3s';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // ========== INIT ON LOAD ==========
+        document.addEventListener('DOMContentLoaded', initApp);
+
+        // Modal close on outside click
+        document.getElementById('apiModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeAPIModal();
+            }
+        });
+    </script>
+</body>
+</html>

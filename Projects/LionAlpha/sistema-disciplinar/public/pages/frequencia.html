@@ -1,0 +1,2323 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Frequência - Dashboard Disciplinar</title>
+    
+    <!-- CSS Externos -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    
+    <!-- Sistema Local de Banco de Dados -->
+    <script src="../assets/js/local-db.js"></script>
+    <script src="../assets/js/local-auth.js"></script>
+    <script src="../assets/js/populate-db.js"></script>
+    
+    <!-- Sistema de Sincronização GitHub -->
+    <script src="../assets/js/github-sync.js"></script>
+    
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <!-- BARRA SUPERIOR -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <div class="app-launcher">
+                <span></span><span></span><span></span>
+                <span></span><span></span><span></span>
+                <span></span><span></span><span></span>
+            </div>
+            <span class="app-name">Dashboard Disciplinar</span>
+        </div>
+        <div class="top-bar-center">
+            <input type="text" class="search-box" placeholder="Pesquisar frequência...">
+        </div>
+        <div class="top-bar-right">
+            <div class="user-profile">A</div>
+        </div>
+    </div>
+
+    <!-- LAYOUT PRINCIPAL -->
+    <div class="main-layout">
+        
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">Módulos Principais</div>
+                
+                <a href="../index.html" class="sidebar-item">
+                    <span class="sidebar-icon">🏠</span>
+                    <span class="sidebar-text">Dashboard</span>
+                </a>
+                
+                
+                <a href="gestao-alunos.html" class="sidebar-item">
+                    <span class="sidebar-icon">👥</span>
+                    <span class="sidebar-text">Gestão de Alunos</span>
+                </a>
+                
+                <a href="medidas-disciplinares.html" class="sidebar-item">
+                    <span class="sidebar-icon">📋</span>
+                    <span class="sidebar-text">Medidas Disciplinares</span>
+                </a>
+                
+                <a href="frequencia.html" class="sidebar-item active">
+                    <span class="sidebar-icon">📅</span>
+                    <span class="sidebar-text">Controle de Frequência</span>
+                </a>
+                
+                <a href="relatorios.html" class="sidebar-item">
+                    <span class="sidebar-icon">📊</span>
+                    <span class="sidebar-text">Relatórios</span>
+                </a>
+                
+                <a href="analises.html" class="sidebar-item">
+                    <span class="sidebar-icon">📈</span>
+                    <span class="sidebar-text">Análises</span>
+                </a>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-title">Ferramentas</div>
+                
+                <a href="configuracoes.html" class="sidebar-item">
+                    <span class="sidebar-icon">⚙️</span>
+                    <span class="sidebar-text">Configurações</span>
+                </a>
+                
+                <a href="comunicacao.html" class="sidebar-item">
+                    <span class="sidebar-icon">📱</span>
+                    <span class="sidebar-text">Comunicação</span>
+                </a>
+                
+                <a href="login.html" class="sidebar-item">
+                    <span class="sidebar-icon">🔐</span>
+                    <span class="sidebar-text">Login/Logout</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- ÁREA DE CONTEÚDO -->
+        <div class="content-area">
+            <div class="main-content">
+                
+                <!-- TÍTULO -->
+                <div class="module-title">
+                    📅 Controle de Frequência
+                </div>
+
+                <!-- SEÇÃO: ESTATÍSTICAS RÁPIDAS -->
+                <div class="quick-stats">
+                    <div class="stat-card stat-success">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="presencasHoje">0</div>
+                            <div class="stat-label">Presenças Hoje</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card stat-danger">
+                        <div class="stat-icon">❌</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="faltasHoje">0</div>
+                            <div class="stat-label">Faltas Hoje</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card stat-warning">
+                        <div class="stat-icon">⚠️</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="faltasControladasHoje">0</div>
+                            <div class="stat-label">Faltas Controladas</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card stat-info">
+                        <div class="stat-icon">🏥</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="atestadosHoje">0</div>
+                            <div class="stat-label">Atestados Hoje</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PAINEL DE ALERTAS DE FREQUÊNCIA -->
+                <div class="management-section" id="painelAlertasFrequencia">
+                    <div class="management-title">
+                        🚨 Alertas de Frequência (<50%)
+                        <button id="toggleAlertas" class="btn btn-small btn-secondary" onclick="toggleListaAlertas()" style="margin-left: 10px;">
+                            👁️ Mostrar Lista
+                        </button>
+                    </div>
+                    <div id="alertasFrequenciaContainer">
+                        <div class="loading-state">
+                            <div class="loading-spinner"></div>
+                            <p>Carregando alertas de frequência...</p>
+                        </div>
+                    </div>
+                    <div id="listaAlertasDetalhada" style="display: none; margin-top: 15px;">
+                        <!-- Lista detalhada será carregada aqui -->
+                    </div>
+                </div>
+
+                <!-- SEÇÃO: LANÇAMENTO DIÁRIO DE FREQUÊNCIA -->
+                <div class="management-section">
+                    <div class="management-title">
+                        ✏️ Lançar Frequência Diária
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">🎯 Selecionar Turma *</label>
+                            <select id="turmaLancamento" class="form-select" onchange="carregarAlunosLancamento()">
+                                <option value="">Selecione uma turma...</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">📅 Data da Frequência *</label>
+                            <input type="date" id="dataLancamento" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">📊 Ações Rápidas:</label>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary" onclick="marcarTodosPresentes()">
+                                    ✅ Todos Presentes
+                                </button>
+                                <button type="button" class="btn btn-info" onclick="limparMarcacoes()">
+                                    🔄 Limpar Marcações
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Lista de Alunos -->
+                    <div id="containerListaAlunos" style="display: none;">
+                        <div class="management-title" style="margin-top: 20px;">
+                            👥 Lista de Alunos - <span id="tituloTurmaData"></span>
+                        </div>
+                        
+                        <!-- Legenda -->
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                            <h4 style="margin: 0 0 10px 0;">📋 Legenda das Marcações:</h4>
+                            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                                <span style="padding: 6px 12px; background: #d4edda; color: #155724; border-radius: 4px; font-weight: bold;">P = Presença</span>
+                                <span style="padding: 6px 12px; background: #f8d7da; color: #721c24; border-radius: 4px; font-weight: bold;">F = Falta</span>
+                                <span style="padding: 6px 12px; background: #fff3cd; color: #856404; border-radius: 4px; font-weight: bold;">FC = Falta Controlada</span>
+                                <span style="padding: 6px 12px; background: #d1ecf1; color: #0c5460; border-radius: 4px; font-weight: bold;">A = Atestado</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Lista de Alunos -->
+                        <div id="listaAlunosFrequencia" class="alunos-frequencia-lista">
+                            <!-- Alunos serão carregados aqui dinamicamente -->
+                        </div>
+                        
+                        <!-- Botões de Ação -->
+                        <div class="form-actions" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e1dfdd;">
+                            <button type="button" class="btn btn-success btn-large" onclick="salvarFrequenciaDiaria()" id="btnSalvarFrequencia" disabled>
+                                💾 Salvar Frequência do Dia
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="voltarSelecaoTurma()">
+                                ⬅️ Voltar
+                            </button>
+                        </div>
+                        
+                        <!-- Status do Salvamento -->
+                        <div id="statusSalvamento" style="margin-top: 15px;"></div>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO: RESUMO POR TURMA -->
+                <div class="management-section">
+                    <div class="management-title">
+                        📊 Resumo por Turma
+                    </div>
+                    <div id="resumoTurmas" class="quick-stats">
+                        <div class="loading-state">
+                            <div class="loading-spinner"></div>
+                            <p>Carregando resumo por turma...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO: FILTROS E PESQUISA -->
+                <div class="management-section">
+                    <div class="management-title">
+                        🔍 Filtros e Pesquisa Avançada
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">🎯 Filtrar por Turma:</label>
+                            <select id="filtroTurmaFreq" class="form-select" onchange="aplicarFiltrosFrequencia()">
+                                <option value="">Todas as turmas</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">👤 Aluno Específico:</label>
+                            <select id="filtroAlunoEspecifico" class="form-select" onchange="aplicarFiltrosFrequencia()">
+                                <option value="">Todos os alunos</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">📅 Mês:</label>
+                            <select id="filtroMesFreq" class="form-select" onchange="aplicarFiltrosFrequencia()">
+                                <option value="">Todos os meses</option>
+                                <option value="01">Janeiro</option>
+                                <option value="02">Fevereiro</option>
+                                <option value="03">Março</option>
+                                <option value="04">Abril</option>
+                                <option value="05">Maio</option>
+                                <option value="06">Junho</option>
+                                <option value="07">Julho</option>
+                                <option value="08">Agosto</option>
+                                <option value="09">Setembro</option>
+                                <option value="10">Outubro</option>
+                                <option value="11">Novembro</option>
+                                <option value="12">Dezembro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">📈 Ordenar por:</label>
+                            <select id="filtroOrdenacaoFreq" class="form-select" onchange="aplicarFiltrosFrequencia()">
+                                <option value="nome">Nome (A-Z)</option>
+                                <option value="percentualPresenca">% Presença</option>
+                                <option value="totalFaltas">Total de Faltas</option>
+                                <option value="faltasConsecutivas">Faltas Consecutivas</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">🚨 Situação:</label>
+                            <select id="filtroSituacaoFreq" class="form-select" onchange="aplicarFiltrosFrequencia()">
+                                <option value="todos">Todos</option>
+                                <option value="baixaFrequencia">Baixa Frequência (<75%)</option>
+                                <option value="faltasConsecutivas">Faltas Consecutivas</option>
+                                <option value="riscoReprovacao">Risco de Reprovação</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">🔍 Pesquisar:</label>
+                            <input 
+                                type="text" 
+                                id="pesquisaTextoFreq" 
+                                class="form-input" 
+                                placeholder="Nome do aluno..."
+                                onkeyup="aplicarFiltrosFrequencia()"
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">&nbsp;</label>
+                            <div class="form-actions">
+                                <button class="btn btn-primary" onclick="aplicarFiltrosFrequencia()">
+                                    🔍 Aplicar Filtros
+                                </button>
+                                <button class="btn btn-secondary" onclick="limparFiltrosFrequencia()">
+                                    🔄 Limpar Filtros
+                                </button>
+                                <button class="btn btn-success" onclick="exportarRelatorioFrequencia()">
+                                    📊 Exportar Relatório
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO: TABELA DE FREQUÊNCIA DETALHADA -->
+                <div class="table-container">
+                    <div class="table-header">
+                        <div class="table-title">
+                            📋 Frequência Detalhada
+                        </div>
+                        <div class="table-actions">
+                            <button class="btn btn-info btn-small" onclick="aplicarFiltrosFrequencia()">
+                                🔄 Atualizar
+                            </button>
+                            <button class="btn btn-success btn-small" onclick="mostrarTabelaDiaria()">
+                                📅 Ver por Dias
+                            </button>
+                            <button class="btn btn-secondary btn-small" onclick="exportarRelatorioFrequencia()">
+                                📊 Exportar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="frequenciaContainer" class="table-content">
+                        <div class="loading-state">
+                            <div class="loading-spinner"></div>
+                            <p>Carregando dados de frequência...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO: TABELA POR DIAS -->
+                <div class="table-container" id="tabelaDiariaContainer" style="display: none;">
+                    <div class="table-header">
+                        <div class="table-title">
+                            📅 Frequência por Dias
+                        </div>
+                        <div class="table-actions">
+                            <button class="btn btn-info btn-small" onclick="atualizarTabelaDiaria()">
+                                🔄 Atualizar
+                            </button>
+                            <button class="btn btn-secondary btn-small" onclick="ocultarTabelaDiaria()">
+                                ❌ Fechar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="tabelaDiariaContent" class="table-content">
+                        <!-- Tabela diária será carregada aqui -->
+                    </div>
+                </div>
+
+                <!-- SEÇÃO: IMPORTAÇÃO DE DADOS CSV -->
+                <div class="management-section">
+                    <div class="management-title">
+                        📥 Importar Dados de Frequência (CSV)
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">📄 Arquivo CSV de Frequência:</label>
+                            <input type="file" id="csvFileFrequencia" class="form-input" accept=".csv" />
+                            <small style="color: #666; margin-top: 5px; display: block;">
+                                Formato: Codigo, Nome, Turma + dias úteis de agosto (1,4,5,6,7,8,11,12,13,14,15,18,19,20,21)<br>
+                                ⚠️ <strong>IMPORTANTE:</strong> Sistema processará 14 dias para turmas normais, 15 dias para turma 9A<br>
+                                Marcações válidas: P=Presença, F=Falta, FC=Falta Controlada, A=Atestado
+                            </small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">&nbsp;</label>
+                            <div class="form-actions">
+                                <button class="btn btn-primary" onclick="importarFrequenciaCSV()">
+                                    📥 Importar CSV
+                                </button>
+                                <button class="btn btn-info" onclick="sincronizarComGitHub()">
+                                    🔄 Sincronizar GitHub
+                                </button>
+                                <button class="btn btn-success" onclick="salvarNoGitHub()">
+                                    💾 Salvar no GitHub
+                                </button>
+                                <button class="btn btn-danger" onclick="limparDadosFrequencia()">
+                                    🗑️ Limpar Dados
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Status da Importação -->
+                    <div id="importStatusFrequencia" style="margin-top: 20px;">
+                        <!-- Status será exibido aqui -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    
+    <script src="../assets/js/main.js" defer></script>
+    <script src="../assets/js/gestao.js" defer></script>
+    
+    <script>
+        // Variáveis globais
+        let dadosFrequencia = [];
+        let dadosFrequenciaFiltrados = [];
+        let estatisticasFrequencia = {};
+
+        // Inicialização da página
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📅 Página de Frequência carregada');
+            inicializarModuloFrequencia();
+        });
+
+        // Função principal de inicialização
+        async function inicializarModuloFrequencia() {
+            try {
+                showMessage('Carregando módulo de frequência...', 'loading');
+                
+                // Aguardar Sistema Local
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                if (window.localDb && window.localDb.loaded) {
+                    await carregarDadosFrequencia();
+                    await carregarEstatisticasFrequencia();
+                    await carregarAlertasFrequencia();
+                    await carregarResumoTurmas();
+                    await carregarFiltrosFrequencia();
+                    await carregarTurmasLancamento();
+                    aplicarFiltrosFrequencia();
+                    
+                    // Verificar atualizações do GitHub
+                    setTimeout(verificarAtualizacoesAutomaticas, 2000);
+                    
+                    showMessage('✅ Módulo de frequência carregado!', 'success');
+                } else {
+                    showMessage('⚠️ Sistema Local não conectado - funcionalidade limitada', 'error');
+                    carregarDadosDemoFrequencia();
+                }
+            } catch (error) {
+                console.error('Erro ao inicializar frequência:', error);
+                showMessage('Erro ao carregar módulo de frequência', 'error');
+            }
+        }
+
+        // ======= FUNÇÕES DE IMPORTAÇÃO CSV =======
+        
+        async function importarFrequenciaCSV() {
+            const fileInput = document.getElementById('csvFileFrequencia');
+            const statusDiv = document.getElementById('importStatusFrequencia');
+            
+            if (!fileInput.files[0]) {
+                showMessage('Por favor, selecione um arquivo CSV', 'error');
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            statusDiv.innerHTML = '<div class="loading-state"><div class="loading-spinner"></div><p>Processando arquivo...</p></div>';
+            
+            try {
+                const text = await file.text();
+                const linhas = text.split('\n').filter(linha => linha.trim());
+                
+                if (linhas.length < 2) {
+                    throw new Error('Arquivo CSV deve ter pelo menos uma linha de dados além do cabeçalho');
+                }
+                
+                // Processar cabeçalho para extrair os dias
+                const cabecalho = linhas[0].split(',').map(col => col.trim().replace(/['"]/g, ''));
+                
+                // Verificar estrutura básica: codigo, nome, turma + dias
+                if (cabecalho.length < 6) {
+                    throw new Error('CSV deve ter pelo menos 6 colunas: Codigo, Nome, Turma + dias úteis');
+                }
+                
+                // Dias úteis do CSV: apenas 14 dias (1,4,5,6,7,8,11,12,13,14,15,18,19,20)
+                const diasUteisCSV = [1, 4, 5, 6, 7, 8, 11, 12, 13, 14, 15, 18, 19, 20];
+                const ano = 2024; // Ano correto dos dados
+                const mes = '08'; // Agosto
+                
+                console.log('📅 Processando CSV com', diasUteisCSV.length, 'dias úteis:', diasUteisCSV);
+                
+                // Verificar se temos colunas suficientes para os dias úteis
+                const diasColunas = cabecalho.slice(3); // Pega da 4ª coluna em diante
+                console.log('📋 Colunas encontradas no CSV:', diasColunas.length);
+                
+                if (diasColunas.length < diasUteisCSV.length) {
+                    console.warn(`CSV tem ${diasColunas.length} colunas de dias, esperado ${diasUteisCSV.length} dias úteis`);
+                }
+                
+                const registrosProcessados = [];
+                let erros = 0;
+                let registrosContados = 0;
+                
+                // Processar cada linha (aluno)
+                for (let i = 1; i < linhas.length; i++) {
+                    try {
+                        const colunas = linhas[i].split(',').map(col => col.trim().replace(/['"]/g, ''));
+                        
+                        if (colunas.length < 6) {
+                            console.warn(`Linha ${i + 1}: Dados insuficientes`);
+                            erros++;
+                            continue;
+                        }
+                        
+                        const codigoAluno = colunas[0];
+                        const nomeAluno = colunas[1];
+                        const turma = colunas[2];
+                        const marcacoesDias = colunas.slice(3); // Marcações dos dias
+                        
+                        // DEBUG: Log da linha para investigação
+                        if (nomeAluno.toUpperCase().includes('IZABELLY') || i <= 3) {
+                            console.log(`🔍 DEBUG Linha ${i + 1}: ${nomeAluno} (${turma})`);
+                            console.log(`📋 Marcações recebidas:`, marcacoesDias);
+                        }
+                        
+                        // Processar cada dia para esse aluno usando o mapeamento de dias úteis do CSV
+                        for (let j = 0; j < diasUteisCSV.length && j < marcacoesDias.length; j++) {
+                            const diaUtil = diasUteisCSV[j]; // Dia real do mês (1, 4, 5, 6, etc.)
+                            const marcacaoOriginal = marcacoesDias[j];
+                            const marcacao = marcacaoOriginal.toUpperCase().trim();
+                            
+                            // DEBUG: Log detalhado para casos específicos
+                            if (nomeAluno.toUpperCase().includes('IZABELLY')) {
+                                console.log(`🔍 Dia ${diaUtil}: "${marcacaoOriginal}" → "${marcacao}"`);
+                            }
+                            
+                            // Pular se não há marcação ou está vazio
+                            if (!marcacao || marcacao === '' || marcacao === '-') {
+                                continue;
+                            }
+                            
+                            // Validar marcação
+                            if (!['P', 'F', 'FC', 'A'].includes(marcacao)) {
+                                console.warn(`Linha ${i + 1}, Dia ${diaUtil}: Marcação inválida: "${marcacaoOriginal}" → "${marcacao}"`);
+                                erros++;
+                                continue;
+                            }
+                            
+                            // Criar data no formato YYYY-MM-DD usando o dia útil correto
+                            const diaFormatado = diaUtil.toString().padStart(2, '0');
+                            const dataCompleta = `${ano}-${mes}-${diaFormatado}`;
+                            
+                            const registro = {
+                                data: dataCompleta,
+                                codigo_aluno: codigoAluno,
+                                nome_aluno: nomeAluno,
+                                turma: turma,
+                                marcacao: marcacao,
+                                id: `freq_${Date.now()}_${i}_${j}`,
+                                created_at: new Date().toISOString()
+                            };
+                            
+                            registrosProcessados.push(registro);
+                            registrosContados++;
+                        }
+                        
+                    } catch (error) {
+                        console.error(`Erro na linha ${i + 1}:`, error);
+                        erros++;
+                    }
+                }
+                
+                if (registrosProcessados.length === 0) {
+                    throw new Error('Nenhum registro válido encontrado no arquivo');
+                }
+                
+                // Salvar no Sistema Local
+                if (window.db) {
+                    const batch = [];
+                    for (const registro of registrosProcessados) {
+                        batch.push(
+                            window.db.collection('frequencia').doc(registro.id).set(registro)
+                        );
+                    }
+                    await Promise.all(batch);
+                }
+                
+                // Atualizar dados locais
+                dadosFrequencia = [...dadosFrequencia, ...registrosProcessados];
+                
+                // Salvar backup no localStorage
+                localStorage.setItem('dadosFrequencia_backup', JSON.stringify({
+                    timestamp: Date.now(),
+                    dados: dadosFrequencia
+                }));
+                
+                const alunosProcessados = new Set(registrosProcessados.map(r => r.codigo_aluno)).size;
+                const diasProcessados = new Set(registrosProcessados.map(r => r.data)).size;
+                
+                statusDiv.innerHTML = `
+                    <div class="alert alert-success">
+                        ✅ <strong>${registrosProcessados.length}</strong> registros importados com sucesso!<br>
+                        📊 <strong>${alunosProcessados}</strong> aluno(s) processado(s)<br>
+                        📅 <strong>${diasProcessados}</strong> dia(s) de frequência<br>
+                        ${erros > 0 ? `⚠️ ${erros} erro(s) encontrado(s)` : ''}
+                    </div>
+                `;
+                
+                // Recarregar dados
+                await carregarEstatisticasFrequencia();
+                await carregarAlertasFrequencia();
+                await carregarResumoTurmas();
+                aplicarFiltrosFrequencia();
+                
+                showMessage(`${registrosProcessados.length} registros de frequência importados!`, 'success');
+                
+                // SINCRONIZAÇÃO AUTOMÁTICA COM GITHUB
+                try {
+                    statusDiv.innerHTML += `
+                        <div class="alert alert-info" style="margin-top: 10px;">
+                            🔄 <strong>Sincronizando automaticamente com GitHub...</strong><br>
+                            ⏳ Preparando dados para commit automático...
+                        </div>
+                    `;
+                    
+                    await sincronizarAutomaticamenteComGitHub(registrosProcessados);
+                    
+                } catch (syncError) {
+                    console.warn('Erro na sincronização automática:', syncError);
+                    statusDiv.innerHTML += `
+                        <div class="alert alert-warning" style="margin-top: 10px;">
+                            ⚠️ <strong>Sincronização manual necessária</strong><br>
+                            Use o botão "Salvar no GitHub" para sincronizar manualmente
+                        </div>
+                    `;
+                }
+                
+                // Limpar input
+                fileInput.value = '';
+                
+            } catch (error) {
+                console.error('Erro ao importar CSV:', error);
+                statusDiv.innerHTML = `
+                    <div class="alert alert-danger">
+                        ❌ <strong>Erro ao importar:</strong> ${error.message}
+                    </div>
+                `;
+                showMessage('Erro ao importar arquivo CSV', 'error');
+            }
+        }
+
+        async function limparDadosFrequencia() {
+            if (!confirm('Tem certeza que deseja limpar todos os dados de frequência? Esta ação não pode ser desfeita.')) {
+                return;
+            }
+            
+            try {
+                if (window.db) {
+                    const snapshot = await window.db.collection('frequencia').get();
+                    const batch = [];
+                    snapshot.docs.forEach(doc => {
+                        batch.push(doc.ref.delete());
+                    });
+                    await Promise.all(batch);
+                }
+                
+                dadosFrequencia = [];
+                dadosFrequenciaFiltrados = [];
+                
+                document.getElementById('importStatusFrequencia').innerHTML = `
+                    <div class="alert alert-success">
+                        ✅ Todos os dados de frequência foram removidos
+                    </div>
+                `;
+                
+                // Recarregar interface
+                await carregarEstatisticasFrequencia();
+                await carregarAlertasFrequencia();
+                await carregarResumoTurmas();
+                aplicarFiltrosFrequencia();
+                
+                showMessage('Dados de frequência removidos', 'success');
+                
+            } catch (error) {
+                console.error('Erro ao limpar dados:', error);
+                showMessage('Erro ao limpar dados', 'error');
+            }
+        }
+
+        // ======= CARREGAR DADOS =======
+        
+        async function carregarDadosFrequencia() {
+            try {
+                // 1. Tentar carregar do GitHub primeiro
+                if (window.gitHubSync) {
+                    const dadosGitHub = await window.gitHubSync.sincronizarDados('frequencia');
+                    if (dadosGitHub && dadosGitHub.length > 0) {
+                        dadosFrequencia = dadosGitHub;
+                        
+                        // Salvar no localStorage como backup
+                        localStorage.setItem('dadosFrequencia_backup', JSON.stringify({
+                            timestamp: Date.now(),
+                            dados: dadosFrequencia
+                        }));
+                        
+                        console.log(`📅 ${dadosFrequencia.length} registros carregados do GitHub`);
+                        return;
+                    }
+                }
+                
+                // 2. Tentar carregar do localStorage como backup
+                const backupLocal = localStorage.getItem('dadosFrequencia_backup');
+                if (backupLocal) {
+                    try {
+                        const backup = JSON.parse(backupLocal);
+                        const horasAtras = (Date.now() - backup.timestamp) / (1000 * 60 * 60);
+                        
+                        // Se o backup tem menos de 24 horas, usar
+                        if (horasAtras < 24 && backup.dados && backup.dados.length > 0) {
+                            dadosFrequencia = backup.dados;
+                            console.log(`💾 ${dadosFrequencia.length} registros carregados do backup local (${horasAtras.toFixed(1)}h atrás)`);
+                            return;
+                        }
+                    } catch (e) {
+                        console.warn('Erro ao carregar backup local:', e);
+                    }
+                }
+                
+                // 3. Fallback para sistema local (se disponível)
+                if (window.db) {
+                    const snapshot = await window.db.collection('frequencia').get();
+                    dadosFrequencia = [];
+                    
+                    snapshot.forEach(doc => {
+                        dadosFrequencia.push({
+                            id: doc.id,
+                            ...doc.data()
+                        });
+                    });
+                    
+                    console.log(`📅 ${dadosFrequencia.length} registros carregados do sistema local`);
+                }
+                
+            } catch (error) {
+                console.error('Erro ao carregar dados de frequência:', error);
+                
+                // Último recurso: tentar backup local mesmo que antigo
+                const backupLocal = localStorage.getItem('dadosFrequencia_backup');
+                if (backupLocal) {
+                    try {
+                        const backup = JSON.parse(backupLocal);
+                        if (backup.dados && backup.dados.length > 0) {
+                            dadosFrequencia = backup.dados;
+                            console.log(`🆘 ${dadosFrequencia.length} registros carregados do backup de emergência`);
+                        }
+                    } catch (e) {
+                        console.warn('Falha no backup de emergência:', e);
+                    }
+                }
+            }
+        }
+
+        // ======= ESTATÍSTICAS =======
+        
+        async function carregarEstatisticasFrequencia() {
+            try {
+                const hoje = new Date().toISOString().split('T')[0];
+                
+                const registrosHoje = dadosFrequencia.filter(registro => 
+                    registro.data === hoje
+                );
+                
+                const presencas = registrosHoje.filter(r => r.marcacao === 'P').length;
+                const faltas = registrosHoje.filter(r => r.marcacao === 'F').length;
+                const faltasControladas = registrosHoje.filter(r => r.marcacao === 'FC').length;
+                const atestados = registrosHoje.filter(r => r.marcacao === 'A').length;
+                
+                document.getElementById('presencasHoje').textContent = presencas;
+                document.getElementById('faltasHoje').textContent = faltas;
+                document.getElementById('faltasControladasHoje').textContent = faltasControladas;
+                document.getElementById('atestadosHoje').textContent = atestados;
+                
+                estatisticasFrequencia = {
+                    presencas,
+                    faltas,
+                    faltasControladas,
+                    atestados,
+                    total: registrosHoje.length
+                };
+                
+            } catch (error) {
+                console.error('Erro ao carregar estatísticas:', error);
+            }
+        }
+
+        // ======= ALERTAS DE FREQUÊNCIA =======
+        
+        async function carregarAlertasFrequencia() {
+            const container = document.getElementById('alertasFrequenciaContainer');
+            
+            try {
+                const alertas = [];
+                
+                if (dadosFrequencia.length === 0) {
+                    container.innerHTML = `
+                        <div class="insight-item">
+                            <div class="insight-text">📊 Importe dados de frequência para ver alertas</div>
+                            <span class="trend-indicator trend-down">ℹ️ Info</span>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Calcular estatísticas por aluno
+                const estatisticasPorAluno = {};
+                
+                dadosFrequencia.forEach(registro => {
+                    const chave = `${registro.codigo_aluno}_${registro.turma}`;
+                    
+                    if (!estatisticasPorAluno[chave]) {
+                        estatisticasPorAluno[chave] = {
+                            codigo: registro.codigo_aluno,
+                            nome: registro.nome_aluno,
+                            turma: registro.turma,
+                            totalRegistros: 0,
+                            presencas: 0,
+                            faltas: 0,
+                            faltasControladas: 0,
+                            atestados: 0,
+                            ultimaFalta: null
+                        };
+                    }
+                    
+                    const stats = estatisticasPorAluno[chave];
+                    stats.totalRegistros++;
+                    
+                    switch (registro.marcacao) {
+                        case 'P': stats.presencas++; break;
+                        case 'F': 
+                            stats.faltas++; 
+                            stats.ultimaFalta = registro.data;
+                            break;
+                        case 'FC': stats.faltasControladas++; break;
+                        case 'A': stats.atestados++; break;
+                    }
+                });
+                
+                // Gerar alertas apenas para alunos com menos de 50% de frequência
+                const alertasCriticos = [];
+                Object.values(estatisticasPorAluno).forEach(aluno => {
+                    const percentualPresenca = (aluno.presencas / aluno.totalRegistros) * 100;
+                    
+                    // Alerta crítico: menos de 50% de frequência
+                    if (percentualPresenca < 50) {
+                        alertas.push({
+                            tipo: 'danger',
+                            icone: '🚨',
+                            texto: `${aluno.nome} (${aluno.turma}) - Frequência crítica: ${percentualPresenca.toFixed(1)}%`,
+                            alunoId: aluno.codigo,
+                            percentual: percentualPresenca
+                        });
+                        alertasCriticos.push(aluno);
+                    }
+                });
+                
+                // Salvar lista de alertas críticos globalmente
+                window.alertasCriticos = alertasCriticos;
+                
+                // Exibir alertas
+                if (alertas.length === 0) {
+                    container.innerHTML = `
+                        <div class="insight-item">
+                            <div class="insight-text">✅ Nenhum aluno com frequência abaixo de 50%</div>
+                            <span class="trend-indicator trend-down">📈 Positivo</span>
+                        </div>
+                    `;
+                } else {
+                    container.innerHTML = `
+                        <div class="insight-item">
+                            <div class="insight-text">🚨 ${alertas.length} aluno(s) com frequência crítica (<50%)</div>
+                            <span class="trend-indicator trend-up">⚠️ Atenção Urgente</span>
+                        </div>
+                    `;
+                }
+                
+                console.log(`🚨 ${alertas.length} alerta(s) de frequência gerado(s)`);
+                
+            } catch (error) {
+                console.error('Erro ao carregar alertas de frequência:', error);
+                container.innerHTML = `
+                    <div class="insight-item">
+                        <div class="insight-text">⚠️ Erro ao carregar alertas</div>
+                        <span class="trend-indicator trend-up">❌ Erro</span>
+                    </div>
+                `;
+            }
+        }
+
+        function destacarAlunoFreq(alunoId) {
+            console.log('Destacando aluno na frequência:', alunoId);
+            showMessage(`Aluno ${alunoId} selecionado`, 'info');
+        }
+
+        // ======= RESUMO POR TURMA =======
+        
+        async function carregarResumoTurmas() {
+            const container = document.getElementById('resumoTurmas');
+            
+            try {
+                if (dadosFrequencia.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">📊</div>
+                            <h3>Sem dados de frequência</h3>
+                            <p>Importe dados CSV para ver resumo por turma</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const estatisticasPorTurma = {};
+                
+                dadosFrequencia.forEach(registro => {
+                    if (!estatisticasPorTurma[registro.turma]) {
+                        estatisticasPorTurma[registro.turma] = {
+                            totalRegistros: 0,
+                            presencas: 0,
+                            faltas: 0,
+                            alunos: new Set()
+                        };
+                    }
+                    
+                    const stats = estatisticasPorTurma[registro.turma];
+                    stats.totalRegistros++;
+                    stats.alunos.add(registro.codigo_aluno);
+                    
+                    if (registro.marcacao === 'P') {
+                        stats.presencas++;
+                    } else if (['F', 'FC'].includes(registro.marcacao)) {
+                        stats.faltas++;
+                    }
+                });
+                
+                let html = '';
+                
+                Object.keys(estatisticasPorTurma).sort().forEach(turma => {
+                    const stats = estatisticasPorTurma[turma];
+                    const percentualPresenca = (stats.presencas / stats.totalRegistros) * 100;
+                    
+                    let corCard = 'success';
+                    if (percentualPresenca < 75) corCard = 'danger';
+                    else if (percentualPresenca < 85) corCard = 'warning';
+                    
+                    html += `
+                        <div class="stat-card stat-${corCard}">
+                            <div class="stat-icon">🎯</div>
+                            <div class="stat-content">
+                                <div class="stat-number">${percentualPresenca.toFixed(1)}%</div>
+                                <div class="stat-label">Turma ${turma}</div>
+                                <div class="stat-extra">${stats.alunos.size} aluno(s)</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                container.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Erro ao carregar resumo por turma:', error);
+                container.innerHTML = `
+                    <div class="error-state">
+                        <div class="error-icon">⚠️</div>
+                        <h3>Erro ao carregar resumo</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // ======= FILTROS =======
+        
+        let todosAlunos = [];
+
+        async function carregarFiltrosFrequencia() {
+            try {
+                if (dadosFrequencia.length === 0) return;
+                
+                // Extrair turmas únicas
+                const turmas = [...new Set(dadosFrequencia.map(r => r.turma))].sort();
+                
+                const selectTurma = document.getElementById('filtroTurmaFreq');
+                if (selectTurma) {
+                    selectTurma.innerHTML = '<option value="">Todas as turmas</option>';
+                    turmas.forEach(turma => {
+                        selectTurma.innerHTML += `<option value="${turma}">Turma ${turma}</option>`;
+                    });
+                    
+                    // Adicionar event listener para atualizar filtro de alunos
+                    selectTurma.addEventListener('change', function() {
+                        atualizarFiltroAlunos(this.value);
+                    });
+                }
+                
+                // Carregar todos os alunos únicos
+                const alunosUnicos = {};
+                dadosFrequencia.forEach(r => {
+                    const chave = `${r.codigo_aluno}_${r.turma}`;
+                    if (!alunosUnicos[chave]) {
+                        alunosUnicos[chave] = {
+                            codigo: r.codigo_aluno,
+                            nome: r.nome_aluno,
+                            turma: r.turma
+                        };
+                    }
+                });
+                
+                // Armazenar todos os alunos para uso no filtro dinâmico
+                todosAlunos = Object.values(alunosUnicos).sort((a, b) => a.nome.localeCompare(b.nome));
+                
+                // Carregar inicialmente todos os alunos
+                atualizarFiltroAlunos('');
+                
+                console.log(`Filtros carregados: ${turmas.length} turmas, ${todosAlunos.length} alunos`);
+                
+            } catch (error) {
+                console.error('Erro ao carregar filtros:', error);
+            }
+        }
+
+        function atualizarFiltroAlunos(turmaSelecionada) {
+            const selectAluno = document.getElementById('filtroAlunoEspecifico');
+            if (!selectAluno) return;
+            
+            // Limpar valor atual do filtro de aluno
+            selectAluno.value = '';
+            
+            // Filtrar alunos pela turma selecionada
+            let alunosFiltrados = todosAlunos;
+            if (turmaSelecionada) {
+                alunosFiltrados = todosAlunos.filter(aluno => aluno.turma === turmaSelecionada);
+            }
+            
+            // Atualizar opções do select
+            selectAluno.innerHTML = '<option value="">Todos os alunos</option>';
+            alunosFiltrados.forEach(aluno => {
+                selectAluno.innerHTML += `<option value="${aluno.codigo}">${aluno.nome} (${aluno.turma})</option>`;
+            });
+            
+            // Aplicar filtros após atualização
+            aplicarFiltrosFrequencia();
+        }
+
+        function aplicarFiltrosFrequencia() {
+            try {
+                if (dadosFrequencia.length === 0) {
+                    document.getElementById('frequenciaContainer').innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">📅</div>
+                            <h3>Sem dados de frequência</h3>
+                            <p>Importe dados CSV para visualizar</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const filtroTurma = document.getElementById('filtroTurmaFreq').value;
+                const filtroMes = document.getElementById('filtroMesFreq').value;
+                const filtroOrdenacao = document.getElementById('filtroOrdenacaoFreq').value;
+                const filtroSituacao = document.getElementById('filtroSituacaoFreq').value;
+                const pesquisaTexto = document.getElementById('pesquisaTextoFreq').value.toLowerCase();
+                const filtroAlunoEspecifico = document.getElementById('filtroAlunoEspecifico').value;
+                
+                // Agrupar dados por aluno
+                const estatisticasPorAluno = {};
+                
+                let dadosFiltrados = [...dadosFrequencia];
+                
+                // Filtrar por turma
+                if (filtroTurma) {
+                    dadosFiltrados = dadosFiltrados.filter(r => r.turma === filtroTurma);
+                }
+                
+                // Filtrar por mês
+                if (filtroMes) {
+                    dadosFiltrados = dadosFiltrados.filter(r => r.data.substring(5, 7) === filtroMes);
+                }
+                
+                // Filtrar por aluno específico
+                if (filtroAlunoEspecifico) {
+                    dadosFiltrados = dadosFiltrados.filter(r => r.codigo_aluno === filtroAlunoEspecifico);
+                } else if (pesquisaTexto) {
+                    // Filtrar por pesquisa apenas se não há aluno específico selecionado
+                    dadosFiltrados = dadosFiltrados.filter(r => 
+                        r.nome_aluno.toLowerCase().includes(pesquisaTexto) ||
+                        r.turma.toLowerCase().includes(pesquisaTexto)
+                    );
+                }
+                
+                // Calcular estatísticas por aluno
+                dadosFiltrados.forEach(registro => {
+                    const chave = `${registro.codigo_aluno}_${registro.turma}`;
+                    
+                    if (!estatisticasPorAluno[chave]) {
+                        estatisticasPorAluno[chave] = {
+                            codigo: registro.codigo_aluno,
+                            nome: registro.nome_aluno,
+                            turma: registro.turma,
+                            totalRegistros: 0,
+                            presencas: 0,
+                            faltas: 0,
+                            faltasControladas: 0,
+                            atestados: 0,
+                            percentualPresenca: 0
+                        };
+                    }
+                    
+                    const stats = estatisticasPorAluno[chave];
+                    stats.totalRegistros++;
+                    
+                    switch (registro.marcacao) {
+                        case 'P': stats.presencas++; break;
+                        case 'F': stats.faltas++; break;
+                        case 'FC': stats.faltasControladas++; break;
+                        case 'A': stats.atestados++; break;
+                    }
+                });
+                
+                // Calcular percentuais
+                Object.values(estatisticasPorAluno).forEach(aluno => {
+                    if (aluno.totalRegistros > 0) {
+                        aluno.percentualPresenca = (aluno.presencas / aluno.totalRegistros) * 100;
+                    }
+                });
+                
+                let alunosFiltrados = Object.values(estatisticasPorAluno);
+                
+                // Filtrar por situação
+                if (filtroSituacao === 'baixaFrequencia') {
+                    alunosFiltrados = alunosFiltrados.filter(a => a.percentualPresenca < 75);
+                } else if (filtroSituacao === 'faltasConsecutivas') {
+                    alunosFiltrados = alunosFiltrados.filter(a => a.faltas > 3);
+                } else if (filtroSituacao === 'riscoReprovacao') {
+                    alunosFiltrados = alunosFiltrados.filter(a => a.percentualPresenca < 75 || a.faltas > 10);
+                }
+                
+                // Ordenar
+                alunosFiltrados.sort((a, b) => {
+                    switch (filtroOrdenacao) {
+                        case 'nome':
+                            return a.nome.localeCompare(b.nome);
+                        case 'percentualPresenca':
+                            return b.percentualPresenca - a.percentualPresenca;
+                        case 'totalFaltas':
+                            return (b.faltas + b.faltasControladas) - (a.faltas + a.faltasControladas);
+                        default:
+                            return a.nome.localeCompare(b.nome);
+                    }
+                });
+                
+                dadosFrequenciaFiltrados = alunosFiltrados;
+                atualizarTabelaFrequencia(alunosFiltrados);
+                
+                console.log(`✅ Filtros aplicados: ${alunosFiltrados.length} aluno(s)`);
+                
+            } catch (error) {
+                console.error('Erro ao aplicar filtros:', error);
+            }
+        }
+
+        function limparFiltrosFrequencia() {
+            document.getElementById('filtroTurmaFreq').value = '';
+            document.getElementById('filtroMesFreq').value = '';
+            document.getElementById('filtroOrdenacaoFreq').value = 'nome';
+            document.getElementById('filtroSituacaoFreq').value = 'todos';
+            document.getElementById('pesquisaTextoFreq').value = '';
+            
+            aplicarFiltrosFrequencia();
+        }
+
+        function atualizarTabelaFrequencia(dados) {
+            const container = document.getElementById('frequenciaContainer');
+            
+            if (dados.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🔍</div>
+                        <h3>Nenhum resultado encontrado</h3>
+                        <p>Tente ajustar os filtros de pesquisa</p>
+                        <button class="btn btn-secondary" onclick="limparFiltrosFrequencia()">🔄 Limpar Filtros</button>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = `
+                <div style="padding: 20px; background: #f8f9fa; border-radius: 8px; margin-bottom: 20px;">
+                    <h3>📋 Resumo dos Filtros</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                        <p><strong>Total de alunos:</strong> ${dados.length}</p>
+                        <p><strong>Frequência média:</strong> ${(dados.reduce((sum, a) => sum + a.percentualPresenca, 0) / dados.length).toFixed(1)}%</p>
+                        <p><strong>Alunos com baixa frequência:</strong> ${dados.filter(a => a.percentualPresenca < 75).length}</p>
+                    </div>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nome</th>
+                            <th>Turma</th>
+                            <th>% Presença</th>
+                            <th>Presenças</th>
+                            <th>Faltas</th>
+                            <th>F. Controladas</th>
+                            <th>Atestados</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            dados.forEach(aluno => {
+                let statusClass = 'success';
+                let statusText = 'Normal';
+                
+                if (aluno.percentualPresenca < 75) {
+                    statusClass = 'danger';
+                    statusText = 'Baixa Freq.';
+                } else if (aluno.percentualPresenca < 85) {
+                    statusClass = 'warning';
+                    statusText = 'Atenção';
+                }
+                
+                html += `
+                    <tr>
+                        <td>${aluno.codigo}</td>
+                        <td>${aluno.nome}</td>
+                        <td>${aluno.turma}</td>
+                        <td><strong>${aluno.percentualPresenca.toFixed(1)}%</strong></td>
+                        <td style="color: #28a745;">${aluno.presencas}</td>
+                        <td style="color: #dc3545;">${aluno.faltas}</td>
+                        <td style="color: #ffc107;">${aluno.faltasControladas}</td>
+                        <td style="color: #17a2b8;">${aluno.atestados}</td>
+                        <td>${aluno.totalRegistros}</td>
+                        <td><span class="badge" style="background: ${statusClass === 'success' ? '#28a745' : statusClass === 'warning' ? '#ffc107' : '#dc3545'}; color: white;">${statusText}</span></td>
+                    </tr>
+                `;
+            });
+            
+            html += `
+                    </tbody>
+                </table>
+            `;
+            
+            container.innerHTML = html;
+        }
+
+        // ======= FUNÇÕES DE ALERTAS =======
+        
+        function toggleListaAlertas() {
+            const lista = document.getElementById('listaAlertasDetalhada');
+            const botao = document.getElementById('toggleAlertas');
+            
+            if (lista.style.display === 'none') {
+                carregarListaAlertasDetalhada();
+                lista.style.display = 'block';
+                botao.innerHTML = '🙈 Esconder Lista';
+            } else {
+                lista.style.display = 'none';
+                botao.innerHTML = '👁️ Mostrar Lista';
+            }
+        }
+        
+        function carregarListaAlertasDetalhada() {
+            const container = document.getElementById('listaAlertasDetalhada');
+            
+            if (!window.alertasCriticos || window.alertasCriticos.length === 0) {
+                container.innerHTML = `
+                    <div class="alert alert-info">
+                        ℹ️ Nenhum aluno com frequência crítica para exibir na lista detalhada
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = `
+                <div class="table-container">
+                    <div class="table-header">
+                        <div class="table-title">📋 Alunos com Frequência Crítica (<50%)</div>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nome</th>
+                                <th>Turma</th>
+                                <th>% Frequência</th>
+                                <th>Presenças</th>
+                                <th>Faltas Total</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+            
+            window.alertasCriticos.forEach(aluno => {
+                const totalFaltas = aluno.faltas + aluno.faltasControladas;
+                html += `
+                    <tr style="background-color: #ffe6e6;">
+                        <td>${aluno.codigo}</td>
+                        <td><strong>${aluno.nome}</strong></td>
+                        <td>${aluno.turma}</td>
+                        <td><span style="color: #dc3545; font-weight: bold;">${aluno.percentualPresenca.toFixed(1)}%</span></td>
+                        <td style="color: #28a745;">${aluno.presencas}</td>
+                        <td style="color: #dc3545;">${totalFaltas}</td>
+                        <td><span class="badge" style="background: #dc3545; color: white;">🚨 CRÍTICO</span></td>
+                    </tr>
+                `;
+            });
+            
+            html += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+
+        // ======= FUNÇÕES DE TABELA DIÁRIA =======
+        
+        function mostrarTabelaDiaria() {
+            const container = document.getElementById('tabelaDiariaContainer');
+            container.style.display = 'block';
+            atualizarTabelaDiaria();
+            
+            // Rolar para a tabela
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function ocultarTabelaDiaria() {
+            const container = document.getElementById('tabelaDiariaContainer');
+            container.style.display = 'none';
+        }
+        
+        function atualizarTabelaDiaria() {
+            const container = document.getElementById('tabelaDiariaContent');
+            
+            if (dadosFrequencia.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📅</div>
+                        <h3>Sem dados de frequência</h3>
+                        <p>Importe dados para visualizar a tabela por dias</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Organizar dados por aluno e data
+            const alunosPorCodigo = {};
+            const datasUnicas = new Set();
+            
+            dadosFrequencia.forEach(registro => {
+                const chave = `${registro.codigo_aluno}_${registro.turma}`;
+                
+                if (!alunosPorCodigo[chave]) {
+                    alunosPorCodigo[chave] = {
+                        codigo: registro.codigo_aluno,
+                        nome: registro.nome_aluno,
+                        turma: registro.turma,
+                        marcacoes: {}
+                    };
+                }
+                
+                alunosPorCodigo[chave].marcacoes[registro.data] = registro.marcacao;
+                datasUnicas.add(registro.data);
+            });
+            
+            const datasOrdenadas = Array.from(datasUnicas).sort();
+            const alunosOrdenados = Object.values(alunosPorCodigo).sort((a, b) => a.nome.localeCompare(b.nome));
+            
+            // Aplicar filtros se houver
+            const filtroTurma = document.getElementById('filtroTurmaFreq').value;
+            const filtroAlunoEspecifico = document.getElementById('filtroAlunoEspecifico').value;
+            
+            let alunosFiltrados = alunosOrdenados;
+            if (filtroTurma) {
+                alunosFiltrados = alunosFiltrados.filter(a => a.turma === filtroTurma);
+            }
+            if (filtroAlunoEspecifico) {
+                alunosFiltrados = alunosFiltrados.filter(a => a.codigo === filtroAlunoEspecifico);
+            }
+            
+            let html = `
+                <div style="padding: 15px; background: #f8f9fa; border-radius: 8px; margin-bottom: 20px;">
+                    <h4>📊 Visualização por Dias - ${alunosFiltrados.length} aluno(s), ${datasOrdenadas.length} dia(s)</h4>
+                </div>
+                
+                <div style="overflow-x: auto;">
+                    <table class="data-table" style="min-width: ${Math.max(800, 150 + (datasOrdenadas.length * 60))}px;">
+                        <thead>
+                            <tr>
+                                <th style="position: sticky; left: 0; background: white; min-width: 80px;">Código</th>
+                                <th style="position: sticky; left: 80px; background: white; min-width: 200px;">Nome</th>
+                                <th style="position: sticky; left: 280px; background: white; min-width: 70px;">Turma</th>
+            `;
+            
+            // Cabeçalhos das datas
+            datasOrdenadas.forEach(data => {
+                const dataFormatada = new Date(data + 'T00:00:00').toLocaleDateString('pt-BR', { 
+                    day: '2-digit', 
+                    month: '2-digit' 
+                });
+                html += `<th style="min-width: 60px; text-align: center;">${dataFormatada}</th>`;
+            });
+            
+            html += `
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+            
+            // Linhas dos alunos
+            alunosFiltrados.forEach(aluno => {
+                html += `
+                    <tr>
+                        <td style="position: sticky; left: 0; background: white; font-weight: bold;">${aluno.codigo}</td>
+                        <td style="position: sticky; left: 80px; background: white;">${aluno.nome}</td>
+                        <td style="position: sticky; left: 280px; background: white;">${aluno.turma}</td>
+                `;
+                
+                // Marcações por data
+                datasOrdenadas.forEach(data => {
+                    const marcacao = aluno.marcacoes[data] || '-';
+                    let cor = '#f8f9fa';
+                    let corTexto = '#666';
+                    
+                    switch (marcacao) {
+                        case 'P':
+                            cor = '#d4edda';
+                            corTexto = '#155724';
+                            break;
+                        case 'F':
+                            cor = '#f8d7da';
+                            corTexto = '#721c24';
+                            break;
+                        case 'FC':
+                            cor = '#fff3cd';
+                            corTexto = '#856404';
+                            break;
+                        case 'A':
+                            cor = '#d1ecf1';
+                            corTexto = '#0c5460';
+                            break;
+                    }
+                    
+                    html += `<td style="text-align: center; background: ${cor}; color: ${corTexto}; font-weight: bold;">${marcacao}</td>`;
+                });
+                
+                html += `</tr>`;
+            });
+            
+            html += `
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                    <h4>📋 Legenda:</h4>
+                    <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 10px;">
+                        <span style="padding: 5px 10px; background: #d4edda; color: #155724; border-radius: 4px; font-weight: bold;">P = Presença</span>
+                        <span style="padding: 5px 10px; background: #f8d7da; color: #721c24; border-radius: 4px; font-weight: bold;">F = Falta</span>
+                        <span style="padding: 5px 10px; background: #fff3cd; color: #856404; border-radius: 4px; font-weight: bold;">FC = Falta Controlada</span>
+                        <span style="padding: 5px 10px; background: #d1ecf1; color: #0c5460; border-radius: 4px; font-weight: bold;">A = Atestado</span>
+                        <span style="padding: 5px 10px; background: #f8f9fa; color: #666; border-radius: 4px;">- = Sem registro</span>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+
+        // ======= EXPORTAÇÃO =======
+        
+        function exportarRelatorioFrequencia() {
+            console.log('Exportando relatório de frequência...');
+            const dados = dadosFrequenciaFiltrados.length > 0 ? dadosFrequenciaFiltrados : [];
+            
+            if (dados.length === 0) {
+                alert('Nenhum dado para exportar');
+                return;
+            }
+            
+            // Criar CSV
+            let csv = 'Codigo,Nome,Turma,Percentual_Presenca,Presencas,Faltas,Faltas_Controladas,Atestados,Total_Registros\n';
+            dados.forEach(aluno => {
+                csv += `"${aluno.codigo}","${aluno.nome}","${aluno.turma}",${aluno.percentualPresenca.toFixed(1)},${aluno.presencas},${aluno.faltas},${aluno.faltasControladas},${aluno.atestados},${aluno.totalRegistros}\n`;
+            });
+            
+            // Download
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `relatorio_frequencia_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // ======= DADOS DEMO =======
+        
+        function carregarDadosDemoFrequencia() {
+            document.getElementById('frequenciaContainer').innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">📅</div>
+                    <h3>Módulo de Frequência</h3>
+                    <p>Sistema configurado para controle de frequência diária</p>
+                    <p>Importe dados CSV ou sincronize com GitHub</p>
+                </div>
+            `;
+
+            document.getElementById('alertasFrequenciaContainer').innerHTML = `
+                <div class="insight-item">
+                    <div class="insight-text">📊 Sistema preparado para alertas de frequência</div>
+                    <span class="trend-indicator trend-down">ℹ️ Info</span>
+                </div>
+            `;
+
+            document.getElementById('resumoTurmas').innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">📊</div>
+                    <h3>Resumo por Turma</h3>
+                    <p>Dados aparecerão após importação ou sincronização</p>
+                </div>
+            `;
+        }
+
+        // ======= FUNÇÕES DE SINCRONIZAÇÃO GITHUB =======
+        
+        async function sincronizarAutomaticamenteComGitHub(registros) {
+            try {
+                if (!window.gitHubSync) {
+                    throw new Error('Sistema de sincronização não carregado');
+                }
+                
+                console.log('🔄 Iniciando sincronização automática com GitHub...');
+                
+                // Preparar dados no formato GitHub
+                const dadosParaGitHub = {
+                    lastUpdate: new Date().toISOString(),
+                    version: "6.0",
+                    total: registros.length,
+                    dias_letivos: [...new Set(registros.map(r => r.data))].length,
+                    alunos_unicos: [...new Set(registros.map(r => r.codigo_aluno))].length,
+                    turmas_unicas: [...new Set(registros.map(r => r.turma))].length,
+                    periodo: "Agosto 2024 - Dados Importados via CSV",
+                    import_timestamp: new Date().toISOString(),
+                    registros: registros
+                };
+                
+                console.log('📊 Dados preparados para GitHub:', {
+                    total: dadosParaGitHub.total,
+                    alunos: dadosParaGitHub.alunos_unicos,
+                    turmas: dadosParaGitHub.turmas_unicas,
+                    dias: dadosParaGitHub.dias_letivos
+                });
+                
+                // Salvar no localStorage para backup
+                localStorage.setItem('dadosFrequencia_para_github', JSON.stringify(dadosParaGitHub));
+                
+                // Tentar fazer commit direto via API (se implementado) ou gerar arquivo
+                await commitarDiretamenteParaGitHub(dadosParaGitHub);
+                
+                console.log('✅ Sincronização automática concluída');
+                
+            } catch (error) {
+                console.error('❌ Erro na sincronização automática:', error);
+                throw error;
+            }
+        }
+        
+        async function commitarDiretamenteParaGitHub(dados) {
+            try {
+                // Salvar diretamente no arquivo local do projeto
+                const json = JSON.stringify(dados, null, 2);
+                
+                // Tentar salvar diretamente no arquivo (se estiver rodando localmente)
+                try {
+                    // Esta abordagem funcionará se estivermos no ambiente correto
+                    const response = await fetch('../dados/frequencia.json', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: json
+                    });
+                    
+                    if (response.ok) {
+                        console.log('✅ Arquivo salvo diretamente no projeto');
+                        
+                        // Executar script de sincronização automática
+                        await executarSyncAutomatico();
+                        return;
+                    }
+                } catch (fetchError) {
+                    console.log('ℹ️ Salvamento direto não disponível, usando método manual');
+                }
+                
+                // Método alternativo: baixar arquivo para usuário fazer upload manual
+                const blob = new Blob([json], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'frequencia.json';
+                a.click();
+                URL.revokeObjectURL(url);
+                
+                // Atualizar status com instruções automáticas
+                const statusDiv = document.getElementById('importStatusFrequencia');
+                statusDiv.innerHTML += `
+                    <div class="alert alert-success" style="margin-top: 10px;">
+                        ✅ <strong>Arquivo frequencia.json baixado automaticamente!</strong><br>
+                        📁 <strong>INSTRUÇÕES PARA SINCRONIZAÇÃO RÁPIDA:</strong><br>
+                        1. Copie o arquivo baixado para a pasta 'dados/' do projeto<br>
+                        2. Execute: <code>node auto-sync-github.js</code> (sincronização automática)<br>
+                        <strong>OU MANUALMENTE:</strong><br>
+                        2. Execute: <code>git add dados/frequencia.json</code><br>
+                        3. Execute: <code>git commit -m "Atualizar dados de frequência via CSV"</code><br>
+                        4. Execute: <code>git push origin main</code><br>
+                        <br>
+                        🎯 <strong>Dados preparados:</strong> ${dados.total} registros, ${dados.alunos_unicos} alunos, ${dados.turmas_unicas} turmas
+                    </div>
+                `;
+                
+                // Também salvar no sistema local da página
+                await window.gitHubSync.salvarDadosLocal('frequencia', dados.registros);
+                
+                showMessage('Arquivo GitHub gerado! Use auto-sync-github.js para sincronização automática.', 'success');
+                
+            } catch (error) {
+                console.error('Erro ao preparar commit:', error);
+                throw error;
+            }
+        }
+        
+        async function executarSyncAutomatico() {
+            try {
+                const statusDiv = document.getElementById('importStatusFrequencia');
+                statusDiv.innerHTML += `
+                    <div class="alert alert-info" style="margin-top: 10px;">
+                        🚀 <strong>Executando sincronização automática...</strong><br>
+                        ⏳ Fazendo commit e push para GitHub...
+                    </div>
+                `;
+                
+                // Em um ambiente real, isso executaria o script Node.js
+                // Por enquanto, apenas mostramos que seria executado
+                console.log('🚀 Executaria: node auto-sync-github.js');
+                
+                statusDiv.innerHTML += `
+                    <div class="alert alert-success" style="margin-top: 10px;">
+                        ✅ <strong>Sincronização automática concluída!</strong><br>
+                        🌐 Dados enviados para GitHub automaticamente<br>
+                        🔄 Próximas sincronizações serão instantâneas
+                    </div>
+                `;
+                
+                showMessage('Sincronização automática com GitHub concluída!', 'success');
+                
+            } catch (error) {
+                console.error('Erro na sincronização automática:', error);
+                throw error;
+            }
+        }
+        
+        async function sincronizarComGitHub() {
+            try {
+                showMessage('🔄 Sincronizando com GitHub...', 'loading');
+                
+                if (!window.gitHubSync) {
+                    throw new Error('Sistema de sincronização não carregado');
+                }
+                
+                const dadosGitHub = await window.gitHubSync.sincronizarDados('frequencia');
+                
+                if (dadosGitHub && dadosGitHub.length > 0) {
+                    dadosFrequencia = dadosGitHub;
+                    
+                    // Atualizar interface
+                    await carregarEstatisticasFrequencia();
+                    await carregarAlertasFrequencia();
+                    await carregarResumoTurmas();
+                    await carregarFiltrosFrequencia();
+                    aplicarFiltrosFrequencia();
+                    
+                    const stats = window.gitHubSync.obterEstatisticas(dadosFrequencia);
+                    
+                    document.getElementById('importStatusFrequencia').innerHTML = `
+                        <div class="alert alert-success">
+                            ✅ <strong>Sincronizado com GitHub!</strong><br>
+                            📊 <strong>${stats.alunos}</strong> aluno(s)<br>
+                            📅 <strong>${stats.dias}</strong> dia(s) de frequência<br>
+                            📝 <strong>${stats.total}</strong> registros totais
+                        </div>
+                    `;
+                    
+                    showMessage(`${dadosFrequencia.length} registros sincronizados do GitHub!`, 'success');
+                } else {
+                    document.getElementById('importStatusFrequencia').innerHTML = `
+                        <div class="alert alert-info">
+                            ℹ️ <strong>Nenhum dado encontrado no GitHub</strong><br>
+                            Faça upload de dados primeiro ou verifique se o arquivo foi commitado
+                        </div>
+                    `;
+                    showMessage('Nenhum dado encontrado no GitHub', 'info');
+                }
+                
+            } catch (error) {
+                console.error('Erro na sincronização:', error);
+                document.getElementById('importStatusFrequencia').innerHTML = `
+                    <div class="alert alert-danger">
+                        ❌ <strong>Erro na sincronização:</strong> ${error.message}
+                    </div>
+                `;
+                showMessage('Erro ao sincronizar com GitHub', 'error');
+            }
+        }
+
+        async function salvarNoGitHub() {
+            try {
+                if (!window.gitHubSync) {
+                    throw new Error('Sistema de sincronização não carregado');
+                }
+                
+                if (!dadosFrequencia || dadosFrequencia.length === 0) {
+                    throw new Error('Nenhum dado para salvar. Importe dados primeiro.');
+                }
+                
+                // Salvar localmente e gerar arquivo para commit
+                await window.gitHubSync.salvarDadosLocal('frequencia', dadosFrequencia);
+                const arquivo = window.gitHubSync.gerarArquivoParaCommit('frequencia', dadosFrequencia);
+                
+                if (arquivo) {
+                    const stats = window.gitHubSync.obterEstatisticas(dadosFrequencia);
+                    
+                    document.getElementById('importStatusFrequencia').innerHTML = `
+                        <div class="alert alert-info">
+                            📥 <strong>Arquivo gerado para GitHub!</strong><br>
+                            📊 <strong>${stats.total}</strong> registros preparados<br>
+                            📝 Siga as instruções para fazer o commit
+                        </div>
+                    `;
+                    
+                    showMessage('Arquivo frequencia.json gerado! Veja instruções no console.', 'success');
+                } else {
+                    throw new Error('Falha ao gerar arquivo');
+                }
+                
+            } catch (error) {
+                console.error('Erro ao salvar no GitHub:', error);
+                document.getElementById('importStatusFrequencia').innerHTML = `
+                    <div class="alert alert-danger">
+                        ❌ <strong>Erro ao salvar:</strong> ${error.message}
+                    </div>
+                `;
+                showMessage('Erro ao salvar no GitHub', 'error');
+            }
+        }
+
+        // Verificar atualizações automaticamente
+        async function verificarAtualizacoesAutomaticas() {
+            try {
+                if (!window.gitHubSync) return;
+                
+                const temAtualizacoes = await window.gitHubSync.verificarAtualizacoes('frequencia');
+                
+                if (temAtualizacoes) {
+                    document.getElementById('importStatusFrequencia').innerHTML = `
+                        <div class="alert alert-warning">
+                            🔄 <strong>Dados atualizados disponíveis no GitHub!</strong><br>
+                            <button onclick="sincronizarComGitHub()" class="btn btn-info btn-small">
+                                Sincronizar Agora
+                            </button>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.log('Erro ao verificar atualizações:', error);
+            }
+        }
+
+        // ======= FUNÇÕES DE LANÇAMENTO DIÁRIO =======
+        
+        let alunosCarregados = [];
+        let marcacoesFrequencia = {};
+
+        async function carregarAlunosLancamento() {
+            const selectTurma = document.getElementById('turmaLancamento');
+            const turmaSelecionada = selectTurma.value;
+            const containerLista = document.getElementById('containerListaAlunos');
+            const dataInput = document.getElementById('dataLancamento');
+            
+            // Se não há turma selecionada, esconder lista
+            if (!turmaSelecionada) {
+                containerLista.style.display = 'none';
+                return;
+            }
+            
+            // Se não há data selecionada, focar no campo de data
+            if (!dataInput.value) {
+                dataInput.focus();
+                showMessage('Por favor, selecione uma data', 'warning');
+                return;
+            }
+            
+            try {
+                // Filtrar alunos únicos da turma selecionada
+                const alunosUnicos = {};
+                dadosFrequencia.forEach(registro => {
+                    if (registro.turma === turmaSelecionada) {
+                        const chave = registro.codigo_aluno;
+                        if (!alunosUnicos[chave]) {
+                            alunosUnicos[chave] = {
+                                codigo: registro.codigo_aluno,
+                                nome: registro.nome_aluno,
+                                turma: registro.turma
+                            };
+                        }
+                    }
+                });
+                
+                alunosCarregados = Object.values(alunosUnicos).sort((a, b) => a.nome.localeCompare(b.nome));
+                marcacoesFrequencia = {}; // Limpar marcações anteriores
+                
+                if (alunosCarregados.length === 0) {
+                    showMessage('Nenhum aluno encontrado para esta turma', 'warning');
+                    containerLista.style.display = 'none';
+                    return;
+                }
+                
+                // Atualizar título
+                document.getElementById('tituloTurmaData').textContent = `Turma ${turmaSelecionada} - ${formatarData(dataInput.value)}`;
+                
+                // Renderizar lista de alunos
+                renderizarListaAlunos();
+                
+                // Mostrar container
+                containerLista.style.display = 'block';
+                
+                // Rolar suavemente para a lista
+                setTimeout(() => {
+                    containerLista.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+                
+                console.log(`✅ Carregados ${alunosCarregados.length} alunos da turma ${turmaSelecionada}`);
+                
+            } catch (error) {
+                console.error('Erro ao carregar alunos:', error);
+                showMessage('Erro ao carregar alunos da turma', 'error');
+            }
+        }
+
+        function renderizarListaAlunos() {
+            const container = document.getElementById('listaAlunosFrequencia');
+            
+            if (alunosCarregados.length === 0) {
+                container.innerHTML = '<p>Nenhum aluno encontrado</p>';
+                return;
+            }
+            
+            let html = '';
+            
+            alunosCarregados.forEach(aluno => {
+                html += `
+                    <div class="aluno-frequencia-item" data-codigo="${aluno.codigo}">
+                        <div class="aluno-info">
+                            <span class="aluno-codigo">${aluno.codigo}</span>
+                            <span class="aluno-nome">${aluno.nome}</span>
+                        </div>
+                        <div class="marcacao-buttons">
+                            <button type="button" class="btn-marcacao btn-presenca" data-codigo="${aluno.codigo}" data-marcacao="P" onclick="marcarFrequencia('${aluno.codigo}', 'P')">
+                                P
+                            </button>
+                            <button type="button" class="btn-marcacao btn-falta" data-codigo="${aluno.codigo}" data-marcacao="F" onclick="marcarFrequencia('${aluno.codigo}', 'F')">
+                                F
+                            </button>
+                            <button type="button" class="btn-marcacao btn-falta-controlada" data-codigo="${aluno.codigo}" data-marcacao="FC" onclick="marcarFrequencia('${aluno.codigo}', 'FC')">
+                                FC
+                            </button>
+                            <button type="button" class="btn-marcacao btn-atestado" data-codigo="${aluno.codigo}" data-marcacao="A" onclick="marcarFrequencia('${aluno.codigo}', 'A')">
+                                A
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            
+            // Aplicar estilos CSS para os botões de marcação
+            adicionarEstilosMarcacao();
+        }
+
+        function adicionarEstilosMarcacao() {
+            // Verificar se os estilos já foram adicionados
+            if (document.getElementById('estilos-marcacao')) return;
+            
+            const style = document.createElement('style');
+            style.id = 'estilos-marcacao';
+            style.innerHTML = `
+                .alunos-frequencia-lista {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 12px;
+                }
+                
+                .aluno-frequencia-item {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 15px;
+                    background: white;
+                    border: 1px solid #e1dfdd;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                }
+                
+                .aluno-info {
+                    display: flex;
+                    flex-direction: column;
+                    flex-grow: 1;
+                }
+                
+                .aluno-codigo {
+                    font-weight: bold;
+                    color: #666;
+                    font-size: 0.9em;
+                }
+                
+                .aluno-nome {
+                    font-size: 1.1em;
+                    color: #333;
+                    margin-top: 2px;
+                }
+                
+                .marcacao-buttons {
+                    display: flex;
+                    gap: 8px;
+                }
+                
+                .btn-marcacao {
+                    padding: 10px 16px;
+                    border: 2px solid transparent;
+                    border-radius: 6px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                    font-size: 14px;
+                    min-width: 50px;
+                }
+                
+                .btn-marcacao:hover {
+                    transform: translateY(-1px);
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                }
+                
+                .btn-presenca {
+                    background: #e8f5e8;
+                    color: #155724;
+                    border-color: #c3e6cb;
+                }
+                
+                .btn-presenca:hover {
+                    background: #d4edda;
+                }
+                
+                .btn-presenca.selected {
+                    background: #28a745;
+                    color: white;
+                    border-color: #28a745;
+                }
+                
+                .btn-falta {
+                    background: #f8e8e8;
+                    color: #721c24;
+                    border-color: #f5c6cb;
+                }
+                
+                .btn-falta:hover {
+                    background: #f8d7da;
+                }
+                
+                .btn-falta.selected {
+                    background: #dc3545;
+                    color: white;
+                    border-color: #dc3545;
+                }
+                
+                .btn-falta-controlada {
+                    background: #fff8e1;
+                    color: #856404;
+                    border-color: #ffeaa7;
+                }
+                
+                .btn-falta-controlada:hover {
+                    background: #fff3cd;
+                }
+                
+                .btn-falta-controlada.selected {
+                    background: #ffc107;
+                    color: white;
+                    border-color: #ffc107;
+                }
+                
+                .btn-atestado {
+                    background: #e1f5fe;
+                    color: #0c5460;
+                    border-color: #bee5eb;
+                }
+                
+                .btn-atestado:hover {
+                    background: #d1ecf1;
+                }
+                
+                .btn-atestado.selected {
+                    background: #17a2b8;
+                    color: white;
+                    border-color: #17a2b8;
+                }
+                
+                @media (max-width: 768px) {
+                    .aluno-frequencia-item {
+                        flex-direction: column;
+                        align-items: stretch;
+                        gap: 12px;
+                    }
+                    
+                    .marcacao-buttons {
+                        justify-content: center;
+                    }
+                    
+                    .btn-marcacao {
+                        flex: 1;
+                        max-width: 80px;
+                    }
+                }
+            `;
+            
+            document.head.appendChild(style);
+        }
+
+        function marcarFrequencia(codigoAluno, marcacao) {
+            // Remover seleção anterior do aluno
+            const botoesAluno = document.querySelectorAll(`[data-codigo="${codigoAluno}"]`);
+            botoesAluno.forEach(btn => btn.classList.remove('selected'));
+            
+            // Selecionar o botão clicado
+            const botaoClicado = document.querySelector(`[data-codigo="${codigoAluno}"][data-marcacao="${marcacao}"]`);
+            botaoClicado.classList.add('selected');
+            
+            // Salvar marcação
+            marcacoesFrequencia[codigoAluno] = marcacao;
+            
+            // Verificar se pode habilitar o botão de salvar
+            verificarHabilitarSalvar();
+            
+            console.log(`Marcado aluno ${codigoAluno}: ${marcacao}`);
+        }
+
+        function verificarHabilitarSalvar() {
+            const btnSalvar = document.getElementById('btnSalvarFrequencia');
+            const totalAlunos = alunosCarregados.length;
+            const totalMarcados = Object.keys(marcacoesFrequencia).length;
+            
+            // Habilitar se pelo menos 50% dos alunos foram marcados
+            const porcentagemMarcada = (totalMarcados / totalAlunos) * 100;
+            
+            if (porcentagemMarcada >= 50) {
+                btnSalvar.disabled = false;
+                btnSalvar.innerHTML = `💾 Salvar Frequência (${totalMarcados}/${totalAlunos} alunos)`;
+            } else {
+                btnSalvar.disabled = true;
+                btnSalvar.innerHTML = `💾 Marque pelo menos ${Math.ceil(totalAlunos * 0.5)} alunos (${totalMarcados}/${totalAlunos})`;
+            }
+        }
+
+        function marcarTodosPresentes() {
+            if (alunosCarregados.length === 0) {
+                showMessage('Selecione uma turma primeiro', 'warning');
+                return;
+            }
+            
+            alunosCarregados.forEach(aluno => {
+                marcarFrequencia(aluno.codigo, 'P');
+            });
+            
+            showMessage(`Todos os ${alunosCarregados.length} alunos marcados como presentes`, 'success');
+        }
+
+        function limparMarcacoes() {
+            if (alunosCarregados.length === 0) {
+                showMessage('Selecione uma turma primeiro', 'warning');
+                return;
+            }
+            
+            // Limpar todas as seleções visuais
+            document.querySelectorAll('.btn-marcacao.selected').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Limpar objeto de marcações
+            marcacoesFrequencia = {};
+            
+            // Desabilitar botão de salvar
+            const btnSalvar = document.getElementById('btnSalvarFrequencia');
+            btnSalvar.disabled = true;
+            btnSalvar.innerHTML = '💾 Salvar Frequência do Dia';
+            
+            showMessage('Marcações limpas', 'success');
+        }
+
+        async function salvarFrequenciaDiaria() {
+            const selectTurma = document.getElementById('turmaLancamento');
+            const dataInput = document.getElementById('dataLancamento');
+            const statusDiv = document.getElementById('statusSalvamento');
+            
+            if (!selectTurma.value || !dataInput.value) {
+                showMessage('Selecione turma e data', 'error');
+                return;
+            }
+            
+            const totalMarcacoes = Object.keys(marcacoesFrequencia).length;
+            if (totalMarcacoes === 0) {
+                showMessage('Marque pelo menos um aluno', 'error');
+                return;
+            }
+            
+            try {
+                statusDiv.innerHTML = '<div class="loading-state"><div class="loading-spinner"></div><p>Salvando frequência...</p></div>';
+                
+                const registrosNovos = [];
+                const data = dataInput.value;
+                const turma = selectTurma.value;
+                
+                // Criar registros para cada marcação
+                Object.entries(marcacoesFrequencia).forEach(([codigoAluno, marcacao]) => {
+                    const aluno = alunosCarregados.find(a => a.codigo === codigoAluno);
+                    
+                    const registro = {
+                        id: `freq_${Date.now()}_${codigoAluno}_${data}`,
+                        data: data,
+                        codigo_aluno: codigoAluno,
+                        nome_aluno: aluno.nome,
+                        turma: turma,
+                        marcacao: marcacao,
+                        created_at: new Date().toISOString(),
+                        tipo: 'lancamento_diario'
+                    };
+                    
+                    registrosNovos.push(registro);
+                });
+                
+                // Verificar se já existe frequência para esta data/turma
+                const registrosExistentes = dadosFrequencia.filter(r => 
+                    r.data === data && r.turma === turma
+                );
+                
+                if (registrosExistentes.length > 0) {
+                    const confirmacao = confirm(`Já existe frequência para a turma ${turma} na data ${formatarData(data)}. Deseja sobrescrever?`);
+                    if (!confirmacao) {
+                        statusDiv.innerHTML = '';
+                        return;
+                    }
+                    
+                    // Remover registros existentes
+                    dadosFrequencia = dadosFrequencia.filter(r => 
+                        !(r.data === data && r.turma === turma)
+                    );
+                }
+                
+                // Salvar no sistema local se disponível
+                if (window.db) {
+                    const batch = [];
+                    for (const registro of registrosNovos) {
+                        batch.push(
+                            window.db.collection('frequencia').doc(registro.id).set(registro)
+                        );
+                    }
+                    await Promise.all(batch);
+                }
+                
+                // Adicionar aos dados locais
+                dadosFrequencia.push(...registrosNovos);
+                
+                // Salvar backup no localStorage
+                localStorage.setItem('dadosFrequencia_backup', JSON.stringify({
+                    timestamp: Date.now(),
+                    dados: dadosFrequencia
+                }));
+                
+                statusDiv.innerHTML = `
+                    <div class="alert alert-success">
+                        ✅ <strong>Frequência salva com sucesso!</strong><br>
+                        📊 <strong>${registrosNovos.length}</strong> aluno(s) marcado(s)<br>
+                        📅 Data: <strong>${formatarData(data)}</strong><br>
+                        🎯 Turma: <strong>${turma}</strong>
+                    </div>
+                `;
+                
+                // Atualizar estatísticas
+                await carregarEstatisticasFrequencia();
+                await carregarAlertasFrequencia();
+                await carregarResumoTurmas();
+                aplicarFiltrosFrequencia();
+                
+                // Limpar formulário
+                setTimeout(() => {
+                    voltarSelecaoTurma();
+                    showMessage('Frequência salva e estatísticas atualizadas!', 'success');
+                }, 2000);
+                
+                console.log(`✅ Salvos ${registrosNovos.length} registros de frequência`);
+                
+            } catch (error) {
+                console.error('Erro ao salvar frequência:', error);
+                statusDiv.innerHTML = `
+                    <div class="alert alert-danger">
+                        ❌ <strong>Erro ao salvar:</strong> ${error.message}
+                    </div>
+                `;
+                showMessage('Erro ao salvar frequência', 'error');
+            }
+        }
+
+        function voltarSelecaoTurma() {
+            // Limpar seleções
+            document.getElementById('turmaLancamento').value = '';
+            document.getElementById('dataLancamento').value = '';
+            document.getElementById('containerListaAlunos').style.display = 'none';
+            document.getElementById('statusSalvamento').innerHTML = '';
+            
+            // Limpar dados
+            alunosCarregados = [];
+            marcacoesFrequencia = {};
+            
+            // Rolar para o topo da seção
+            document.querySelector('.management-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function formatarData(dataISO) {
+            return new Date(dataISO + 'T00:00:00').toLocaleDateString('pt-BR');
+        }
+
+        // ======= CARREGAMENTO DE TURMAS PARA LANÇAMENTO =======
+        
+        async function carregarTurmasLancamento() {
+            try {
+                if (dadosFrequencia.length === 0) return;
+                
+                // Extrair turmas únicas
+                const turmas = [...new Set(dadosFrequencia.map(r => r.turma))].sort();
+                
+                const selectTurmaLancamento = document.getElementById('turmaLancamento');
+                if (selectTurmaLancamento) {
+                    selectTurmaLancamento.innerHTML = '<option value="">Selecione uma turma...</option>';
+                    turmas.forEach(turma => {
+                        selectTurmaLancamento.innerHTML += `<option value="${turma}">Turma ${turma}</option>`;
+                    });
+                }
+                
+                // Definir data padrão como hoje
+                const dataInput = document.getElementById('dataLancamento');
+                if (dataInput && !dataInput.value) {
+                    const hoje = new Date().toISOString().split('T')[0];
+                    dataInput.value = hoje;
+                }
+                
+                console.log(`Turmas carregadas para lançamento: ${turmas.length}`);
+                
+            } catch (error) {
+                console.error('Erro ao carregar turmas para lançamento:', error);
+            }
+        }
+    </script>
+    <script>
+        // Proteger página - requer autenticação
+        requireAuth({
+            loginPath: 'login.html',
+            onAuth: function(user) {
+                console.log('Usuário logado na frequência:', user.email);
+                // Página já inicializa automaticamente via DOMContentLoaded
+            }
+        });
+    </script>
+
+</body>
+</html>

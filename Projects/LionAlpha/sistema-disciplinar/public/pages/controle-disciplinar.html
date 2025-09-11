@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle Disciplinar - Dashboard Disciplinar</title>
+    
+    <!-- CSS Externos -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    
+    <!-- Scripts do Sistema Local -->
+    <script src="../assets/js/local-db.js"></script>
+    <script src="../assets/js/local-auth.js"></script>
+    <script src="../assets/js/populate-db.js"></script>
+</head>
+
+<body>
+    <!-- BARRA SUPERIOR -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <div class="app-launcher">
+                <span></span><span></span><span></span>
+                <span></span><span></span><span></span>
+                <span></span><span></span><span></span>
+            </div>
+            <span class="app-name">Dashboard Disciplinar</span>
+        </div>
+        <div class="top-bar-center">
+            <input type="text" class="search-box" placeholder="Pesquisar alunos para controle...">
+        </div>
+        <div class="top-bar-right">
+            <div class="user-profile">A</div>
+        </div>
+    </div>
+
+    <!-- LAYOUT PRINCIPAL -->
+    <div class="main-layout">
+        
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">Módulos Principais</div>
+                
+                <a href="../index.html" class="sidebar-item">
+                    <span class="sidebar-icon">🏠</span>
+                    <span class="sidebar-text">Dashboard</span>
+                </a>
+                
+                <a href="controle-disciplinar.html" class="sidebar-item active">
+                    <span class="sidebar-icon">⚖️</span>
+                    <span class="sidebar-text">Controle Disciplinar</span>
+                </a>
+                
+                <a href="gestao-alunos.html" class="sidebar-item">
+                    <span class="sidebar-icon">👥</span>
+                    <span class="sidebar-text">Gestão de Alunos</span>
+                </a>
+                
+                <a href="medidas-disciplinares.html" class="sidebar-item">
+                    <span class="sidebar-icon">📋</span>
+                    <span class="sidebar-text">Medidas Disciplinares</span>
+                </a>
+                
+                <a href="relatorios.html" class="sidebar-item">
+                    <span class="sidebar-icon">📊</span>
+                    <span class="sidebar-text">Relatórios</span>
+                </a>
+                
+                <a href="analises.html" class="sidebar-item">
+                    <span class="sidebar-icon">📈</span>
+                    <span class="sidebar-text">Análises</span>
+                </a>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-title">Ferramentas</div>
+                
+                <a href="configuracoes.html" class="sidebar-item">
+                    <span class="sidebar-icon">⚙️</span>
+                    <span class="sidebar-text">Configurações</span>
+                </a>
+                
+                <a href="comunicacao.html" class="sidebar-item">
+                    <span class="sidebar-icon">📱</span>
+                    <span class="sidebar-text">Comunicação</span>
+                </a>
+                
+                <a href="login.html" class="sidebar-item">
+                    <span class="sidebar-icon">🔐</span>
+                    <span class="sidebar-text">Login/Logout</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- ÁREA DE CONTEÚDO -->
+        <div class="content-area">
+            <div class="main-content">
+                
+                <!-- TÍTULO -->
+                <div class="module-title">
+                    ⚖️ Controle Disciplinar Central
+                </div>
+
+                <!-- PAINEL DE ALERTAS -->
+                <div class="management-section" id="painelAlertas">
+                    <div class="management-title">
+                        🚨 Alertas e Prioridades
+                    </div>
+                    <div id="alertasContainer">
+                        <div class="loading-state">
+                            <div class="loading-spinner"></div>
+                            <p>Carregando alertas...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AÇÕES RÁPIDAS -->
+                <div class="quick-stats">
+                    <div class="stat-card stat-primary" onclick="abrirRegistroRapido('falta')">
+                        <div class="stat-icon">📝</div>
+                        <div class="stat-content">
+                            <div class="stat-number">Registrar</div>
+                            <div class="stat-label">Nova Falta</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card stat-warning" onclick="abrirRegistroRapido('medida')">
+                        <div class="stat-icon">⚖️</div>
+                        <div class="stat-content">
+                            <div class="stat-number">Aplicar</div>
+                            <div class="stat-label">Medida Disciplinar</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card stat-success" onclick="window.location.href='gestao-alunos.html'">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-content">
+                            <div class="stat-number">Gerenciar</div>
+                            <div class="stat-label">Alunos</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card stat-info" onclick="window.location.href='relatorios.html'">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-content">
+                            <div class="stat-number">Visualizar</div>
+                            <div class="stat-label">Relatórios</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BUSCA RÁPIDA DE ALUNO -->
+                <div class="management-section">
+                    <div class="management-title">
+                        🔍 Busca Rápida de Aluno
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Pesquisar Aluno:</label>
+                            <input 
+                                type="text" 
+                                id="buscaAluno" 
+                                class="form-input" 
+                                placeholder="Digite o nome do aluno..."
+                                onkeyup="buscarAluno(this.value)"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Filtrar por Turma:</label>
+                            <select id="filtroTurmaBusca" class="form-select" onchange="aplicarFiltroBusca()">
+                                <option value="">Todas as turmas</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div id="resultadosBusca" class="table-content">
+                        <div class="empty-state">
+                            <div class="empty-icon">🔍</div>
+                            <h3>Buscar Aluno</h3>
+                            <p>Digite o nome do aluno para ver informações e registrar ocorrências</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODAL DE REGISTRO RÁPIDO -->
+                <div id="modalRegistro" class="modal" style="display: none;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 id="modalTitulo">Registro Rápido</h2>
+                            <span class="modal-close" onclick="fecharModal()">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Conteúdo será inserido dinamicamente -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ESTATÍSTICAS DO DIA -->
+                <div class="management-section">
+                    <div class="management-title">
+                        📅 Estatísticas de Hoje
+                    </div>
+                    
+                    <div class="student-stats">
+                        <div class="stat-box">
+                            <div class="stat-number" id="faltasHoje">0</div>
+                            <div class="stat-label">Faltas Hoje</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number" id="medidasHoje">0</div>
+                            <div class="stat-label">Medidas Hoje</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number" id="alunosAfetadosHoje">0</div>
+                            <div class="stat-label">Alunos Afetados</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number" id="turmasAfetadasHoje">0</div>
+                            <div class="stat-label">Turmas Afetadas</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ÚLTIMAS ATIVIDADES -->
+                <div class="table-container">
+                    <div class="table-header">
+                        <div class="table-title">
+                            🕐 Últimas Atividades
+                        </div>
+                        <div class="table-actions">
+                            <button class="btn btn-info btn-small" onclick="atualizarAtividades()">
+                                🔄 Atualizar
+                            </button>
+                            <select class="filter-select" onchange="filtrarAtividades(this.value)">
+                                <option value="hoje">Hoje</option>
+                                <option value="ontem">Ontem</option>
+                                <option value="semana">Esta Semana</option>
+                                <option value="mes">Este Mês</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div id="ultimasAtividades" class="table-content">
+                        <div class="loading-state">
+                            <div class="loading-spinner"></div>
+                            <p>Carregando atividades...</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ESTILOS DO MODAL -->
+    <style>
+        .modal {
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #e1dfdd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: bold;
+            color: #605e5c;
+        }
+
+        .modal-close:hover {
+            color: #dc3545;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-card {
+            background: #ffffff;
+            border: 1px solid #e1dfdd;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .result-card:hover {
+            background: #f8f7f6;
+            border-color: #0078d4;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .result-name {
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .clickable-stat {
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .clickable-stat:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+
+    <!-- JAVASCRIPT -->
+    <script src="../assets/js/firebase-config.js" defer></script>
+    <script src="../assets/js/main.js" defer></script>
+    <script src="../assets/js/gestao.js" defer></script>
+    <script src="../assets/js/medidas.js" defer></script>
+    
+    <script>
+        // Variáveis globais
+        let alunosBusca = [];
+        let atividadesCache = [];
+
+        // Inicialização da página
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('⚖️ Página de Controle Disciplinar carregada');
+            inicializarControleDisciplinar();
+        });
+
+        // Função de inicialização
+        async function inicializarControleDisciplinar() {
+            try {
+                showMessage('Carregando controle disciplinar...', 'loading');
+                
+                // Aguardar Firebase
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                if (isFirebaseReady()) {
+                    await carregarDadosControle();
+                    showMessage('✅ Controle disciplinar carregado!', 'success');
+                } else {
+                    showMessage('⚠️ Firebase não conectado - funcionalidade limitada', 'error');
+                    carregarDadosDemoControle();
+                }
+            } catch (error) {
+                console.error('Erro ao carregar controle:', error);
+                showMessage('Erro ao carregar controle disciplinar', 'error');
+            }
+        }
+
+        // Carregar alunos do Firebase
+        async function carregarAlunos() {
+            try {
+                if (!window.db) {
+                    if (typeof firebase !== "undefined") {
+                        window.db = firebase.firestore();
+                    } else {
+                        console.error('Firebase não carregado');
+                        return [];
+                    }
+                }
+
+                const snapshot = await db.collection("alunos").get();
+                alunosCache = [];
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    alunosCache.push({
+                        id: doc.id,
+                        codigo: data.codigo || doc.id,
+                        nome: data.nome_completo || data.nome || '',
+                        turma: data.turma || '',
+                        responsavel: data.responsavel || '',
+                        telefone: data.telefone_responsavel || data.telefone || '',
+                        cpf: data.cpf_responsavel || data.cpf || '',
+                        email: data.email || ''
+                    });
+                });
+
+                console.log(`${alunosCache.length} alunos carregados do Firebase`);
+                return alunosCache;
+            } catch (error) {
+                console.error('Erro ao carregar alunos:', error);
+                return [];
+            }
+        }
+
+        // Carregar dados do controle
+        async function carregarDadosControle() {
+            try {
+                // Carregar alunos se não estiver em cache
+                if (!alunosCache || alunosCache.length === 0) {
+                    await carregarAlunos();
+                }
+                
+                alunosBusca = [...alunosCache];
+                await carregarTurmasParaFiltro();
+                await carregarAlertas();
+                await carregarEstatisticasHoje();
+                await carregarUltimasAtividades();
+                
+            } catch (error) {
+                console.error('Erro ao carregar dados:', error);
+            }
+        }
+
+        // Carregar turmas para filtro
+        async function carregarTurmasParaFiltro() {
+            const filtroTurma = document.getElementById('filtroTurmaBusca');
+            const turmas = [...new Set(alunosBusca.map(aluno => aluno.turma))].sort();
+            
+            filtroTurma.innerHTML = '<option value="">Todas as turmas</option>';
+            turmas.forEach(turma => {
+                filtroTurma.innerHTML += `<option value="${turma}">${turma}</option>`;
+            });
+        }
+
+        // Carregar alertas
+        async function carregarAlertas() {
+            const container = document.getElementById('alertasContainer');
+            
+            try {
+                const alertas = [];
+                
+                // Verificar alunos com muitas faltas
+                const limiteFaltas = parseInt(localStorage.getItem('limiteFaltas') || '10');
+                
+                if (processedDataRelatorios && processedDataRelatorios.length > 0) {
+                    const alunosProblematicos = processedDataRelatorios.filter(aluno => 
+                        aluno.faltasInjustificadas >= limiteFaltas || 
+                        aluno.statusRisco === 'Alto' || 
+                        aluno.statusRisco === 'Crítico'
+                    );
+                    
+                    alunosProblematicos.forEach(aluno => {
+                        let tipo = 'warning';
+                        let icone = '⚠️';
+                        let texto = '';
+                        
+                        if (aluno.statusRisco === 'Crítico') {
+                            tipo = 'danger';
+                            icone = '🚨';
+                            texto = `${aluno.nome} (${aluno.turma}) - Status CRÍTICO`;
+                        } else if (aluno.faltasInjustificadas >= limiteFaltas) {
+                            tipo = 'warning';
+                            icone = '📢';
+                            texto = `${aluno.nome} (${aluno.turma}) - ${aluno.faltasInjustificadas} faltas injustificadas`;
+                        }
+                        
+                        if (texto) {
+                            alertas.push({ tipo, icone, texto, alunoId: aluno.id });
+                        }
+                    });
+                }
+                
+                // Verificar se há registros de hoje que precisam de atenção
+                const hoje = new Date().toISOString().split('T')[0];
+                if (registrosCache) {
+                    const registrosHoje = registrosCache.filter(r => r.data === hoje);
+                    
+                    if (registrosHoje.length > 10) {
+                        alertas.push({
+                            tipo: 'info',
+                            icone: '📊',
+                            texto: `${registrosHoje.length} registros hoje - dia movimentado`
+                        });
+                    }
+                }
+                
+                // Exibir alertas
+                if (alertas.length === 0) {
+                    container.innerHTML = `
+                        <div class="insight-item">
+                            <div class="insight-text">✅ Nenhum alerta no momento - situação sob controle</div>
+                            <span class="trend-indicator trend-down">📉 Positivo</span>
+                        </div>
+                    `;
+                } else {
+                    container.innerHTML = alertas.map(alerta => `
+                        <div class="insight-item" onclick="${alerta.alunoId ? `focalizarAluno('${alerta.alunoId}')` : ''}">
+                            <div class="insight-text">${alerta.icone} ${alerta.texto}</div>
+                            <span class="trend-indicator trend-${alerta.tipo === 'danger' ? 'up' : alerta.tipo === 'warning' ? 'stable' : 'down'}">
+                                ${alerta.tipo === 'danger' ? '🚨 Crítico' : alerta.tipo === 'warning' ? '⚠️ Atenção' : 'ℹ️ Info'}
+                            </span>
+                        </div>
+                    `).join('');
+                }
+                
+            } catch (error) {
+                console.error('Erro ao carregar alertas:', error);
+                container.innerHTML = `
+                    <div class="insight-item">
+                        <div class="insight-text">⚠️ Erro ao carregar alertas</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Carregar estatísticas de hoje
+        async function carregarEstatisticasHoje() {
+            try {
+                if (!window.db) {
+                    if (typeof firebase !== "undefined") {
+                        window.db = firebase.firestore();
+                    } else {
+                        console.error('Firebase não carregado');
+                        return;
+                    }
+                }
+
+                const hoje = new Date();
+                const inicioHoje = new Date(hoje.setHours(0, 0, 0, 0));
+                const fimHoje = new Date(hoje.setHours(23, 59, 59, 999));
+                
+                // Buscar medidas disciplinares de hoje
+                const medidasHoje = await db.collection('medidas_disciplinares')
+                    .where('created_at', '>=', inicioHoje)
+                    .where('created_at', '<=', fimHoje)
+                    .get();
+
+                let faltasHoje = 0; // Por enquanto 0 até implementarmos sistema de faltas
+                let alunosAfetados = new Set();
+                let turmasAfetadas = new Set();
+                
+                medidasHoje.forEach(doc => {
+                    const data = doc.data();
+                    if (data.codigo_aluno) alunosAfetados.add(data.codigo_aluno);
+                    if (data.turma) turmasAfetadas.add(data.turma);
+                });
+                
+                // Atualizar elementos da interface
+                const elemFaltas = document.getElementById('faltasHoje');
+                const elemMedidas = document.getElementById('medidasHoje');
+                const elemAlunos = document.getElementById('alunosAfetadosHoje');
+                const elemTurmas = document.getElementById('turmasAfetadasHoje');
+                
+                if (elemFaltas) elemFaltas.textContent = faltasHoje;
+                if (elemMedidas) elemMedidas.textContent = medidasHoje.size;
+                if (elemAlunos) elemAlunos.textContent = alunosAfetados.size;
+                if (elemTurmas) elemTurmas.textContent = turmasAfetadas.size;
+                
+            } catch (error) {
+                console.error('Erro ao carregar estatísticas:', error);
+            }
+        }
+
+        // Carregar últimas atividades
+        async function carregarUltimasAtividades() {
+            const container = document.getElementById('ultimasAtividades');
+            
+            try {
+                if (!window.db) {
+                    if (typeof firebase !== "undefined") {
+                        window.db = firebase.firestore();
+                    } else {
+                        console.error('Firebase não carregado');
+                        return;
+                    }
+                }
+
+                // Buscar últimas medidas disciplinares (máximo 10)
+                const medidasRecentes = await db.collection('medidas_disciplinares')
+                    .orderBy('created_at', 'desc')
+                    .limit(10)
+                    .get();
+
+                const atividades = [];
+                medidasRecentes.forEach(doc => {
+                    const data = doc.data();
+                    atividades.push({
+                        id: doc.id,
+                        tipo: 'Medida Disciplinar',
+                        aluno: data.nome_aluno || 'Nome não informado',
+                        turma: data.turma || 'N/A',
+                        especificacao: data.especificacao || 'Sem especificação',
+                        data: data.created_at ? data.created_at.toDate() : new Date(data.data || Date.now()),
+                        categoria: 'medida'
+                    });
+                });
+                
+                atividadesCache = atividades;
+                displayUltimasAtividades(atividadesCache);
+                
+            } catch (error) {
+                console.error('Erro ao carregar atividades:', error);
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">⚠️</div>
+                        <h3>Erro ao carregar atividades</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayUltimasAtividades(atividades) {
+            const container = document.getElementById('ultimasAtividades');
+            
+            if (atividades.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📋</div>
+                        <h3>Nenhuma atividade</h3>
+                        <p>Registros de atividades aparecerão aqui</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const html = `
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Horário</th>
+                            <th>Aluno</th>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${atividades.map(atividade => {
+                            const horario = new Date(atividade.dataRegistro).toLocaleTimeString('pt-BR', { 
+                                hour: '2-digit', 
+                                minute: '2-digit' 
+                            });
+                            
+                            let tipoDisplay, descricao;
+                            
+                            if (atividade.categoria === 'falta') {
+                                tipoDisplay = `<span class="detail-type ${atividade.tipo}">Falta</span>`;
+                                descricao = atividade.observacoes || 'Falta registrada';
+                            } else {
+                                tipoDisplay = `<span class="detail-type" style="background: #fff5e6; color: #ffc107; border: 1px solid #ffc107;">Medida</span>`;
+                                descricao = atividade.tipo;
+                            }
+                            
+                            return `
+                                <tr onclick="focalizarAluno('${atividade.alunoId}')" style="cursor: pointer;">
+                                    <td>${horario}</td>
+                                    <td><strong>${atividade.alunoNome}</strong><br><small>${atividade.alunoTurma}</small></td>
+                                    <td>${tipoDisplay}</td>
+                                    <td>${descricao}</td>
+                                    <td>
+                                        <button class="btn btn-info btn-small" onclick="event.stopPropagation(); focalizarAluno('${atividade.alunoId}')">
+                                            👁️
+                                        </button>
+                                    </td>
+                                </tr>
+                            `;
+                        }).join('')}
+                    </tbody>
+                </table>
+            `;
+            
+            container.innerHTML = html;
+        }
+
+        // Buscar aluno
+        function buscarAluno(termo) {
+            const resultados = document.getElementById('resultadosBusca');
+            
+            if (!termo || termo.length < 2) {
+                resultados.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🔍</div>
+                        <h3>Buscar Aluno</h3>
+                        <p>Digite pelo menos 2 caracteres para buscar</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const turmaFiltro = document.getElementById('filtroTurmaBusca').value;
+            
+            let alunosFiltrados = alunosBusca.filter(aluno => {
+                const matchNome = aluno.nome.toLowerCase().includes(termo.toLowerCase());
+                const matchTurma = !turmaFiltro || aluno.turma === turmaFiltro;
+                return matchNome && matchTurma;
+            });
+            
+            if (alunosFiltrados.length === 0) {
+                resultados.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">❌</div>
+                        <h3>Nenhum aluno encontrado</h3>
+                        <p>Tente outro nome ou verifique a turma</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const html = alunosFiltrados.slice(0, 5).map(aluno => `
+                <div class="result-card" onclick="focalizarAluno('${aluno.id}')">
+                    <div class="result-header">
+                        <div class="result-name">${aluno.nome}</div>
+                        <div class="result-actions">
+                            <button class="btn btn-primary btn-small" onclick="event.stopPropagation(); registrarFaltaRapida('${aluno.id}', '${aluno.nome}')">
+                                📝 Falta
+                            </button>
+                            <button class="btn btn-warning btn-small" onclick="event.stopPropagation(); registrarMedidaRapida('${aluno.id}', '${aluno.nome}')">
+                                ⚖️ Medida
+                            </button>
+                        </div>
+                    </div>
+                    <div style="font-size: 12px; color: #666;">
+                        Turma: ${aluno.turma} ${aluno.responsavel ? `• Responsável: ${aluno.responsavel}` : ''}
+                    </div>
+                </div>
+            `).join('');
+            
+            resultados.innerHTML = html + (alunosFiltrados.length > 5 ? 
+                `<div style="text-align: center; padding: 10px; color: #666;">... e mais ${alunosFiltrados.length - 5} resultados</div>` : 
+                '');
+        }
+
+        // Aplicar filtro de busca
+        function aplicarFiltroBusca() {
+            const termo = document.getElementById('buscaAluno').value;
+            if (termo && termo.length >= 2) {
+                buscarAluno(termo);
+            }
+        }
+
+        // Focalizar aluno
+        function focalizarAluno(alunoId) {
+            localStorage.setItem('alunoFocalizado', alunoId);
+            window.location.href = 'relatorios.html';
+        }
+
+        // Registro rápido
+        function abrirRegistroRapido(tipo) {
+            const modal = document.getElementById('modalRegistro');
+            const titulo = document.getElementById('modalTitulo');
+            const body = modal.querySelector('.modal-body');
+            
+            if (tipo === 'falta') {
+                titulo.textContent = '📝 Registro Rápido de Falta';
+                body.innerHTML = `
+                    <div class="form-group">
+                        <label class="form-label">Aluno:</label>
+                        <select id="modalAlunoFalta" class="form-input" required>
+                            <option value="">Selecione o aluno...</option>
+                            ${alunosBusca.map(aluno => 
+                                `<option value="${aluno.id}">${aluno.nome} (${aluno.turma})</option>`
+                            ).join('')}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Tipo:</label>
+                        <select id="modalTipoFalta" class="form-input" required>
+                            <option value="F">Falta Injustificada</option>
+                            <option value="A">Falta Justificada</option>
+                            <option value="P">Presença</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Observações:</label>
+                        <textarea id="modalObsFalta" class="form-input" rows="3"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-secondary" onclick="fecharModal()">Cancelar</button>
+                        <button class="btn btn-primary" onclick="salvarFaltaRapida()">✅ Salvar</button>
+                    </div>
+                `;
+            } else if (tipo === 'medida') {
+                titulo.textContent = '⚖️ Registro Rápido de Medida';
+                body.innerHTML = `
+                    <div class="form-group">
+                        <label class="form-label">Aluno:</label>
+                        <select id="modalAlunoMedida" class="form-input" required>
+                            <option value="">Selecione o aluno...</option>
+                            ${alunosBusca.map(aluno => 
+                                `<option value="${aluno.id}">${aluno.nome} (${aluno.turma})</option>`
+                            ).join('')}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Tipo de Medida:</label>
+                        <select id="modalTipoMedida" class="form-input" required>
+                            <option value="">Selecione...</option>
+                            <option value="Advertência Verbal">Advertência Verbal</option>
+                            <option value="Advertência Escrita">Advertência Escrita</option>
+                            <option value="Suspensão">Suspensão</option>
+                            <option value="Reunião com Responsáveis">Reunião com Responsáveis</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Motivo:</label>
+                        <textarea id="modalMotivoMedida" class="form-input" rows="3" required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-secondary" onclick="fecharModal()">Cancelar</button>
+                        <button class="btn btn-warning" onclick="salvarMedidaRapida()">⚠️ Salvar</button>
+                    </div>
+                `;
+            }
+            
+            modal.style.display = 'flex';
+        }
+
+        function fecharModal() {
+            document.getElementById('modalRegistro').style.display = 'none';
+        }
+
+        async function salvarFaltaRapida() {
+            // Implementar salvamento (usar funções já existentes)
+            showMessage('Funcionalidade de registro rápido em desenvolvimento', 'info');
+            fecharModal();
+        }
+
+        async function salvarMedidaRapida() {
+            // Implementar salvamento (usar funções já existentes)
+            showMessage('Funcionalidade de registro rápido em desenvolvimento', 'info');
+            fecharModal();
+        }
+
+        function registrarFaltaRapida(alunoId, nomeAluno) {
+            showMessage(`Registrando falta para ${nomeAluno}`, 'info');
+            window.location.href = `medidas-disciplinares.html?aluno=${alunoId}&tipo=falta`;
+        }
+
+        function registrarMedidaRapida(alunoId, nomeAluno) {
+            showMessage(`Registrando medida para ${nomeAluno}`, 'info');
+            window.location.href = `medidas-disciplinares.html?aluno=${alunoId}&tipo=medida`;
+        }
+
+        // Atualizar atividades
+        function atualizarAtividades() {
+            carregarUltimasAtividades();
+        }
+
+        // Filtrar atividades
+        function filtrarAtividades(filtro) {
+            let atividadesFiltradas = [...atividadesCache];
+            
+            const hoje = new Date();
+            let dataLimite;
+            
+            switch(filtro) {
+                case 'hoje':
+                    dataLimite = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+                    break;
+                case 'ontem':
+                    dataLimite = new Date(hoje.getTime() - 24 * 60 * 60 * 1000);
+                    dataLimite = new Date(dataLimite.getFullYear(), dataLimite.getMonth(), dataLimite.getDate());
+                    break;
+                case 'semana':
+                    dataLimite = new Date(hoje.getTime() - 7 * 24 * 60 * 60 * 1000);
+                    break;
+                case 'mes':
+                    dataLimite = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+                    break;
+            }
+            
+            if (dataLimite) {
+                atividadesFiltradas = atividadesCache.filter(atividade => 
+                    new Date(atividade.dataRegistro) >= dataLimite
+                );
+            }
+            
+            displayUltimasAtividades(atividadesFiltradas);
+        }
+
+        // Carregar dados demo
+        function carregarDadosDemoControle() {
+            document.getElementById('alertasContainer').innerHTML = `
+                <div class="insight-item">
+                    <div class="insight-text">📊 Configure o Firebase para ver alertas reais</div>
+                </div>
+            `;
+            
+            document.getElementById('ultimasAtividades').innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">📋</div>
+                    <h3>Demo</h3>
+                    <p>Configure o Firebase para ver atividades reais</p>
+                </div>
+            `;
+        }
+
+        // Funções globais
+        window.buscarAluno = buscarAluno;
+        window.aplicarFiltroBusca = aplicarFiltroBusca;
+        window.abrirRegistroRapido = abrirRegistroRapido;
+        window.fecharModal = fecharModal;
+        window.focalizarAluno = focalizarAluno;
+        window.registrarFaltaRapida = registrarFaltaRapida;
+        window.registrarMedidaRapida = registrarMedidaRapida;
+        window.atualizarAtividades = atualizarAtividades;
+        window.filtrarAtividades = filtrarAtividades;
+        window.salvarFaltaRapida = salvarFaltaRapida;
+        window.salvarMedidaRapida = salvarMedidaRapida;
+    </script>
+    <script>
+        // Proteger página - requer autenticação
+        requireAuth({
+            loginPath: 'login.html',
+            onAuth: function(user) {
+                console.log('Usuário logado no controle disciplinar:', user.email);
+                // Página já inicializa automaticamente via DOMContentLoaded
+            }
+        });
+    </script>
+
+</body>
+</html>

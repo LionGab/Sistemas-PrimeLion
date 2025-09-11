@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>📊 A/B Testing Tracker - LinkedIn Naming Strategy</title>
+    <meta name="description" content="Tracker otimizado para acompanhar performance de diferentes naming strategies no LinkedIn">
+    
+    <style>
+        /* CSS crítico inline para carregamento instantâneo */
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,#0077b5 0%,#00a0dc 100%);min-height:100vh;color:#333}
+        .container{max-width:100%;background:#fff;min-height:100vh}
+        .header{background:linear-gradient(135deg,#1a202c,#2d3748);color:#fff;padding:16px;text-align:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+        .header h1{font-size:1.6rem;margin-bottom:8px;font-weight:700}
+        .header p{font-size:0.9rem;opacity:.9}
+        .quick-add{background:#f8f9fa;padding:16px;border-bottom:1px solid #e2e8f0}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+        .form-group{margin-bottom:8px}
+        .form-group:last-child{margin-bottom:0}
+        label{display:block;margin-bottom:4px;color:#4a5568;font-weight:600;font-size:12px}
+        input,select{width:100%;padding:12px 8px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;background:#fff}
+        input:focus,select:focus{outline:none;border-color:#0077b5;box-shadow:0 0 0 2px rgba(0,119,181,.1)}
+        .btn{padding:12px 16px;border:none;border-radius:8px;font-weight:600;cursor:pointer;transition:all .2s;font-size:14px}
+        .btn-primary{background:linear-gradient(135deg,#0077b5,#00a0dc);color:#fff}
+        .btn-success{background:#16a34a;color:#fff}
+        .btn-export{background:#7c3aed;color:#fff}
+        .btn:active{transform:scale(.98)}
+        .metrics{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:16px;background:#f8f9fa}
+        .metric-card{background:#fff;border-radius:12px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+        .metric-value{font-size:1.8rem;font-weight:700;color:#0077b5;margin:4px 0}
+        .metric-label{font-size:12px;color:#6b7280;font-weight:500}
+        .metric-trend{font-size:12px;margin-top:4px}
+        .trend-up{color:#16a34a}
+        .trend-down{color:#ef4444}
+        .entries{max-height:60vh;overflow-y:auto;padding:0}
+        .entry{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px;padding:12px 16px;border-bottom:1px solid #f0f0f0;align-items:center;font-size:13px}
+        .entry:nth-child(even){background:#fafafa}
+        .version{font-weight:600;color:#2d3748}
+        .date{color:#6b7280;font-size:11px}
+        .metric{text-align:center;font-weight:600}
+        .conversion{color:#16a34a}
+        .tabs{display:flex;border-bottom:1px solid #e2e8f0;background:#fff}
+        .tab{flex:1;padding:12px 8px;text-align:center;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:600;color:#6b7280}
+        .tab.active{color:#0077b5;border-bottom:2px solid #0077b5}
+        .chart-container{padding:16px;background:#fff;display:none}
+        .chart-container.active{display:block}
+        .empty-state{text-align:center;padding:40px 20px;color:#9ca3af}
+        .empty-icon{font-size:3rem;margin-bottom:16px}
+        .floating-add{position:fixed;bottom:20px;right:20px;width:56px;height:56px;background:#0077b5;border-radius:50%;border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(0,119,181,.4);z-index:200;display:flex;align-items:center;justify-content:center}
+        .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:1000;padding:20px}
+        .modal-content{background:#fff;border-radius:16px;max-width:400px;width:100%;margin:auto;max-height:90vh;overflow-y:auto;position:relative;top:50%;transform:translateY(-50%)}
+        .modal-header{padding:20px 20px 0;text-align:center}
+        .modal-body{padding:20px}
+        .close{position:absolute;top:12px;right:16px;font-size:24px;cursor:pointer;color:#9ca3af}
+        .winner-badge{background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;padding:4px 8px;border-radius:12px;font-size:10px;font-weight:600;margin-left:8px}
+        
+        @media (max-width: 480px) {
+            .metrics{grid-template-columns:1fr;gap:12px}
+            .metric-card{padding:12px}
+            .entry{grid-template-columns:1fr;gap:4px;padding:12px}
+            .entry > div{margin-bottom:4px}
+            .form-row{grid-template-columns:1fr;gap:8px}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 A/B Testing Tracker</h1>
+            <p>LinkedIn Naming Strategy Performance</p>
+        </div>
+
+        <div class="metrics">
+            <div class="metric-card">
+                <div class="metric-value" id="totalTests">0</div>
+                <div class="metric-label">Testes Ativos</div>
+                <div class="metric-trend trend-up" id="testsGrowth">+0% esta semana</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-value" id="bestConversion">0%</div>
+                <div class="metric-label">Melhor Taxa</div>
+                <div class="metric-trend" id="bestNaming">-</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-value" id="totalViews">0</div>
+                <div class="metric-label">Views Totais</div>
+                <div class="metric-trend trend-up" id="viewsGrowth">+0% vs anterior</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-value" id="avgConversion">0%</div>
+                <div class="metric-label">Taxa Média</div>
+                <div class="metric-trend" id="conversionTrend">Estável</div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('entries')">📊 Dados</button>
+            <button class="tab" onclick="showTab('chart')">📈 Gráfico</button>
+            <button class="tab" onclick="showTab('insights')">💡 Insights</button>
+        </div>
+
+        <div id="entriesTab" class="chart-container active">
+            <div class="quick-add">
+                <div class="form-row">
+                    <div class="form-group">
+                        <select id="namingVersion">
+                            <option value="">Selecione o naming</option>
+                            <option value="Sistema ROI 3X">Sistema ROI 3X</option>
+                            <option value="Framework Escala">Framework Escala</option>
+                            <option value="Aceleração Receita">Aceleração Receita</option>
+                            <option value="Transformação 90d">Transformação 90d</option>
+                            <option value="Consultoria Premium">Consultoria Premium</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="number" id="profileViews" placeholder="Views perfil" inputmode="numeric">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="number" id="connections" placeholder="Conexões" inputmode="numeric">
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="number" id="messages" placeholder="Mensagens" inputmode="numeric">
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="addEntry()" style="width: 100%; margin-top: 12px;">
+                    ➕ ADICIONAR DADOS
+                </button>
+            </div>
+
+            <div class="entries" id="entriesList">
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">📊</div>
+                    <h3>Nenhum teste ainda</h3>
+                    <p>Adicione seus primeiros dados acima</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="chartTab" class="chart-container">
+            <div style="padding: 20px; text-align: center;">
+                <h3 style="margin-bottom: 16px;">📈 Performance por Naming</h3>
+                <canvas id="performanceChart" width="300" height="200"></canvas>
+            </div>
+        </div>
+
+        <div id="insightsTab" class="chart-container">
+            <div style="padding: 20px;">
+                <h3 style="margin-bottom: 16px;">💡 Insights Automáticos</h3>
+                <div id="insightsList">
+                    <div class="empty-state">
+                        <div class="empty-icon">🤖</div>
+                        <h3>Adicione dados para insights</h3>
+                        <p>Com 3+ entradas, geramos insights automáticos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button class="floating-add" onclick="openQuickAdd()">+</button>
+
+    <!-- Modal para adicionar dados (mobile) -->
+    <div class="modal" id="quickAddModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeQuickAdd()">&times;</span>
+                <h2>➕ Adicionar Teste</h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Naming Testado</label>
+                    <select id="modalNaming">
+                        <option value="Sistema ROI 3X">Sistema ROI 3X</option>
+                        <option value="Framework Escala">Framework Escala</option>
+                        <option value="Aceleração Receita">Aceleração Receita</option>
+                        <option value="Transformação 90d">Transformação 90d</option>
+                        <option value="Consultoria Premium">Consultoria Premium</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Views do Perfil</label>
+                    <input type="number" id="modalViews" placeholder="Ex: 450" inputmode="numeric">
+                </div>
+
+                <div class="form-group">
+                    <label>Conexões Aceitas</label>
+                    <input type="number" id="modalConnections" placeholder="Ex: 35" inputmode="numeric">
+                </div>
+
+                <div class="form-group">
+                    <label>Mensagens Recebidas</label>
+                    <input type="number" id="modalMessages" placeholder="Ex: 12" inputmode="numeric">
+                </div>
+
+                <button class="btn btn-primary" onclick="addFromModal()" style="width: 100%; margin-top: 16px;">
+                    ✅ ADICIONAR DADOS
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dados globais otimizados
+        let testData = JSON.parse(localStorage.getItem('abTestData')) || [];
+        let chart = null;
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            renderEntries();
+            updateMetrics();
+            generateInsights();
+            
+            // Setup event listeners
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Enter key para adicionar
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    if (document.activeElement.closest('.quick-add')) {
+                        addEntry();
+                    }
+                }
+            });
+
+            // Auto-save on input
+            ['namingVersion', 'profileViews', 'connections', 'messages'].forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('input', debounce(saveTemporary, 500));
+                }
+            });
+        }
+
+        function addEntry() {
+            const naming = document.getElementById('namingVersion').value;
+            const views = parseInt(document.getElementById('profileViews').value) || 0;
+            const connections = parseInt(document.getElementById('connections').value) || 0;
+            const messages = parseInt(document.getElementById('messages').value) || 0;
+
+            if (!naming || views === 0) {
+                showToast('⚠️ Selecione o naming e adicione views', 'warning');
+                return;
+            }
+
+            const entry = {
+                id: Date.now(),
+                date: new Date().toISOString(),
+                naming,
+                views,
+                connections,
+                messages,
+                connectionRate: connections > 0 ? ((connections / views) * 100) : 0,
+                messageRate: messages > 0 && connections > 0 ? ((messages / connections) * 100) : 0,
+                conversionRate: messages > 0 ? ((messages / views) * 100) : 0
+            };
+
+            testData.push(entry);
+            saveData();
+            renderEntries();
+            updateMetrics();
+            generateInsights();
+            clearInputs();
+            
+            showToast('✅ Dados adicionados com sucesso!', 'success');
+
+            // Vibração no mobile (se suportado)
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+        }
+
+        function addFromModal() {
+            const naming = document.getElementById('modalNaming').value;
+            const views = parseInt(document.getElementById('modalViews').value) || 0;
+            const connections = parseInt(document.getElementById('modalConnections').value) || 0;
+            const messages = parseInt(document.getElementById('modalMessages').value) || 0;
+
+            if (views === 0) {
+                showToast('⚠️ Adicione pelo menos as views', 'warning');
+                return;
+            }
+
+            const entry = {
+                id: Date.now(),
+                date: new Date().toISOString(),
+                naming,
+                views,
+                connections,
+                messages,
+                connectionRate: connections > 0 ? ((connections / views) * 100) : 0,
+                messageRate: messages > 0 && connections > 0 ? ((messages / connections) * 100) : 0,
+                conversionRate: messages > 0 ? ((messages / views) * 100) : 0
+            };
+
+            testData.push(entry);
+            saveData();
+            renderEntries();
+            updateMetrics();
+            generateInsights();
+            clearModalInputs();
+            closeQuickAdd();
+            
+            showToast('✅ Teste adicionado!', 'success');
+        }
+
+        function renderEntries() {
+            const container = document.getElementById('entriesList');
+            const emptyState = document.getElementById('emptyState');
+
+            if (testData.length === 0) {
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            
+            // Ordenar por data (mais recente primeiro)
+            const sortedData = [...testData].sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            container.innerHTML = sortedData.map((entry, index) => {
+                const isWinner = isTopPerformer(entry);
+                return `
+                    <div class="entry" style="animation: slideIn 0.3s ease ${index * 0.1}s both;">
+                        <div>
+                            <div class="version">
+                                ${entry.naming}
+                                ${isWinner ? '<span class="winner-badge">🏆 TOP</span>' : ''}
+                            </div>
+                            <div class="date">${formatDate(entry.date)}</div>
+                        </div>
+                        <div class="metric">
+                            ${entry.views}<br>
+                            <span style="font-size: 10px; color: #9ca3af;">views</span>
+                        </div>
+                        <div class="metric">
+                            ${entry.connections}<br>
+                            <span style="font-size: 10px; color: #9ca3af;">${entry.connectionRate.toFixed(1)}%</span>
+                        </div>
+                        <div class="metric conversion">
+                            ${entry.messages}<br>
+                            <span style="font-size: 10px; color: #16a34a;">${entry.conversionRate.toFixed(1)}%</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateMetrics() {
+            if (testData.length === 0) {
+                document.getElementById('totalTests').textContent = '0';
+                document.getElementById('bestConversion').textContent = '0%';
+                document.getElementById('totalViews').textContent = '0';
+                document.getElementById('avgConversion').textContent = '0%';
+                return;
+            }
+
+            // Cálculos
+            const totalTests = testData.length;
+            const totalViews = testData.reduce((sum, entry) => sum + entry.views, 0);
+            const bestConversion = Math.max(...testData.map(entry => entry.conversionRate));
+            const avgConversion = testData.reduce((sum, entry) => sum + entry.conversionRate, 0) / testData.length;
+            
+            // Encontrar melhor naming
+            const bestEntry = testData.find(entry => entry.conversionRate === bestConversion);
+            const bestNaming = bestEntry ? bestEntry.naming.split(' ')[0] : '-';
+
+            // Atualizar interface
+            document.getElementById('totalTests').textContent = totalTests;
+            document.getElementById('bestConversion').textContent = bestConversion.toFixed(1) + '%';
+            document.getElementById('totalViews').textContent = formatNumber(totalViews);
+            document.getElementById('avgConversion').textContent = avgConversion.toFixed(1) + '%';
+            document.getElementById('bestNaming').textContent = bestNaming;
+
+            // Calcular trends (último vs penúltimo)
+            if (testData.length >= 2) {
+                const sorted = [...testData].sort((a, b) => new Date(a.date) - new Date(b.date));
+                const recent = sorted.slice(-2);
+                const growth = ((recent[1].conversionRate - recent[0].conversionRate) / recent[0].conversionRate * 100);
+                
+                const trendElement = document.getElementById('conversionTrend');
+                if (growth > 5) {
+                    trendElement.textContent = `+${growth.toFixed(0)}%`;
+                    trendElement.className = 'metric-trend trend-up';
+                } else if (growth < -5) {
+                    trendElement.textContent = `${growth.toFixed(0)}%`;
+                    trendElement.className = 'metric-trend trend-down';
+                } else {
+                    trendElement.textContent = 'Estável';
+                    trendElement.className = 'metric-trend';
+                }
+            }
+        }
+
+        function generateInsights() {
+            const container = document.getElementById('insightsList');
+            
+            if (testData.length < 3) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🤖</div>
+                        <h3>Adicione mais dados</h3>
+                        <p>Com 3+ entradas, geramos insights automáticos</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const insights = calculateInsights();
+            
+            container.innerHTML = insights.map(insight => `
+                <div style="background: ${insight.color}; padding: 16px; border-radius: 12px; margin-bottom: 16px; border-left: 4px solid ${insight.borderColor};">
+                    <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                        <span style="font-size: 20px; margin-right: 8px;">${insight.icon}</span>
+                        <strong>${insight.title}</strong>
+                    </div>
+                    <p style="color: #4a5568; font-size: 14px;">${insight.description}</p>
+                </div>
+            `).join('');
+        }
+
+        function calculateInsights() {
+            const insights = [];
+            
+            // Melhor performer
+            const bestEntry = testData.reduce((best, current) => 
+                current.conversionRate > best.conversionRate ? current : best
+            );
+            
+            insights.push({
+                icon: '🏆',
+                title: `${bestEntry.naming} está dominando`,
+                description: `Taxa de conversão ${bestEntry.conversionRate.toFixed(1)}% - ${(bestEntry.conversionRate - (testData.reduce((sum, e) => sum + e.conversionRate, 0) / testData.length - bestEntry.conversionRate)).toFixed(1)}% acima da média.`,
+                color: '#d1fae5',
+                borderColor: '#16a34a'
+            });
+
+            // Análise de volume
+            const totalMessages = testData.reduce((sum, entry) => sum + entry.messages, 0);
+            if (totalMessages > 50) {
+                insights.push({
+                    icon: '📈',
+                    title: 'Volume forte de mensagens',
+                    description: `${totalMessages} mensagens geradas no total. Seu naming está atraindo interesse real.`,
+                    color: '#dbeafe',
+                    borderColor: '#0077b5'
+                });
+            }
+
+            // Recomendação de otimização
+            const avgConnectionRate = testData.reduce((sum, e) => sum + e.connectionRate, 0) / testData.length;
+            if (avgConnectionRate < 8) {
+                insights.push({
+                    icon: '💡',
+                    title: 'Oportunidade: Taxa de conexão',
+                    description: `Taxa média ${avgConnectionRate.toFixed(1)}%. Considere otimizar headline e about section para melhorar.`,
+                    color: '#fef3c7',
+                    borderColor: '#f59e0b'
+                });
+            }
+
+            // Análise temporal
+            const recentTests = testData.filter(entry => {
+                const daysDiff = (Date.now() - new Date(entry.date)) / (1000 * 60 * 60 * 24);
+                return daysDiff <= 7;
+            });
+            
+            if (recentTests.length >= 3) {
+                const recentAvg = recentTests.reduce((sum, e) => sum + e.conversionRate, 0) / recentTests.length;
+                const overallAvg = testData.reduce((sum, e) => sum + e.conversionRate, 0) / testData.length;
+                
+                if (recentAvg > overallAvg * 1.2) {
+                    insights.push({
+                        icon: '🚀',
+                        title: 'Tendência positiva',
+                        description: `Performance subiu ${((recentAvg - overallAvg) / overallAvg * 100).toFixed(0)}% nos últimos 7 dias. Continue testando!`,
+                        color: '#d1fae5',
+                        borderColor: '#16a34a'
+                    });
+                }
+            }
+
+            return insights;
+        }
+
+        function showTab(tabName) {
+            // Atualizar tabs
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Mostrar conteúdo
+            document.querySelectorAll('.chart-container').forEach(container => {
+                container.classList.remove('active');
+            });
+
+            if (tabName === 'entries') {
+                document.getElementById('entriesTab').classList.add('active');
+            } else if (tabName === 'chart') {
+                document.getElementById('chartTab').classList.add('active');
+                setTimeout(createChart, 100); // Delay para renderização
+            } else if (tabName === 'insights') {
+                document.getElementById('insightsTab').classList.add('active');
+            }
+        }
+
+        function createChart() {
+            if (testData.length === 0) return;
+
+            const canvas = document.getElementById('performanceChart');
+            const ctx = canvas.getContext('2d');
+            
+            // Limpar canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Agrupar dados por naming
+            const namingGroups = {};
+            testData.forEach(entry => {
+                if (!namingGroups[entry.naming]) {
+                    namingGroups[entry.naming] = [];
+                }
+                namingGroups[entry.naming].push(entry.conversionRate);
+            });
+
+            // Calcular médias
+            const chartData = Object.keys(namingGroups).map(naming => {
+                const rates = namingGroups[naming];
+                const avgRate = rates.reduce((sum, rate) => sum + rate, 0) / rates.length;
+                return { naming: naming.split(' ')[0], rate: avgRate };
+            });
+
+            // Desenhar gráfico de barras
+            const padding = 40;
+            const chartWidth = canvas.width - (padding * 2);
+            const chartHeight = canvas.height - (padding * 2);
+            const maxRate = Math.max(...chartData.map(d => d.rate)) * 1.2;
+            const barWidth = chartWidth / chartData.length * 0.8;
+            const barSpacing = chartWidth / chartData.length * 0.2;
+
+            chartData.forEach((data, index) => {
+                const x = padding + (index * (barWidth + barSpacing));
+                const barHeight = (data.rate / maxRate) * chartHeight;
+                const y = canvas.height - padding - barHeight;
+
+                // Barra
+                const gradient = ctx.createLinearGradient(0, y, 0, y + barHeight);
+                gradient.addColorStop(0, '#0077b5');
+                gradient.addColorStop(1, '#00a0dc');
+                
+                ctx.fillStyle = gradient;
+                ctx.fillRect(x, y, barWidth, barHeight);
+
+                // Label
+                ctx.fillStyle = '#666';
+                ctx.font = 'bold 12px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(data.naming, x + barWidth/2, canvas.height - 10);
+
+                // Valor
+                ctx.fillStyle = '#0077b5';
+                ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.fillText(data.rate.toFixed(1) + '%', x + barWidth/2, y - 10);
+            });
+        }
+
+        function openQuickAdd() {
+            document.getElementById('quickAddModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent scroll
+        }
+
+        function closeQuickAdd() {
+            document.getElementById('quickAddModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function clearInputs() {
+            document.getElementById('namingVersion').value = '';
+            document.getElementById('profileViews').value = '';
+            document.getElementById('connections').value = '';
+            document.getElementById('messages').value = '';
+        }
+
+        function clearModalInputs() {
+            document.getElementById('modalViews').value = '';
+            document.getElementById('modalConnections').value = '';
+            document.getElementById('modalMessages').value = '';
+        }
+
+        function exportData() {
+            if (testData.length === 0) {
+                showToast('⚠️ Nenhum dado para exportar', 'warning');
+                return;
+            }
+
+            const csv = generateCSV();
+            downloadCSV(csv, `ab-testing-data-${formatDateForFile(new Date())}.csv`);
+            showToast('📊 Dados exportados!', 'success');
+        }
+
+        function generateCSV() {
+            const headers = ['Data', 'Naming', 'Views', 'Conexões', 'Mensagens', 'Taxa Conexão', 'Taxa Conversão'];
+            const rows = testData.map(entry => [
+                formatDate(entry.date),
+                entry.naming,
+                entry.views,
+                entry.connections,
+                entry.messages,
+                entry.connectionRate.toFixed(1) + '%',
+                entry.conversionRate.toFixed(1) + '%'
+            ]);
+
+            return [headers, ...rows].map(row => row.join(',')).join('\n');
+        }
+
+        function downloadCSV(csv, filename) {
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        function saveData() {
+            localStorage.setItem('abTestData', JSON.stringify(testData));
+        }
+
+        function saveTemporary() {
+            const tempData = {
+                naming: document.getElementById('namingVersion').value,
+                views: document.getElementById('profileViews').value,
+                connections: document.getElementById('connections').value,
+                messages: document.getElementById('messages').value
+            };
+            localStorage.setItem('abTestTemp', JSON.stringify(tempData));
+        }
+
+        function loadTemporary() {
+            const temp = localStorage.getItem('abTestTemp');
+            if (temp) {
+                const data = JSON.parse(temp);
+                document.getElementById('namingVersion').value = data.naming || '';
+                document.getElementById('profileViews').value = data.views || '';
+                document.getElementById('connections').value = data.connections || '';
+                document.getElementById('messages').value = data.messages || '';
+            }
+        }
+
+        function showToast(message, type) {
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 80px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: ${type === 'success' ? '#16a34a' : type === 'warning' ? '#f59e0b' : '#6b7280'};
+                color: white;
+                padding: 12px 20px;
+                border-radius: 20px;
+                font-size: 14px;
+                font-weight: 600;
+                z-index: 1001;
+                animation: toastSlide 0.3s ease;
+            `;
+            toast.textContent = message;
+
+            // Add to DOM
+            document.body.appendChild(toast);
+
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.style.animation = 'toastSlide 0.3s ease reverse';
+                setTimeout(() => document.body.removeChild(toast), 300);
+            }, 2700);
+        }
+
+        // Utility functions
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('pt-BR', { 
+                day: '2-digit', 
+                month: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function formatDateForFile(date) {
+            return date.toISOString().split('T')[0];
+        }
+
+        function formatNumber(num) {
+            if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'k';
+            }
+            return num.toString();
+        }
+
+        function isTopPerformer(entry) {
+            if (testData.length < 2) return false;
+            const sortedByConversion = [...testData].sort((a, b) => b.conversionRate - a.conversionRate);
+            return sortedByConversion.indexOf(entry) === 0;
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Load temporary data on page load
+        window.addEventListener('load', loadTemporary);
+
+        // CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes toastSlide {
+                from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+                to { opacity: 1; transform: translateX(-50%) translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // PWA support
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').catch(() => {});
+        }
+    </script>
+</body>
+</html>

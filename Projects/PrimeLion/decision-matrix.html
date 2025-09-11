@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matriz de Decisão - Naming Strategy LinkedIn</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .subtitle {
+            color: #718096;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .progress-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        .question-container {
+            display: none;
+        }
+        .question-container.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .question {
+            font-size: 18px;
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .option {
+            padding: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+        }
+        .option:hover {
+            border-color: #667eea;
+            background: #f7f9ff;
+            transform: translateX(5px);
+        }
+        .option.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1));
+        }
+        .option-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 4px;
+        }
+        .option-desc {
+            color: #718096;
+            font-size: 14px;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-back {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+        .btn-next {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .result {
+            display: none;
+            text-align: center;
+        }
+        .result.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        .recommendation {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .recommendation h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .recommendation p {
+            font-size: 18px;
+        }
+        .justification {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .justification h3 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        .justification ul {
+            list-style: none;
+            padding: 0;
+        }
+        .justification li {
+            padding: 8px 0;
+            color: #4a5568;
+            display: flex;
+            align-items: flex-start;
+        }
+        .justification li:before {
+            content: "✓";
+            color: #48bb78;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .export-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        .export-btn:hover {
+            transform: scale(1.02);
+        }
+        .restart-btn {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Matriz de Decisão Inteligente</h1>
+        <p class="subtitle">Descubra o naming perfeito para seu LinkedIn</p>
+        
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        
+        <!-- Pergunta 1 -->
+        <div class="question-container active" id="q1">
+            <div class="question">1. Qual é o seu principal objetivo no LinkedIn?</div>
+            <div class="options">
+                <div class="option" onclick="selectOption(1, 'conversion')">
+                    <div class="option-title">💰 Gerar leads qualificados</div>
+                    <div class="option-desc">Quero que prospects entrem em contato comigo</div>
+                </div>
+                <div class="option" onclick="selectOption(1, 'authority')">
+                    <div class="option-title">🏆 Construir autoridade</div>
+                    <div class="option-desc">Ser reconhecido como referência no mercado</div>
+                </div>
+                <div class="option" onclick="selectOption(1, 'network')">
+                    <div class="option-title">🤝 Expandir networking</div>
+                    <div class="option-desc">Conectar com mais executivos e decisores</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pergunta 2 -->
+        <div class="question-container" id="q2">
+            <div class="question">2. Como você prefere se posicionar?</div>
+            <div class="options">
+                <div class="option" onclick="selectOption(2, 'results')">
+                    <div class="option-title">📊 Focado em resultados</div>
+                    <div class="option-desc">Números, métricas e casos de sucesso</div>
+                </div>
+                <div class="option" onclick="selectOption(2, 'methodology')">
+                    <div class="option-title">🔬 Especialista em metodologia</div>
+                    <div class="option-desc">Processos, frameworks e sistemas proprietários</div>
+                </div>
+                <div class="option" onclick="selectOption(2, 'transformation')">
+                    <div class="option-title">✨ Agente de transformação</div>
+                    <div class="option-desc">Mudança, inovação e disrupção</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pergunta 3 -->
+        <div class="question-container" id="q3">
+            <div class="question">3. Qual é o perfil do seu cliente ideal?</div>
+            <div class="options">
+                <div class="option" onclick="selectOption(3, 'startup')">
+                    <div class="option-title">🚀 Startups em crescimento</div>
+                    <div class="option-desc">R$100k a R$1M, buscando escalar rápido</div>
+                </div>
+                <div class="option" onclick="selectOption(3, 'scaleup')">
+                    <div class="option-title">📈 Scale-ups estabelecidas</div>
+                    <div class="option-desc">R$1M a R$5M, otimizando operações</div>
+                </div>
+                <div class="option" onclick="selectOption(3, 'enterprise')">
+                    <div class="option-title">🏢 Médias empresas</div>
+                    <div class="option-desc">R$5M+, transformação digital e processos</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pergunta 4 -->
+        <div class="question-container" id="q4">
+            <div class="question">4. Qual diferencial você mais valoriza?</div>
+            <div class="options">
+                <div class="option" onclick="selectOption(4, 'speed')">
+                    <div class="option-title">⚡ Velocidade de resultados</div>
+                    <div class="option-desc">Entrega rápida, sprints, metodologias ágeis</div>
+                </div>
+                <div class="option" onclick="selectOption(4, 'predictability')">
+                    <div class="option-title">🎯 Previsibilidade</div>
+                    <div class="option-desc">Processos estruturados, garantias, ROI claro</div>
+                </div>
+                <div class="option" onclick="selectOption(4, 'innovation')">
+                    <div class="option-title">💡 Inovação</div>
+                    <div class="option-desc">Soluções únicas, tecnologia, disrupção</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pergunta 5 -->
+        <div class="question-container" id="q5">
+            <div class="question">5. Como você prefere comunicar valor?</div>
+            <div class="options">
+                <div class="option" onclick="selectOption(5, 'direct')">
+                    <div class="option-title">🎯 Direto e quantitativo</div>
+                    <div class="option-desc">"3X ROI", "R$50M gerados", "+300% crescimento"</div>
+                </div>
+                <div class="option" onclick="selectOption(5, 'strategic')">
+                    <div class="option-title">🧠 Estratégico e conceitual</div>
+                    <div class="option-desc">"Framework validado", "Metodologia proprietária"</div>
+                </div>
+                <div class="option" onclick="selectOption(5, 'aspirational')">
+                    <div class="option-title">🚀 Aspiracional e transformador</div>
+                    <div class="option-desc">"Transformação executiva", "Próximo nível"</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Resultado -->
+        <div class="result" id="result">
+            <div class="recommendation">
+                <h2 id="recommendedNaming">Sistema ROI 3X</h2>
+                <p>Perfeito para seu perfil!</p>
+            </div>
+            
+            <div class="justification">
+                <h3>Por que esta recomendação?</h3>
+                <ul id="justificationList">
+                </ul>
+            </div>
+            
+            <button class="export-btn" onclick="exportReport()">📥 Baixar Relatório Completo (PDF)</button>
+            <button class="export-btn restart-btn" onclick="restart()">🔄 Refazer Análise</button>
+        </div>
+        
+        <div class="navigation" id="navigation">
+            <button class="btn btn-back" onclick="previousQuestion()" id="backBtn" disabled>Voltar</button>
+            <button class="btn btn-next" onclick="nextQuestion()" id="nextBtn" disabled>Próxima</button>
+        </div>
+    </div>
+    
+    <script>
+        let currentQuestion = 1;
+        const totalQuestions = 5;
+        const answers = {};
+        
+        function selectOption(question, value) {
+            answers[question] = value;
+            
+            // Remove seleção anterior
+            document.querySelectorAll(`#q${question} .option`).forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Adiciona seleção atual
+            event.currentTarget.classList.add('selected');
+            
+            // Habilita botão próxima
+            document.getElementById('nextBtn').disabled = false;
+        }
+        
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                document.getElementById(`q${currentQuestion}`).classList.remove('active');
+                currentQuestion++;
+                document.getElementById(`q${currentQuestion}`).classList.add('active');
+                
+                // Atualiza progress bar
+                const progress = (currentQuestion / totalQuestions) * 100;
+                document.getElementById('progress').style.width = progress + '%';
+                
+                // Atualiza botões
+                document.getElementById('backBtn').disabled = false;
+                document.getElementById('nextBtn').disabled = !answers[currentQuestion];
+                
+                if (currentQuestion === totalQuestions) {
+                    document.getElementById('nextBtn').textContent = 'Ver Resultado';
+                }
+            } else {
+                showResult();
+            }
+        }
+        
+        function previousQuestion() {
+            if (currentQuestion > 1) {
+                document.getElementById(`q${currentQuestion}`).classList.remove('active');
+                currentQuestion--;
+                document.getElementById(`q${currentQuestion}`).classList.add('active');
+                
+                // Atualiza progress bar
+                const progress = (currentQuestion / totalQuestions) * 100;
+                document.getElementById('progress').style.width = progress + '%';
+                
+                // Atualiza botões
+                document.getElementById('backBtn').disabled = currentQuestion === 1;
+                document.getElementById('nextBtn').disabled = false;
+                document.getElementById('nextBtn').textContent = 'Próxima';
+            }
+        }
+        
+        function calculateRecommendation() {
+            const scores = {
+                'Sistema ROI 3X': 0,
+                'Framework de Escala Validado': 0,
+                'Aceleração de Receita Recorrente': 0,
+                'Transformação Executiva 90 Dias': 0,
+                'Consultoria de Alta Performance': 0
+            };
+            
+            // Lógica de pontuação baseada nas respostas
+            if (answers[1] === 'conversion' && answers[5] === 'direct') scores['Sistema ROI 3X'] += 3;
+            if (answers[2] === 'methodology' && answers[4] === 'predictability') scores['Framework de Escala Validado'] += 3;
+            if (answers[3] === 'scaleup' && answers[2] === 'results') scores['Aceleração de Receita Recorrente'] += 3;
+            if (answers[4] === 'speed' && answers[5] === 'aspirational') scores['Transformação Executiva 90 Dias'] += 3;
+            if (answers[1] === 'authority' && answers[2] === 'methodology') scores['Consultoria de Alta Performance'] += 2;
+            
+            // Pontuação adicional
+            Object.values(answers).forEach(answer => {
+                if (answer.includes('result') || answer.includes('direct')) scores['Sistema ROI 3X']++;
+                if (answer.includes('method') || answer.includes('strategic')) scores['Framework de Escala Validado']++;
+                if (answer.includes('scale') || answer.includes('predictability')) scores['Aceleração de Receita Recorrente']++;
+                if (answer.includes('speed') || answer.includes('transformation')) scores['Transformação Executiva 90 Dias']++;
+            });
+            
+            // Encontra o vencedor
+            return Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+        }
+        
+        function getJustifications(naming) {
+            const justifications = {
+                'Sistema ROI 3X': [
+                    'Foco direto em resultados mensuráveis alinhado com seu objetivo de gerar leads',
+                    'Comunicação quantitativa que ressoa com decisores orientados a números',
+                    'Promessa clara e ousada que diferencia você no mercado',
+                    'Ideal para scale-ups que buscam previsibilidade financeira'
+                ],
+                'Framework de Escala Validado': [
+                    'Posiciona você como criador de metodologia proprietária',
+                    'Transmite segurança através da validação e casos de sucesso',
+                    'Perfeito para construir autoridade no segmento B2B',
+                    'Atrai clientes que valorizam processos estruturados'
+                ],
+                'Aceleração de Receita Recorrente': [
+                    'Foco em receita recorrente, crucial para SaaS e serviços',
+                    'Comunica crescimento sustentável e previsível',
+                    'Linguagem clara que todos os executivos entendem',
+                    'Ideal para empresas em fase de scale-up'
+                ],
+                'Transformação Executiva 90 Dias': [
+                    'Prazo definido cria senso de urgência e tangibilidade',
+                    'Posiciona você como agente de mudança rápida',
+                    'Atrai executivos com mandato de transformação',
+                    'Diferencia através da velocidade de entrega'
+                ],
+                'Consultoria de Alta Performance': [
+                    'Posicionamento clássico e premium',
+                    'Flexível para múltiplos segmentos',
+                    'Transmite excelência e resultados superiores',
+                    'Ideal para networking com C-level'
+                ]
+            };
+            
+            return justifications[naming] || [];
+        }
+        
+        function showResult() {
+            const recommendation = calculateRecommendation();
+            const justifications = getJustifications(recommendation);
+            
+            // Esconde perguntas
+            document.getElementById(`q${currentQuestion}`).classList.remove('active');
+            document.getElementById('navigation').style.display = 'none';
+            
+            // Mostra resultado
+            document.getElementById('recommendedNaming').textContent = recommendation;
+            document.getElementById('justificationList').innerHTML = justifications
+                .map(j => `<li>${j}</li>`)
+                .join('');
+            document.getElementById('result').classList.add('active');
+            
+            // Progress 100%
+            document.getElementById('progress').style.width = '100%';
+        }
+        
+        function exportReport() {
+            const report = {
+                recommendation: document.getElementById('recommendedNaming').textContent,
+                answers: answers,
+                justifications: Array.from(document.querySelectorAll('#justificationList li'))
+                    .map(li => li.textContent),
+                date: new Date().toISOString()
+            };
+            
+            // Cria conteúdo do relatório
+            const content = `
+RELATÓRIO DE NAMING STRATEGY - LINKEDIN
+========================================
+Data: ${new Date().toLocaleDateString('pt-BR')}
+
+RECOMENDAÇÃO PRINCIPAL
+----------------------
+${report.recommendation}
+
+ANÁLISE DO PERFIL
+-----------------
+✓ Objetivo principal: ${answers[1]}
+✓ Posicionamento preferido: ${answers[2]}
+✓ Cliente ideal: ${answers[3]}
+✓ Diferencial valorizado: ${answers[4]}
+✓ Estilo de comunicação: ${answers[5]}
+
+JUSTIFICATIVA DA RECOMENDAÇÃO
+-----------------------------
+${report.justifications.map((j, i) => `${i + 1}. ${j}`).join('\n')}
+
+PRÓXIMOS PASSOS
+---------------
+1. Atualize seu headline no LinkedIn imediatamente
+2. Mantenha consistência em todo o perfil
+3. Teste por 30 dias e meça resultados
+4. Use o A/B Testing Tracker fornecido
+
+========================================
+Gerado por LinkedIn Naming Strategy Tool
+            `;
+            
+            // Download como arquivo
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `naming-strategy-report-${new Date().toISOString().split('T')[0]}.txt`;
+            a.click();
+        }
+        
+        function restart() {
+            currentQuestion = 1;
+            Object.keys(answers).forEach(key => delete answers[key]);
+            
+            // Reset UI
+            document.getElementById('result').classList.remove('active');
+            document.getElementById('q1').classList.add('active');
+            document.getElementById('navigation').style.display = 'flex';
+            document.getElementById('backBtn').disabled = true;
+            document.getElementById('nextBtn').disabled = true;
+            document.getElementById('nextBtn').textContent = 'Próxima';
+            document.getElementById('progress').style.width = '20%';
+            
+            // Remove seleções
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+        }
+        
+        // Inicialização
+        document.getElementById('progress').style.width = '20%';
+    </script>
+</body>
+</html>

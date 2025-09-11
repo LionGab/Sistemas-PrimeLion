@@ -1,0 +1,20 @@
+# Outputs
+outputs/
+*.log
+
+# Worktrees
+worktrees/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary
+*.tmp
+*.bak

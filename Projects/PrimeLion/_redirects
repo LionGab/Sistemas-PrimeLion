@@ -1,0 +1,41 @@
+# Redirects para Lion Tools
+
+# Página principal - Clube Lion Negócios
+/ /documents/lion%20-%20docs/index.html 200
+
+# Programa de transformação (conteúdo anterior)
+/programa /documents/lion%20-%20docs/clube-lion-negocio.html 200
+/transformacao /documents/lion%20-%20docs/clube-lion-negocio.html 200
+
+# Ferramentas LinkedIn otimizadas
+/roi-calculator /documents/lion%20-%20docs/roi-calculator-optimized.html 200
+/ab-testing /documents/lion%20-%20docs/ab-testing-tracker-optimized.html 200
+/linkedin-profile /documents/lion%20-%20docs/linkedin-profile-mockup-optimized.html 200
+/naming-dashboard /documents/lion%20-%20docs/naming-dashboard-optimized.html 200  
+/decision-matrix /documents/lion%20-%20docs/decision-matrix-optimized.html 200
+
+# Aliases para ferramentas
+/roi /documents/lion%20-%20docs/roi-calculator-optimized.html 200
+/calculator /documents/lion%20-%20docs/roi-calculator-optimized.html 200
+/ab-test /documents/lion%20-%20docs/ab-testing-tracker-optimized.html 200
+/teste-ab /documents/lion%20-%20docs/ab-testing-tracker-optimized.html 200
+/profile /documents/lion%20-%20docs/linkedin-profile-mockup-optimized.html 200
+/perfil /documents/lion%20-%20docs/linkedin-profile-mockup-optimized.html 200
+/nomes /documents/lion%20-%20docs/naming-dashboard-optimized.html 200
+/naming /documents/lion%20-%20docs/naming-dashboard-optimized.html 200
+/decisao /documents/lion%20-%20docs/decision-matrix-optimized.html 200
+/matriz /documents/lion%20-%20docs/decision-matrix-optimized.html 200
+
+# Clube Lion - seções específicas  
+/diagnostico /documents/lion%20-%20docs/index.html#diagnostico 301
+/sprint /documents/lion%20-%20docs/index.html#diagnostico 301
+/faq /documents/lion%20-%20docs/index.html#faq 301
+
+# Links externos
+/whatsapp https://wa.me/5511999999999?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20Sprint%20de%20Diagn%C3%B3stico%20Gratuito 302
+/wpp https://wa.me/5511999999999?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20Sprint%20de%20Diagn%C3%B3stico%20Gratuito 302
+/agendar https://calendly.com/gabriel-sprint 302
+/calendly https://calendly.com/gabriel-sprint 302
+
+# Fallback para 404
+/* /documents/lion%20-%20docs/index.html 200

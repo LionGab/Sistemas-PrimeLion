@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 DIAGNÓSTICO DIGITAL SUPREMO | Revolução IA em MT</title>
+    
+    <!-- Bibliotecas essenciais -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.6.0/confetti.browser.min.js" defer></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+            --warning-gradient: linear-gradient(45deg, #fa709a 0%, #fee140 100%);
+            --danger-gradient: linear-gradient(45deg, #ff6b6b 0%, #ee5a52 100%);
+            --gold-gradient: linear-gradient(45deg, #f7971e 0%, #ffd200 100%);
+            --cyber-gradient: linear-gradient(45deg, #12c2e9 0%, #c471ed 50%, #f64f59 100%);
+            
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.8);
+            --text-muted: rgba(255, 255, 255, 0.6);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 25%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            color: var(--text-primary);
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Background otimizado para mobile */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        @media (min-width: 768px) {
+            #bg-canvas {
+                opacity: 1;
+            }
+        }
+
+        /* Mesh gradient overlay */
+        .mesh-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 3;
+        }
+
+        /* Header revolucionário */
+        /* Hero section - Mobile first */
+        .hero-section {
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px) saturate(120%);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (min-width: 768px) {
+            .hero-section {
+                padding: 80px 40px;
+                border-radius: 32px;
+                margin-bottom: 50px;
+                backdrop-filter: blur(20px) saturate(150%);
+                box-shadow: 
+                    0 25px 50px rgba(0, 0, 0, 0.4),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(75, 0, 130, 0.1), transparent, rgba(255, 20, 147, 0.1), transparent);
+            animation: heroRotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes heroRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hero-badge {
+            background: var(--cyber-gradient);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            display: inline-block;
+            animation: badgePulse 2s ease-in-out infinite;
+            box-shadow: 0 10px 30px rgba(18, 194, 233, 0.4);
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(18, 194, 233, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 15px 40px rgba(18, 194, 233, 0.6); }
+        }
+
+        .hero-title {
+            font-size: 2rem;
+            background: var(--cyber-gradient);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientMove 3s ease infinite;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 768px) {
+            .hero-title {
+                font-size: clamp(2.5rem, 6vw, 5rem);
+                margin-bottom: 25px;
+                font-weight: 900;
+                letter-spacing: -0.03em;
+                line-height: 1.1;
+            }
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        @media (min-width: 768px) {
+            .hero-subtitle {
+                font-size: 1.6rem;
+                margin-bottom: 35px;
+                font-weight: 500;
+            }
+        }
+
+        .hero-warning {
+            background: var(--danger-gradient);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+            text-transform: none;
+            letter-spacing: 0.5px;
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        @media (min-width: 768px) {
+            .hero-warning {
+                padding: 25px 45px;
+                border-radius: 50px;
+                font-weight: 800;
+                font-size: 1.2rem;
+                animation: warningPulse 2s infinite, warningGlow 3s ease-in-out infinite alternate;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                box-shadow: 0 20px 50px rgba(255, 107, 107, 0.5);
+            }
+        }
+
+        @keyframes warningPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        @keyframes warningGlow {
+            0% { box-shadow: 0 20px 50px rgba(255, 107, 107, 0.5); }
+            100% { box-shadow: 0 25px 70px rgba(255, 107, 107, 0.8); }
+        }
+
+        /* Sistema de progresso holográfico */
+        .progress-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 50px;
+            padding: 40px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        .progress-ring {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .progress-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.1);
+            stroke-width: 12;
+        }
+
+        .progress-fill {
+            fill: none;
+            stroke: url(#hologramGradient);
+            stroke-width: 12;
+            stroke-linecap: round;
+            stroke-dasharray: 565.48;
+            stroke-dashoffset: 565.48;
+            transition: stroke-dashoffset 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            filter: drop-shadow(0 0 20px rgba(18, 194, 233, 0.8));
+        }
+
+        .progress-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .progress-percentage {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--cyber-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        @media (min-width: 768px) {
+            .progress-percentage {
+                font-size: 2.5rem;
+                font-weight: 900;
+                margin-bottom: 10px;
+            }
+        }
+
+        .progress-label {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Stats dashboard */
+        .stats-dashboard {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            min-width: 120px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--success-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Cards de pergunta épicos */
+        .question-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px) saturate(120%);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(50px);
+            opacity: 0;
+        }
+
+        @media (min-width: 768px) {
+            .question-card {
+                backdrop-filter: blur(25px) saturate(150%);
+                border-radius: 32px;
+                padding: 60px 50px;
+                margin-bottom: 50px;
+                box-shadow: 
+                    0 30px 60px rgba(0, 0, 0, 0.4),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                transform: translateY(100px);
+            }
+        }
+
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 1s ease;
+        }
+
+        .question-card.active::before {
+            left: 100%;
+        }
+
+        .question-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .question-number {
+            background: var(--cyber-gradient);
+            color: white;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.8rem;
+            margin-right: 30px;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(18, 194, 233, 0.5);
+        }
+
+        .question-number::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: var(--cyber-gradient);
+            z-index: -1;
+            opacity: 0.3;
+            animation: numberPulse 2s infinite;
+        }
+
+        @keyframes numberPulse {
+            0% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.2); opacity: 0.1; }
+            100% { transform: scale(1); opacity: 0.3; }
+        }
+
+        .question-content {
+            flex: 1;
+        }
+
+        .question-category {
+            background: var(--warning-gradient);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        @media (min-width: 768px) {
+            .question-category {
+                padding: 8px 16px;
+                border-radius: 20px;
+                font-size: 0.8rem;
+                font-weight: 700;
+                letter-spacing: 1px;
+                margin-bottom: 15px;
+            }
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.4;
+            margin-bottom: 15px;
+            letter-spacing: -0.01em;
+        }
+
+        @media (min-width: 768px) {
+            .question-text {
+                font-size: 1.8rem;
+                font-weight: 700;
+                line-height: 1.3;
+                margin-bottom: 20px;
+            }
+        }
+
+        .question-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        @media (min-width: 768px) {
+            .question-subtitle {
+                font-size: 1.1rem;
+                font-weight: 500;
+                line-height: 1.4;
+            }
+        }
+
+        /* Opções de resposta avançadas */
+        .options-grid {
+            display: grid;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .options-2 { grid-template-columns: 1fr 1fr; }
+        .options-3 { grid-template-columns: repeat(3, 1fr); }
+        .options-4 { grid-template-columns: 1fr 1fr; }
+        .options-5 { grid-template-columns: repeat(2, 1fr); }
+
+        .option {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-weight: 600;
+            font-size: 1rem;
+            text-align: center;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            color: inherit;
+            font-family: inherit;
+        }
+
+        @media (min-width: 768px) {
+            .option {
+                padding: 25px;
+                font-size: 1.1rem;
+                min-height: 120px;
+                transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            }
+        }
+
+        .option:focus {
+            outline: 2px solid #4ade80;
+            outline-offset: 2px;
+        }
+
+        .option-emoji {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.2));
+        }
+
+        @media (min-width: 768px) {
+            .option-emoji {
+                font-size: 2.5rem;
+                margin-bottom: 15px;
+                filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+            }
+        }
+
+        .option-text {
+            line-height: 1.4;
+            font-size: 0.9rem;
+        }
+
+        @media (min-width: 768px) {
+            .option-text {
+                font-size: 1rem;
+            }
+        }
+
+        .option:hover {
+            transform: translateY(-10px) scale(1.03);
+            border-color: rgba(18, 194, 233, 0.8);
+            background: rgba(18, 194, 233, 0.15);
+            box-shadow: 0 25px 50px rgba(18, 194, 233, 0.3);
+        }
+
+        .option.selected,
+        .option[aria-pressed="true"] {
+            background: var(--success-gradient);
+            color: white;
+            transform: scale(1.02);
+            border-color: rgba(0, 242, 254, 1);
+            box-shadow: 0 15px 30px rgba(79, 172, 254, 0.4);
+        }
+
+        @media (min-width: 768px) {
+            .option.selected,
+            .option[aria-pressed="true"] {
+                transform: scale(1.05);
+                box-shadow: 0 25px 50px rgba(79, 172, 254, 0.6);
+            }
+        }
+
+        /* Input personalizado para respostas abertas */
+        .input-container {
+            margin-bottom: 40px;
+        }
+
+        .custom-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 20px 25px;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .custom-input::placeholder {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .custom-input:focus {
+            outline: none;
+            border-color: rgba(18, 194, 233, 0.8);
+            background: rgba(18, 194, 233, 0.1);
+            box-shadow: 0 10px 30px rgba(18, 194, 233, 0.3);
+        }
+
+        .custom-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Informações de impacto */
+        .impact-section {
+            background: var(--gold-gradient);
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 30px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 15px 40px rgba(247, 151, 30, 0.4);
+            animation: impactGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes impactGlow {
+            0% { box-shadow: 0 15px 40px rgba(247, 151, 30, 0.4); }
+            100% { box-shadow: 0 20px 50px rgba(247, 151, 30, 0.6); }
+        }
+
+        .impact-icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+
+        /* Botão de próxima pergunta */
+        .next-button {
+            background: var(--danger-gradient);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 25px 50px;
+            font-size: 1.3rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 20px 50px rgba(255, 107, 107, 0.4);
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .next-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .next-button:hover::before {
+            left: 100%;
+        }
+
+        .next-button.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .next-button:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 30px 60px rgba(255, 107, 107, 0.6);
+        }
+
+
+        /* Resultado final revolucionário */
+        .result-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 80px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+            transform: scale(0.8);
+            opacity: 0;
+        }
+
+        .result-crown {
+            font-size: 6rem;
+            margin-bottom: 30px;
+            animation: crownFloat 2s ease-in-out infinite;
+            filter: drop-shadow(0 10px 30px rgba(255, 215, 0, 0.5));
+        }
+
+        @keyframes crownFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        .result-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 25px;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .result-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .result-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-section {
+            background: var(--danger-gradient);
+            border-radius: 24px;
+            padding: 40px;
+            margin: 50px 0;
+            box-shadow: 0 25px 50px rgba(255, 107, 107, 0.5);
+        }
+
+        .cta-button {
+            background: white;
+            color: #1a1a2e;
+            border: none;
+            border-radius: 50px;
+            padding: 25px 60px;
+            font-size: 1.4rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            animation: ctaHeartbeat 2s infinite;
+        }
+
+        @keyframes ctaHeartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.08);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .bonus-list {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+            text-align: left;
+        }
+
+        .bonus-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .bonus-icon {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            width: 30px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Screen reader only class */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Mobile optimization */
+        @media (max-width: 480px) {
+            .options-grid {
+                grid-template-columns: 1fr !important;
+                gap: 10px;
+            }
+            
+            .question-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .question-number {
+                margin-right: 0;
+                margin-bottom: 15px;
+                width: 60px;
+                height: 60px;
+                font-size: 1.4rem;
+            }
+            
+            .cta-button {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .hero-section {
+                padding: 50px 25px;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .question-card {
+                padding: 40px 25px;
+            }
+            
+            .question-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .question-number {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr !important;
+            }
+            
+            
+            .result-section {
+                padding: 50px 25px;
+            }
+            
+            .result-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Animações de entrada */
+        .fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Cursores customizados */
+        .option, .next-button, .cta-button {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><circle cx="12" cy="12" r="10" fill="%2300f2fe"/><circle cx="12" cy="12" r="6" fill="%23ffffff"/></svg>'), auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background e overlays -->
+    <canvas id="bg-canvas"></canvas>
+    <div class="mesh-overlay"></div>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <header class="hero-section" role="banner">
+            <h1 class="hero-title">DIAGNÓSTICO DIGITAL</h1>
+            <p class="hero-subtitle">Descubra o potencial de crescimento do seu negócio</p>
+            <div class="hero-warning" role="note" aria-label="Informação importante">Identifique oportunidades de melhoria e otimização</div>
+        </header>
+
+
+        <!-- Progress Section -->
+        <section class="progress-section" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do diagnóstico">
+            <div class="progress-container">
+                <svg class="progress-ring" viewBox="0 0 200 200" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="hologramGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#12c2e9"/>
+                            <stop offset="33%" style="stop-color:#c471ed"/>
+                            <stop offset="66%" style="stop-color:#f64f59"/>
+                            <stop offset="100%" style="stop-color:#12c2e9"/>
+                        </linearGradient>
+                    </defs>
+                    <circle cx="100" cy="100" r="90" class="progress-bg"/>
+                    <circle cx="100" cy="100" r="90" class="progress-fill" id="progressRing"/>
+                </svg>
+                <div class="progress-center">
+                    <div class="progress-percentage" id="progressPercent" aria-live="polite">0%</div>
+                    <div class="progress-label" id="progressStage" aria-live="polite">INICIANDO</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Container -->
+        <div id="quizContainer">
+            <!-- Perguntas serão inseridas aqui -->
+        </div>
+
+        <!-- Result Container -->
+        <div id="resultContainer" class="hidden">
+            <!-- Resultado será inserido aqui -->
+        </div>
+    </div>
+
+
+    <script>
+        // Configuração simplificada
+        let startTime = Date.now();
+        let currentQuestion = 0;
+        let totalScore = 0;
+        let responses = [];
+        let timerInterval;
+
+        // Dados das perguntas otimizadas (8 perguntas)
+        const questions = [
+            {
+                id: 0,
+                category: "IDENTIFICAÇÃO",
+                question: "Qual é o nome da sua empresa e instagram?",
+                subtitle: "🔹 Para personalizar completamente sua análise.",
+                type: "text",
+                placeholder: "Ex: Tech Solutions - @techsolutions",
+                impact: "👉 Identificação para análise personalizada."
+            },
+            {
+                id: 1,
+                category: "ATENDIMENTO NO WHATSAPP",
+                question: "Como você atende seus clientes no WhatsApp hoje?",
+                subtitle: "🔹 Quando o atendimento demora mais de 5 minutos para começar, a chance de fechar a venda cai até 70%. Estudo de Harvard.",
+                type: "multiple",
+                options: [
+                    { text: "Atendo 24h com IA (fluxos + repasse humano)", emoji: "🤖", score: 20, color: "#4ade80" },
+                    { text: "Chatbot básico com respostas prontas", emoji: "💬", score: 12, color: "#60a5fa" },
+                    { text: "Respondo apenas em horário comercial", emoji: "⏰", score: 6, color: "#f59e0b" },
+                    { text: "Respondo quando consigo", emoji: "📱", score: 0, color: "#ef4444" }
+                ],
+                impact: "👉 Impacto: atendimento imediato aumenta conversão em até 70%."
+            },
+            {
+                id: 2,
+                category: "CONTEÚDO PARA REDES",
+                question: "Como você cria posts e conteúdos para suas redes sociais?",
+                subtitle: "🔹 Conteúdo consistente gera 3x mais engajamento.",
+                type: "multiple",
+                options: [
+                    { text: "IA cria em segundos + revisão humana", emoji: "⚡", score: 15, color: "#4ade80" },
+                    { text: "Uso Canva com templates", emoji: "🎨", score: 10, color: "#60a5fa" },
+                    { text: "Produzo básico sem padrão", emoji: "📊", score: 5, color: "#f59e0b" },
+                    { text: "Quase não posto", emoji: "😴", score: 0, color: "#ef4444" }
+                ],
+                impact: "👉 Impacto: consistência + padrão visual triplicam alcance."
+            },
+            {
+                id: 3,
+                category: "TRÁFEGO PAGO",
+                question: "Você investe em anúncios (Facebook, Google, Instagram, TikTok)?",
+                subtitle: "🔹 Apenas 15% dos negócios locais usam tráfego de forma correta.",
+                type: "multiple",
+                options: [
+                    { text: "Sim, otimizado por IA", emoji: "🚀", score: 15, color: "#4ade80" },
+                    { text: "Faço campanhas manuais", emoji: "📈", score: 10, color: "#60a5fa" },
+                    { text: "Já testei, mas não deu resultado", emoji: "😞", score: 3, color: "#f59e0b" },
+                    { text: "Nunca fiz", emoji: "🤷", score: 0, color: "#ef4444" }
+                ],
+                impact: "👉 Impacto: campanhas com IA reduzem custo por cliente."
+            },
+            {
+                id: 4,
+                category: "DADOS & FERRAMENTAS",
+                question: "Como você acompanha o desempenho do seu negócio?",
+                subtitle: "🔹 Decisões em tempo real aumentam lucro em até 25%.",
+                type: "multiple",
+                options: [
+                    { text: "Dashboards integrados com IA", emoji: "📊", score: 15, color: "#4ade80" },
+                    { text: "Google Analytics e relatórios básicos", emoji: "📈", score: 10, color: "#60a5fa" },
+                    { text: "Planilhas no Excel", emoji: "📋", score: 5, color: "#f59e0b" },
+                    { text: "Só pelo extrato bancário", emoji: "🏦", score: 0, color: "#ef4444" }
+                ],
+                impact: "👉 Impacto: visão consolidada identifica oportunidades escondidas."
+            },
+            {
+                id: 5,
+                category: "CONCORRÊNCIA",
+                question: "Como você monitora seus concorrentes?",
+                subtitle: "🔹 Quem não monitora perde até 60% das oportunidades.",
+                type: "multiple",
+                options: [
+                    { text: "IA monitora automaticamente", emoji: "🕵️", score: 10, color: "#4ade80" },
+                    { text: "Acompanho redes sociais deles", emoji: "👀", score: 7, color: "#60a5fa" },
+                    { text: "Olho de vez em quando", emoji: "🤔", score: 3, color: "#f59e0b" },
+                    { text: "Não monitoro", emoji: "🙈", score: 0, color: "#ef4444" }
+                ],
+                impact: "👉 Impacto: inteligência competitiva mostra brechas exploráveis."
+            },
+            {
+                id: 6,
+                category: "LEADS E VENDAS",
+                question: "Quantos leads qualificados você gera por mês?",
+                subtitle: "🔹 Lead qualificado = pessoa interessada com potencial de compra real.",
+                type: "multiple",
+                options: [
+                    { text: "Mais de 200 leads", emoji: "🚀", score: 15, color: "#4ade80" },
+                    { text: "50-200 leads", emoji: "💪", score: 10, color: "#60a5fa" },
+                    { text: "10-50 leads", emoji: "📈", score: 6, color: "#f59e0b" },
+                    { text: "Menos de 10 leads", emoji: "😢", score: 0, color: "#ef4444" }
+                ],
+                impact: "👉 IA pode gerar 10x mais leads qualificados com mesmo orçamento."
+            },
+            {
+                id: 8,
+                category: "MAIOR PROBLEMA HOJE",
+                question: "Qual é o maior desafio do seu negócio neste momento?",
+                subtitle: "🔹 Exemplo: poucos clientes novos, vendas baixas, concorrência forte, falta de tempo...",
+                type: "text",
+                placeholder: "Descreva seu principal desafio atual...",
+                impact: "👉 Sua resposta gera um plano de ação imediato."
+            },
+            {
+                id: 9,
+                category: "OBJETIVO EM 90 DIAS",
+                question: "Qual seu principal objetivo para os próximos 90 dias?",
+                subtitle: "🔹 Exemplo: dobrar faturamento, automatizar vendas, reduzir custos, ganhar mercado...",
+                type: "text",
+                placeholder: "Descreva seu objetivo principal...",
+                impact: "👉 Objetivo claro = estratégia personalizada."
+            }
+        ];
+
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+            showQuestion();
+        });
+
+        function initializeApp() {
+            // Inicialização simplificada para melhor performance
+            console.log('Quiz inicializado');
+
+        }
+
+        // Background 3D removido para performance
+
+        // Audio removido para performance
+
+        function startTimer() {
+            // Timer removido para simplificar interface
+        }
+
+        function updateProgress() {
+            const progress = (currentQuestion / questions.length) * 100;
+            const circumference = 2 * Math.PI * 90;
+            const offset = circumference - (progress / 100) * circumference;
+            
+            document.getElementById('progressRing').style.strokeDashoffset = offset;
+            document.getElementById('progressPercent').textContent = Math.round(progress) + '%';
+            
+            const stages = ['INICIANDO', 'ANALISANDO', 'DESCOBRINDO', 'REVELANDO', 'FINALIZANDO'];
+            const stageIndex = Math.min(Math.floor(progress / 25), stages.length - 1);
+            document.getElementById('progressStage').textContent = stages[stageIndex];
+        }
+
+
+        function showQuestion() {
+            if (currentQuestion >= questions.length) {
+                showResult();
+                return;
+            }
+
+            const question = questions[currentQuestion];
+            const container = document.getElementById('quizContainer');
+            
+            let optionsHTML = '';
+            if (question.type === 'multiple') {
+                const gridClass = `options-${question.options.length}`;
+                optionsHTML = `
+                    <div class="options-grid ${gridClass}">
+                        ${question.options.map((option, index) => `
+                            <button class="option" 
+                                    onclick="selectOption(${index}, ${option.score}, '${option.color}')" 
+                                    style="border-color: ${option.color}20"
+                                    type="button"
+                                    role="radio"
+                                    aria-pressed="false"
+                                    tabindex="0">
+                                <div class="option-emoji" aria-hidden="true">${option.emoji}</div>
+                                <div class="option-text">${option.text}</div>
+                            </button>
+                        `).join('')}
+                    </div>
+                `;
+            } else if (question.type === 'double') {
+                // Pergunta 6 com dois campos
+                optionsHTML = `
+                    <div style="display: grid; gap: 30px;">
+                        <div>
+                            <h4 style="margin-bottom: 15px; color: var(--text-secondary);">${question.fieldA.label}</h4>
+                            <div class="options-grid options-4">
+                                ${question.fieldA.options.map((option, index) => `
+                                    <button class="option" 
+                                            onclick="selectDoubleOption('A', ${index}, ${option.score}, '${option.color}')" 
+                                            style="border-color: ${option.color}20"
+                                            type="button"
+                                            role="radio"
+                                            aria-pressed="false"
+                                            tabindex="0">
+                                        <div class="option-emoji" aria-hidden="true">${option.emoji}</div>
+                                        <div class="option-text">${option.text}</div>
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 15px; color: var(--text-secondary);">${question.fieldB.label}</h4>
+                            <div class="options-grid options-4">
+                                ${question.fieldB.options.map((option, index) => `
+                                    <button class="option" 
+                                            onclick="selectDoubleOption('B', ${index}, ${option.score}, '${option.color}')" 
+                                            style="border-color: ${option.color}20"
+                                            type="button"
+                                            role="radio"
+                                            aria-pressed="false"
+                                            tabindex="0">
+                                        <div class="option-emoji" aria-hidden="true">${option.emoji}</div>
+                                        <div class="option-text">${option.text}</div>
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (question.type === 'text') {
+                optionsHTML = `
+                    <div class="input-container">
+                        <textarea class="custom-input custom-textarea" 
+                                  placeholder="${question.placeholder}"
+                                  id="textInput"
+                                  onchange="saveTextResponse(this.value)"></textarea>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = `
+                <div class="question-card fade-in-up">
+                    <div class="question-header">
+                        <div class="question-number">${currentQuestion + 1}</div>
+                        <div class="question-content">
+                            <div class="question-category">${question.category}</div>
+                            <div class="question-text">${question.question}</div>
+                            <div class="question-subtitle">${question.subtitle}</div>
+                        </div>
+                    </div>
+                    
+                    ${optionsHTML}
+                    
+                    <div class="impact-section">
+                        <span class="impact-icon">💎</span>
+                        ${question.impact}
+                    </div>
+                    
+                    <button class="next-button" id="nextButton" onclick="nextQuestion()">
+                        PRÓXIMA PERGUNTA →
+                    </button>
+                </div>
+            `;
+
+            updateProgress();
+            
+            setTimeout(() => {
+                document.querySelector('.question-card').classList.add('active');
+            }, 100);
+        }
+
+        function selectOption(optionIndex, score, color) {
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            
+            // Efeito de vibração simplificado
+            if (navigator.vibrate) {
+                navigator.vibrate(score > 7 ? [100] : [200, 100, 200]);
+            }
+
+            // Confetti para respostas excelentes
+            if (score >= 8 && typeof confetti !== 'undefined') {
+                confetti({
+                    particleCount: 50,
+                    spread: 60,
+                    origin: { y: 0.8 },
+                    colors: [color, '#ffffff', '#ffd700']
+                });
+            }
+            
+            // Salvar resposta
+            totalScore += score;
+            responses.push({
+                questionId: questions[currentQuestion].id,
+                score: score,
+                optionIndex: optionIndex,
+                timestamp: Date.now() - startTime
+            });
+            
+            
+            const nextButton = document.getElementById('nextButton');
+            nextButton.classList.add('show');
+        }
+
+        // Função para questão dupla (Q6)
+        let doubleResponses = { A: null, B: null };
+        function selectDoubleOption(field, optionIndex, score, color) {
+            const fieldClass = field === 'A' ? '.options-grid:first-of-type .option' : '.options-grid:last-of-type .option';
+            const options = document.querySelectorAll(fieldClass);
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            
+            // Salvar resposta temporária
+            doubleResponses[field] = { score, optionIndex };
+            
+            // Se ambos campos foram preenchidos
+            if (doubleResponses.A && doubleResponses.B) {
+                const totalFieldScore = doubleResponses.A.score + doubleResponses.B.score;
+                totalScore += totalFieldScore;
+                
+                responses.push({
+                    questionId: questions[currentQuestion].id,
+                    scoreA: doubleResponses.A.score,
+                    scoreB: doubleResponses.B.score,
+                    totalScore: totalFieldScore,
+                    timestamp: Date.now() - startTime
+                });
+                
+                    
+                const nextButton = document.getElementById('nextButton');
+                nextButton.classList.add('show');
+                
+                // Confetti se pontuação alta
+                if (totalFieldScore >= 20 && typeof confetti !== 'undefined') {
+                    confetti({
+                        particleCount: 70,
+                        spread: 70,
+                        origin: { y: 0.8 },
+                        colors: ['#4ade80', '#60a5fa', '#ffd700']
+                    });
+                }
+            }
+        }
+
+        function saveTextResponse(value) {
+            if (value.trim()) {
+                responses.push({
+                    questionId: questions[currentQuestion].id,
+                    textResponse: value,
+                    timestamp: Date.now() - startTime
+                });
+                
+                const nextButton = document.getElementById('nextButton');
+                nextButton.classList.add('show');
+            }
+        }
+
+        function nextQuestion() {
+            const currentCard = document.querySelector('.question-card');
+            
+            // Resetar respostas duplas para próxima questão
+            doubleResponses = { A: null, B: null };
+            
+            // Animação CSS simples em vez de GSAP
+            currentCard.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+            currentCard.style.transform = 'translateX(-100px)';
+            currentCard.style.opacity = '0';
+            
+            setTimeout(() => {
+                currentQuestion++;
+                showQuestion();
+            }, 500);
+        }
+
+
+        function showResult() {
+            
+            const container = document.getElementById('quizContainer');
+            container.classList.add('hidden');
+            
+            const resultContainer = document.getElementById('resultContainer');
+            resultContainer.classList.remove('hidden');
+            
+            // Confetti final
+            setTimeout(() => {
+                if (typeof confetti !== 'undefined') {
+                    confetti({
+                        particleCount: 150,
+                        spread: 80,
+                        origin: { y: 0.6 },
+                        colors: ['#12c2e9', '#c471ed', '#f64f59', '#4ade80', '#ffd700']
+                    });
+                }
+            }, 1000);
+            
+            const resultData = calculateResult();
+            const totalTime = Math.floor((Date.now() - startTime) / 1000);
+            const avgResponseTime = Math.floor(totalTime / questions.length);
+            
+            // Extrair respostas de texto
+            const textResponses = responses.filter(r => r.textResponse);
+            const businessProblem = textResponses.find(r => r.questionId === 8)?.textResponse || 'Não informado';
+            const mainGoal = textResponses.find(r => r.questionId === 9)?.textResponse || 'Crescimento acelerado';
+            const businessName = 'Sua empresa';
+            
+            // Pegar nome e empresa
+            const nameAndCompany = responses[0]?.textResponse || 'Não informado';
+            
+            // Compilar todas as respostas detalhadas
+            let detailedResponses = '';
+            questions.forEach((q, index) => {
+                const response = responses[index];
+                if (response && q.id !== 0) { // Pular questão de identificação na lista
+                    if (q.type === 'multiple') {
+                        const selectedOption = q.options[response.optionIndex];
+                        detailedResponses += `Q${q.id}: ${q.question}%0A`;
+                        detailedResponses += `R: ${selectedOption.text}%0A%0A`;
+                    } else if (q.type === 'double') {
+                        const fieldA = q.fieldA.options[response.scoreA ? q.fieldA.options.findIndex(o => o.score === response.scoreA) : 0];
+                        const fieldB = q.fieldB.options[response.scoreB ? q.fieldB.options.findIndex(o => o.score === response.scoreB) : 0];
+                        detailedResponses += `Q${q.id}: ${q.question}%0A`;
+                        detailedResponses += `Leads: ${fieldA ? fieldA.text : 'N/A'}%0A`;
+                        detailedResponses += `Faturamento: ${fieldB ? fieldB.text : 'N/A'}%0A%0A`;
+                    } else if (q.type === 'text') {
+                        detailedResponses += `Q${q.id}: ${q.question}%0A`;
+                        detailedResponses += `R: ${response.textResponse || 'Não respondido'}%0A%0A`;
+                    }
+                }
+            });
+            
+            resultContainer.innerHTML = `
+                <div class="result-section fade-in-up">
+                    <div class="result-crown">${resultData.icon}</div>
+                    <h1 class="result-title" style="color: ${resultData.color}">${resultData.title}</h1>
+                    <p class="result-subtitle">${resultData.description}</p>
+                    
+                    <div class="result-metrics">
+                        <div class="metric-card">
+                            <div class="metric-value" style="color: ${resultData.color}">${totalScore}/100</div>
+                            <div class="metric-label">Score Digital</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" style="color: #4ade80">${resultData.priority}</div>
+                            <div class="metric-label">Foco Principal</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" style="color: #60a5fa">${totalTime}s</div>
+                            <div class="metric-label">Tempo Total</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value" style="color: #f59e0b">${resultData.priority}</div>
+                            <div class="metric-label">Prioridade</div>
+                        </div>
+                    </div>
+                    
+                    <div class="cta-section">
+                        <h3 style="margin-bottom: 20px; font-size: 1.8rem;">🚨 ANÁLISE GRATUITA PERSONALIZADA</h3>
+                        <p style="margin-bottom: 30px; font-size: 1.2rem; opacity: 0.9;">
+                            Baseado nas suas respostas, criamos um plano específico para você
+                        </p>
+                        <div style="display: flex; justify-content: center;">
+                            <a href="https://wa.me/556699301589?text=🔥 DIAGNÓSTICO DIGITAL COMPLETO%0A%0A👤 CLIENTE: ${nameAndCompany}%0A🏆 SCORE FINAL: ${totalScore}/100%0A⏱ Tempo: ${totalTime}s%0A%0A📊 RESPOSTAS DETALHADAS:%0A${detailedResponses}%0A🔴 PROBLEMA PRINCIPAL:%0A${businessProblem}%0A%0A🎯 OBJETIVO 90 DIAS:%0A${mainGoal}%0A%0A📩 QUERO MINHA ANÁLISE PERSONALIZADA!" 
+                               class="cta-button" style="background: white; color: #25D366; width: 100%; max-width: 400px;">
+                                💬 FALAR AGORA NO WHATSAPP
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="bonus-list">
+                        <h4 style="margin-bottom: 25px; font-size: 1.4rem; text-align: center;">🎁 BÔNUS EXCLUSIVOS INCLUSOS</h4>
+                        <div class="bonus-item">
+                            <span class="bonus-icon">✅</span>
+                            Auditoria completa personalizada para seu negócio
+                        </div>
+                        <div class="bonus-item">
+                            <span class="bonus-icon">✅</span>
+                            Plano de ação para resolver: "${businessProblem}"
+                        </div>
+                        <div class="bonus-item">
+                            <span class="bonus-icon">✅</span>
+                            Estratégia específica para: "${mainGoal}"
+                        </div>
+                        <div class="bonus-item">
+                            <span class="bonus-icon">✅</span>
+                            Demo ao vivo das ferramentas de IA funcionando
+                        </div>
+                        <div class="bonus-item">
+                            <span class="bonus-icon">✅</span>
+                            Análise detalhada do seu potencial de crescimento
+                        </div>
+                        <div class="bonus-item">
+                            <span class="bonus-icon">✅</span>
+                            45 minutos de consultoria VIP sem custo
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 30px; padding: 20px; background: rgba(255, 107, 107, 0.1); border-radius: 15px;">
+                            <strong>⏰ URGENTE: Apenas 3 análises por dia</strong><br>
+                            📱 Resposta garantida em 10 minutos<br>
+                            💰 Consulta especializada gratuita
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                resultContainer.querySelector('.result-section').style.transform = 'scale(1)';
+                resultContainer.querySelector('.result-section').style.opacity = '1';
+            }, 200);
+        }
+
+        function calculateResult() {
+            const resultVariant = Math.random() > 0.5 ? 'hard' : 'soft';
+            
+            if (totalScore >= 86) {
+                return {
+                    title: resultVariant === 'hard' ? "ELITE DIGITAL - DOMINÂNCIA TOTAL" : "Seu Diagnóstico Digital - Nível Elite",
+                    icon: "👑",
+                    color: "#4ade80",
+                    description: resultVariant === 'hard' 
+                        ? "Excelente! Você está no nível elite. Identificamos algumas oportunidades de otimização para maximizar ainda mais seus resultados."
+                        : `Score: ${totalScore}/100. Você está no grupo elite dos negócios digitais. Identificamos 3 pontos de melhoria que podem otimizar ainda mais seus resultados.`,
+                    potentialLoss: 0,
+                    priority: "OTIMIZAÇÃO",
+                    variant: resultVariant
+                };
+            } else if (totalScore >= 61) {
+                return {
+                    title: resultVariant === 'hard' ? "FORTE MAS PERDENDO DINHEIRO" : "Seu Diagnóstico Digital - Nível Forte",
+                    icon: "🚀",
+                    color: "#60a5fa",
+                    description: resultVariant === 'hard'
+                        ? "Muito bom! Você tem uma base forte. Identificamos pontos estratégicos que podem acelerar seu crescimento."
+                        : `Score: ${totalScore}/100. Você tem uma base sólida mas ainda há grandes oportunidades de crescimento. Plano personalizado disponível.`,
+                    potentialLoss: 0,
+                    priority: "ACELERAÇÃO",
+                    variant: resultVariant
+                };
+            } else if (totalScore >= 31) {
+                return {
+                    title: resultVariant === 'hard' ? "EM EVOLUÇÃO COM POTENCIAL EXPLOSIVO" : "Seu Diagnóstico Digital - Em Evolução",
+                    icon: "💎",
+                    color: "#f59e0b",
+                    description: resultVariant === 'hard'
+                        ? "Bom progresso! Você já iniciou sua transformação digital. Há oportunidades importantes para expandir."
+                        : `Score: ${totalScore}/100. Você já iniciou sua jornada digital mas há muito espaço para crescer. Principais pontos de melhoria identificados.`,
+                    potentialLoss: 0,
+                    priority: "EXPANSÃO",
+                    variant: resultVariant
+                };
+            } else {
+                return {
+                    title: resultVariant === 'hard' ? "INICIANTE - EMERGÊNCIA DIGITAL" : "Seu Diagnóstico Digital - Iniciante",
+                    icon: "🚨",
+                    color: "#ef4444",
+                    description: resultVariant === 'hard'
+                        ? "Início da jornada! Há muito potencial para crescimento. Vamos criar um plano personalizado para acelerar sua evolução."
+                        : `Score: ${totalScore}/100. Você está no início da transformação digital. Criamos um plano sob medida para acelerar seu crescimento.`,
+                    potentialLoss: 0,
+                    priority: "TRANSFORMAÇÃO",
+                    variant: resultVariant
+                };
+            }
+        }
+    </script>
+</body>
+</html>

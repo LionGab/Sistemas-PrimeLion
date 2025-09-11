@@ -1,0 +1,21 @@
+# Dados sensíveis
+*.csv
+/exports
+/logs
+service-account*.json
+.env*
+
+# Dependências
+node_modules/
+
+# SO
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temporários
+tmp/
+temp/
