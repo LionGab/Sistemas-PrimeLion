@@ -1,0 +1,306 @@
+{
+  "name": "1 - Setup WhatsApp Evolution",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://evolution:8080/instance/create",
+        "authentication": "headerAuth",
+        "requestMethod": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $env.EVOLUTION_API_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "instanceName",
+              "value": "full_force_academia"
+            },
+            {
+              "name": "qrcode",
+              "value": true
+            },
+            {
+              "name": "webhook",
+              "value": "{{ $env.WEBHOOK_URL }}"
+            },
+            {
+              "name": "events",
+              "value": ["MESSAGE_RECEIVED", "CONNECTION_UPDATE"]
+            }
+          ]
+        }
+      },
+      "id": "create-instance",
+      "name": "Create WhatsApp Instance",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [440, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "instance_id",
+              "name": "instanceId",
+              "value": "={{ $json.instance.instanceName }}",
+              "type": "string"
+            },
+            {
+              "id": "qr_code",
+              "name": "qrCode",
+              "value": "={{ $json.qrcode.code }}",
+              "type": "string"
+            },
+            {
+              "id": "status",
+              "name": "status",
+              "value": "={{ $json.instance.status }}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "id": "set-instance-data",
+      "name": "Set Instance Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [640, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://evolution:8080/instance/connect/full_force_academia",
+        "authentication": "headerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $env.EVOLUTION_API_KEY }}"
+            }
+          ]
+        }
+      },
+      "id": "get-qr-code",
+      "name": "Get QR Code",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [840, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@fullforceacademia.com",
+        "toEmail": "={{ $env.ADMIN_EMAIL }}",
+        "subject": "QR Code WhatsApp - Full Force Academia",
+        "message": "=Escaneie o QR Code abaixo para conectar o WhatsApp:\n\n{{ $json.qrCode }}\n\nInstance: {{ $json.instanceId }}\nStatus: {{ $json.status }}\n\nAcesse: http://localhost:8080/instance/qrcode/full_force_academia",
+        "options": {}
+      },
+      "id": "send-qr-email",
+      "name": "Send QR Code Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1040, 300]
+    },
+    {
+      "parameters": {
+        "amount": 30,
+        "unit": "seconds"
+      },
+      "id": "wait-connection",
+      "name": "Wait for Connection",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1240, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://evolution:8080/instance/connectionState/full_force_academia",
+        "authentication": "headerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $env.EVOLUTION_API_KEY }}"
+            }
+          ]
+        }
+      },
+      "id": "check-status",
+      "name": "Check Connection Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1440, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "id": "connection_status",
+              "value1": "={{ $json.instance.state }}",
+              "operation": "equal",
+              "value2": "open"
+            }
+          ]
+        }
+      },
+      "id": "if-connected",
+      "name": "IF Connected",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1640, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@fullforceacademia.com",
+        "toEmail": "={{ $env.ADMIN_EMAIL }}",
+        "subject": "✅ WhatsApp Conectado - Full Force Academia",
+        "message": "=✅ WhatsApp conectado com sucesso!\n\nInstance: full_force_academia\nStatus: {{ $json.instance.state }}\n\n🚀 Sistema pronto para enviar mensagens de reativação!\n\nPróximos passos:\n1. Importar lista de ex-alunos\n2. Executar campanha de reativação\n3. Monitorar respostas\n\nDashboard: http://localhost:5678",
+        "options": {}
+      },
+      "id": "success-notification",
+      "name": "Success Notification",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1840, 200]
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@fullforceacademia.com",
+        "toEmail": "={{ $env.ADMIN_EMAIL }}",
+        "subject": "❌ Erro Conexão WhatsApp - Full Force Academia",
+        "message": "=❌ Falha na conexão do WhatsApp\n\nInstance: full_force_academia\nStatus: {{ $json.instance.state }}\n\nTente novamente:\n1. Execute o workflow novamente\n2. Verifique se o QR Code foi escaneado\n3. Verifique se o WhatsApp está ativo no celular",
+        "options": {}
+      },
+      "id": "error-notification",
+      "name": "Error Notification",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1840, 400]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Create WhatsApp Instance",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create WhatsApp Instance": {
+      "main": [
+        [
+          {
+            "node": "Set Instance Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Instance Data": {
+      "main": [
+        [
+          {
+            "node": "Get QR Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get QR Code": {
+      "main": [
+        [
+          {
+            "node": "Send QR Code Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send QR Code Email": {
+      "main": [
+        [
+          {
+            "node": "Wait for Connection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for Connection": {
+      "main": [
+        [
+          {
+            "node": "Check Connection Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Connection Status": {
+      "main": [
+        [
+          {
+            "node": "IF Connected",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Connected": {
+      "main": [
+        [
+          {
+            "node": "Success Notification",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "id": "1",
+  "tags": ["whatsapp", "setup", "academia"]
+}

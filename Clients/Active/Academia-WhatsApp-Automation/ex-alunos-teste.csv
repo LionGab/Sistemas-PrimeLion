@@ -1,0 +1,11 @@
+nome,telefone,ultimo_treino,email,plano_anterior,valor_anterior
+João Silva,5565991234567,2024-08-01,joao.silva@email.com,Mensal,89
+Maria Santos,5565992345678,2024-07-15,maria.santos@email.com,Trimestral,240
+Pedro Costa,5565993456789,2024-06-01,pedro.costa@email.com,Mensal,89
+Ana Oliveira,5565994567890,2024-05-15,ana.oliveira@email.com,Semestral,450
+Carlos Souza,5565995678901,2024-08-10,carlos.souza@email.com,Mensal,89
+Fernanda Lima,5565996789012,2024-07-01,fernanda.lima@email.com,Anual,750
+Roberto Alves,5565997890123,2024-04-20,roberto.alves@email.com,Mensal,89
+Juliana Rocha,5565998901234,2024-06-30,juliana.rocha@email.com,Trimestral,240
+Marcelo Dias,5565999012345,2024-05-01,marcelo.dias@email.com,Mensal,89
+Camila Ferreira,5565990123456,2024-07-20,camila.ferreira@email.com,Semestral,450

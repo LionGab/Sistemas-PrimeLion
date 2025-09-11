@@ -1,0 +1,270 @@
+version: '3.8'
+
+services:
+  # Enhanced N8N with MCP Support
+  n8n-enhanced:
+    image: n8nio/n8n:latest
+    container_name: n8n_academia_enhanced
+    restart: unless-stopped
+    environment:
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=n8n
+      - DB_POSTGRESDB_USER=n8n
+      - DB_POSTGRESDB_PASSWORD=n8n_password
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=academia2024
+      - WEBHOOK_URL=http://localhost:5678/
+      - GENERIC_TIMEZONE=America/Sao_Paulo
+      - N8N_ENCRYPTION_KEY=academia_encryption_key_2024
+      - N8N_METRICS=true
+      - N8N_LOG_LEVEL=info
+      - N8N_LOG_OUTPUT=console
+      - N8N_DIAGNOSTICS_ENABLED=true
+      # Enhanced Features
+      - N8N_MCP_ENABLED=true
+      - N8N_AI_VALIDATION=true
+      - N8N_WORKFLOW_BUILDER_API=true
+      - N8N_MONITORING_ENABLED=true
+      # Academia Specific
+      - ACADEMIA_NAME=Full Force Academia
+      - ACADEMIA_LOCATION=Matupá-MT
+      - EX_STUDENTS_COUNT=561
+      - MONTHLY_POTENTIAL=84150
+      - EVOLUTION_API_URL=http://evolution:8080
+      - RATE_LIMIT_MESSAGES=20
+      - DELAY_BETWEEN_MESSAGES=3000
+      - VALIDATION_STRICT_MODE=true
+    ports:
+      - "5678:5678"
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./n8n/workflows:/home/node/.n8n/workflows
+      - ./n8n/credentials:/home/node/.n8n/credentials
+      - ./n8n/backups:/home/node/.n8n/backups
+      - ./logs:/var/log/n8n
+    depends_on:
+      - postgres
+      - redis
+      - mcp-server
+    networks:
+      - academia_network
+
+  # MCP Server for AI Integration
+  mcp-server:
+    build:
+      context: ./mcp-server
+      dockerfile: Dockerfile
+    container_name: mcp_server_academia
+    restart: unless-stopped
+    environment:
+      - MCP_PORT=3333
+      - N8N_API_URL=http://n8n-enhanced:5678
+      - N8N_API_KEY=${N8N_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - CLAUDE_API_KEY=${CLAUDE_API_KEY}
+      - VALIDATION_ENABLED=true
+      - WORKFLOW_TEMPLATES_PATH=/app/templates
+    ports:
+      - "3333:3333"
+    volumes:
+      - ./mcp-server/templates:/app/templates
+      - ./logs:/var/log/mcp
+    networks:
+      - academia_network
+
+  # Enhanced Evolution API with Monitoring
+  evolution-enhanced:
+    image: davidsongomes/evolution-api:latest
+    container_name: evolution_api_enhanced
+    restart: unless-stopped
+    environment:
+      - SERVER_PORT=8080
+      - DATABASE_ENABLED=true
+      - DATABASE_CONNECTION_URI=postgresql://n8n:n8n_password@postgres:5432/n8n
+      - REDIS_ENABLED=true
+      - REDIS_URI=redis://redis:6379
+      - CACHE_REDIS_ENABLED=true
+      - CACHE_REDIS_URI=redis://redis:6379
+      - WEBHOOK_GLOBAL_URL=http://n8n-enhanced:5678/webhook/whatsapp
+      - WEBHOOK_GLOBAL_ENABLED=true
+      - QRCODE_LIMIT=30
+      - AUTHENTICATION_API_KEY=academia_evolution_2024
+      - LOG_LEVEL=info
+      - DEL_INSTANCE=false
+      # Enhanced Monitoring
+      - METRICS_ENABLED=true
+      - HEALTH_CHECK_ENABLED=true
+      - RATE_LIMIT_ENABLED=true
+      - RATE_LIMIT_MAX_REQUESTS=100
+      - RATE_LIMIT_WINDOW_MS=60000
+    ports:
+      - "8080:8080"
+    volumes:
+      - evolution_data:/evolution/instances
+      - ./logs:/var/log/evolution
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - academia_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # PostgreSQL with Enhanced Configuration
+  postgres:
+    image: postgres:13
+    container_name: postgres_n8n_enhanced
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=n8n
+      - POSTGRES_USER=n8n
+      - POSTGRES_PASSWORD=n8n_password
+      - POSTGRES_INITDB_ARGS=--auth-local=trust
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d
+      - ./logs:/var/log/postgresql
+    networks:
+      - academia_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U n8n"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Redis with Persistence
+  redis:
+    image: redis:7-alpine
+    container_name: redis_academia_enhanced
+    restart: unless-stopped
+    command: redis-server --requirepass academia_redis_2024 --appendonly yes
+    volumes:
+      - redis_data:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - academia_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Workflow Validator Service
+  workflow-validator:
+    build:
+      context: ./validator
+      dockerfile: Dockerfile
+    container_name: workflow_validator
+    restart: unless-stopped
+    environment:
+      - VALIDATOR_PORT=4444
+      - N8N_API_URL=http://n8n-enhanced:5678
+      - VALIDATION_RULES_PATH=/app/rules
+      - STRICT_MODE=true
+    ports:
+      - "4444:4444"
+    volumes:
+      - ./validator/rules:/app/rules
+      - ./logs:/var/log/validator
+    networks:
+      - academia_network
+
+  # Analytics and Monitoring Dashboard
+  analytics-dashboard:
+    build:
+      context: ./analytics
+      dockerfile: Dockerfile
+    container_name: analytics_dashboard
+    restart: unless-stopped
+    environment:
+      - DASHBOARD_PORT=5555
+      - N8N_API_URL=http://n8n-enhanced:5678
+      - POSTGRES_URL=postgresql://n8n:n8n_password@postgres:5432/n8n
+      - REDIS_URL=redis://redis:6379
+    ports:
+      - "5555:5555"
+    volumes:
+      - ./analytics/dashboards:/app/dashboards
+      - ./logs:/var/log/analytics
+    depends_on:
+      - postgres
+      - redis
+      - n8n-enhanced
+    networks:
+      - academia_network
+
+  # Grafana for Advanced Monitoring
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana_academia
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=academia2024
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+    networks:
+      - academia_network
+
+  # Prometheus for Metrics Collection
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus_academia
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    networks:
+      - academia_network
+
+  # Nginx Reverse Proxy with SSL
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_academia
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+      - ./logs:/var/log/nginx
+    depends_on:
+      - n8n-enhanced
+      - analytics-dashboard
+      - grafana
+    networks:
+      - academia_network
+
+volumes:
+  n8n_data:
+  postgres_data:
+  evolution_data:
+  redis_data:
+  grafana_data:
+  prometheus_data:
+
+networks:
+  academia_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

@@ -1,0 +1,470 @@
+{
+  "name": "4 - Process WhatsApp Responses",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "whatsapp",
+        "options": {}
+      },
+      "id": "webhook-receiver",
+      "name": "Webhook - WhatsApp",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [240, 300],
+      "webhookId": "whatsapp-responses"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "phone_number",
+              "name": "phoneNumber",
+              "value": "={{ $json.data.key.remoteJid.replace('@s.whatsapp.net', '') }}",
+              "type": "string"
+            },
+            {
+              "id": "message_text",
+              "name": "messageText",
+              "value": "={{ $json.data.message.conversation || $json.data.message.extendedTextMessage?.text || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "timestamp",
+              "name": "timestamp",
+              "value": "={{ new Date().toISOString() }}",
+              "type": "string"
+            },
+            {
+              "id": "contact_name",
+              "name": "contactName",
+              "value": "={{ $json.data.pushName || 'Não informado' }}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "id": "extract-data",
+      "name": "Extract Message Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [440, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "ExAlunos",
+        "options": {
+          "headerRow": 1,
+          "includeEmptyCells": false,
+          "range": "A:O"
+        }
+      },
+      "id": "find-student",
+      "name": "Find Student in Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [640, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "id": "phone_match",
+              "value1": "={{ $json.telefone }}",
+              "operation": "contains",
+              "value2": "={{ $('Extract Message Data').item.json.phoneNumber }}"
+            }
+          ]
+        }
+      },
+      "id": "filter-student",
+      "name": "Filter Matching Student",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [840, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Analisar a mensagem recebida\nconst mensagem = $input.item.json.messageText.toLowerCase();\nconst phoneNumber = $('Extract Message Data').item.json.phoneNumber;\nconst studentData = $input.item.json;\n\n// Palavras-chave para análise\nconst palavrasInteresse = ['sim', 'quero', 'interesse', 'aceito', 'vou', 'ok', 'beleza', 'fechado', 'vamos', 'agendar'];\nconst palavrasRecusa = ['não', 'nao', 'depois', 'pare', 'parar', 'stop', 'remover', 'cancelar', 'sair'];\nconst palavrasDuvida = ['quanto', 'valor', 'preço', 'horario', 'horário', 'onde', 'endereço', 'como', 'quando', 'duvida', 'dúvida', '?'];\n\nlet tipoResposta;\nlet proximaAcao;\nlet respostaAutomatica;\nlet novoStatus;\n\n// Classificar tipo de resposta\nif (palavrasInteresse.some(palavra => mensagem.includes(palavra))) {\n  tipoResposta = 'INTERESSADO';\n  novoStatus = 'AGENDAMENTO';\n  proximaAcao = 'agendar_visita';\n  respostaAutomatica = `Que ótimo, ${studentData.nome}! 🎉\\n\\nVamos agendar sua volta à *Full Force Academia*! 💪\\n\\n📅 *Horários disponíveis hoje*:\\n• Manhã: 06h às 11h\\n• Tarde: 14h às 17h\\n• Noite: 18h às 22h\\n\\n📍 *Endereço*: [Seu endereço], Matupá-MT\\n\\nQual horário é melhor para você? Responda e já agendamos! 🚀`;\n} else if (palavrasRecusa.some(palavra => mensagem.includes(palavra))) {\n  tipoResposta = 'RECUSADO';\n  novoStatus = 'RECUSADO';\n  proximaAcao = 'reagendar_30_dias';\n  respostaAutomatica = `Tudo bem, ${studentData.nome}! 😊\\n\\nRespeitamos sua decisão. Estaremos sempre aqui quando você quiser voltar a treinar! 💪\\n\\n*Full Force Academia* - Matupá-MT\\n\\nSe mudar de ideia, é só chamar! 📱`;\n} else if (palavrasDuvida.some(palavra => mensagem.includes(palavra))) {\n  tipoResposta = 'DUVIDA';\n  novoStatus = 'EM_CONVERSA';\n  proximaAcao = 'responder_duvida';\n  respostaAutomatica = `Claro, ${studentData.nome}! Vou tirar suas dúvidas! 😊\\n\\n💰 *Valores*:\\n• Mensal: R$ 89\\n• Trimestral: R$ 240 (R$ 80/mês)\\n• Semestral: R$ 450 (R$ 75/mês)\\n\\n⏰ *Horários*:\\n• Segunda a Sexta: 06h às 22h\\n• Sábado: 07h às 17h\\n• Domingo: 08h às 12h\\n\\n📍 *Localização*: [Seu endereço], Matupá-MT\\n\\nQue mais gostaria de saber? 🤔`;\n} else {\n  tipoResposta = 'INDEFINIDO';\n  novoStatus = 'RESPONDEU';\n  proximaAcao = 'analisar_manual';\n  respostaAutomatica = `Oi, ${studentData.nome}! 👋\\n\\nObrigado pela mensagem! Nossa equipe vai analisar e retornar em breve.\\n\\n*Full Force Academia* - Matupá-MT\\n📱 Para mais informações, entre em contato conosco!`;\n}\n\n// Calcular pontuação de interesse (0-100)\nlet pontuacaoInteresse = 0;\nif (tipoResposta === 'INTERESSADO') pontuacaoInteresse = 90;\nelse if (tipoResposta === 'DUVIDA') pontuacaoInteresse = 60;\nelse if (tipoResposta === 'RECUSADO') pontuacaoInteresse = 10;\nelse pontuacaoInteresse = 30;\n\nreturn {\n  ...studentData,\n  mensagem_recebida: $('Extract Message Data').item.json.messageText,\n  phone_number: phoneNumber,\n  timestamp_resposta: $('Extract Message Data').item.json.timestamp,\n  tipo_resposta: tipoResposta,\n  novo_status: novoStatus,\n  proxima_acao: proximaAcao,\n  resposta_automatica: respostaAutomatica,\n  pontuacao_interesse: pontuacaoInteresse,\n  contact_name: $('Extract Message Data').item.json.contactName\n};"
+      },
+      "id": "analyze-message",
+      "name": "Analyze Message Intent",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1040, 300]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.tipo_resposta }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "INTERESSADO",
+              "output": 0
+            },
+            {
+              "value2": "RECUSADO",
+              "output": 1
+            },
+            {
+              "value2": "DUVIDA",
+              "output": 2
+            }
+          ]
+        },
+        "fallbackOutput": 3
+      },
+      "id": "switch-response-type",
+      "name": "Switch Response Type",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [1240, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://evolution:8080/message/sendText/full_force_academia",
+        "authentication": "headerAuth",
+        "requestMethod": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $env.EVOLUTION_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $json.phone_number }}"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.resposta_automatica }}"
+            }
+          ]
+        }
+      },
+      "id": "send-auto-response",
+      "name": "Send Auto Response",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1440, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "resource": "sheet",
+        "operation": "update",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "ExAlunos",
+        "columnToMatchOn": "telefone",
+        "valueToMatchOn": "={{ $json.telefone }}",
+        "fieldsUi": {
+          "values": [
+            {
+              "column": "status",
+              "value": "={{ $json.novo_status }}"
+            },
+            {
+              "column": "resposta_recebida",
+              "value": "={{ $json.mensagem_recebida }}"
+            },
+            {
+              "column": "tipo_resposta",
+              "value": "={{ $json.tipo_resposta }}"
+            },
+            {
+              "column": "pontuacao_interesse",
+              "value": "={{ $json.pontuacao_interesse }}"
+            },
+            {
+              "column": "timestamp_resposta",
+              "value": "={{ $json.timestamp_resposta }}"
+            },
+            {
+              "column": "proxima_acao",
+              "value": "={{ $json.proxima_acao }}"
+            }
+          ]
+        }
+      },
+      "id": "update-student-status",
+      "name": "Update Student Status",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [1640, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "id": "is_interested",
+              "value1": "={{ $json.tipo_resposta }}",
+              "operation": "equal",
+              "value2": "INTERESSADO"
+            }
+          ]
+        }
+      },
+      "id": "if-interested",
+      "name": "IF Interested",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1840, 200]
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@fullforceacademia.com",
+        "toEmail": "={{ $env.ADMIN_EMAIL }}",
+        "subject": "🎯 LEAD QUENTE - Full Force Academia",
+        "message": "=🎯 **LEAD INTERESSADO IDENTIFICADO!**\\n\\n👤 **Cliente**: {{ $json.nome }}\\n📱 **Telefone**: {{ $json.telefone }}\\n📧 **Email**: {{ $json.email }}\\n💬 **Mensagem**: {{ $json.mensagem_recebida }}\\n⭐ **Pontuação**: {{ $json.pontuacao_interesse }}/100\\n\\n📊 **DADOS HISTÓRICOS:**\\n💰 Plano anterior: {{ $json.plano_anterior }}\\n💵 Valor anterior: R$ {{ $json.valor_anterior }}\\n📅 Último treino: {{ $json.ultimo_treino }}\\n🔥 Categoria: {{ $json.categoria }}\\n\\n✅ **AÇÕES AUTOMÁTICAS:**\\n✓ Resposta automática enviada\\n✓ Status atualizado para AGENDAMENTO\\n✓ Pontuação de interesse registrada\\n\\n🚀 **PRÓXIMOS PASSOS:**\\n1. Ligar para o cliente em até 2h\\n2. Agendar visita presencial\\n3. Fechar matrícula\\n\\n💰 **ROI PROJETADO**: R$ 150/mês\\n🎯 **PROBABILIDADE**: 85% conversão\\n\\n📍 Full Force Academia - Matupá-MT",
+        "options": {}
+      },
+      "id": "notify-hot-lead",
+      "name": "Notify Hot Lead",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [2040, 150]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "id": "is_refused",
+              "value1": "={{ $json.tipo_resposta }}",
+              "operation": "equal",
+              "value2": "RECUSADO"
+            }
+          ]
+        }
+      },
+      "id": "if-refused",
+      "name": "IF Refused",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1840, 400]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "value": 30
+            }
+          ]
+        }
+      },
+      "id": "wait-30-days",
+      "name": "Wait 30 Days",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [2040, 400]
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "resource": "sheet",
+        "operation": "update",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "ExAlunos",
+        "columnToMatchOn": "telefone",
+        "valueToMatchOn": "={{ $json.telefone }}",
+        "fieldsUi": {
+          "values": [
+            {
+              "column": "status",
+              "value": "IMPORTADO"
+            },
+            {
+              "column": "proxima_acao",
+              "value": "retry_campaign"
+            }
+          ]
+        }
+      },
+      "id": "reset-for-retry",
+      "name": "Reset for Retry",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [2240, 400]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook - WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Extract Message Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Message Data": {
+      "main": [
+        [
+          {
+            "node": "Find Student in Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Student in Sheet": {
+      "main": [
+        [
+          {
+            "node": "Filter Matching Student",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Matching Student": {
+      "main": [
+        [
+          {
+            "node": "Analyze Message Intent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze Message Intent": {
+      "main": [
+        [
+          {
+            "node": "Switch Response Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Response Type": {
+      "main": [
+        [
+          {
+            "node": "Send Auto Response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Auto Response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Auto Response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Auto Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Auto Response": {
+      "main": [
+        [
+          {
+            "node": "Update Student Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Student Status": {
+      "main": [
+        [
+          {
+            "node": "IF Interested",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "IF Refused",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Interested": {
+      "main": [
+        [
+          {
+            "node": "Notify Hot Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Refused": {
+      "main": [
+        [
+          {
+            "node": "Wait 30 Days",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 30 Days": {
+      "main": [
+        [
+          {
+            "node": "Reset for Retry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "id": "4",
+  "tags": ["webhook", "responses", "automation", "academia"]
+}
