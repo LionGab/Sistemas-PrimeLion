@@ -4,7 +4,7 @@ services:
   # N8N Automation Platform
   n8n:
     image: n8nio/n8n:latest
-    container_name: n8n_academia
+    container_name: n8n-mcp
     restart: unless-stopped
     environment:
       - DB_TYPE=postgresdb
@@ -13,9 +13,7 @@ services:
       - DB_POSTGRESDB_DATABASE=n8n
       - DB_POSTGRESDB_USER=n8n
       - DB_POSTGRESDB_PASSWORD=n8n_password
-      - N8N_BASIC_AUTH_ACTIVE=true
-      - N8N_BASIC_AUTH_USER=admin
-      - N8N_BASIC_AUTH_PASSWORD=academia2024
+      - N8N_BASIC_AUTH_ACTIVE=false
       - WEBHOOK_URL=http://localhost:5678/
       - GENERIC_TIMEZONE=America/Sao_Paulo
       - N8N_ENCRYPTION_KEY=academia_encryption_key_2024
@@ -52,34 +50,10 @@ services:
     networks:
       - academia_network
 
-  # Evolution API for WhatsApp
-  evolution:
-    image: davidsongomes/evolution-api:latest
-    container_name: evolution_api
-    restart: unless-stopped
-    environment:
-      - SERVER_PORT=8080
-      - DATABASE_ENABLED=true
-      - DATABASE_CONNECTION_URI=postgresql://n8n:n8n_password@postgres:5432/n8n
-      - REDIS_ENABLED=true
-      - REDIS_URI=redis://redis:6379
-      - CACHE_REDIS_ENABLED=true
-      - CACHE_REDIS_URI=redis://redis:6379
-      - WEBHOOK_GLOBAL_URL=http://n8n:5678/webhook/whatsapp
-      - WEBHOOK_GLOBAL_ENABLED=true
-      - QRCODE_LIMIT=30
-      - AUTHENTICATION_API_KEY=academia_evolution_2024
-      - LOG_LEVEL=info
-      - DEL_INSTANCE=false
-    ports:
-      - "8080:8080"
-    volumes:
-      - evolution_data:/evolution/instances
-    depends_on:
-      - postgres
-      - redis
-    networks:
-      - academia_network
+  # Evolution API placeholder - to be configured later
+  # evolution:
+  #   image: evolutionapi/evolution-api:latest
+  #   container_name: evolution_api
 
   # Redis for Queue Management
   redis:

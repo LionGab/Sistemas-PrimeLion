@@ -1,0 +1,472 @@
+{
+  "name": "3 - Reactivation Campaign (DEMO - Sem WhatsApp)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "value": "0 9 * * *"
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Schedule Daily 9AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 400]
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "resource": "sheet",
+        "operation": "read",
+        "documentId": "{{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "ExAlunos",
+        "options": {
+          "headerRow": 1,
+          "includeEmptyCells": false,
+          "range": "A:O"
+        }
+      },
+      "id": "read-ex-students",
+      "name": "Read Ex-Students",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [440, 350]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "id": "not_processed",
+              "value1": "={{ $json.status }}",
+              "operation": "notEqual",
+              "value2": "ENVIADO"
+            },
+            {
+              "id": "not_refused",
+              "value1": "={{ $json.status }}",
+              "operation": "notEqual",  
+              "value2": "RECUSADO"
+            }
+          ]
+        },
+        "combineOperation": "all"
+      },
+      "id": "filter-unprocessed",
+      "name": "Filter Unprocessed",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [640, 350]
+    },
+    {
+      "parameters": {
+        "limit": "{{ $env.RATE_LIMIT_MESSAGES || 20 }}"
+      },
+      "id": "limit-rate",
+      "name": "Limit Rate (20/day)",
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [840, 350]
+    },
+    {
+      "parameters": {
+        "dataType": "string",
+        "value1": "={{ $json.categoria }}",
+        "rules": {
+          "rules": [
+            {
+              "value2": "QUENTE",
+              "output": 0
+            },
+            {
+              "value2": "MORNO",
+              "output": 1
+            },
+            {
+              "value2": "FRIO",
+              "output": 2
+            }
+          ]
+        }
+      },
+      "id": "switch-category",
+      "name": "Switch by Category",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [1040, 350]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "message_text",
+              "name": "messageText",
+              "value": "=Oi {{ $json.nome }}! 👋\n\nSentimos sua falta na *Full Force Academia* aqui em Matupá-MT! 💪\n\n🎁 *Oferta especial*: 7 dias GRÁTIS para você voltar a treinar!\n\n📍 Estamos te esperando na academia\n⏰ Horários flexíveis disponíveis\n\nQuer voltar? Responda *SIM* e vamos agendar! 🚀",
+              "type": "string"
+            },
+            {
+              "id": "category_type",
+              "name": "categoryType",
+              "value": "QUENTE",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "id": "message-quente",
+      "name": "Message QUENTE",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [1240, 200]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "message_text",
+              "name": "messageText",
+              "value": "=Oi {{ $json.nome }}! 👋\n\n*{{ $json.plano_anterior }}* venceu? Temos uma oferta imperdível! 🔥\n\n💥 *50% de desconto* por 2 meses\n💪 Volta a treinar na *Full Force Academia*\n📍 Matupá-MT\n\n✅ Sem taxa de matrícula\n✅ Todos os equipamentos liberados\n✅ Aulas em grupo inclusas\n\nOferta válida até sexta! Responda *QUERO* 🚀",
+              "type": "string"
+            },
+            {
+              "id": "category_type",
+              "name": "categoryType",
+              "value": "MORNO",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "id": "message-morno",
+      "name": "Message MORNO",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [1240, 350]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "message_text",
+              "name": "messageText",
+              "value": "=Oi {{ $json.nome }}! 👋\n\nLembra da *Full Force Academia*? Queremos você de volta! 💪\n\n🎯 *OFERTA ESPECIAL*:\n❌ SEM taxa de matrícula\n💰 Apenas R$ 89 no 1º mês\n🔥 Depois só R$ {{ $json.valor_anterior || 89 }}/mês\n\n📍 Matupá-MT - Equipamentos novos\n⏰ Horários que cabem na sua rotina\n\nVamos treinar juntos? Responda *SIM* e fechamos hoje! 🚀\n\n_Oferta limitada_",
+              "type": "string"
+            },
+            {
+              "id": "category_type",
+              "name": "categoryType",
+              "value": "FRIO",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "id": "message-frio",
+      "name": "Message FRIO",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [1240, 500]
+    },
+    {
+      "parameters": {
+        "jsCode": "// SIMULAÇÃO DE ENVIO WHATSAPP - LOG APENAS\nconst nome = $input.item.json.nome;\nconst telefone = $input.item.json.telefone;\nconst mensagem = $input.item.json.messageText;\nconst categoria = $input.item.json.categoryType;\n\n// Simular resultado de envio\nconst sucesso = Math.random() > 0.05; // 95% de sucesso\n\nconst resultado = {\n  nome: nome,\n  telefone: telefone,\n  categoria: categoria,\n  mensagem: mensagem,\n  status_envio: sucesso ? 'SUCESSO' : 'ERRO',\n  timestamp: new Date().toISOString(),\n  academia: 'Full Force Academia - Matupá/MT',\n  simulado: true\n};\n\nconsole.log('🚀 [SIMULAÇÃO WHATSAPP] Enviando para:', nome, telefone);\nconsole.log('📱 Mensagem:', mensagem.substring(0, 50) + '...');\nconsole.log('✅ Status:', resultado.status_envio);\n\nreturn resultado;"
+      },
+      "id": "simulate-whatsapp",
+      "name": "Simulate WhatsApp (LOG)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1440, 350]
+    },
+    {
+      "parameters": {
+        "amount": "{{ $env.DELAY_BETWEEN_MESSAGES || 3000 }}",
+        "unit": "ms"
+      },
+      "id": "wait-delay",
+      "name": "Wait 3s (Rate Limit)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1640, 350]
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "resource": "sheet", 
+        "operation": "update",
+        "documentId": "={{ $env.GOOGLE_SHEETS_ID }}",
+        "sheetName": "ExAlunos",
+        "columnToMatchOn": "telefone",
+        "valueToMatchOn": "={{ $json.telefone }}",
+        "fieldsUi": {
+          "values": [
+            {
+              "column": "status",
+              "value": "ENVIADO_SIMULADO"
+            },
+            {
+              "column": "data_ultimo_contato", 
+              "value": "={{ new Date().toISOString() }}"
+            },
+            {
+              "column": "categoria_mensagem",
+              "value": "={{ $json.categoria }}"
+            }
+          ]
+        }
+      },
+      "id": "update-status",
+      "name": "Update Status Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [1840, 350]
+    },
+    {
+      "parameters": {
+        "operation": "aggregateItems",
+        "aggregate": "count",
+        "fieldsUi": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "nome"
+            }
+          ]
+        }
+      },
+      "id": "count-sent",
+      "name": "Count Messages Sent",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 3,
+      "position": [2040, 350]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "id": "messages_sent",
+              "value1": "={{ $json.count }}",
+              "operation": "larger",
+              "value2": 0
+            }
+          ]
+        }
+      },
+      "id": "if-messages-sent",
+      "name": "IF Messages Sent",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2240, 350]
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@fullforceacademia.com",
+        "toEmail": "{{ $env.ADMIN_EMAIL }}",
+        "subject": "🚀 [DEMO] Campanha Executada - Full Force Academia",
+        "message": "=🚀 **CAMPANHA DE REATIVAÇÃO EXECUTADA (SIMULAÇÃO)**\n\n📱 **Mensagens simuladas**: {{ $json.count }}\n📅 **Data/Hora**: {{ new Date().toLocaleString('pt-BR', {timeZone: 'America/Sao_Paulo'}) }}\n🏢 **Academia**: Full Force Academia - Matupá-MT\n\n⚠️ **MODO DEMONSTRAÇÃO**:\n- Mensagens foram simuladas (não enviadas)\n- Status: ENVIADO_SIMULADO\n- Logs disponíveis no N8N\n\n📊 **PRÓXIMOS PASSOS:**\n1. Configurar WhatsApp Business API (Meta)\n2. Aguardar aprovação (7-15 dias)\n3. Integrar API real aos workflows\n4. Ativar campanhas reais\n\n📈 **META**: 30% de taxa de resposta\n🎯 **CONVERSÃO ESPERADA**: {{ Math.round($json.count * 0.15) }} novos alunos\n💰 **ROI PROJETADO**: R$ {{ Math.round($json.count * 0.15 * 150) }}\n\n✅ Sistema N8N funcionando perfeitamente!\n🔗 WhatsApp API: https://developers.facebook.com/docs/whatsapp",
+        "options": {}
+      },
+      "id": "send-campaign-report",
+      "name": "Send Demo Report",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [2440, 300]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Daily 9AM": {
+      "main": [
+        [
+          {
+            "node": "Read Ex-Students",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Read Ex-Students",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Ex-Students": {
+      "main": [
+        [
+          {
+            "node": "Filter Unprocessed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Unprocessed": {
+      "main": [
+        [
+          {
+            "node": "Limit Rate (20/day)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit Rate (20/day)": {
+      "main": [
+        [
+          {
+            "node": "Switch by Category",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch by Category": {
+      "main": [
+        [
+          {
+            "node": "Message QUENTE",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Message MORNO",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Message FRIO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message QUENTE": {
+      "main": [
+        [
+          {
+            "node": "Simulate WhatsApp (LOG)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message MORNO": {
+      "main": [
+        [
+          {
+            "node": "Simulate WhatsApp (LOG)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message FRIO": {
+      "main": [
+        [
+          {
+            "node": "Simulate WhatsApp (LOG)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simulate WhatsApp (LOG)": {
+      "main": [
+        [
+          {
+            "node": "Wait 3s (Rate Limit)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 3s (Rate Limit)": {
+      "main": [
+        [
+          {
+            "node": "Update Status Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Status Sheet": {
+      "main": [
+        [
+          {
+            "node": "Count Messages Sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Count Messages Sent": {
+      "main": [
+        [
+          {
+            "node": "IF Messages Sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Messages Sent": {
+      "main": [
+        [
+          {
+            "node": "Send Demo Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3-demo",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "id": "3-demo",
+  "tags": ["campaign", "reactivation", "demo", "academia", "full-force"]
+}

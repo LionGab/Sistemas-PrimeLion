@@ -1,0 +1,58 @@
+{
+  "n8n": {
+    "baseUrl": "http://localhost:5678",
+    "apiKey": "",
+    "credentials": {
+      "email": "eugabrielmktd@gmail.com",
+      "password": "Adogo123"
+    }
+  },
+  "mcp": {
+    "name": "n8n-mcp-fullforce",
+    "description": "N8N MCP for Full Force Academia WhatsApp Automation",
+    "version": "1.0.0"
+  },
+  "workflows": {
+    "import": {
+      "path": "./n8n/workflows/2-import-ex-students.json",
+      "name": "Import Ex-Students Full Force",
+      "description": "Import and categorize 561 ex-students"
+    },
+    "campaign": {
+      "path": "./n8n/workflows/3-reactivation-campaign-whatsapp-real.json", 
+      "name": "Campanha Reativação WhatsApp",
+      "description": "Daily WhatsApp campaign - 20 messages/day"
+    },
+    "dashboard": {
+      "path": "./n8n/workflows/5-dashboard-report.json",
+      "name": "Dashboard Reports Full Force",
+      "description": "ROI metrics and performance reports"
+    }
+  },
+  "integrations": {
+    "whatsapp": {
+      "bridgeUrl": "http://localhost:3002/send-whatsapp",
+      "statusUrl": "http://localhost:3002/status",
+      "statsUrl": "http://localhost:3002/stats"
+    },
+    "googleSheets": {
+      "spreadsheetId": "",
+      "credentials": "pending"
+    },
+    "smtp": {
+      "host": "smtp.gmail.com",
+      "port": 587,
+      "email": "eugabrielmktd@gmail.com"
+    }
+  },
+  "business": {
+    "name": "Full Force Academia",
+    "location": "Matupá-MT",
+    "targets": {
+      "exStudents": 561,
+      "dailyMessages": 20,
+      "expectedReactivations": 84,
+      "projectedROI": 12600
+    }
+  }
+}
