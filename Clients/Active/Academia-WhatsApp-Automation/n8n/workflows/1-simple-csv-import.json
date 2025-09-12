@@ -1,0 +1,134 @@
+{
+  "name": "1 - Simple CSV Import - Full Force Academia",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "f8a1b2c3-d4e5-6789-abcd-ef1234567890",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "operation": "fromFile",
+        "fileFormat": "csv",
+        "options": {
+          "headerRow": true,
+          "delimiter": ","
+        }
+      },
+      "id": "a1b2c3d4-e5f6-7890-1234-abcdef567890",
+      "name": "Read CSV",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "typeVersion": 2,
+      "position": [400, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Processar dados dos ex-alunos Full Force Academia\nconst items = [];\n\nfor (const item of $input.all()) {\n  const data = item.json;\n  \n  // Calcular categoria baseada no último treino\n  const hoje = new Date();\n  const ultimoTreino = new Date(data.ultimo_treino || hoje);\n  const diasInativo = Math.floor((hoje - ultimoTreino) / (1000 * 60 * 60 * 24));\n  \n  let categoria = 'FRIO';\n  let oferta = 'Sem taxa de matrícula + R$ 89 primeiro mês';\n  \n  if (diasInativo <= 30) {\n    categoria = 'QUENTE';\n    oferta = '7 dias grátis para voltar';\n  } else if (diasInativo <= 60) {\n    categoria = 'MORNO';\n    oferta = '50% desconto por 2 meses';\n  }\n  \n  // Preparar dados processados\n  items.push({\n    json: {\n      nome: data.nome || '',\n      telefone: data.telefone || '',\n      email: data.email || '',\n      ultimo_treino: data.ultimo_treino || '',\n      plano_anterior: data.plano_anterior || 'Mensal',\n      valor_anterior: parseFloat(data.valor_anterior) || 150,\n      dias_inativo: diasInativo,\n      categoria: categoria,\n      oferta: oferta,\n      status: 'IMPORTADO',\n      data_importacao: hoje.toISOString(),\n      academia: 'Full Force Academia',\n      cidade: 'Matupá-MT'\n    }\n  });\n}\n\nreturn items;"
+      },
+      "id": "b2c3d4e5-f6g7-8901-2345-bcdef6789012",
+      "name": "Process Ex-Students Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [600, 300]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": "YOUR_GOOGLE_SHEET_ID_HERE",
+        "sheetName": "Ex-Alunos",
+        "columnToMatchOn": "telefone",
+        "valueInputMode": "defineBelow",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "nome",
+              "fieldValue": "={{ $json.nome }}"
+            },
+            {
+              "fieldId": "telefone", 
+              "fieldValue": "={{ $json.telefone }}"
+            },
+            {
+              "fieldId": "categoria",
+              "fieldValue": "={{ $json.categoria }}"
+            },
+            {
+              "fieldId": "status",
+              "fieldValue": "={{ $json.status }}"
+            },
+            {
+              "fieldId": "data_importacao",
+              "fieldValue": "={{ $json.data_importacao }}"
+            }
+          ]
+        }
+      },
+      "id": "c3d4e5f6-g7h8-9012-3456-cdefg7890123",
+      "name": "Save to Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [800, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "YOUR_GOOGLE_SHEETS_CREDENTIAL_ID",
+          "name": "Google Sheets - Full Force Academia"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Read CSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read CSV": {
+      "main": [
+        [
+          {
+            "node": "Process Ex-Students Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Ex-Students Data": {
+      "main": [
+        [
+          {
+            "node": "Save to Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1",
+  "meta": {
+    "instanceId": "full-force-academia-n8n"
+  },
+  "id": "1",
+  "tags": [
+    {
+      "createdAt": "2025-09-12T22:15:00.000Z",
+      "updatedAt": "2025-09-12T22:15:00.000Z",
+      "id": "1",
+      "name": "Full Force Academia"
+    }
+  ]
+}

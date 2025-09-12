@@ -1,0 +1,282 @@
+{
+  "name": "3 - Response Processor - Full Force Academia",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "whatsapp-response",
+        "options": {
+          "responseMode": "responseNode"
+        }
+      },
+      "id": "webhook-trigger-505",
+      "name": "WhatsApp Response Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [200, 300],
+      "webhookId": "full-force-whatsapp-response"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Processar resposta do WhatsApp - Full Force Academia\nconst resposta = ($json.message || '').toLowerCase();\nconst telefone = $json.from || '';\nconst nome = $json.nome || 'Aluno';\n\n// Analisar intenção da resposta\nlet interessado = false;\nlet categoria_resposta = 'NEUTRO';\nlet proxima_acao = 'AGUARDAR';\n\n// Respostas positivas\nif (resposta.includes('sim') || resposta.includes('quero') || resposta.includes('interessado') || resposta.includes('vamos') || resposta.includes('aceito')) {\n  interessado = true;\n  categoria_resposta = 'INTERESSADO';\n  proxima_acao = 'CONTATAR_VENDAS';\n}\n\n// Respostas negativas\nelse if (resposta.includes('não') || resposta.includes('nao') || resposta.includes('desinteressado') || resposta.includes('pare') || resposta.includes('remover')) {\n  interessado = false;\n  categoria_resposta = 'RECUSOU';\n  proxima_acao = 'REMOVER_LISTA';\n}\n\n// Dúvidas/perguntas\nelse if (resposta.includes('?') || resposta.includes('como') || resposta.includes('quanto') || resposta.includes('horário') || resposta.includes('valor')) {\n  interessado = true;\n  categoria_resposta = 'DUVIDAS';\n  proxima_acao = 'RESPONDER_DUVIDAS';\n}\n\n// Preparar resposta automática\nlet resposta_automatica = '';\n\nif (categoria_resposta === 'INTERESSADO') {\n  resposta_automatica = `Que ótimo, ${nome}! 🎉\\n\\nVou te transferir para nossa equipe de vendas que vai te ajudar com todos os detalhes!\\n\\n📞 *Full Force Academia - Matupá*\\n🏋️‍♀️ Sua transformação começa agora!\\n\\nAguarde que em breve entraremos em contato! 💪`;\n} else if (categoria_resposta === 'DUVIDAS') {\n  resposta_automatica = `Oi ${nome}! Vou esclarecer suas dúvidas! 😊\\n\\n🏋️‍♀️ *Full Force Academia - Matupá*\\n\\n📍 *Localização*: Centro de Matupá-MT\\n⏰ *Horários*: Seg-Sex: 6h às 22h | Sáb: 8h às 18h\\n💰 *Valores*: A partir de R$ 89/mês\\n🎁 *Oferta atual*: Sem taxa de matrícula!\\n\\n✅ Equipamentos modernos\\n✅ Ambiente climatizado\\n✅ Professores qualificados\\n\\nQuer agendar uma visita? Responda *SIM*! 🚀`;\n} else if (categoria_resposta === 'RECUSOU') {\n  resposta_automatica = `Entendido, ${nome}! 😊\\n\\nObrigado pelo retorno. Você foi removido da nossa lista de contatos automáticos.\\n\\nCaso mude de ideia, estaremos sempre aqui na *Full Force Academia*!\\n\\n💪 Transformando vidas em Matupá-MT!`;\n}\n\nreturn {\n  telefone: telefone,\n  nome: nome,\n  resposta_original: $json.message || '',\n  interessado: interessado,\n  categoria_resposta: categoria_resposta,\n  proxima_acao: proxima_acao,\n  resposta_automatica: resposta_automatica,\n  data_resposta: new Date().toISOString(),\n  academia: 'Full Force Academia',\n  cidade: 'Matupá-MT'\n};"
+      },
+      "id": "analyze-response-606",
+      "name": "Analyze Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [400, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "send-response-condition",
+              "leftValue": "={{ $json.resposta_automatica }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "isNotEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "should-respond-707",
+      "name": "Should Send Response?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [600, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:3001/send-whatsapp",
+        "options": {
+          "bodyContentType": "json", 
+          "jsonBody": "={\n  \"to\": \"{{ $json.telefone }}\",\n  \"message\": \"{{ $json.resposta_automatica }}\",\n  \"category\": \"RESPONSE\"\n}",
+          "timeout": 30000
+        }
+      },
+      "id": "send-auto-response-808",
+      "name": "Send Auto Response",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [800, 200],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": "YOUR_GOOGLE_SHEET_ID_HERE",
+        "sheetName": "Respostas",
+        "columnToMatchOn": "telefone",
+        "valueInputMode": "defineBelow",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "telefone",
+              "fieldValue": "={{ $json.telefone }}"
+            },
+            {
+              "fieldId": "nome",
+              "fieldValue": "={{ $json.nome }}"
+            },
+            {
+              "fieldId": "resposta_original",
+              "fieldValue": "={{ $json.resposta_original }}"
+            },
+            {
+              "fieldId": "categoria_resposta", 
+              "fieldValue": "={{ $json.categoria_resposta }}"
+            },
+            {
+              "fieldId": "interessado",
+              "fieldValue": "={{ $json.interessado }}"
+            },
+            {
+              "fieldId": "proxima_acao",
+              "fieldValue": "={{ $json.proxima_acao }}"
+            },
+            {
+              "fieldId": "data_resposta",
+              "fieldValue": "={{ $json.data_resposta }}"
+            }
+          ]
+        }
+      },
+      "id": "log-response-909",
+      "name": "Log to Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [800, 400],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "YOUR_GOOGLE_SHEETS_CREDENTIAL_ID",
+          "name": "Google Sheets - Full Force Academia"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "hot-lead-condition",
+              "leftValue": "={{ $json.categoria_resposta }}",
+              "rightValue": "INTERESSADO",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "hot-lead-check-101",
+      "name": "Hot Lead Alert?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1000, 400]
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@fullforceacademia.com",
+        "toEmail": "vendas@fullforceacademia.com",
+        "subject": "🔥 HOT LEAD - Full Force Academia",
+        "message": "=🔥 *LEAD QUENTE IDENTIFICADO!*\\n\\n👤 *Nome*: {{ $json.nome }}\\n📱 *Telefone*: {{ $json.telefone }}\\n💬 *Resposta*: {{ $json.resposta_original }}\\n\\n⏰ *Data*: {{ $json.data_resposta }}\\n🏋️‍♀️ *Academia*: Full Force Academia - Matupá/MT\\n\\n🎯 *Ação*: CONTATAR IMEDIATAMENTE para conversão!\\n\\n---\\nSistema de Automação N8N - Full Force Academia",
+        "options": {}
+      },
+      "id": "notify-sales-team-111",
+      "name": "Notify Sales Team", 
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [1200, 350],
+      "credentials": {
+        "smtp": {
+          "id": "YOUR_SMTP_CREDENTIAL_ID",
+          "name": "SMTP - Full Force Academia"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"status\": \"success\", \"message\": \"Response processed successfully\", \"categoria\": \"{{ $json.categoria_resposta }}\", \"academia\": \"Full Force Academia\" }",
+        "options": {}
+      },
+      "id": "webhook-response-121",
+      "name": "Webhook Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1000, 200]
+    }
+  ],
+  "connections": {
+    "WhatsApp Response Webhook": {
+      "main": [
+        [
+          {
+            "node": "Analyze Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze Response": {
+      "main": [
+        [
+          {
+            "node": "Should Send Response?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Should Send Response?": {
+      "main": [
+        [
+          {
+            "node": "Send Auto Response",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Log to Google Sheets", 
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log to Google Sheets",
+            "type": "main", 
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Auto Response": {
+      "main": [
+        [
+          {
+            "node": "Webhook Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log to Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Hot Lead Alert?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hot Lead Alert?": {
+      "main": [
+        [
+          {
+            "node": "Notify Sales Team",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3",
+  "meta": {
+    "instanceId": "full-force-academia-n8n"
+  },
+  "id": "3",
+  "tags": [
+    {
+      "createdAt": "2025-09-12T22:25:00.000Z",
+      "updatedAt": "2025-09-12T22:25:00.000Z",
+      "id": "1", 
+      "name": "Full Force Academia"
+    }
+  ]
+}

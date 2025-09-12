@@ -1,0 +1,206 @@
+{
+  "name": "2 - WhatsApp Reactivation Campaign - Full Force Academia",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9 * * 1-6"
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger-123",
+      "name": "Daily 9AM (Mon-Sat)",
+      "type": "n8n-nodes-base.scheduleTrigger", 
+      "typeVersion": 1,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": "YOUR_GOOGLE_SHEET_ID_HERE",
+        "sheetName": "Ex-Alunos",
+        "range": "A:Z",
+        "valueInputMode": "defineBelow"
+      },
+      "id": "read-students-456",
+      "name": "Read Students from Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [400, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "YOUR_GOOGLE_SHEETS_CREDENTIAL_ID",
+          "name": "Google Sheets - Full Force Academia"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "filter-condition-1",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "PENDENTE",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "filter-pending-789",
+      "name": "Filter Pending Students",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [600, 300]
+    },
+    {
+      "parameters": {
+        "batchSize": 20,
+        "options": {
+          "reset": false
+        }
+      },
+      "id": "limit-batch-101",
+      "name": "Limit to 20 per Day",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 3,
+      "position": [800, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Preparar mensagem personalizada para Full Force Academia\nconst nome = $json.nome || 'Aluno';\nconst categoria = $json.categoria || 'FRIO';\nconst telefone = $json.telefone || '';\n\nlet mensagem = '';\n\nif (categoria === 'QUENTE') {\n  mensagem = `Oi ${nome}! 👋\\n\\nSentimos sua falta na *Full Force Academia* aqui em Matupá-MT! 💪\\n\\n🎁 *Oferta especial*: 7 dias GRÁTIS para você voltar a treinar!\\n\\n📍 Estamos te esperando na academia\\n⏰ Seg a Sex: 6h às 22h | Sáb: 8h às 18h\\n\\nQuer voltar? Responda *SIM* e vamos agendar! 🚀\\n\\n_Full Force Academia - Transformando vidas em Matupá!_`;\n} else if (categoria === 'MORNO') {\n  mensagem = `Oi ${nome}! 👋\\n\\n*Plano anterior* venceu? Temos uma oferta imperdível! 🔥\\n\\n💥 *50% de desconto* por 2 meses\\n💪 Volta a treinar na *Full Force Academia*\\n📍 Matupá-MT\\n\\n✅ Sem taxa de matrícula\\n✅ Todos os equipamentos liberados\\n✅ Aulas em grupo inclusas\\n⏰ Horários flexíveis\\n\\nOferta válida até sexta! Responda *QUERO* 🚀`;\n} else {\n  mensagem = `Oi ${nome}! 👋\\n\\nLembra da *Full Force Academia*? Queremos você de volta! 💪\\n\\n🎯 *OFERTA ESPECIAL DE VOLTA*:\\n❌ SEM taxa de matrícula\\n💰 Apenas R$ 89 no 1º mês\\n🔥 Depois só R$ 150/mês\\n\\n📍 Matupá-MT - Equipamentos novos chegaram!\\n⏰ Horários que cabem na sua rotina\\n🏋️‍♀️ Ambiente renovado te espera\\n\\nVamos treinar juntos? Responda *SIM* e fechamos hoje! 🚀\\n\\n_Oferta limitada - Sua nova versão te aguarda!_`;\n}\n\nreturn {\n  to: telefone,\n  message: mensagem,\n  category: categoria,\n  nome: nome,\n  academia: 'Full Force Academia',\n  cidade: 'Matupá-MT'\n};"
+      },
+      "id": "prepare-message-202",
+      "name": "Prepare WhatsApp Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1000, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:3001/send-whatsapp",
+        "options": {
+          "bodyContentType": "json",
+          "jsonBody": "={\n  \"to\": \"{{ $json.to }}\",\n  \"message\": \"{{ $json.message }}\",\n  \"category\": \"{{ $json.category }}\"\n}",
+          "timeout": 30000
+        }
+      },
+      "id": "send-whatsapp-303",
+      "name": "Send WhatsApp Message",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1200, 300],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "mode": "passThrough",
+        "output": "Mensagens enviadas com sucesso para Full Force Academia!",
+        "options": {}
+      },
+      "id": "summary-404",
+      "name": "Campaign Summary",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1400, 300]
+    }
+  ],
+  "connections": {
+    "Daily 9AM (Mon-Sat)": {
+      "main": [
+        [
+          {
+            "node": "Read Students from Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Students from Sheets": {
+      "main": [
+        [
+          {
+            "node": "Filter Pending Students", 
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Pending Students": {
+      "main": [
+        [
+          {
+            "node": "Limit to 20 per Day",
+            "type": "main", 
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit to 20 per Day": {
+      "main": [
+        [
+          {
+            "node": "Prepare WhatsApp Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare WhatsApp Message": {
+      "main": [
+        [
+          {
+            "node": "Send WhatsApp Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send WhatsApp Message": {
+      "main": [
+        [
+          {
+            "node": "Campaign Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2",
+  "meta": {
+    "instanceId": "full-force-academia-n8n"
+  },
+  "id": "2",
+  "tags": [
+    {
+      "createdAt": "2025-09-12T22:20:00.000Z",
+      "updatedAt": "2025-09-12T22:20:00.000Z", 
+      "id": "1",
+      "name": "Full Force Academia"
+    }
+  ]
+}
